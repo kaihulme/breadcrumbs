@@ -25,7 +25,7 @@ jobs:
 
       - run:
           name: Download Dependencies
-          command: ./gradlew androidDependencies
+          command: gradle androidDependencies
 
       - save_cache:
           paths:
