@@ -20,8 +20,8 @@ jobs:
           - v1-dependencies-
 
       - run:
-        name: Download Dependencies
-        command: ./gradle androidDependencies
+          name: Download Dependencies
+          command: ./gradle androidDependencies
 
       - save_cache:
           paths:
@@ -30,8 +30,8 @@ jobs:
 
       # run tests!
       - run:
-        name: Run tests
-        command: ./gradlew test
+          name: Run tests
+          command: ./gradlew test
 
 
 
