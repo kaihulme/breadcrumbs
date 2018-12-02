@@ -5,4 +5,5 @@
     <string name="button2">Second Button</string>
     <string name="button3">Third Button</string>
     <string name="button4">Fourth Button</string>
+    <string name="hint">Hint</string>
 </resources>
