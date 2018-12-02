@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BreadCrumbsSPE</string>
+    <string name="question">Question</string>
+    <string name="button1">First Button</string>
+    <string name="button2">Second Button</string>
+    <string name="button3">Third Button</string>
+    <string name="button4">Fourth Button</string>
 </resources>
