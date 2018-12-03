@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/map" />
+        app:srcCompat="@drawable/map_portrait" />
 
     <Button
         android:id="@+id/help_btn"
