@@ -34,6 +34,7 @@ android {
         exclude 'META-INF/INDEX.LIST'
         exclude 'META-INF/web-fragment.xml'
     }
+    //lint having problems with duplicate classes probably, can fix later - this works for now
     lintOptions{
         abortOnError false
     }
