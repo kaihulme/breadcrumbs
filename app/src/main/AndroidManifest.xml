@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".HomeActivity"/>
         <activity android:name=".WelcomeActivity" android:exported="true"/>
         <activity android:name=".QuestionActivity" />
         <activity android:name=".HintActivity" android:exported="true"></activity>
