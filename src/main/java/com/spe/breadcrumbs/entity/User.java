@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity @Table(name = "User")
 public class User {
     @Id @GeneratedValue
-    private int id;
+    private Long id;
     @Column(name = "firstName") @Getter @Setter
     private String firstName;
 

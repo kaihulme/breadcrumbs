@@ -1,7 +1,7 @@
-$('#loginButton').on('click', function () {
+/*
+$('#loginBtn').on('click', function () {
     logIn();
 });
-
 $("#password").on('keyup', function (e) {
     if (e.keyCode == 13) {
         logIn();
@@ -9,5 +9,6 @@ $("#password").on('keyup', function (e) {
 });
 
 function logIn () {
-  window.location.href = "views/participants.html";
+  window.location.href = "participants.html";
 }
+*/
