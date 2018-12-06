@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -71,10 +71,10 @@
               <div class="col-7">
 
                 <div class="jumbotron" id=stats>
-                      <h5>User ID: user_ID</h5>
-                      <h5>First Name: user_firstName</h5>
-                      <h5>Second Name: user_secondName</h5>
-                      <h5>Score: user_score</h5>
+                      <h5 th:text =" 'User ID: ' + ${user.id}">user_id</h5>
+                      <h5 th:text = "'First Name: ' + ${user.firstName}">First Name: user_firstName</h5>
+                      <h5 th:text="'Surname: ' + ${user.lastName}">Second Name: user_secondName</h5>
+                      <h5 th:text="'Score: ' + ${user.score}">Score: user_score</h5>
                 </div>
 
               </div>
@@ -91,7 +91,7 @@
                 <thead>
                     <tr>
                         <th>Questions</th>
-                        <th>Attemps</th>
+                        <th>Attempts</th>
                         <th>Score</th>
                     </tr>
                 </thead>

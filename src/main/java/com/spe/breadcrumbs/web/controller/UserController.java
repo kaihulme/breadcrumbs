@@ -29,7 +29,7 @@ public class UserController {
     public String getUserDetail(@PathVariable Long id,Model m){
         User match;
         match = userDAO.getUser(id);
-        //m.addAttribute("user",match);
+        m.addAttribute("user",match);
         return "views/participants_userProfile";
     }
 
