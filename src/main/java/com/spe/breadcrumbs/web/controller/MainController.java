@@ -19,15 +19,6 @@ public class MainController{
 
     private UserDAO userDAO = new UserListDAO();
 
-   @RequestMapping("index")
-    public String index(){
-        return "clients/embedded/index";
-    }
-
-    @RequestMapping("client.html")
-    public String client(){
-       return "clients/embedded/client";
-    }
 
 //    @RequestMapping("/participants_userProfile")
 //    public String getUserDetail(){

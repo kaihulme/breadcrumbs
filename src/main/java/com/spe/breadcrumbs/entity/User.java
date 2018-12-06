@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity @Table(name = "User")
 @Getter @Setter
@@ -24,6 +26,9 @@ public class User {
 
     @Column(name = "score")
     private int score;
+
+    @Getter @Setter
+    List<Question> questions = new ArrayList<>();
 
     public User(Long id,String firstName,String lastName,String email) {
         this.id = id;

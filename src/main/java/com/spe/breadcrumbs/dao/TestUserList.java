@@ -20,7 +20,7 @@ public class TestUserList {
         testList.add(loretta);
     }
 
-    public static CopyOnWriteArrayList getTestUsers(){
+    public static CopyOnWriteArrayList<User> getTestUsers(){
         return testList;
     }
 

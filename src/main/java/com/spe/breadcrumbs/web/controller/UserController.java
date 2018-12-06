@@ -1,8 +1,8 @@
 package com.spe.breadcrumbs.web.controller;
 
-import com.spe.breadcrumbs.dao.UserDAO;
-import com.spe.breadcrumbs.dao.UserDbDAO;
-import com.spe.breadcrumbs.dao.UserListDAO;
+import com.spe.breadcrumbs.dao.*;
+import com.spe.breadcrumbs.entity.Question;
+import com.spe.breadcrumbs.entity.Quiz;
 import com.spe.breadcrumbs.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +18,7 @@ import java.util.List;
 
 public class UserController {
     private UserDAO userDAO = new UserListDAO();
+    private QuestionDAO questionDAO = new QuestionListDAO();
 
     @RequestMapping(method = RequestMethod.GET)
     public String participants(Model m){
@@ -29,6 +30,7 @@ public class UserController {
     public String getUserDetail(@PathVariable Long id,Model m){
         User match;
         match = userDAO.getUser(id);
+        if(match != null) match.setQuestions(questionDAO.getAllQuestions());
         m.addAttribute("user",match);
         return "views/participants_userProfile";
     }
