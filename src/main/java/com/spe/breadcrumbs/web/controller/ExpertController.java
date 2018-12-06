@@ -1,4 +1,4 @@
-package com.spe.breadcrumbs.web;
+package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.entity.Expert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,15 @@ public class ExpertController{
 
    @RequestMapping("index")
     public String index(){
-        return "index";
+        return "clients/embedded/index";
     }
 
-    @RequestMapping("/participants")
+    @RequestMapping("client.html")
+    public String client(){
+       return "clients/embedded/client";
+    }
+
+    //@RequestMapping("/participants")
     public String participants(){ //once given the correct email and password,
         return "views/participants";
     }

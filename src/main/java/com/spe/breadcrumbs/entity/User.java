@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class User {
     @Id @GeneratedValue
-    private long id;
+    private Long id;
     @Column(name = "firstName")
     private String firstName;
 
@@ -25,16 +25,16 @@ public class User {
     @Column(name = "score")
     private int score;
 
-    public User(long id,String firstName,String lastName,String email) {
+    public User(Long id,String firstName,String lastName,String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email; //can use regex to pattern match
-        this.score= 0; // can also use regex to pattern match
+        this.score= 0;
     }
 
     public boolean equals(User u) {
-        return (id == u.getId());
+        return (id.equals(u.getId()) || (u.getEmail().toLowerCase().equals(email)));
     }
 
     @Override

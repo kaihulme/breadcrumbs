@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface UserDAO {
     List<User> getAllUsers();
-    User getUser(long id);
+    User getUser(Long id);
     User getByEmail(String email);
     boolean add(User u);
-    boolean update(long id,User u);
-    boolean delete(long id);
+    boolean update(Long id,User u);
+    boolean delete(Long id);
 }

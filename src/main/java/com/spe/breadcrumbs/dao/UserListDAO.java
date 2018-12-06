@@ -5,14 +5,16 @@ import com.spe.breadcrumbs.entity.User;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static com.spe.breadcrumbs.dao.TestUserList.getTestUsers;
+
 public class UserListDAO implements UserDAO {
-    private final CopyOnWriteArrayList<User> users = new CopyOnWriteArrayList<>();
+    private final CopyOnWriteArrayList<User> users = getTestUsers() ;
     public List<User> getAllUsers(){
         return users;
     }
-    public User getUser(long id){
+    public User getUser(Long id){
         for(User u: users){
-            if(u.getId() == id) return u;
+            if(u.getId().equals(id)) return u;
         }
         return null;
     }
@@ -35,11 +37,11 @@ public class UserListDAO implements UserDAO {
     }
 
     @Override
-    public boolean update(long id, User u) {
+    public boolean update(Long id, User u) {
         int matchIndex =-1;
         for(User user:users){
             matchIndex += 1;
-            if(user.getId() == id) {
+            if(user.getId().equals(id)) {
                 users.set(matchIndex, u);
                 return true;
             }
@@ -47,9 +49,9 @@ public class UserListDAO implements UserDAO {
         return false;
     }
 
-    public boolean delete(long id){
+    public boolean delete(Long id){
         for(User u: users){
-            if(u.getId() == id){
+            if(u.getId().equals(id)){
                 users.remove(u);
                 return true;
             }

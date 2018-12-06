@@ -1,27 +1,29 @@
-package com.spe.breadcrumbs.controller;
+package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.UserDAO;
 import com.spe.breadcrumbs.dao.UserListDAO;
 import com.spe.breadcrumbs.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin
 @RestController
-
 @RequestMapping("/participants")
+
 public class UserController {
     private UserDAO users = new UserListDAO();
 
+    @RequestMapping(method = RequestMethod.GET)
     public List<User> getAll(){
         return users.getAllUsers();
     }
     //get a user's profile data
     @RequestMapping(method = RequestMethod.GET,value = "{id}")
-    public ResponseEntity get(@PathVariable long id){
+    public ResponseEntity get(@PathVariable Long id){
         User match;
         match = users.getUser(id);
         if(match != null){
@@ -51,7 +53,7 @@ public class UserController {
     }
 
     @RequestMapping(method =RequestMethod.PUT,value = "{id}")
-    public ResponseEntity update(@PathVariable long id,@RequestBody User u){
+    public ResponseEntity update(@PathVariable Long id,@RequestBody User u){
         if (users.update(id,u)) {
             return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
@@ -61,7 +63,7 @@ public class UserController {
 
     // Delete a User
     @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-    public ResponseEntity delete(@PathVariable long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
 
         boolean result = users.delete(id);
 
