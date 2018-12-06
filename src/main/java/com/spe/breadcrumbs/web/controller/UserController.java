@@ -7,6 +7,7 @@ import com.spe.breadcrumbs.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,20 @@ import java.util.List;
 
 public class UserController {
     private UserDAO userDAO = new UserListDAO();
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String participants(Model m){
+        m.addAttribute("users",userDAO.getAllUsers());
+        return "views/participants";
+    }
+
+    @RequestMapping(method = RequestMethod.GET,value = "{id}")
+    public String getUserDetail(@PathVariable Long id,Model m){
+        User match;
+        match = userDAO.getUser(id);
+        //m.addAttribute("user",match);
+        return "views/participants_userProfile";
+    }
 
 
 //    private UserDAO users = new UserListDAO();

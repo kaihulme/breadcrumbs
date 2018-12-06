@@ -29,10 +29,11 @@ public class MainController{
        return "clients/embedded/client";
     }
 
-    @RequestMapping("/participants")
-    public String participants(Model m){
-       m.addAttribute("users",userDAO.getAllUsers());
-       return "views/participants";
-    }
+//    @RequestMapping("/participants_userProfile")
+//    public String getUserDetail(){
+//        return "views/participants_userProfile";
+//    }
+
+
     //@RequestMapping("/participants/")
 }

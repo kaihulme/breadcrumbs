@@ -81,7 +81,7 @@
         <tbody class="rowlink" data-link="row">
           <tbody>
             <tr th:each="user : ${users}">
-              <td><a href="participants_userProfile.html"><span th:text="${user.id}">id</span></a></td>
+              <td><a th:href="@{'participants/' + ${user.id}}"><span th:text="${user.id}">id</span></a></td>
               <td><span th:text="${user.firstName}"> firstName</span></td>
               <td><span th:text="${user.lastName}">lastName</span></td>
               <td><span th:text="${user.score}">score</span></td>
