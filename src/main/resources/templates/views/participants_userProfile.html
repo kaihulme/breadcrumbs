@@ -96,14 +96,8 @@
                     </tr>
                 </thead>
                 <tbody class="rowlink" data-link="row">
-                  <tr>
-                    <td><a href="participants_userProfile_question.html">What of the following statements best describes a toxic throid adenoma?</a></td>
-                    <td>4</td>
-                    <td>10</td>
-                  </tr>
-                  <!-- can't add questions properly -->
                   <tr th:each="question : ${user.questions}">
-                      <td><span th:text="${question.text}">Question</span></td>
+                      <td><a th:href = "@{'questions/' + ${question.id}}"></a><span th:text="${question.question}">Question</span></td>
                       <td><span th:text="${question.noOfAttempts}">Attempts</span></td>
                       <td><span th:text="${question.score}">Score</span></td>
                   </tr>
