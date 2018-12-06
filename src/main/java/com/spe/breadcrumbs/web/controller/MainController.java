@@ -1,6 +1,9 @@
 package com.spe.breadcrumbs.web.controller;
 
+import com.spe.breadcrumbs.dao.UserDAO;
+import com.spe.breadcrumbs.dao.UserListDAO;
 import com.spe.breadcrumbs.entity.Expert;
+import com.spe.breadcrumbs.web.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
@@ -12,9 +15,9 @@ import com.spe.breadcrumbs.web.ExpertRepository;
 
 @SpringBootApplication
 @Controller
-public class ExpertController{
+public class MainController{
 
-    private ExpertRepository expertRepo;
+    private UserDAO userDAO = new UserListDAO();
 
    @RequestMapping("index")
     public String index(){
@@ -26,8 +29,10 @@ public class ExpertController{
        return "clients/embedded/client";
     }
 
-    //@RequestMapping("/participants")
-    public String participants(){ //once given the correct email and password,
-        return "views/participants";
+    @RequestMapping("/participants")
+    public String participants(Model m){
+       m.addAttribute("users",userDAO.getAllUsers());
+       return "views/participants";
     }
+    //@RequestMapping("/participants/")
 }

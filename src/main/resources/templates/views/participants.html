@@ -80,78 +80,13 @@
         </thread>
         <tbody class="rowlink" data-link="row">
           <tbody>
-            <tr>
-              <td><a href="participants_userProfile.html">01</a></td>
-              <td>Andy</td>
-              <td>Anderson</td>
-              <td>534</td>
+            <tr th:each="user : ${users}">
+              <td><a href="participants_userProfile.html"><span th:text="${user.id}">id</span></a></td>
+              <td><span th:text="${user.firstName}"> firstName</span></td>
+              <td><span th:text="${user.lastName}">lastName</span></td>
+              <td><span th:text="${user.score}">score</span></td>
             </tr>
-            <tr>
-              <td><a href="participants_userProfile.html">02</a></td>
-              <td>Brad</td>
-              <td>Braderson</td>
-              <td>345</td>
-            </tr>
-            <tr>
-              <td><a href="participants_userProfile.html">03</a></td>
-              <td>Charlie</td>
-              <td>Charlston</td>
-              <td>894</td>
-            </tr>
-            <tr>
-              <td><a href="participants_userProfile.html">04</a></td>
-              <td>Daniel</td>
-              <td>Danson</td>
-              <td>233</td>
-            </tr>
-            <tr>
-              <td><a href="participants_userProfile.html">user_ID</a></td>
-              <td>user_firstName</td>
-              <td>user_secondName</td>
-              <td>user_score</td>
-            </tr>
-            <tr>
-              <td><a href="participants_userProfile.html">user_ID</a></td>
-              <td>user_firstName</td>
-              <td>user_secondName</td>
-              <td>user_score</td>
-            </tr>
-            <tr>
-              <td><a href="participants_userProfile.html">user_ID</a></td>
-              <td>user_firstName</td>
-              <td>user_secondName</td>
-              <td>user_score</td>
-            </tr>
-            <tr>
-              <td><a href="participants_userProfile.html">user_ID</a></td>
-              <td>user_firstName</td>
-              <td>user_secondName</td>
-              <td>user_score</td>
-            </tr>
-            <tr>
-              <td><a href="participants_userProfile.html">user_ID</a></td>
-              <td>user_firstName</td>
-              <td>user_secondName</td>
-              <td>user_score</td>
-            </tr>
-            <tr>
-              <td><a href="participants_userProfile.html">user_ID</a></td>
-              <td>user_firstName</td>
-              <td>user_secondName</td>
-              <td>user_score</td>
-            </tr>
-            <tr>
-              <td><a href="participants_userProfile.html">user_ID</a></td>
-              <td>user_firstName</td>
-              <td>user_secondName</td>
-              <td>user_score</td>
-            </tr>
-            <tr>
-              <td><a href="participants_userProfile.html">user_ID</a></td>
-              <td>user_firstName</td>
-              <td>user_secondName</td>
-              <td>user_score</td>
-            </tr>
+
           </tbody>
       </table>
 
