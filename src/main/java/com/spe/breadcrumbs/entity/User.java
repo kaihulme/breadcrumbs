@@ -50,4 +50,5 @@ public class User {
                 + " email: " + email
                 + " score: " + score;
     }
+
 }

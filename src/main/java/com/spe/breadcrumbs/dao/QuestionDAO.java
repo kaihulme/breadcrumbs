@@ -10,4 +10,7 @@ public interface QuestionDAO {
 
     //given the String q returns all questions which have part of that text
     List<Question> find(String t);
+
+    //finds a question by its id
+    Question findById(Long id);
 }

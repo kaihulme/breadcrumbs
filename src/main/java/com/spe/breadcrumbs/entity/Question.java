@@ -18,7 +18,8 @@ public class Question {
     @Column(name = "score") @Getter @Setter
     private int score;
     private List<Choices> choices = new ArrayList<>();
-    public Question(String question,int noOfAttempts,int score) {
+    public Question(Long id,String question,int noOfAttempts,int score) {
+        this.id = id;
         this.question = question;
         this.noOfAttempts = noOfAttempts;
         this.score = score;

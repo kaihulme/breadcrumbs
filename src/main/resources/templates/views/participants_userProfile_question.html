@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -15,10 +15,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="css/participants_userProfile_question.css">
+    <link rel="stylesheet" type="text/css" href="/css/participants_userProfile_question.css">
 
 
-</head>
+</head>/
 
 <body>
 
@@ -26,21 +26,21 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header text-center">
-                <img src="css/images/bioscientificaLogo.jpg" class="rounded-circle" id="logo"/>
+                <img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="logo"/>
             </div>
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="participants.html">Participants</a>
+                    <a th:href="@{/participants}">Participants</a>
                 </li>
                 <li>
-                    <a href="questions.html">Questions</a>
+                    <a th:href="@{/questions}">Questions</a>
                 </li>
                 <li>
-                    <a href="paths.html">Paths</a>
+                    <a th:href="@{/paths}">Paths</a>
                 </li>
                 <li>
-                    <a href="Management.html">Management</a>
+                    <a th:href="@{/management}">Management</a>
                 </li>
             </ul>
 
@@ -67,7 +67,7 @@
             </nav>
 
             <div class="jumbotron" id=question>
-                  <h3>Question </h3>
+                  <h3 th:text = "${question.question}">Question</h3>
             </div>
 
             <table class="table table-striped table-hover" id=users>

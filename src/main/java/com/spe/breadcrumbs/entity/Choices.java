@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Entity @Table(name = "Choices")
 public class Choices {
 
+   @Getter
    private Question question;
    @Column(name = "choiceText") @Getter @Setter
    private String choiceText;

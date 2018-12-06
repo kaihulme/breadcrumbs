@@ -22,4 +22,12 @@ public class QuestionListDAO implements QuestionDAO {
         }
         return matches;
     }
+
+    @Override
+    public Question findById(Long id) {
+        for(Question q: questions){
+            if(q.getId().equals(id)) return q;
+        }
+        return null;
+    }
 }

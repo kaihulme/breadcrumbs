@@ -38,6 +38,15 @@ public class UserController {
         return "views/participants_userProfile";
     }
 
+    @RequestMapping(method = RequestMethod.GET,value = "{userId}/questions/{questionId}")
+    public String getQuestionDetail(@PathVariable Long userId,@PathVariable Long questionId,Model m){
+        User u = userDAO.getUser(userId);
+        Question q = u.getQuiz().findQuestion(questionId);
+        m.addAttribute("question",q);
+        return "views/participants_userProfile_question";
+
+    }
+
 
 //    private UserDAO users = new UserListDAO();
 //    @RequestMapping(method = RequestMethod.GET)

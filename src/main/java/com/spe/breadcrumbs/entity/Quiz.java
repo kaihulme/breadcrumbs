@@ -25,4 +25,12 @@ public class Quiz {
         this.title = title;
     }
 
+    //returns a question in the quiz based on its id
+    public Question findQuestion(Long id){
+        for(Question q: questions){
+            if(q.getId().equals(id)) return q;
+        }
+        return null;
+    }
+
 }

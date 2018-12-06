@@ -97,7 +97,7 @@
                 </thead>
                 <tbody class="rowlink" data-link="row">
                   <tr th:each="question : ${user.quiz.questions}">
-                      <td><a th:href = "@{'questions/' + ${question.id}}"><span th:text="${question.question}">Question</span></a></td>
+                      <td><a th:href = "@{'/participants/' +${user.id} + '/questions/' + ${question.id}}"><span th:text="${question.question}">Question</span></a></td>
                       <td><span th:text="${question.noOfAttempts}">Attempts</span></td>
                       <td><span th:text="${question.score}">Score</span></td>
                   </tr>
