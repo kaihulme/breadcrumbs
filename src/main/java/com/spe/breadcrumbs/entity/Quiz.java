@@ -18,9 +18,11 @@ public class Quiz {
     @Getter @Setter
     List<Question> questions = new ArrayList<>();
 
-    public Quiz(String title,Question... questions){
+    @Getter
+    List<User> users = new ArrayList<>();
+
+    public Quiz(String title){
         this.title = title;
-        this.questions.addAll(Arrays.asList(questions));
     }
 
 }

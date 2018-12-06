@@ -28,7 +28,7 @@ public class User {
     private int score;
 
     @Getter @Setter
-    List<Question> questions = new ArrayList<>();
+    Quiz quiz;
 
     public User(Long id,String firstName,String lastName,String email) {
         this.id = id;

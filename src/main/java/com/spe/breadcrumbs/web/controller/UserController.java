@@ -30,7 +30,10 @@ public class UserController {
     public String getUserDetail(@PathVariable Long id,Model m){
         User match;
         match = userDAO.getUser(id);
-        if(match != null) match.setQuestions(questionDAO.getAllQuestions());
+        List<Question> questions = questionDAO.getAllQuestions();
+        Quiz quiz = new Quiz("title");
+        quiz.setQuestions(questions);
+        if(match != null) match.setQuiz(quiz);
         m.addAttribute("user",match);
         return "views/participants_userProfile";
     }
