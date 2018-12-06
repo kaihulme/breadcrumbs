@@ -31,16 +31,16 @@
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="participants.html">Participants</a>
+                    <a th:href="@{/participants}">Participants</a>
                 </li>
                 <li>
-                    <a href="questions.html">Questions</a>
+                    <a th:href="@{/questions}">Questions</a>
                 </li>
                 <li>
-                    <a href="paths.html">Paths</a>
+                    <a th:href="@{/paths}">Paths</a>
                 </li>
                 <li>
-                    <a href="Management.html">Management</a>
+                    <a th:href="@{/management}">Management</a>
                 </li>
             </ul>
 
@@ -97,7 +97,7 @@
                 </thead>
                 <tbody class="rowlink" data-link="row">
                   <tr th:each="question : ${user.questions}">
-                      <td><a th:href = "@{'questions/' + ${question.id}}"></a><span th:text="${question.question}">Question</span></td>
+                      <td><a th:href = "@{'questions/' + ${question.id}}"><span th:text="${question.question}">Question</span></a></td>
                       <td><span th:text="${question.noOfAttempts}">Attempts</span></td>
                       <td><span th:text="${question.score}">Score</span></td>
                   </tr>

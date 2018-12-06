@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity @Table(name = "question")
 public class Question {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Getter
     private Long id;
     @Column(name = "question") @Getter @Setter
     private String question;
