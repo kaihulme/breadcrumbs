@@ -51,4 +51,9 @@ public class UserDbDAO implements UserDAO {
         }
         return false;
     }
+
+    @Override
+    public List<User> search(String s) {
+        return null;
+    }
 }

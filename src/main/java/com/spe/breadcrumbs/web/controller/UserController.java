@@ -1,6 +1,7 @@
 package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
+import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.entity.Quiz;
 import com.spe.breadcrumbs.entity.User;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
@@ -21,8 +23,9 @@ public class UserController {
     private QuestionDAO questionDAO = new QuestionListDAO();
 
     @RequestMapping(method = RequestMethod.GET)
-    public String participants(Model m){
-        m.addAttribute("users",userDAO.getAllUsers());
+    public String participants(Model m,@RequestParam(value = "name",required = false) String s){
+        if(s == null) m.addAttribute("users",userDAO.getAllUsers());
+        else m.addAttribute("users",userDAO.search(s));
         return "views/participants";
     }
 
@@ -42,10 +45,18 @@ public class UserController {
     public String getQuestionDetail(@PathVariable Long userId,@PathVariable Long questionId,Model m){
         User u = userDAO.getUser(userId);
         Question q = u.getQuiz().findQuestion(questionId);
+        Choice c1 = new Choice(q,"deer",false);
+        Choice c2 = new Choice(q,"kidney",true);
+        Choice c3 = new Choice(q,"hat",false);
+        q.setAttempts(Arrays.asList(c1,c2,c3));
         m.addAttribute("question",q);
         return "views/participants_userProfile_question";
-
     }
+
+//    @RequestMapping(method = RequestMethod.GET)
+//    public String searchUsers( @RequestParam String s){
+//        return "views/participants";
+//    }
 
 
 //    private UserDAO users = new UserListDAO();

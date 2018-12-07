@@ -78,22 +78,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>01</a></td>
-                    <td>QuestionAnswer01</td>
-                  </tr>
-                  <tr>
-                    <td>02</a></td>
-                    <td>QuestionAnswer02</td>
-                  </tr>
-                  <tr>
-                    <td>03</a></td>
-                    <td>QuestionAnswer03</td>
-                  </tr>
-                  <tr>
-                    <td>04</a></td>
-                    <td>QuestionAnswer04</td>
-                  </tr>
+                    <tr th:each = "attempt: ${question.attempts}">
+                        <td th:text = "${question.attempts.indexOf(attempt) + 1}">no</td>
+                        <td th:text = "${attempt.choiceText}">attempt</td>
+                    </tr>
+
                 </tbody>
             </table>
 

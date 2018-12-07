@@ -7,8 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity @Table(name = "Choices")
-public class Choices {
+@Entity @Table(name = "Choice")
+public class Choice {
 
    @Getter
    private Question question;
@@ -16,5 +16,12 @@ public class Choices {
    private String choiceText;
    @Column(name = "answer") @Getter @Setter
    private boolean answer;
+
+   public Choice(Question question,String choiceText,boolean answer){
+      this.question = question;
+      this.choiceText = choiceText;
+      this.answer = answer;
+   }
+
 
 }

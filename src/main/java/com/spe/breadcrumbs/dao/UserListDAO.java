@@ -1,7 +1,9 @@
 package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.User;
+import sun.text.normalizer.UTF16;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -57,5 +59,14 @@ public class UserListDAO implements UserDAO {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<User> search(String s) {
+        List<User> matches = new ArrayList<>();
+        for(User u: users){
+            if(u.getFirstName().toLowerCase().contains(s.toLowerCase())||u.getLastName().toLowerCase().contains(s.toLowerCase())) matches.add(u);
+        }
+        return matches;
     }
 }
