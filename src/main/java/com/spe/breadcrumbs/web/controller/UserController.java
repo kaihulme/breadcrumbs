@@ -22,10 +22,15 @@ public class UserController {
     private UserDAO userDAO = new UserListDAO();
     private QuestionDAO questionDAO = new QuestionListDAO();
 
+//    @RequestMapping(method = RequestMethod.GET)
+//    public String participants(Model m,@RequestParam(value = "name",required = false) String s){
+//        if(s == null) m.addAttribute("users",userDAO.getAllUsers());
+//        else m.addAttribute("users",userDAO.search(s));
+//        return "views/participants";
+//    }
     @RequestMapping(method = RequestMethod.GET)
-    public String participants(Model m,@RequestParam(value = "name",required = false) String s){
-        if(s == null) m.addAttribute("users",userDAO.getAllUsers());
-        else m.addAttribute("users",userDAO.search(s));
+    public String participants(Model m){
+        m.addAttribute("users",userDAO.getAllUsers());
         return "views/participants";
     }
 

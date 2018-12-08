@@ -11,7 +11,7 @@ $('#sidebarCollapse').on('click', function () {
 // search table and filter results
 function searchTable(event) {
     var filter = event.target.value.toUpperCase();
-    var rows = document.querySelector("#users tbody").rows;
+    var rows = document.querySelector("#users").rows;
 
     for (var i = 1; i < rows.length; i++) {
         var firstCol = rows[i].cells[0].textContent.toUpperCase();

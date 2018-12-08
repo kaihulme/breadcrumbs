@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -30,17 +30,17 @@
             </div>
 
             <ul class="list-unstyled components">
-                <li>
-                    <a href="participants.html">Participants</a>
-                </li>
                 <li class="active">
-                    <a href="questions.html">Questions</a>
+                    <a th:href="@{participants}">Participants</a>
                 </li>
                 <li>
-                    <a href="paths.html">Paths</a>
+                    <a th:href="@{questions}">Questions</a>
                 </li>
                 <li>
-                    <a href="Management.html">Management</a>
+                    <a th:href="@{paths}">Paths</a>
+                </li>
+                <li>
+                    <a th:href="@{management}">Management</a>
                 </li>
             </ul>
 
