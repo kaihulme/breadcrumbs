@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/question_textview"
+            android:text="@string/question"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textAlignment="gravity"
+            android:textSize="30sp"
+            android:textColor="@color/buttonColor"/>
+
+        <Button
+            android:id="@+id/button_answer1"
+            android:text="@string/button1"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="@color/buttonColor"/>
+
+        <Button
+            android:id="@+id/button_answer2"
+            android:text="@string/button2"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="@color/buttonColor"/>
+
+        <Button
+            android:id="@+id/button_answer3"
+            android:text="@string/button3"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="@color/buttonColor"/>
+
+        <Button
+            android:id="@+id/button_answer4"
+            android:text="@string/button4"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="@color/buttonColor"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
