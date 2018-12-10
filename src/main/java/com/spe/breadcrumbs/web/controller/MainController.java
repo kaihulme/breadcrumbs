@@ -36,11 +36,4 @@ public class MainController{
         return "views/paths";
     }
 
-//    @RequestMapping("/participants_userProfile")
-//    public String getUserDetail(){
-//        return "views/participants_userProfile";
-//    }
-
-
-    //@RequestMapping("/participants/")
 }

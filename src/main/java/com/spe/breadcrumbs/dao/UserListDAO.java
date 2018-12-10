@@ -1,7 +1,6 @@
 package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.User;
-import sun.text.normalizer.UTF16;
 
 import java.util.ArrayList;
 import java.util.List;
