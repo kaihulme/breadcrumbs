@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Bioscientifica | Breadcrumbs</title>
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <!-- Jansy CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/participants.css">
+
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+      <div class="sidebar-header text-center">
+        <img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="logo" />
+      </div>
+
+      <ul class="list-unstyled components">
+        <li class="active">
+          <a th:href="@{participants}">Participants</a>
+        </li>
+        <li>
+          <a th:href="@{questions}">Questions</a>
+        </li>
+        <li>
+          <a th:href="@{paths}">Paths</a>
+        </li>
+        <li>
+          <a th:href="@{management}">Management</a>
+        </li>
+      </ul>
+
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <span class="glyphicon glyphicon-align-left">Toggle</span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="../index.html">Log Out</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </nav>
+
+      <input type="search" id="search" placeholder="Search">
+
+      <table class="table table-hover" id="users">
+        <thread>
+          <tr class="header">
+            <th style="width:10%;" onclick="sortTable(0)">User ID</th>
+            <th style="width:15%;" onclick="sortTable(1)">First Name</th>
+            <th style="width:65%;" onclick="sortTable(2)">Second Name</th>
+            <th style="width:10%;" onclick="sortTable(3)">Score</th>
+          </tr>
+        </thread>
+        <tbody class="rowlink" data-link="row">
+          <tbody>
+            <tr th:each="user : ${users}">
+              <td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.id}">id</span></a></td>
+              <td><span th:text="${user.firstName}"> firstName</span></td>
+              <td><span th:text="${user.lastName}">lastName</span></td>
+              <td><span th:text="${user.score}">score</span></td>
+            </tr>
+
+          </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- jQuery JS CDN-->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <!-- Bootstrap JS CDN -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <!-- Jansy-Bootstrap JS CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+
+  <!-- Custom JS -->
+  <script type="text/javascript" th:src="@{/js/participants.js}"></script>
+
+</body>
+
+</html>

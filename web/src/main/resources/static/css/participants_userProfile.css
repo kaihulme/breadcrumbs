@@ -1,0 +1,128 @@
+/*************** wrapper / body ************/
+
+.wrapper {
+    margin-top: 70px;
+    display: flex;
+    width: 100%;
+}
+
+body {
+    background: #fafafa;
+}
+
+/****************** navbar *********************/
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+/**************** sidebar **********************/
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #d63558;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #991e39;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #991e39;
+    background: #fff;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #991e39;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+#logo {
+  padding: 10px;
+  width: 200px;
+}
+
+/*********** main content ************/
+
+#content {
+    width: calc(100% - 250px);
+    padding: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#content.active {
+    width: 100%;
+    padding-left: 10vh;
+    padding-right: 10vh;
+}
+
+.jumbotron {
+  height : 20vh;
+  padding: 20px;  
+}
+
+#questions {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#questions th,
+#questions td {
+  text-align: left;
+  padding: 12px;
+}
+#questions th {
+  cursor: pointer;
+}
+
+#questions tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#questions tr.header,
+#questions tr:hover {
+  background-color: #f1f1f1;
+}
