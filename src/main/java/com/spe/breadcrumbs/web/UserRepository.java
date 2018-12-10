@@ -1,6 +1,7 @@
 package com.spe.breadcrumbs.web;
 
 import com.spe.breadcrumbs.entity.User;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 

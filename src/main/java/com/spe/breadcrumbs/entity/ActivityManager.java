@@ -14,7 +14,7 @@ public class ActivityManager {
 
     @Column(name = "lastName") @Getter @Setter
     private String lastName;
-    @Column(name = "userame") @Getter @Setter
+    @Column(name = "username") @Getter @Setter
     private String username;
     @Column(name = "password")  @Setter
     private String password;

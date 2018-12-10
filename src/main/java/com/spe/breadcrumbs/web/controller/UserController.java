@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/participants")
 
 public class UserController {
-    private UserDAO userDAO = new UserListDAO();
+    private UserDAO userDAO = new UserDbDAO();
     private QuestionDAO questionDAO = new QuestionListDAO();
 
 //    @RequestMapping(method = RequestMethod.GET)
@@ -49,6 +49,9 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET,value = "{userId}/questions/{questionId}")
     public String getQuestionDetail(@PathVariable Long userId,@PathVariable Long questionId,Model m){
         User u = userDAO.getUser(userId);
+        Quiz quiz = new Quiz("title");
+        quiz.setQuestions(questionDAO.getAllQuestions());
+        u.setQuiz(quiz);
         Question q = u.getQuiz().findQuestion(questionId);
         Choice c1 = new Choice(q,"deer",false);
         Choice c2 = new Choice(q,"kidney",true);

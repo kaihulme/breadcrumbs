@@ -20,10 +20,9 @@ public class Question {
     @Getter @Setter
     private List<Choice> attempts = new ArrayList<>(); //stores the order the user made the hints (can be less than 4)
     private List<Choice> choices = new ArrayList<>();
-    public Question(Long id,String question,int noOfAttempts,int score) {
+    public Question(Long id,String question,int score) {
         this.id = id;
         this.question = question;
-        this.noOfAttempts = noOfAttempts;
         this.score = score;
     }
 }

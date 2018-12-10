@@ -20,9 +20,6 @@ public class WebApplication {
 
 	public static void main(String[] args) {
 
-		DBConnection dbConnection = new DBConnection();
-		Connection connection = dbConnection.getConnection();
-
 		//Set Properties
 		myProps.setProperty("server.address", host.orElse("localhost"));
 		myProps.setProperty("server.port", port.orElse("8080"));
