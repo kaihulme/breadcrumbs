@@ -24,7 +24,7 @@
             android:textColor="@color/buttonColor"/>
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/button_answer1"
             android:text="@string/button1"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
@@ -33,7 +33,7 @@
             android:textColor="@color/buttonColor"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/button_answer2"
             android:text="@string/button2"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
@@ -42,7 +42,7 @@
             android:textColor="@color/buttonColor"/>
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/button_answer3"
             android:text="@string/button3"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
@@ -51,7 +51,7 @@
             android:textColor="@color/buttonColor"/>
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/button_answer4"
             android:text="@string/button4"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"

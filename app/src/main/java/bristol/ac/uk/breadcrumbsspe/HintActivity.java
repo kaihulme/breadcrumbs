@@ -14,8 +14,10 @@ public class HintActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hint);
         goBack();
     }
+
+    // Back to Home Screen
     private void goBack(){ //goes back to the home screen
-        Button home_btn = findViewById(R.id.back_btn);
+        Button home_btn = findViewById(R.id.button_back_hint);
         home_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
