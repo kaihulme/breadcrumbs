@@ -113,9 +113,9 @@
 				<tbody class="rowlink" data-link="row">
 					<tr th:each="user : ${users}">
 						<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.id}">id</span></a></td>
-						<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.firstName}"> firstName</span></td>
-						<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.lastName}">lastName</span></td>
-						<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.score}">score</span></td>
+						<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.firstName}"> firstName</span></a></td>
+						<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.lastName}">lastName</span></a></td>
+						<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.score}">score</span></a></td>
 		  			</tr>
 				</tbody>
 	  		</table>
@@ -146,7 +146,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary"><a th:href="@{index}">Confirm</a></button>
+						<button type="button" class="btn btn-primary"><a th:href="@{/}">Confirm</a></button>
 					</div>
 				</div>
 			</div>

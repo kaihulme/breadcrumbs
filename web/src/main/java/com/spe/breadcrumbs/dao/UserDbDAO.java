@@ -2,6 +2,7 @@ package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +12,9 @@ import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 
 public class UserDbDAO implements UserDAO {
 
+    @Autowired
     private UserRepository userRepo;
+
     private List<User> users = new ArrayList<>();
     private List<User> userCache = new ArrayList<>();
 
