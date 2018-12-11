@@ -20,6 +20,8 @@ public class MainController{
 
     private UserDAO userDAO = new UserListDAO();
 
+    @RequestMapping("/index")
+    public String index() { return "index"; }
 
     @RequestMapping("/questions")
     public String allQuestions(){
