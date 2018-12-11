@@ -18,7 +18,7 @@ import java.util.List;
 
 public class UserController {
     private UserDAO userDAO = new UserDbDAO();
-    private QuestionDAO questionDAO = new QuestionListDAO();
+    private QuestionDAO questionDAO = new QuestionDbDAO();
 
     @RequestMapping(method = RequestMethod.GET)
     public String participants(Model m){
