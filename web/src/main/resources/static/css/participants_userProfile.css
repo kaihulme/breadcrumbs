@@ -66,6 +66,34 @@ a[aria-expanded="true"] {
     background: #991e39;
 }
 
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #991e39;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #dd5f7a;
+    color: #ffffff;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
 a,
 a:hover,
 a:focus {
@@ -99,7 +127,7 @@ a:focus {
 
 .jumbotron {
   height : 20vh;
-  padding: 20px;  
+  padding: 20px;
 }
 
 #questions {
