@@ -16,6 +16,8 @@ import java.util.List;
 
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
 
+import static bristol.ac.uk.breadcrumbsspe.TestQuestionList.getQuestions;
+
 public class QuestionActivity extends AppCompatActivity {
 
     private int numberOfAnswers = 4;
@@ -37,7 +39,8 @@ public class QuestionActivity extends AppCompatActivity {
             b.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-
+                    List<Question> questions = getQuestions();
+                    System.out.println(questions);
                     startActivity(new Intent(QuestionActivity.this, HomeActivity.class));
                 }
             });

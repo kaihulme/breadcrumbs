@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import bristol.ac.uk.breadcrumbsspe.entity.Choice;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
 
 public class TestQuestionList {
@@ -30,6 +31,18 @@ public class TestQuestionList {
                 String question = obj.getString("question");
                 Question q = new Question(id,question,0);
                 questions.add(q);
+                //add all the choices
+                List<Choice> choices = new ArrayList<>();
+                String choiceJson = allChoices.get(i);
+                JSONArray choiceArr = new JSONArray(choiceJson);
+                for(int j = 0; j < choiceArr.length();j++){
+                    JSONObject obj2 = choiceArr.getJSONObject(j);
+                    String choiceText = obj2.getString("choiceText");
+                    boolean answer = obj2.getBoolean("answer");
+                    Choice c = new Choice(q,choiceText,answer);
+                    choices.add(c);
+                }
+                q.setChoices(choices);
             }
         }catch(JSONException e){
             System.out.println("failed to parse");
@@ -38,4 +51,8 @@ public class TestQuestionList {
     }
 
     private TestQuestionList(){}
+
+    public static List<Question> getQuestions() {
+        return questions;
+    }
 }
