@@ -50,7 +50,9 @@ apply plugin: 'io.spring.dependency-management'
 
 repositories {
     mavenCentral()
-}
+    maven {
+        url 'https://repo.spring.io/libs-milestone'
+    }}
 
 /*configurations {
     developmentOnly
@@ -67,6 +69,14 @@ dependencies {
     implementation 'com.google.android.gms:play-services-vision:17.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
+    implementation 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+
+
+
+
     // For some reason devTools gives an ArrayIndexOutOfBoundsException, excluded for now
     // developmentOnly("org.springframework.boot:spring-boot-devtools")
     //implementation 'org.springframework.boot:spring-boot-starter-web'
