@@ -28,7 +28,7 @@ public class TestQuestionList {
                 Long id = obj.getLong("id");
                 String question = obj.getString("question");
                 Question q = new Question(id,question,0);
-                questions.add(q);
+                
                 //add all the choices
                 List<Choice> choices = new ArrayList<>();
                 String choiceJson = allChoices.get(i);
@@ -41,6 +41,7 @@ public class TestQuestionList {
                     choices.add(c);
                 }
                 q.setChoices(choices);
+                questions.add(q);
             }
         }catch(JSONException e){
             System.out.println("failed to parse");
