@@ -1,6 +1,5 @@
 package com.spe.breadcrumbs.entity;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
