@@ -90,7 +90,7 @@ fastlane/readme.md
 *.iml
 *.ipr
 .idea/
-.idea/workspace.xml
+web/.idea/workspace.xml
 
 ### NetBeans ###
 /nbproject/private/

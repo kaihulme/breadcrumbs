@@ -123,6 +123,13 @@ a:focus {
     padding-right: 10vh;
 }
 
+#pageContent {
+    min-width: 100%;
+}
+
+hr.style1{
+	border-top: 1px solid #dbdbdb;
+}
 
 #search {
   width: 100%;
@@ -132,26 +139,27 @@ a:focus {
 }
 
 #users {
-  border-collapse: collapse;
-  width: 100%;
-  border: 1px solid #ddd;
-  font-size: 18px;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    font-size: 18px;
+    /*width: 110vh;
+    max-width: 110vh;*/
 }
 
 #users th,
 #users td {
-  text-align: left;
-  padding: 12px;
+    text-align: left;
+    padding: 12px;
 }
 #users th {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 #users tr {
-  border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 #users tr.header,
 #users tr:hover {
-  background-color: #f1f1f1;
+    background-color: #fff;
 }

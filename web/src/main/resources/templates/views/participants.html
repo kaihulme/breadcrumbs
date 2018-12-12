@@ -69,7 +69,7 @@
 		<div id="content">
 
 			<!-- Navigation Bar -->
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<nav class="navbar navbar-expand-lg" id="navbar">
 				<div class="container-fluid">
 
 					<!-- Navbar Left -->
@@ -97,30 +97,46 @@
 			<!-- /Navigation Bar -->
 
 			<!-- Page Content -->
+			<div id="pageContent">
 
-			<input type="search" id="search" placeholder="Search">
+				<br><hr class="style1"><br>
 
-			<!-- User Table -->
-			<table class="table table-striped table-hover" id="users">
-				<thread>
-					<tr>
-						<th style="width:10%;" onclick="sortTable(0)">User ID</th>
-						<th style="width:15%;" onclick="sortTable(1)">First Name</th>
-						<th style="width:65%;" onclick="sortTable(2)">Second Name</th>
-						<th style="width:10%;" onclick="sortTable(3)">Score</th>
-					</tr>
-				</thread>
-				<tbody class="rowlink" data-link="row">
-					<tr th:each="user : ${users}">
-						<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.id}">id</span></a></td>
-						<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.firstName}"> firstName</span></td>
-						<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.lastName}">lastName</span></td>
-						<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.score}">score</span></td>
-		  			</tr>
-				</tbody>
-	  		</table>
-			<!-- /User Table -->
+				<div class="row justify-content-md-center">
+					<div class="col-10">
+						<input type="search" id="search" placeholder="Search">
+					</div>
+				</div>
 
+				<div class="row justify-content-md-center">
+					<div class="col-10">
+
+						<!-- User Table -->
+						<table class="table table-striped table-hover" id="users">
+							<thread>
+								<tr>
+									<th style="width:10%;" onclick="sortTable(0)">User ID</th>
+									<th style="width:15%;" onclick="sortTable(1)">First Name</th>
+									<th style="width:65%;" onclick="sortTable(2)">Second Name</th>
+									<th style="width:10%;" onclick="sortTable(3)">Score</th>
+								</tr>
+							</thread>
+							<tbody class="rowlink" data-link="row">
+								<tr th:each="user : ${users}">
+									<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.id}">id</span></a></td>
+									<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.firstName}"> firstName</span></td>
+									<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.lastName}">lastName</span></td>
+									<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.score}">score</span></td>
+					            </tr>
+							</tbody>
+				        </table>
+						<!-- /User Table -->
+
+					</div>
+				</div>
+
+				<br><hr class="style1"><br>
+
+			</div>
 			<!-- /Page Content -->
 
 		</div>

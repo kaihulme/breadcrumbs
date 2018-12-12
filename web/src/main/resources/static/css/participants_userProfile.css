@@ -125,32 +125,47 @@ a:focus {
     padding-right: 10vh;
 }
 
-.jumbotron {
-  height : 20vh;
-  padding: 20px;
+#pageContent {
+    max-width: 100%;
+}
+
+#statsJumbo {
+    /*background: #d63558;
+    color: #fff;
+    width: 300px;
+    max-width: 300px;
+    height: 300px;
+    max-height: 300px;
+    top: 50%;
+    transform: translateY(-50%);*/
+}
+
+hr.style1{
+	border-top: 1px solid #dbdbdb;
 }
 
 #questions {
-  border-collapse: collapse;
-  width: 100%;
-  border: 1px solid #ddd;
-  font-size: 18px;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    font-size: 18px;
+    /*width: 110vh;
+    max-width: 110vh;*/
 }
 
 #questions th,
 #questions td {
-  text-align: left;
-  padding: 12px;
+    text-align: left;
+    padding: 12px;
 }
 #questions th {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 #questions tr {
-  border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 #questions tr.header,
 #questions tr:hover {
-  background-color: #f1f1f1;
+    background-color: #fff;
 }

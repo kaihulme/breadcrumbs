@@ -125,35 +125,36 @@ a:focus {
     padding-right: 10vh;
 }
 
-
-#search {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
+#pageContent {
+    max-width:100%;
 }
 
-#users {
-  border-collapse: collapse;
-  width: 100%;
-  border: 1px solid #ddd;
-  font-size: 18px;
+hr.style1{
+    border-top: 1px solid #dbdbdb;
 }
 
-#users th,
-#users td {
-  text-align: left;
-  padding: 12px;
-}
-#users th {
-  cursor: pointer;
-}
-
-#users tr {
-  border-bottom: 1px solid #ddd;
+#answers {
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    font-size: 18px;
+    /*width: 110vh;
+    max-width: 110vh;*/
 }
 
-#users tr.header,
-#users tr:hover {
-  background-color: #f1f1f1;
+#answers th,
+#answers td {
+    text-align: left;
+    padding: 12px;
+}
+#answers th {
+    cursor: pointer;
+}
+
+#answers tr {
+    border-bottom: 1px solid #ddd;
+}
+
+#answers tr.header,
+#answers tr:hover {
+    background-color: #fff;
 }
