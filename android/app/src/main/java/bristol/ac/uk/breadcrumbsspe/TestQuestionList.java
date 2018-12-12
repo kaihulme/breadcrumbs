@@ -1,7 +1,5 @@
 package bristol.ac.uk.breadcrumbsspe;
 
-import com.google.android.gms.vision.L;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
