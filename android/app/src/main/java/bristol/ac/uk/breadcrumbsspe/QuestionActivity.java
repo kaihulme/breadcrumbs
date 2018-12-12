@@ -25,7 +25,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int a = 0;
+        int a = 1;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         answer(a);
@@ -45,7 +45,7 @@ public class QuestionActivity extends AppCompatActivity {
                     if(buttons.indexOf(b) == rightAnswer) {
                         b.setBackgroundColor(rgb(0, 191, 0));
                         //wait
-                        //startActivity(new Intent(QuestionActivity.this, HomeActivity.class));
+                        startActivity(new Intent(QuestionActivity.this, HomeActivity.class));
                     }
                     else
                         b.setBackgroundColor(rgb(191, 0, 0));

@@ -15,8 +15,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1da5f2b5-2dfd-4839-81d8-b17db5900520" name="Default" comment="Added json strings for parsing with choices for the question">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/bristol/ac/uk/breadcrumbsspe/TestQuestionList.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/bristol/ac/uk/breadcrumbsspe/TestQuestionList.java" afterDir="false" />
+    <list default="true" id="1f68fbc1-843c-4de7-8d94-1a3b5b266279" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/bristol/ac/uk/breadcrumbsspe/QuestionActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/bristol/ac/uk/breadcrumbsspe/QuestionActivity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -79,17 +79,8 @@
       <file leaf-file-name="app.iml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/app.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/bristol/ac/uk/breadcrumbsspe/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+            <state relative-caret-position="356">
+              <caret line="47" column="24" lean-forward="true" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -2774,7 +2765,8 @@
         <option value="$PROJECT_DIR$/app/app.iml" />
         <option value="$PROJECT_DIR$/app/src/main/java/bristol/ac/uk/breadcrumbsspe/QuestionActivity.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/bristol/ac/uk/breadcrumbsspe/TestQuestionList.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_hint.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/bristol/ac/uk/breadcrumbsspe/QuestionActivity.java" />
       </list>
     </option>
   </component>
@@ -2842,8 +2834,22 @@
         <subPane>
           <expand>
             <path>
-              <item name="android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
+              <item name="android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="breadcrumbsspe" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -3624,8 +3630,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/bristol/ac/uk/breadcrumbsspe/TestQuestionList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="31" column="37" lean-forward="true" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
+        <state relative-caret-position="356">
+          <caret line="47" column="24" lean-forward="true" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
