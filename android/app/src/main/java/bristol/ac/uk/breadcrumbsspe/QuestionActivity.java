@@ -8,26 +8,31 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import bristol.ac.uk.breadcrumbsspe.entity.Question;
+import static android.graphics.Color.rgb;
 
+
+@SpringBootApplication
 public class QuestionActivity extends AppCompatActivity {
 
     private int numberOfAnswers = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        int a = 0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-        answer();
+        answer(a);
     }
 
-    private void answer(){
+    @RequestMapping("/answerQuestion")
+    private void answer(@RequestParam("answer") int rightAnswer){
         List<Button> buttons = new ArrayList<>();
         buttons.add((Button)findViewById(R.id.button_answer1));
         buttons.add((Button)findViewById(R.id.button_answer2));
@@ -37,8 +42,12 @@ public class QuestionActivity extends AppCompatActivity {
             b.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-
-                    startActivity(new Intent(QuestionActivity.this, HomeActivity.class));
+                    if(buttons.indexOf(b) == rightAnswer) {
+                        b.setBackgroundColor(rgb(0, 191, 0));
+                    }
+                    else
+                        b.setBackgroundColor(rgb(191, 0, 0));
+                    //startActivity(new Intent(QuestionActivity.this, HomeActivity.class));
                 }
             });
         }
