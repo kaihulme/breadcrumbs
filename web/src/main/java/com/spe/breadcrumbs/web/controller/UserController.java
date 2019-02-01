@@ -45,10 +45,8 @@ public class UserController {
         quiz.setQuestions(questionDAO.getAllQuestions());
         u.setQuiz(quiz);
         Question q = u.getQuiz().findQuestion(questionId);
-        Choice c1 = new Choice(q,"deer",false);
-        Choice c2 = new Choice(q,"kidney",true);
-        Choice c3 = new Choice(q,"hat",false);
-        q.setAttempts(Arrays.asList(c1,c2,c3));
+        List<Choice> choices = questionDAO.getChoices(q);
+        q.setAttempts(choices);
         m.addAttribute("question",q);
         return "views/participants_userProfile_question";
     }

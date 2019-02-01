@@ -1,5 +1,6 @@
 package com.spe.breadcrumbs.dao;
 
+import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Question;
 
 import java.util.ArrayList;
@@ -30,4 +31,11 @@ public class QuestionListDAO implements QuestionDAO {
         }
         return null;
     }
+
+    @Override
+    public List<Choice> getChoices(Question q) {
+        return null;
+    }
+
+
 }

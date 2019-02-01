@@ -1,5 +1,6 @@
 package com.spe.breadcrumbs.dao;
 
+import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Question;
 
 import java.sql.Connection;
@@ -41,5 +42,24 @@ public class QuestionDbDAO implements QuestionDAO {
     @Override
     public Question findById(Long id) {
         return null;
+    }
+
+    @Override
+    public List<Choice> getChoices(Question q) {
+        List<Choice> choices = new ArrayList<>();
+        Connection con = getConnection();
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Choices");
+            while(rs.next()){
+                if(rs.getLong("question") == q.getId()){
+                    Choice c = new Choice(q,rs.getString("choiceText"),rs.getBoolean("answer"));
+                    choices.add(c);
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return choices;
     }
 }

@@ -1,5 +1,6 @@
 package com.spe.breadcrumbs.dao;
 
+import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Question;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface QuestionDAO {
 
     //finds a question by its id
     Question findById(Long id);
+
+    List<Choice> getChoices(Question q);
 }

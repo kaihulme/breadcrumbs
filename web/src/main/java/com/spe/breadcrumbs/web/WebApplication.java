@@ -23,7 +23,6 @@ public class WebApplication {
 		//Set Properties
 		myProps.setProperty("server.address", host.orElse("localhost"));
 		myProps.setProperty("server.port", port.orElse("8080"));
-		System.out.format("server address %s  port %s",host,port);
 
 		SpringApplication app = new SpringApplication(WebApplication.class);
 		app.setDefaultProperties(myProps);

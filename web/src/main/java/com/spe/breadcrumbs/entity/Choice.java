@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity @Table(name = "Choice")
 public class Choice {
 
-   @Getter
+   @Getter @Setter
    private Question question;
    @Column(name = "choiceText") @Getter @Setter
    private String choiceText;
