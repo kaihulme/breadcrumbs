@@ -6,12 +6,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Choice {
 
-   private Question question;
+   private Long questionId;
    private String choiceText;
    private boolean answer;
 
-   public Choice(Question question,String choiceText,boolean answer){
-      this.question = question;
+   public Choice(Long questionId,String choiceText,boolean answer){
+      this.questionId = questionId;
       this.choiceText = choiceText;
       this.answer = answer;
    }

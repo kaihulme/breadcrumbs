@@ -33,4 +33,8 @@ public class Question {
     public void setChoices(List<Choice> choices) {
         this.choices = choices;
     }
+
+    public List<Choice> getChoices() {
+        return choices;
+    }
 }
