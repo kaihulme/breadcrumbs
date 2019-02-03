@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 
-public class UserAPI {
+public class RestAPI {
     private UserDAO userDAO = new UserDbDAO();
     private QuestionDAO questionDAO = new QuestionDbDAO();
 
@@ -34,6 +34,11 @@ public class UserAPI {
         quiz.setQuestions(questions);
         if(match != null) match.setQuiz(quiz);
         return match;
+    }
+
+    @RequestMapping(method = RequestMethod.GET,value = "questions")
+    public List<Question> getQuestions(){
+        return  questionDAO.getAllQuestions();
     }
 
 
