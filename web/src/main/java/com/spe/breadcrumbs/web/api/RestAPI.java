@@ -5,6 +5,7 @@ import com.spe.breadcrumbs.dao.QuestionDAO;
 import com.spe.breadcrumbs.dao.QuestionDbDAO;
 import com.spe.breadcrumbs.dao.UserDAO;
 import com.spe.breadcrumbs.dao.UserDbDAO;
+import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.entity.Quiz;
 import com.spe.breadcrumbs.entity.User;
@@ -39,6 +40,11 @@ public class RestAPI {
     @RequestMapping(method = RequestMethod.GET,value = "questions")
     public List<Question> getQuestions(){
         return  questionDAO.getAllQuestions();
+    }
+
+    @RequestMapping(method = RequestMethod.GET,value = "questions/{id}")
+    public List<Choice> getChoices(@PathVariable Long id){
+        return questionDAO.getChoices(id);
     }
 
 

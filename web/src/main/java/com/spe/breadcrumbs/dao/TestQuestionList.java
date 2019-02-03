@@ -17,9 +17,9 @@ public class TestQuestionList {
         testQuestions.add(q2);
         testQuestions.add(q3);
         for(Question q: testQuestions){
-            Choice c1 = new Choice(q,"deer",false);
-            Choice c2 = new Choice(q,"kidney",true);
-            Choice c3 = new Choice(q,"hat",false);
+            Choice c1 = new Choice(q.getId(),"deer",false);
+            Choice c2 = new Choice(q.getId(),"kidney",true);
+            Choice c3 = new Choice(q.getId(),"hat",false);
             q.setAttempts(Arrays.asList(c1,c2,c3));
         }
     }

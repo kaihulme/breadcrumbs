@@ -15,5 +15,5 @@ public interface QuestionDAO {
     //finds a question by its id
     Question findById(Long id);
 
-    List<Choice> getChoices(Question q);
+    List<Choice> getChoices(Long questionId);
 }

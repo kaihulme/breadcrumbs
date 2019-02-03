@@ -11,17 +11,16 @@ import javax.persistence.Table;
 public class Choice {
 
    @Getter @Setter
-   private Question question;
+   private Long questionId;
    @Column(name = "choiceText") @Getter @Setter
    private String choiceText;
    @Column(name = "answer") @Getter @Setter
    private boolean answer;
 
-   public Choice(Question question,String choiceText,boolean answer){
-      this.question = question;
+   public Choice(Long questionId,String choiceText,boolean answer){
+      this.questionId = questionId;
       this.choiceText = choiceText;
       this.answer = answer;
    }
-
 
 }

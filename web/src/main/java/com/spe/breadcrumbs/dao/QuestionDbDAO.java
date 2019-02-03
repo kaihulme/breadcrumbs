@@ -45,15 +45,15 @@ public class QuestionDbDAO implements QuestionDAO {
     }
 
     @Override
-    public List<Choice> getChoices(Question q) {
+    public List<Choice> getChoices(Long questionId) {
         List<Choice> choices = new ArrayList<>();
         Connection con = getConnection();
         try{
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Choices");
             while(rs.next()){
-                if(rs.getLong("question") == q.getId()){
-                    Choice c = new Choice(q,rs.getString("choiceText"),rs.getBoolean("answer"));
+                if(rs.getLong("question") == questionId){
+                    Choice c = new Choice(questionId,rs.getString("choiceText"),rs.getBoolean("answer"));
                     choices.add(c);
                 }
             }

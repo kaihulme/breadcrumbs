@@ -33,7 +33,7 @@ public class QuestionListDAO implements QuestionDAO {
     }
 
     @Override
-    public List<Choice> getChoices(Question q) {
+    public List<Choice> getChoices(Long i) {
         return null;
     }
 
