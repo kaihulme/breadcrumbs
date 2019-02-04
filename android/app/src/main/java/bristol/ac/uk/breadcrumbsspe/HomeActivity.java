@@ -11,6 +11,9 @@ import android.widget.Button;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Random;
+
+import bristol.ac.uk.breadcrumbsspe.api.FetchQuestions;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
 import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
 
@@ -27,7 +30,15 @@ public class HomeActivity extends AppCompatActivity {
         scanButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                startActivity(new Intent(HomeActivity.this, QuestionActivity.class));
+                FetchQuestions process = new FetchQuestions();
+                process.execute();
+                //get a random question index
+               // int index = new Random().nextInt(4);
+                Intent prevQuestion = getIntent();
+                int index = (prevQuestion.getIntExtra("PREV_QUESTION",-1) + 1) % 4;
+                Intent answerQuestion = new Intent(HomeActivity.this, QuestionActivity.class);
+                answerQuestion.putExtra("CURRENT_QUESTION",index);
+                startActivity(answerQuestion);
             }
         });
     }
