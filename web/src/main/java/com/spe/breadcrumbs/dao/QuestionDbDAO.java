@@ -2,11 +2,9 @@ package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Question;
+import com.spe.breadcrumbs.entity.User;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +29,11 @@ public class QuestionDbDAO implements QuestionDAO {
         }catch(SQLException e) {
             e.printStackTrace();
         }
+        //add choices
+        for(Question q: questions){
+            List<Choice> c = getChoices(q.getId());
+            q.setChoices(c);
+        }
         return questions;
     }
 
@@ -41,7 +44,22 @@ public class QuestionDbDAO implements QuestionDAO {
 
     @Override
     public Question findById(Long id) {
-        return null;
+        Question q = null;
+        Connection con = getConnection();
+        try{
+            String getQuestion = "SELECT * FROM Question WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(getQuestion);
+            stmt.setInt(1,Math.toIntExact(id));
+            ResultSet rs = stmt.executeQuery();
+            rs.next(); //move it to the first row
+            q = new Question(rs.getLong("id"),rs.getString("question"),0);
+            con.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        List<Choice> choices = getChoices(q.getId());
+        q.setChoices(choices);
+        return q;
     }
 
     @Override

@@ -43,8 +43,8 @@ public class RestAPI {
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "questions/{id}")
-    public List<Choice> getChoices(@PathVariable Long id){
-        return questionDAO.getChoices(id);
+    public Question getQuestion(@PathVariable Long id){
+        return questionDAO.findById(id);
     }
 
 

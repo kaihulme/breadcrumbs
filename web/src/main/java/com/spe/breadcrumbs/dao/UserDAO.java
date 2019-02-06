@@ -12,4 +12,5 @@ public interface UserDAO {
     boolean delete(Long id);
     //gets all users whose first or last name contain s
     List<User> search(String s);
+
 }
