@@ -1,0 +1,10 @@
+version: 2
+jobs:
+    build:
+        docker:
+            - image: circleci/openjdk:8
+    steps:
+        - checkout
+        - run:
+            name: run code
+            command: mvn clean package

@@ -1,14 +1,8 @@
 package com.spe.breadcrumbs.web.api;
 
 
-import com.spe.breadcrumbs.dao.QuestionDAO;
-import com.spe.breadcrumbs.dao.QuestionDbDAO;
-import com.spe.breadcrumbs.dao.UserDAO;
-import com.spe.breadcrumbs.dao.UserDbDAO;
-import com.spe.breadcrumbs.entity.Choice;
-import com.spe.breadcrumbs.entity.Question;
-import com.spe.breadcrumbs.entity.Quiz;
-import com.spe.breadcrumbs.entity.User;
+import com.spe.breadcrumbs.dao.*;
+import com.spe.breadcrumbs.entity.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +14,7 @@ import java.util.List;
 public class RestAPI {
     private UserDAO userDAO = new UserDbDAO();
     private QuestionDAO questionDAO = new QuestionDbDAO();
+    private ExpertDAO expertDAO = new ExpertDbDAO();
 
     @RequestMapping(method = RequestMethod.GET,value = "users")
     public List<User> getUsers(){
@@ -37,14 +32,23 @@ public class RestAPI {
         return match;
     }
 
+    @RequestMapping(method = RequestMethod.POST,value = "users")
+    public void addUser(User u){
+        userDAO.add(u);
+    }
+    @RequestMapping(method = RequestMethod.GET,value = "experts/{id}")
+    public Expert getExpert(@PathVariable Long id){
+        return expertDAO.getExpert(id);
+    }
+
     @RequestMapping(method = RequestMethod.GET,value = "questions")
     public List<Question> getQuestions(){
         return  questionDAO.getAllQuestions();
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "questions/{id}")
-    public List<Choice> getChoices(@PathVariable Long id){
-        return questionDAO.getChoices(id);
+    public Question getQuestion(@PathVariable Long id){
+        return questionDAO.findById(id);
     }
 
 
