@@ -1,14 +1,16 @@
 package com.spe.breadcrumbs.entity;
 
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
-@Entity
+@Entity @Getter
 public class Expert {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @Id
+    private Long id;
 
     @Column(name = "firstName")
     private String firstName;
@@ -20,7 +22,8 @@ public class Expert {
     private String password;
     private List<Quiz> quizzes = new ArrayList<>();
 
-    public Expert(String firstName,String lastName,String email, String password) {
+    public Expert(Long id,String firstName,String lastName,String email, String password) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email; //can use regex to pattern match
