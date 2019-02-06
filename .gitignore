@@ -142,3 +142,5 @@ web/.flattened-pom.xml
 web/secrets.yml
 web/.gradletasknamecache
 web/.sts4-cache
+
+android/\.idea/
