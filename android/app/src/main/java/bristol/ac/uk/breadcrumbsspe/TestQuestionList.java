@@ -21,34 +21,6 @@ public class TestQuestionList {
     private static String choices3 = "[{\"questionId\":3,\"choiceText\":\"Cortisol\",\"answer\":false},{\"questionId\":3,\"choiceText\":\"Thyroid hormone\",\"answer\":false},{\"questionId\":3,\"choiceText\":\"Parathormone\",\"answer\":false},{\"questionId\":3,\"choiceText\":\"Oxytocin\",\"answer\":true}]";
     private static String choices4 =  "[{\"questionId\":4,\"choiceText\":\"Obesity\",\"answer\":false},{\"questionId\":4,\"choiceText\":\"A buffalo hump\",\"answer\":false},{\"questionId\":4,\"choiceText\":\"Moon facies\",\"answer\":false},{\"questionId\":4,\"choiceText\":\"Bronze or hyperpigmented skin\",\"answer\":true}]";
     private static List<String> allChoices = Arrays.asList(choices1,choices2,choices3,choices4);
-//    static{
-//        try{
-//            JSONArray jsonArray = new JSONArray(jsonString);
-//            for(int i = 0;i< jsonArray.length();i++){
-//                JSONObject obj = jsonArray.getJSONObject(i);
-//                Long id = obj.getLong("id");
-//                String question = obj.getString("question");
-//                Question q = new Question(id,question,0);
-//
-//                //add all the choices
-//                List<Choice> choices = new ArrayList<>();
-//                String choiceJson = allChoices.get(i);
-//                JSONArray choiceArr = new JSONArray(choiceJson);
-//                for(int j = 0; j < choiceArr.length();j++){
-//                    JSONObject obj2 = choiceArr.getJSONObject(j);
-//                    String choiceText = obj2.getString("choiceText");
-//                    boolean answer = obj2.getBoolean("answer");
-//                    Choice c = new Choice(q.getId(),choiceText,answer);
-//                    choices.add(c);
-//                }
-//                q.setChoices(choices);
-//                questions.add(q);
-//            }
-//        }catch(JSONException e){
-//            System.out.println("failed to parse");
-//            e.printStackTrace();
-//        }
-//    }
     private static void parseJson(){
         try{
             JSONArray jsonArray = new JSONArray(jsonString);
