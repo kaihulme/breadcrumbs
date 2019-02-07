@@ -12,7 +12,7 @@ public interface QuestionDAO {
     //given the String q returns all questions which have part of that text
     List<Question> find(String t);
 
-    //finds a question by its id
+    //finds a question by its id. return null if not found
     Question findById(Long id);
 
     List<Choice> getChoices(Long questionId);

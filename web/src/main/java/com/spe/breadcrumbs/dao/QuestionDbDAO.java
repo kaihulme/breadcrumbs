@@ -11,12 +11,10 @@ import java.util.List;
 import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 
 public class QuestionDbDAO implements QuestionDAO {
-    private List<Question> questions = new ArrayList<>();
-    private List<Question> questionCache = new ArrayList<>();
 
     @Override
     public List<Question> getAllQuestions() {
-        if (!questionCache.isEmpty()) return questionCache;
+        List<Question> questions = new ArrayList<>();
         Connection con = getConnection();
         try{
             Statement stmt = con.createStatement();
@@ -24,7 +22,6 @@ public class QuestionDbDAO implements QuestionDAO {
             while (rs.next()){
                 Question q = new Question(rs.getLong("id"),rs.getString("question"),0);
                 questions.add(q);
-                questionCache.add(q);
             }
         }catch(SQLException e) {
             e.printStackTrace();
@@ -51,14 +48,16 @@ public class QuestionDbDAO implements QuestionDAO {
             PreparedStatement stmt = con.prepareStatement(getQuestion);
             stmt.setInt(1,Math.toIntExact(id));
             ResultSet rs = stmt.executeQuery();
-            rs.next(); //move it to the first row
-            q = new Question(rs.getLong("id"),rs.getString("question"),0);
-            con.close();
+            if(rs.next()){
+                //move it to the first row
+                q = new Question(rs.getLong("id"),rs.getString("question"),0);
+                con.close();
+                List<Choice> choices = getChoices(q.getId());
+                q.setChoices(choices);
+            }
         }catch(SQLException e){
             e.printStackTrace();
         }
-        List<Choice> choices = getChoices(q.getId());
-        q.setChoices(choices);
         return q;
     }
 

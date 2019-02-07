@@ -18,9 +18,10 @@ public class RestAPI {
     private QuestionDAO questionDAO = new QuestionDbDAO();
     private ExpertDAO expertDAO = new ExpertDbDAO();
 
+    //Users
     @RequestMapping(method = RequestMethod.GET,value = "users")
-    public List<User> getUsers(){
-        return  userDAO.getAllUsers();
+    public ResponseEntity getUsers(){
+        return  new ResponseEntity<>(userDAO.getAllUsers(),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "users/{id}")
@@ -52,6 +53,7 @@ public class RestAPI {
         }
         return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
+    //Experts
     @RequestMapping(method = RequestMethod.GET,value = "experts/{id}")
     public ResponseEntity getExpert(@PathVariable Long id){
         Expert e = expertDAO.getExpert(id);
@@ -61,14 +63,20 @@ public class RestAPI {
         return new ResponseEntity(null,HttpStatus.NOT_FOUND);
     }
 
+    //Questions
     @RequestMapping(method = RequestMethod.GET,value = "questions")
-    public List<Question> getQuestions(){
-        return  questionDAO.getAllQuestions();
+    public ResponseEntity getQuestions(){
+            return new ResponseEntity<>(questionDAO.getAllQuestions(),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "questions/{id}")
-    public Question getQuestion(@PathVariable Long id){
-        return questionDAO.findById(id);
+    public ResponseEntity getQuestion(@PathVariable Long id) {
+        Question q = questionDAO.findById(id);
+        if(q != null){
+            return new ResponseEntity<>(q,HttpStatus.OK);
+        }else{
+            return new ResponseEntity(null,HttpStatus.NOT_FOUND);
+        }
     }
 
 
