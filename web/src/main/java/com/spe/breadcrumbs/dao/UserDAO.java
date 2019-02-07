@@ -7,9 +7,9 @@ public interface UserDAO {
     List<User> getAllUsers();
     User getUser(Long id);
     User getByEmail(String email);
-    boolean add(User u);
+    boolean addUser(User u);
     boolean update(Long id,User u);
-    boolean delete(Long id);
+    boolean deleteUser(Long id);
     //gets all users whose first or last name contain s
     List<User> search(String s);
 }

@@ -19,11 +19,13 @@ public class ExpertDbDAO implements ExpertDAO {
             PreparedStatement stmt = con.prepareStatement(getExpert);
             stmt.setInt(1,Math.toIntExact(id));
             ResultSet rs = stmt.executeQuery();
-            rs.next(); //move it to the first row
-            Expert e = new Expert(rs.getLong("id"),rs.getString("firstName"),rs.getString("lastName"),rs.getString("email")
-                                  ,rs.getString("password"));
-        con.close();
-            return e;
+            if(rs.next()) {
+                //move it to the first row
+                Expert e = new Expert(rs.getLong("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("email")
+                        , rs.getString("password"));
+                con.close();
+                return e;
+            }
         }catch(SQLException e){
             e.printStackTrace();
         }

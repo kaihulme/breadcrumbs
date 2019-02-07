@@ -12,15 +12,10 @@ import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 
 public class UserDbDAO implements UserDAO {
 
-    @Autowired
-    private UserRepository userRepo;
-
-    private List<User> users = new ArrayList<>();
-    private List<User> userCache = new ArrayList<>();
-
     @Override
     public List<User> getAllUsers(){
-        if(!userCache.isEmpty()) return userCache;
+      //  if(!userCache.isEmpty()) return userCache;
+        List<User> users = new ArrayList<>();
         Connection con = getConnection();
         try{
             Statement stmt = con.createStatement();
@@ -28,7 +23,6 @@ public class UserDbDAO implements UserDAO {
             while (rs.next()){
                 User u = new User(rs.getLong("id"),rs.getString("firstName"),rs.getString("lastName"),rs.getString("email"));
                 users.add(u);
-                userCache.add(u);
             }
             con.close();
         }catch (SQLException e){
@@ -46,10 +40,11 @@ public class UserDbDAO implements UserDAO {
             PreparedStatement stmt = con.prepareStatement(getUser);
             stmt.setInt(1,Math.toIntExact(id));
             ResultSet rs = stmt.executeQuery();
-            rs.next(); //move it to the first row
-            u = new User(rs.getLong("id"),rs.getString("firstName"),rs.getString("lastName"),rs.getString("email"));
-            con.close();
-            return u;
+           if(rs.next()) { //move it to the first row
+               u = new User(rs.getLong("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"));
+               con.close();
+               return u;
+           }
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -58,16 +53,24 @@ public class UserDbDAO implements UserDAO {
 
     @Override
     public User getByEmail(String email) {
-        return userRepo.findByEmail(email);
+        return null;
     }
 
     @Override
-    public boolean add(User user) {
-        for(User u: userRepo.findAll()){
-            if(u.equals(user)) return false;
+    public boolean addUser(User u) {
+        try{
+            Connection con = getConnection();
+            String addUser = "INSERT INTO User(firstName,lastName,email) VALUES(?,?,?)";
+            PreparedStatement stmt = con.prepareStatement(addUser);
+            stmt.setString(1,u.getFirstName());
+            stmt.setString(2,u.getLastName());
+            stmt.setString(3,u.getEmail());
+            stmt.executeUpdate();
+            return true;
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
         }
-        userRepo.addUser(user.getFirstName(),user.getLastName(),user.getEmail());
-        return true;
     }
 
     @Override
@@ -76,12 +79,18 @@ public class UserDbDAO implements UserDAO {
     }
 
     @Override
-    public boolean delete(Long id) {
-        if(userRepo.findOne(id) != null){
-            userRepo.delete(userRepo.findOne(id));
+    public boolean deleteUser(Long id) {
+        try{
+            Connection con = getConnection();
+            String deleteUser = "DELETE FROM User Where id = ?";
+            PreparedStatement stmt = con.prepareStatement(deleteUser);
+            stmt.setLong(1,id);
+            stmt.executeUpdate();
             return true;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override
