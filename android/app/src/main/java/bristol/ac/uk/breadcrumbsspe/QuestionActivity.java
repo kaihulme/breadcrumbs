@@ -67,21 +67,6 @@ public class QuestionActivity extends AppCompatActivity {
 //            if (c.isAnswer()) a = i;
 //        }
        // rightAnswer = a;
-        for (Button b : buttons) {
-            b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (buttons.indexOf(b) == rightAnswer) {
-                        b.setBackgroundColor(rgb(0, 191, 0));
-                        //wait
-                        Intent nextQ = new Intent(QuestionActivity.this, HomeActivity.class);
-                        nextQ.putExtra("PREV_QUESTION",q);
-                        startActivity(nextQ);
-                    } else
-                        b.setBackgroundColor(rgb(191, 0, 0));
-                }
-            });
-        }
     }
 
     //given the string parses it and returns qIndex list of questions
