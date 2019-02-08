@@ -21,14 +21,11 @@ public class HomeActivity extends AppCompatActivity {
         scanButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-             //   new FetchQuestions().execute();
                 Intent prevQuestion = getIntent();
                 int index = (prevQuestion.getIntExtra("PREV_QUESTION",-1) + 1) % 4;
                 Intent answerQuestion = new Intent(HomeActivity.this, QuestionActivity.class);
                 answerQuestion.putExtra("CURRENT_QUESTION",index);
                 startActivity(answerQuestion);
-//                Intent test = new Intent(HomeActivity.this,TestActivity.class);
-//                startActivity(test);
             }
         });
     }

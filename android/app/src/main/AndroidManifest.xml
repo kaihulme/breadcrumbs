@@ -32,7 +32,6 @@
         <activity
             android:name=".qrcode.QRCodeCaptureActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".TestActivity"></activity>
     </application>
 
 </manifest>

@@ -53,50 +53,6 @@ public class QuestionActivity extends AppCompatActivity {
         buttons.add((Button)findViewById(R.id.button_answer2));
         buttons.add((Button)findViewById(R.id.button_answer3));
         buttons.add((Button)findViewById(R.id.button_answer4));
-//        List<Question> questions = parseJson(questionsJSON);
-//        Question testQuestion = questions.get(q);
-//        String questionText = testQuestion.getQuestion();
-       // question_textview.setText(questionText);
-        //set choices for question
-        final int rightAnswer;
-        rightAnswer = answer;
-        //int a = -1;
-//        for (int i = 0; i < 4; i++) {
-//            Choice c = testQuestion.getChoices().get(i);
-//            buttons.get(i).setText(c.getChoiceText());
-//            if (c.isAnswer()) a = i;
-//        }
-       // rightAnswer = a;
-    }
-
-    //given the string parses it and returns qIndex list of questions
-    public static List<Question> parseJson(String s){
-        List<Question> questions = new ArrayList<>();
-        try {
-            JSONArray questionArray = new JSONArray(s);
-            for(int i = 0; i < questionArray.length(); i++){
-                JSONObject obj = questionArray.getJSONObject(i);
-                Long id = obj.getLong("id");
-                String question = obj.getString("question");
-                Question q = new Question(id,question,0);
-                //add choices
-                List<Choice> choices = new ArrayList<>();
-                JSONArray choicesArray = obj.getJSONArray("choices");
-                for(int j = 0;  j < choicesArray.length(); j++){
-                    JSONObject obj2 = choicesArray.getJSONObject(j);
-                    String choiceText = obj2.getString("choiceText");
-                    boolean answer = obj2.getBoolean("answer");
-                    Choice c = new Choice(q.getId(),choiceText,answer);
-                    choices.add(c);
-                }
-                q.setChoices(choices);
-                questions.add(q);
-            }
-            return questions;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return questions;
     }
 
 }

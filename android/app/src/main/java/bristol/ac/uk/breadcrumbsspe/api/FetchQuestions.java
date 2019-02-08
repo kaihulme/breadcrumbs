@@ -19,7 +19,7 @@ import bristol.ac.uk.breadcrumbsspe.entity.Choice;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
 
 import static android.graphics.Color.rgb;
-import static bristol.ac.uk.breadcrumbsspe.QuestionActivity.parseJson;
+import static bristol.ac.uk.breadcrumbsspe.json.JSONHandler.parseQuestions;
 
 public class FetchQuestions extends AsyncTask<Void,Void,Void> {
 
@@ -50,7 +50,7 @@ public class FetchQuestions extends AsyncTask<Void,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
        questionActivity.questionsJSON = data;
-        List<Question> questions = parseJson(data);
+        List<Question> questions = parseQuestions(data);
         Question q = questions.get(questionActivity.qIndex);
        questionActivity.question_textview.setText(q.getQuestion());
 
