@@ -17,7 +17,7 @@ import bristol.ac.uk.breadcrumbsspe.TestQuestionList;
 
 import static bristol.ac.uk.breadcrumbsspe.TestActivity.setTestString;
 
-public class FetchQuestions extends AsyncTask<Void,Void,Void> {
+public class FetchQuestionsAsync extends AsyncTask<Void,Void,Void> {
 
     String data = "";
     @Override
@@ -42,7 +42,7 @@ public class FetchQuestions extends AsyncTask<Void,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         //TestQuestionList.setJsonString(data);
-        QuestionActivity.questionsJSON = data;
+        //QuestionActivity.questionsJSON = data;
         TestActivity.question_textView.setText(data);
     }
 }
