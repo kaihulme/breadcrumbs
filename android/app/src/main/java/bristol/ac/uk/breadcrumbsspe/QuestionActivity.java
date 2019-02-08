@@ -30,7 +30,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     //answer question with this index in question list
     private void answer(int q){
-        new FetchQuestions(this).execute();
+        new FetchQuestions().start(this);
         buttons.add((Button)findViewById(R.id.button_answer1));
         buttons.add((Button)findViewById(R.id.button_answer2));
         buttons.add((Button)findViewById(R.id.button_answer3));
