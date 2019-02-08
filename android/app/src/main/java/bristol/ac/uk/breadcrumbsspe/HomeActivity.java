@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import bristol.ac.uk.breadcrumbsspe.api.FetchQuestions;
-
 public class HomeActivity extends AppCompatActivity {
 
     @Override

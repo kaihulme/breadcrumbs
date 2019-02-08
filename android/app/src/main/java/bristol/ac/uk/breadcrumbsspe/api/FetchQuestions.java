@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
@@ -22,12 +23,11 @@ import static android.graphics.Color.rgb;
 import static bristol.ac.uk.breadcrumbsspe.json.JSONHandler.parseQuestions;
 
 public class FetchQuestions extends AsyncTask<Void,Void,Void> {
-
-    private QuestionActivity questionActivity;
-    public FetchQuestions(QuestionActivity questionActivity){
-        this.questionActivity = questionActivity;
+    private WeakReference<QuestionActivity> questionActivityRef;
+    public FetchQuestions(QuestionActivity questionActivityRef){
+        this.questionActivityRef = new WeakReference<>(questionActivityRef);
     }
-    String data = "";
+    private StringBuilder dataBuilder = new StringBuilder();
     @Override
     protected Void doInBackground(Void... voids) {
         try{
@@ -38,7 +38,7 @@ public class FetchQuestions extends AsyncTask<Void,Void,Void> {
             String line = "";
             while(line != null){
                 line = bufferedReader.readLine();
-                data = data + line;
+                dataBuilder.append(line);
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -49,28 +49,25 @@ public class FetchQuestions extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-       questionActivity.questionsJSON = data;
-        List<Question> questions = parseQuestions(data);
-        Question q = questions.get(questionActivity.qIndex);
-       questionActivity.question_textview.setText(q.getQuestion());
-
-
+        List<Question> questions = parseQuestions(dataBuilder.toString());
+        Question q = questions.get(questionActivityRef.get().qIndex);
+        questionActivityRef.get().question_textview.setText(q.getQuestion());
         for (int i = 0; i < 4; i++) {
             Choice c = q.getChoices().get(i);
-            questionActivity.buttons.get(i).setText(c.getChoiceText());
-            if(c.isAnswer()) questionActivity.answer = i;
+            questionActivityRef.get().buttons.get(i).setText(c.getChoiceText());
+            if(c.isAnswer()) questionActivityRef.get().answer = i;
         }
 
-        for (Button b : questionActivity.buttons) {
+        for (Button b : questionActivityRef.get().buttons) {
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (questionActivity.buttons.indexOf(b) == questionActivity.answer) {
+                    if (questionActivityRef.get().buttons.indexOf(b) == questionActivityRef.get().answer) {
                         b.setBackgroundColor(rgb(0, 191, 0));
                         //wait
-                        Intent nextQ = new Intent(questionActivity, HomeActivity.class);
-                        nextQ.putExtra("PREV_QUESTION",questionActivity.qIndex);
-                        questionActivity.startActivity(nextQ);
+                        Intent nextQ = new Intent(questionActivityRef.get(), HomeActivity.class);
+                        nextQ.putExtra("PREV_QUESTION", questionActivityRef.get().qIndex);
+                        questionActivityRef.get().startActivity(nextQ);
                     } else
                         b.setBackgroundColor(rgb(191, 0, 0));
                 }
