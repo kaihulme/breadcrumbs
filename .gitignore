@@ -144,3 +144,5 @@ web/.gradletasknamecache
 web/.sts4-cache
 
 android/\.idea/
+
+*.iml
