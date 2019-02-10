@@ -19,17 +19,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 
 public class WebApplicationTests {
-	@Mock
-	private UserDAO userDAO;
-
-	@Autowired
-	private MockMvc mvc;
 	//TODO add tests
 	@Test
 	public void contextLoads() {
 	}
 
 	public void testUsersNotNull(){
+	}
+
+	public void testGetUserId(){
+
+	}
+
+	public void testGetUserIdThrowsException(){
+
+	}
+
+	public void testAddUser(){
+
+	}
+
+	public void testAddUserDuplicateEmail(){
+
+	}
+
+	public void testAddUserDuplicateCode(){
+
+	}
+
+	public void testDeleteUser(){
+
+	}
+
+	public void testDeleteUserThrowsException(){
+
 	}
 
 }
