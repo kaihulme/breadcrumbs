@@ -75,7 +75,7 @@ public class QuizDbDAO implements QuizDAO{
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
                 User u = new User(rs.getLong("id"),rs.getString("firstName"),
-                        rs.getString("lastName"),rs.getString("email"),rs.getInt("score"));
+                        rs.getString("lastName"),rs.getString("email"),rs.getString("code"),rs.getInt("score"));
                 users.add(u);
             }
             con.close();

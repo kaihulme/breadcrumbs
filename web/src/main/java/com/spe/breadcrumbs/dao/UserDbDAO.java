@@ -25,7 +25,7 @@ public class UserDbDAO implements UserDAO {
             while (rs.next()){
                 User u = new User(rs.getLong("id"),rs.getString("firstName"),
                         rs.getString("lastName"),rs.getString("email"),
-                        rs.getInt("score"));
+                        rs.getString("code"),rs.getInt("score"));
                 users.add(u);
             }
             con.close();
@@ -47,7 +47,7 @@ public class UserDbDAO implements UserDAO {
            if(rs.next()) { //move it to the first row
                u = new User(rs.getLong("id"), rs.getString("firstName"),
                        rs.getString("lastName"), rs.getString("email"),
-                       rs.getInt("score"));
+                       rs.getString("code"),rs.getInt("score"));
                con.close();
                return u;
            }
@@ -68,6 +68,7 @@ public class UserDbDAO implements UserDAO {
                     "User.firstName as firstName," +
                     "User.lastName as lastName," +
                     "User.email as email," +
+                    "User.code as code," +
                     "User.score as score," +
                     "Quiz.quizId as quizId," +
                     "Quiz.title as title," +
@@ -83,7 +84,9 @@ public class UserDbDAO implements UserDAO {
                 u = new User(rs.getLong("userId"),
                         rs.getString("firstName"),
                         rs.getString("lastName"),
-                        rs.getString("email"),rs.getInt("score"));
+                        rs.getString("email"),
+                        rs.getString("code"),
+                        rs.getInt("score"));
                 quiz = new Quiz(rs.getInt("quizId"),rs.getString("title"));
                 Question q = new Question(rs.getLong("questionId"),rs.getString("question"));
                 questions.add(q);
