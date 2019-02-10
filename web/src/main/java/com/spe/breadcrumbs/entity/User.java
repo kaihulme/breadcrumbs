@@ -22,20 +22,21 @@ public class User {
     private String email;
 
     @Column(name = "code")
-    private String code;
+    private final String code;
 
     @Column(name = "score")
     private int score;
 
     @Getter @Setter
-    Quiz quiz;
+    private Quiz quiz;
 
-    public User(Long id,String firstName,String lastName,String email) {
+    public User(Long id,String firstName,String lastName,String email,String code,int score) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email; //can use regex to pattern match
-        this.score= 0;
+        this.code = code;
+        this.score= score;
     }
 
     public boolean equals(User u) {

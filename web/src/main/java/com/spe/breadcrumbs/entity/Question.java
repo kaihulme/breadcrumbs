@@ -13,19 +13,18 @@ public class Question {
     private Long id;
     @Column(name = "question") @Getter @Setter
     private String question;
-    @Column(name = "no_of_attempts") @Getter @Setter
-    private int noOfAttempts;
-    @Column(name = "score") @Getter @Setter
-    private int score;
     @Getter @Setter
     private Quiz quiz;
+    @Getter
+    private int noOfAttempts = 0;
+    @Getter
+    private int score = 0;
     @Getter @Setter
     private List<Choice> attempts = new ArrayList<>(); //stores the order the user made the attempts (can be less than 4)
     @Getter @Setter
     private List<Choice> choices = new ArrayList<>();
-    public Question(Long id,String question,int score) {
+    public Question(Long id,String question) {
         this.id = id;
         this.question = question;
-        this.score = score;
     }
 }

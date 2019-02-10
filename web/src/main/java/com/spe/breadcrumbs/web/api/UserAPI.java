@@ -30,10 +30,10 @@ public class UserAPI {
         User match;
         match = userDAO.getUser(id);
         List<Question> questions = questionDAO.getAllQuestions();
-        Quiz quiz = new Quiz("title");
+        Quiz quiz = new Quiz(1,"title");
         quiz.setQuestions(questions);
         if(match != null){
-            match.setQuiz(quiz);
+          //  match.setQuiz(quiz);
             return new ResponseEntity<>(match, HttpStatus.OK);
         }
         return new ResponseEntity(null,HttpStatus.NOT_FOUND);
