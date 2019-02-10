@@ -114,6 +114,7 @@ public class UserDbDAO implements UserDAO {
                 QuizDAO quizDAO = new QuizDbDAO();
                 q = quizDAO.getQuiz(quizId);
             }
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -126,6 +127,28 @@ public class UserDbDAO implements UserDAO {
     }
 
     @Override
+    public User getByCode(String code) {
+        User u = null;
+        try{
+            Connection con = getConnection();
+            String getUser = "SELECT * FROM User WHERE code = ?";
+            PreparedStatement stmt = con.prepareStatement(getUser);
+            stmt.setString(1,code);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                u = new User(rs.getLong("id"),rs.getString("firstName"),
+                        rs.getString("lastName"),rs.getString("email"),
+                        rs.getString("code"),rs.getInt("score"));
+                con.close();
+                return u;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return u;
+    }
+
+    @Override
     public boolean addUser(User u) {
         try{
             Connection con = getConnection();
@@ -135,6 +158,7 @@ public class UserDbDAO implements UserDAO {
             stmt.setString(2,u.getLastName());
             stmt.setString(3,u.getEmail());
             stmt.executeUpdate();
+            con.close();
             return true;
         }catch(SQLException e){
             e.printStackTrace();
@@ -155,6 +179,7 @@ public class UserDbDAO implements UserDAO {
             PreparedStatement stmt = con.prepareStatement(deleteUser);
             stmt.setLong(1,id);
             stmt.executeUpdate();
+            con.close();
             return true;
         }catch (SQLException e){
             e.printStackTrace();

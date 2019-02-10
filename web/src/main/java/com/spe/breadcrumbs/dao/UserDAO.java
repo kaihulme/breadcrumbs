@@ -13,6 +13,7 @@ public interface UserDAO {
     //get quiz that user is taking
     Quiz getQuiz(Long id);
     User getByEmail(String email);
+    User getByCode(String code);
     boolean addUser(User u);
     boolean update(Long id,User u);
     boolean deleteUser(Long id);

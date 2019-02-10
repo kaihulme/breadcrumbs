@@ -18,22 +18,25 @@ import java.util.List;
 
 public class UserAPI {
     private UserDAO userDAO = new UserDbDAO();
-    private QuestionDAO questionDAO = new QuestionDbDAO();
-
+    
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity getUsers(){
-        return  new ResponseEntity<>(userDAO.getAllUsers(), HttpStatus.OK);
+    public ResponseEntity getUsers(@RequestParam(value = "code",required = false,defaultValue = "") String code){
+        if(code.equals("")) return new ResponseEntity<>(userDAO.getAllUsers(), HttpStatus.OK);
+        else{
+            User match;
+            match = userDAO.getByCode(code);
+            if(match != null){
+                return new ResponseEntity<>(match, HttpStatus.OK);
+            }
+            return new ResponseEntity(null,HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "{id}")
     public ResponseEntity getUser(@PathVariable Long id){
         User match;
-        match = userDAO.getUser(id);
-        List<Question> questions = questionDAO.getAllQuestions();
-        Quiz quiz = new Quiz(1,"title");
-        quiz.setQuestions(questions);
+        match = userDAO.getUserWithQuiz(id) ;
         if(match != null){
-          //  match.setQuiz(quiz);
             return new ResponseEntity<>(match, HttpStatus.OK);
         }
         return new ResponseEntity(null,HttpStatus.NOT_FOUND);
@@ -54,4 +57,5 @@ public class UserAPI {
         }
         return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
+
 }

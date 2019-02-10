@@ -35,6 +35,14 @@ public class WebApplicationTests {
 
 	}
 
+	public void testGetUserByCode(){
+
+	}
+
+	public void testGetUserByCodeThrowsException(){
+
+	}
+
 	public void testAddUser(){
 
 	}
