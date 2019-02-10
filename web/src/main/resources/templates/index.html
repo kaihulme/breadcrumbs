@@ -37,10 +37,15 @@
           <!--</div>-->
 
           <div class="d-flex justify-content-center" id="loginButton">
+
+            <form id="loginDetails">
+                <input type="text" id="user"><br>
+                <input type="password" id="password">
+            </form>
               <a th:href="@{participants}">
-                <button type="button" id="loginBtn" class="btn btn-info">
-                    <span>Click to Enter</span>
-                </button>
+                  <button type="button" id="loginBtn" class="btn btn-default">
+                      <span>Click to Enter</span>
+                  </button>
               </a>
           </div>
 
