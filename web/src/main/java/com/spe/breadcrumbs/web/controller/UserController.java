@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
@@ -30,10 +29,6 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET,value = "{id}")
     public String getUserDetail(@PathVariable Long id,Model m){
-//        User match;
-//        match = userDAO.getUser(id);
-//        Quiz quiz = userDAO.getQuiz(id);
-//        match.setQuiz(quiz);
         User match = userDAO.getUserWithQuiz(id);
         m.addAttribute("user",match);
         return "views/participants_userProfile";
@@ -41,16 +36,15 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET,value = "{userId}/questions/{questionId}")
     public String getQuestionDetail(@PathVariable Long userId,@PathVariable Long questionId,Model m){
-        User u = userDAO.getUser(userId);
-        Quiz quiz = userDAO.getQuiz(userId);
+        User u = userDAO.getUserWithQuiz(userId);
+        Quiz quiz = u.getQuiz();
         Question q = quiz.findQuestion(questionId);
+        List<Choice> choices = questionDAO.getChoices(questionId);
+        q.setChoices(choices);
+        //TODO Add attempts table to database
         q.setAttempts(q.getChoices());
         m.addAttribute("question",q);
-//        u.setQuiz(quiz);
-//        Question q = u.getQuiz().findQuestion(questionId);
-//        List<Choice> choices = questionDAO.getChoices(questionId);
-//        q.setAttempts(choices);
-//        m.addAttribute("question",q);
+
         return "views/participants_userProfile_question";
     }
 

@@ -24,14 +24,12 @@ public class WebApplicationTests {
 
 	@Autowired
 	private MockMvc mvc;
+	//TODO add tests
 	@Test
 	public void contextLoads() {
 	}
 
-	public void testUsersNotNull() throws Exception{
-		this.mvc.perform(get("/api/users"))
-				.andExpect(status().isOk())
-				.andExpect(content().string("f"));
+	public void testUsersNotNull(){
 	}
 
 }
