@@ -28,14 +28,14 @@ public class User {
     private int score;
 
     @Getter @Setter
-    Quiz quiz;
+    private Quiz quiz;
 
-    public User(Long id,String firstName,String lastName,String email) {
+    public User(Long id,String firstName,String lastName,String email,int score) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email; //can use regex to pattern match
-        this.score= 0;
+        this.score= score;
     }
 
     public boolean equals(User u) {
