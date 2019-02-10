@@ -1,20 +1,79 @@
 package bristol.ac.uk.breadcrumbsspe;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        buttonClick();
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        switch (menuItem.getItemId()){
+                            case R.id.nav_map:
+                                startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                                return true;
+                            case R.id.nav_camera:
+                                startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
+                                return true;
+                            case R.id.nav_help:
+                                startActivity(new Intent(HomeActivity.this, WelcomeActivity.class));
+                                return true;
+                        }
+                        return true;
+                    }
+                });
+
+        FloatingActionButton camera_button = findViewById(R.id.camera_button);
+        camera_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
     }
-    private void buttonClick(){
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*private void buttonClick(){
         Button scanButton = findViewById(R.id.scan_btn);
         scanButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -26,5 +85,5 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(answerQuestion);
             }
         });
-    }
+    }*/
 }

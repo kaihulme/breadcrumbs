@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -21,7 +22,8 @@ public class QRCodeScannerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mResultTextView = findViewById(R.id.result_textview);
 
-        findViewById(R.id.scan_barcode_button).setOnClickListener(new View.OnClickListener() {
+        Button scanQrCode = findViewById(R.id.scan_qrcode_button);
+        scanQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), QRCodeCaptureActivity.class);
