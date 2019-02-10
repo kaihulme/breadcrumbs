@@ -16,6 +16,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/participants")
 
+
 public class UserController {
     private UserDAO userDAO = new UserDbDAO();
     private QuestionDAO questionDAO = new QuestionDbDAO();
@@ -50,8 +51,5 @@ public class UserController {
         m.addAttribute("question",q);
         return "views/participants_userProfile_question";
     }
-
-
-
 
 }
