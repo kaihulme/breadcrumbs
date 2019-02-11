@@ -18,10 +18,10 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        app:layout_constraintBottom_toTopOf="@id/scan_barcode_button"/>
+        app:layout_constraintBottom_toTopOf="@id/scan_qrcode_button"/>
 
     <Button
-        android:id="@+id/scan_barcode_button"
+        android:id="@+id/scan_qrcode_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/scan_qrcode_button"
