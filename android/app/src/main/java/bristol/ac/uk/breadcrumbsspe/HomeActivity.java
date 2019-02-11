@@ -13,6 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
+import bristol.ac.uk.breadcrumbsspe.entity.MapState;
+
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -22,6 +26,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        drawMap();
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
@@ -86,4 +92,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }*/
+
+    private void drawMap () {
+        int mapID = ((MapState) this.getApplication()).getCurrentMap();
+        ImageView map = findViewById(mapID);
+        map.setImageResource(mapID);
+    }
+
+
+
+
+
 }
