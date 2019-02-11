@@ -2,10 +2,9 @@ package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.Expert;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 
@@ -30,6 +29,25 @@ public class ExpertDbDAO implements ExpertDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<Expert> getAllExperts(){
+        List<Expert> experts = new ArrayList<>();
+        Connection con = getConnection();
+        try {
+            Statement stmt = getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Experts");
+            while (rs.next()) {
+                Expert e = new Expert(rs.getLong("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("email")
+                        , rs.getString("password"));
+                experts.add(e);
+            }
+            con.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return experts;
     }
 
     @Override

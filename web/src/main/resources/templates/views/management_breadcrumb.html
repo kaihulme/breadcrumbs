@@ -91,90 +91,28 @@
 
             <!-- Page Content -->
 
-	        <!-- Nav tabs -->
-	        <ul class="nav nav-tabs" id="myTab" role="tablist">
-		        <li class="nav-item">
-			        <a class="nav-link active" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="true">Users</a>
-		        </li>
-		        <li class="nav-item">
-			        <a class="nav-link" id="expert-tab" data-toggle="tab" href="#expert" role="tab" aria-controls="expert" aria-selected="false">Experts</a>
-		        </li>
-		        <li class="nav-item">
-			        <a class="nav-link" id="breadcrumb-tab" data-toggle="tab" href="#breadcrumb" role="tab" aria-controls="breadcrumb" aria-selected="false">Breadcrumbs</a>
-		        </li>
-	        </ul>
-
-	        <!-- Tab panes -->
-	        <div class="tab-content">
-
-		        <div class="tab-pane active" id="user" role="tabpanel" aria-labelledby="user-tab">
-			        <!-- User Table -->
-			        <table class="table table-striped table-hover" id="users">
-				        <thread>
-					        <tr>
-						        <th style="width:10%;" onclick="sortTable(0)">ID</th>
-						        <th style="width:15%;" onclick="sortTable(1)">First Name</th>
-						        <th style="width:65%;" onclick="sortTable(2)">Second Name</th>
-						        <th style="width:10%;" onclick="sortTable(3)">Email</th>
-						        <th style="width:10%;" onclick="sortTable(3)">Code</th>
-					        </tr>
-				        </thread>
-				        <tbody class="rowlink" data-link="row">
-				        <tr th:each="user : ${users}">
-					        <td><a th:href="@{'/management/' + ${user.id}}"><span th:text="${user.id}">id</span></a></td>
-					        <td><a th:href="@{'/management/' + ${user.id}}"><span th:text="${user.firstName}"> firstName</span></a></td>
-					        <td><a th:href="@{'/management/' + ${user.id}}"><span th:text="${user.lastName}">lastName</span></a></td>
-					        <td><a th:href="@{'/management/' + ${user.id}}"><span th:text="${user.email}">email</span></a></td>
-					        <td><a th:href="@{'/management/' + ${user.id}}"><span th:text="${user.code}">code</span></a></td>
-				        </tr>
-				        </tbody>
-			        </table>
-			        <!-- /User Table -->
+	        <form>
+		        <div class="form-row">
+			        <div class="col">
+				        <label for="questionInput">Question</label>
+				        <input class="form-control" type="text" id="questionInput" placeholder="e.g. What is endocrinology?">
+			        </div>
 		        </div>
-
-		        <div class="tab-pane" id="expert" role="tabpanel" aria-labelledby="expert-tab">
-			        <!-- Expert Table -->
-			        <table class="table table-striped table-hover" id="experts">
-				        <thread>
-					        <tr>
-						        <th style="width:10%;" onclick="sortTable(0)">ID</th>
-						        <th style="width:15%;" onclick="sortTable(1)">First Name</th>
-						        <th style="width:55%;" onclick="sortTable(2)">Second Name</th>
-						        <th style="width:20%;" onclick="sortTable(3)">Email</th>
-					        </tr>
-				        </thread>
-				        <tbody class="rowlink" data-link="row">
-				        <tr th:each="expert : ${experts}">
-					        <td><a th:href="@{'/management/' + ${expert.id}}"><span th:text="${expert.id}">id</span></a></td>
-					        <td><a th:href="@{'/management/' + ${expert.id}}"><span th:text="${expert.firstName}"> firstName</span></a></td>
-					        <td><a th:href="@{'/management/' + ${expert.id}}"><span th:text="${expert.lastName}">lastName</span></a></td>
-					        <td><a th:href="@{'/management/' + ${expert.id}}"><span th:text="${expert.email}">email</span></a></td>
-				        </tr>
-				        </tbody>
-			        </table>
-			        <!-- /Expert Table -->
+		        <div class="form-row">
+			        <div class="col">
+				        <label for="clue1Input">Clue 1</label>
+				        <input class="form-control" type="text" id="clue1Input" placeholder="e.g. Medecine">
+			        </div>
 		        </div>
-
-		        <div class="tab-pane" id="breadcrumb" role="tabpanel" aria-labelledby="breadcrumb-tab">
-			        <!-- Breadcrumb Table -->
-			        <table class="table table-striped table-hover" id="breadcrumbs">
-				        <thread>
-					        <tr>
-						        <th style="width:10%;" onclick="sortTable(0)">ID</th>
-						        <th style="width:90%;" onclick="sortTable(1)">Question</th>
-					        </tr>
-				        </thread>
-				        <tbody class="rowlink" data-link="row">
-				        <tr th:each="question : ${questions}">
-					        <td><a th:href="@{'/management/' + ${question.id}}"><span th:text="${question.id}">id</span></a></td>
-					        <td><a th:href="@{'/management/' + ${question.id}}"><span th:text="${question.question}"> question</span></a></td>
-				        </tr>
-				        </tbody>
-			        </table>
-			        <!-- /Breadcrumb Table -->
+		        <div class="form-row">
+			        <div class="col">
+				        <label for="clue2Input">Clue 2</label>
+				        <input class="form-control" type="text" id="clue2Input" placeholder="e.g. Hormones">
+			        </div>
 		        </div>
-
-	        </div>
+				<br>
+		        <button type="submit" class="btn btn-info">Submit</button>
+	        </form>
 
             <!-- /Page Content -->
 
