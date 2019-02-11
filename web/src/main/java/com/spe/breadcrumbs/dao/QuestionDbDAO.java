@@ -20,7 +20,7 @@ public class QuestionDbDAO implements QuestionDAO {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Question");
             while (rs.next()){
-                Question q = new Question(rs.getLong("id"),rs.getString("question"),0);
+                Question q = new Question(rs.getLong("id"),rs.getString("question"));
                 questions.add(q);
             }
         }catch(SQLException e) {
@@ -50,7 +50,7 @@ public class QuestionDbDAO implements QuestionDAO {
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 //move it to the first row
-                q = new Question(rs.getLong("id"),rs.getString("question"),0);
+                q = new Question(rs.getLong("id"),rs.getString("question"));
                 con.close();
                 List<Choice> choices = getChoices(q.getId());
                 q.setChoices(choices);

@@ -7,7 +7,7 @@
 */}
 
 body {
-    background: #dd5f7a;
+    background: #ffffff;
     padding: 30vh;
 }
 
@@ -30,16 +30,13 @@ body {
 }
 
 #loginDetails {
-  padding-top: 40px;
+    padding: 10px;
 }
 
-#username {
-  margin-right: 10px;
+#user {
 }
 #password {
-  margin-left: 10px;
 }
 
 #loginButton {
-  margin-top: 20px;
 }

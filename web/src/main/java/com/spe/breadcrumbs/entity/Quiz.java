@@ -4,24 +4,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Entity @Table(name = "Quiz")
 public class Quiz {
-    @Id @GeneratedValue
+    @Id @GeneratedValue @Getter
     private int id;
     @Column(name = "title") @Getter @Setter
     private String title;
     @Getter @Setter
     List<Question> questions = new ArrayList<>();
 
-    @Getter
+    @Getter @Setter
     List<User> users = new ArrayList<>();
 
-    public Quiz(String title){
+    public Quiz(int id,String title){
+        this.id = id;
         this.title = title;
     }
 

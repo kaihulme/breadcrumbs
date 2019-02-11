@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bristol.ac.uk.breadcrumbsspe.api.FetchQuestions;
+import bristol.ac.uk.breadcrumbsspe.entity.MapState;
 
 //@SpringBootApplication
 public class QuestionActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question);
         buttons = new ArrayList<>();
         question_textview = findViewById(R.id.question_textview);
+        updateMap(qIndex);
         answer(qIndex);
     }
 
@@ -35,6 +37,10 @@ public class QuestionActivity extends AppCompatActivity {
         buttons.add((Button)findViewById(R.id.button_answer2));
         buttons.add((Button)findViewById(R.id.button_answer3));
         buttons.add((Button)findViewById(R.id.button_answer4));
+    }
+
+    private void updateMap(int questionNumber) {
+        ((MapState) this.getApplication()).setCurrentQuestion(questionNumber);
     }
 
 }
