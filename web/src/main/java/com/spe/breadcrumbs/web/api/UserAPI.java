@@ -18,7 +18,7 @@ import java.util.List;
 
 public class UserAPI {
     private UserDAO userDAO = new UserDbDAO();
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity getUsers(@RequestParam(value = "code",required = false,defaultValue = "") String code){
         if(code.equals("")) return new ResponseEntity<>(userDAO.getAllUsers(), HttpStatus.OK);
