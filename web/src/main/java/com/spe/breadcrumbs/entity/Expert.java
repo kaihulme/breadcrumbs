@@ -1,12 +1,14 @@
 package com.spe.breadcrumbs.entity;
 
 import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
 @Entity @Table(name="Experts")
-@Getter
+@Getter @Setter
 public class Expert {
 
     @Id @GeneratedValue
