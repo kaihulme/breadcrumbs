@@ -6,6 +6,7 @@ import com.spe.breadcrumbs.entity.Question;
 import java.util.List;
 
 public interface QuestionDAO {
+
     //returns all questions
     List<Question> getAllQuestions();
 
@@ -16,4 +17,7 @@ public interface QuestionDAO {
     Question findById(Long id);
 
     List<Choice> getChoices(Long questionId);
+
+    boolean update(Long id,Question q);
+
 }

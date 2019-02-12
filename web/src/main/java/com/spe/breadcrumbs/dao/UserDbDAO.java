@@ -170,19 +170,21 @@ public class UserDbDAO implements UserDAO {
     @Override
     public boolean update(Long id, User u) {
         try{
-            String updateScore = "UPDATE User " +
+            String updateUser = "UPDATE User " +
                     "SET firstName = ?," +
                     "lastName = ?," +
                     "email = ?," +
+                    "code = ?," +
                     "score = ? " +
                     "WHERE id = ?;";
             Connection con = getConnection();
-            PreparedStatement stmt = con.prepareStatement(updateScore);
+            PreparedStatement stmt = con.prepareStatement(updateUser);
             stmt.setString(1,u.getFirstName());
             stmt.setString(2,u.getLastName());
             stmt.setString(3,u.getEmail());
-            stmt.setInt(4,u.getScore());
-            stmt.setLong(5,u.getId());
+            stmt.setString(4,u.getCode());
+            stmt.setInt(5,u.getScore());
+            stmt.setLong(6,u.getId());
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {

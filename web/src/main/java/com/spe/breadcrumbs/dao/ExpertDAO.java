@@ -12,6 +12,10 @@ public interface ExpertDAO {
 
     boolean addExpert(Expert e);
 
+    boolean update(Long id, Expert e);
+
+    boolean deleteExpert(Long id);
+
     public boolean validate(String email,String password);
 
 }

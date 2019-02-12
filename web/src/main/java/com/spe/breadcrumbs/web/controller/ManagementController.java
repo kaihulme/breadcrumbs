@@ -36,7 +36,7 @@ public class ManagementController {
     @RequestMapping(method = RequestMethod.GET, value= "/user")
     public String addUser(Model m) {
         m.addAttribute("user", new User());
-        return "views/management_user";
+        return "views/management_userAdd";
     }
 
     @PostMapping("/addUser")
@@ -48,7 +48,7 @@ public class ManagementController {
     @RequestMapping(method = RequestMethod.GET, value= "/expert")
     public String addExpert(Model m) {
         m.addAttribute("expert", new Expert());
-        return "views/management_expert";
+        return "views/management_expertAdd";
     }
 
     @PostMapping("/addExpert")
@@ -58,8 +58,8 @@ public class ManagementController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value= "/breadcrumb")
-    public String tempBreadcrumb(Model m) {
-        return "views/management_breadcrumb";
+    public String addBreadcrumb(Model m) {
+        return "views/management_breadcrumbAdd";
     }
 
 }

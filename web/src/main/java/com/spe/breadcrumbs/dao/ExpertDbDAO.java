@@ -70,6 +70,46 @@ public class ExpertDbDAO implements ExpertDAO {
     }
 
     @Override
+    public boolean update(Long id, Expert e) {
+        try{
+            String updateExpert = "UPDATE Expert " +
+                    "SET firstName = ?," +
+                    "lastName = ?," +
+                    "email = ?," +
+                    "password = ? " +
+                    "WHERE id = ?;";
+            Connection con = getConnection();
+            PreparedStatement stmt = con.prepareStatement(updateExpert);
+            stmt.setString(1,e.getFirstName());
+            stmt.setString(2,e.getLastName());
+            stmt.setString(3,e.getEmail());
+            stmt.setString(4,e.getPassword());
+            stmt.setLong(5,e.getId());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteExpert(Long id) {
+        try{
+            Connection con = getConnection();
+            String deleteUser = "DELETE FROM Experts Where id = ?";
+            PreparedStatement stmt = con.prepareStatement(deleteUser);
+            stmt.setLong(1,id);
+            stmt.executeUpdate();
+            con.close();
+            return true;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public boolean validate(String email, String password) {
         try{
             Connection con = getConnection();
