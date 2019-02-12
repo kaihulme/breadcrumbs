@@ -32,6 +32,7 @@ public class UserAPI {
         }
     }
 
+
     @RequestMapping(method = RequestMethod.GET,value = "{id}")
     public ResponseEntity getUser(@PathVariable Long id){
         User match;
@@ -40,6 +41,16 @@ public class UserAPI {
             return new ResponseEntity<>(match, HttpStatus.OK);
         }
         return new ResponseEntity(null,HttpStatus.NOT_FOUND);
+    }
+
+    //update the user details with that id
+    @RequestMapping(method = RequestMethod.PUT,value = "{id}")
+    public ResponseEntity update(@PathVariable Long id,@RequestBody User u){
+        if(userDAO.update(id,u)){
+            return new ResponseEntity(null,HttpStatus.OK);
+        }else{
+            return new ResponseEntity(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST)

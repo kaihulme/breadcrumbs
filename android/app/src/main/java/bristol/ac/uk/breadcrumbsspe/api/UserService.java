@@ -9,7 +9,7 @@ import retrofit2.http.Query;
 
 public interface UserService {
     @GET("users")
-    Call<User> getUserbyCode(@Query(value = "code",encoded = true) String code);
+    Call<User> getUserByCode(@Query(value = "code",encoded = true) String code);
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://129.213.113.83/api/")
             .addConverterFactory(GsonConverterFactory.create())

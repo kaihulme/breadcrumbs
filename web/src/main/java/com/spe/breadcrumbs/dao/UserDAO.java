@@ -19,10 +19,8 @@ public interface UserDAO {
     User getByEmail(String email);
 
     User getByCode(String code);
-
-    boolean addUser(User u);
-
     boolean update(Long id,User u);
+    boolean addUser(User u);
 
     boolean deleteUser(Long id);
 

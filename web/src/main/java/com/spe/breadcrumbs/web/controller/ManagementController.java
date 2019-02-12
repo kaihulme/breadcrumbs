@@ -26,6 +26,7 @@ public class ManagementController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String tableContent(Model m){
+        //TODO make this function faster (INNER JOINs)
         m.addAttribute("users",userDAO.getAllUsers());
         m.addAttribute("experts", expertDAO.getAllExperts());
         m.addAttribute("questions", questionDAO.getAllQuestions());
