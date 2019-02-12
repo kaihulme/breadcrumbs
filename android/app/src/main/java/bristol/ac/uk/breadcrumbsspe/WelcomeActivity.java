@@ -16,6 +16,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         displayName();
+        displayScore();
         goToHome();
     }
     private void displayName(){
@@ -24,6 +25,14 @@ public class WelcomeActivity extends AppCompatActivity {
         User u = UserInSession.getUser();
         welcomeText += u.getFirstName();
         welcome_textview.setText(welcomeText);
+    }
+
+    private void displayScore() {
+        TextView score_textview = findViewById(R.id.score_textview);
+        String scoreText = "Score: ";
+        User u = UserInSession.getUser();
+        scoreText += u.getScore();
+        score_textview.setText(scoreText);
     }
     private void goToHome(){
         Button begin_btn = findViewById(R.id.begin_btn);
