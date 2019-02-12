@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.List;
 
+import bristol.ac.uk.breadcrumbsspe.UserInSession;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Question {
     private Long id;
@@ -36,5 +38,27 @@ public class Question {
 
     public List<Choice> getChoices() {
         return choices;
+    }
+
+    public void correctAttemptMade(boolean correctAnswer) {
+        if (correctAnswer) {
+            noOfAttempts += 1;
+            updateScore();
+        }
+        else {
+            noOfAttempts += 1;
+        }
+    }
+
+    private void updateScore() {
+        if (noOfAttempts == 1) score = 100;
+        else if (noOfAttempts == 2) score = 50;
+        else if (noOfAttempts == 3) score = 25;
+        else score = 0;
+
+        //TODO: Update corresponding database question with new score
+
+        User u = UserInSession.getUser();
+        u.addToScore(score);
     }
 }

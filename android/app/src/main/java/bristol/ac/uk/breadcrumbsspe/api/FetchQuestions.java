@@ -46,12 +46,14 @@ public class FetchQuestions implements Callback<List<Question>> {
                     @Override
                     public void onClick(View v) {
                         if (questionActivity.buttons.indexOf(b) == questionActivity.answer) {
+                            q.correctAttemptMade(true);
                             b.setBackgroundColor(rgb(0, 191, 0));
                             //wait
                             Intent nextQ = new Intent(questionActivity, HomeActivity.class);
                             nextQ.putExtra("PREV_QUESTION", questionActivity.qIndex);
                             questionActivity.startActivity(nextQ);
                         } else
+                            q.correctAttemptMade(false);
                             b.setBackgroundColor(rgb(191, 0, 0));
                     }
                 });

@@ -27,7 +27,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        drawMap();
+       drawMap();
+
+
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
@@ -95,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void drawMap () {
         int mapID = ((MapState) this.getApplication()).getCurrentMap();
-        ImageView map = findViewById(mapID);
+        ImageView map = findViewById(R.id.map);
         map.setImageResource(mapID);
     }
 

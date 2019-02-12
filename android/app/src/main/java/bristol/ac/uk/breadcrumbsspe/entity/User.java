@@ -62,4 +62,9 @@ public class User {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public void addToScore(int pointsScored) {
+        score += pointsScored;
+        //TODO: Update corresponding database user with new score
+    }
 }
