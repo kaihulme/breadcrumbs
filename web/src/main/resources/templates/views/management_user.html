@@ -91,37 +91,16 @@
 
             <!-- Page Content -->
 
-	        <form>
-		        <div class="form-row">
-			        <div class="col">
-				        <label for="firstNameInput">First Name</label>
-				        <input class="form-control" type="text" id="firstNameInput" placeholder="e.g. Dave">
-			        </div>
-			        <div class="col">
-				        <label for="secondNameInput">Second Name</label>
-				        <input class="form-control" type="text" id="secondNameInput" placeholder="e.g. Smith">
-			        </div>
-		        </div>
-		        <br>
-		        <div class="form-row">
-			        <div class="col">
-				        <div class="form-group">
-					        <label for="emailInput">Email address</label>
-					        <input type="email" class="form-control" id="emailInput" placeholder="e.g. davesmith@example.com">
-				        </div>
-			        </div>
-		        </div>
-		        <div class="form-row">
-			        <div class="col">
-				        <div class="form-group">
-					        <label for="exampleInputPassword1">Code</label>
-					        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="e.g. 123">
-				        </div>
-			        </div>
-		        </div>
-		        <br>
-		        <button type="submit" class="btn btn-primary">Submit</button>
+	        <form action="#" th:action="@{addUser}" th:object="${user}" method="post">
+		        <p>Id: <input type="text" th:field="*{id}" /></p>
+		        <p>First Name: <input type="text" th:field="*{firstName}" /></p>
+		        <p>Second Name: <input type="text" th:field="*{lastName}" /></p>
+		        <p>Email: <input type="text" th:field="*{email}" /></p>
+		        <p>Code: <input type="text" th:field="*{code}" /></p>
+		        <p>Score: <input type="text" th:field="*{score}" /></p>
+		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 	        </form>
+
 
             <!-- /Page Content -->
 

@@ -22,7 +22,7 @@ public class User {
     private String email;
 
     @Column(name = "code")
-    private final String code;
+    private String code;
 
     @Column(name = "score")
     private int score;
@@ -37,6 +37,10 @@ public class User {
         this.email = email; //can use regex to pattern match
         this.code = code;
         this.score= score;
+    }
+
+    public User() {
+
     }
 
     public boolean equals(User u) {
