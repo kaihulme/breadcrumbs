@@ -3,15 +3,19 @@ package bristol.ac.uk.breadcrumbsspe;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 import bristol.ac.uk.breadcrumbsspe.api.UserService;
 import bristol.ac.uk.breadcrumbsspe.entity.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                             UserInSession userInSession = UserInSession.getInstance(u);
                             startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
                         }else{
-                            //TODO Make popup displaying Invalid Code
+                            wrongCodeDialog();
                         }
                     }
                     @Override
@@ -50,5 +54,24 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void wrongCodeDialog() {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        }
+        else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Invalid Code")
+        .setMessage("That is an invalid code. Please try again.")
+        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+                        // Return to welcome page
+        }
+        })
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .show();
     }
 }
