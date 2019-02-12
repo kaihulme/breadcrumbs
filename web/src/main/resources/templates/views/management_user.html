@@ -92,12 +92,10 @@
             <!-- Page Content -->
 
 	        <form action="#" th:action="@{addUser}" th:object="${user}" method="post">
-		        <p>Id: <input type="text" th:field="*{id}" /></p>
 		        <p>First Name: <input type="text" th:field="*{firstName}" /></p>
 		        <p>Second Name: <input type="text" th:field="*{lastName}" /></p>
 		        <p>Email: <input type="text" th:field="*{email}" /></p>
 		        <p>Code: <input type="text" th:field="*{code}" /></p>
-		        <p>Score: <input type="text" th:field="*{score}" /></p>
 		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 	        </form>
 

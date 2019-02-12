@@ -172,11 +172,12 @@ public class UserDbDAO implements UserDAO {
     public boolean addUser(User u) {
         try{
             Connection con = getConnection();
-            String addUser = "INSERT INTO User(firstName,lastName,email) VALUES(?,?,?)";
+            String addUser = "INSERT INTO User(firstName,lastName,email,code) VALUES(?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(addUser);
             stmt.setString(1,u.getFirstName());
             stmt.setString(2,u.getLastName());
             stmt.setString(3,u.getEmail());
+            stmt.setString(4,u.getCode());
             stmt.executeUpdate();
             con.close();
             return true;
