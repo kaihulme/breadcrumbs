@@ -1,6 +1,7 @@
 package bristol.ac.uk.breadcrumbsspe;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Build;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 String code = codeText.getText().toString();
                 UserService userService = UserService.retrofit.create(UserService.class);
-                Call<User> userCall = userService.getUserbyCode(code);
+                Call<User> userCall = userService.getUserByCode(code);
                 userCall.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
@@ -45,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
                         }else{
                             wrongCodeDialog();
-                            Snackbar.make(v, "Invalid Code. Please try again.", Snackbar.LENGTH_LONG)
-                                    .setAction("Invalid Code", null).show();
                         }
                     }
                     @Override
