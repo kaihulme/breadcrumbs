@@ -72,7 +72,7 @@ public class ExpertDbDAO implements ExpertDAO {
     @Override
     public boolean update(Long id, Expert e) {
         try{
-            String updateExpert = "UPDATE Expert " +
+            String updateExpert = "UPDATE Experts " +
                     "SET firstName = ?," +
                     "lastName = ?," +
                     "email = ?," +
@@ -97,8 +97,8 @@ public class ExpertDbDAO implements ExpertDAO {
     public boolean deleteExpert(Long id) {
         try{
             Connection con = getConnection();
-            String deleteUser = "DELETE FROM Experts Where id = ?";
-            PreparedStatement stmt = con.prepareStatement(deleteUser);
+            String deleteExpert = "DELETE FROM Experts Where id = ?";
+            PreparedStatement stmt = con.prepareStatement(deleteExpert);
             stmt.setLong(1,id);
             stmt.executeUpdate();
             con.close();

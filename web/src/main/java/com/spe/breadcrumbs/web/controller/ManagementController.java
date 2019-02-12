@@ -33,6 +33,21 @@ public class ManagementController {
         return "views/management";
     }
 
+    //////////////// USER UPDATE ADD ////////////////////////
+
+    @RequestMapping(method = RequestMethod.GET, value= "/user/{id}")
+    public String updateUser(@PathVariable Long id, Model m) {
+        User match = userDAO.getUser(id);
+        m.addAttribute("user", match);
+        return "views/management_userEdit";
+    }
+
+    @PostMapping("/user/updateUser/{id}")
+    public RedirectView updateUser(@ModelAttribute User user, @PathVariable Long id) {
+        userDAO.update(id, user);
+        return new RedirectView("http://localhost:8080/management");
+    }
+
     @RequestMapping(method = RequestMethod.GET, value= "/user")
     public String addUser(Model m) {
         m.addAttribute("user", new User());
@@ -42,6 +57,21 @@ public class ManagementController {
     @PostMapping("/addUser")
     public RedirectView addUser(@ModelAttribute User user) {
         userDAO.addUser(user);
+        return new RedirectView("http://localhost:8080/management");
+    }
+
+    //////////////// EXPERT UPDATE ADD /////////////////////
+
+    @RequestMapping(method = RequestMethod.GET, value= "/expert/{id}")
+    public String updateExpert(@PathVariable Long id, Model m) {
+        Expert match = expertDAO.getExpert(id);
+        m.addAttribute("expert", match);
+        return "views/management_expertEdit";
+    }
+
+    @PostMapping("/expert/updateExpert/{id}")
+    public RedirectView updateExpert(@ModelAttribute Expert expert, @PathVariable Long id) {
+        expertDAO.update(id, expert);
         return new RedirectView("http://localhost:8080/management");
     }
 
@@ -56,6 +86,8 @@ public class ManagementController {
         expertDAO.addExpert(expert);
         return new RedirectView("http://localhost:8080/management");
     }
+
+    //////////////// BREADCRUMB UPDATE ////////////////////////
 
     @RequestMapping(method = RequestMethod.GET, value= "/breadcrumb")
     public String addBreadcrumb(Model m) {
