@@ -26,4 +26,8 @@ public class HintActivity extends AppCompatActivity {
         });
 
     }
+
+    private void updateHintText() {
+
+    }
 }

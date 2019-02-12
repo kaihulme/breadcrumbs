@@ -101,8 +101,4 @@ public class HomeActivity extends AppCompatActivity {
         map.setImageResource(mapID);
     }
 
-
-
-
-
 }
