@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(Call<User> call, Response<User> response) {
                         if(response.isSuccessful()){
                             User u = response.body();
-                            UserInSession userInSession = new UserInSession(u);
+                            UserInSession userInSession = UserInSession.getInstance(u);
                             startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
                         }else{
                             //TODO Make popup displaying Invalid Code
