@@ -51,6 +51,25 @@ public class ExpertDbDAO implements ExpertDAO {
     }
 
     @Override
+    public boolean addExpert(Expert e) {
+        try {
+            Connection con = getConnection();
+            String addExpert = "INSERT INTO Experts(firstName,lastName,email,password) VALUES(?,?,?,?)";
+            PreparedStatement stmt = con.prepareStatement(addExpert);
+            stmt.setString(1,e.getFirstName());
+            stmt.setString(2,e.getLastName());
+            stmt.setString(3,e.getEmail());
+            stmt.setString(4,e.getPassword());
+            stmt.executeUpdate();
+            con.close();
+            return true;
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public boolean validate(String email, String password) {
         try{
             Connection con = getConnection();

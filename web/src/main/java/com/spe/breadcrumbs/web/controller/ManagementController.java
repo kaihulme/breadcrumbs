@@ -1,7 +1,9 @@
 package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
+import com.spe.breadcrumbs.entity.Expert;
 import com.spe.breadcrumbs.entity.User;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -30,12 +32,11 @@ public class ManagementController {
         return "views/management";
     }
 
-
-//    @GetMapping("/user")
-//    public String userForm(Model m, User user) {
-//        return "views/management_user";
-//    }
-
+    @RequestMapping(method = RequestMethod.GET, value= "/user")
+    public String addUser(Model m) {
+        m.addAttribute("user", new User());
+        return "views/management_user";
+    }
 
     @PostMapping("/addUser")
     public RedirectView addUser(@ModelAttribute User user) {
@@ -43,15 +44,16 @@ public class ManagementController {
         return new RedirectView("http://localhost:8080/management");
     }
 
-    @RequestMapping(method = RequestMethod.GET, value= "/user")
-    public String addUser(Model m) {
-        m.addAttribute("user", new User());
-        return "views/management_user";
-    }
-
     @RequestMapping(method = RequestMethod.GET, value= "/expert")
     public String addExpert(Model m) {
+        m.addAttribute("expert", new Expert());
         return "views/management_expert";
+    }
+
+    @PostMapping("/addExpert")
+    public RedirectView addExpert(@ModelAttribute Expert expert) {
+        expertDAO.addExpert(expert);
+        return new RedirectView("http://localhost:8080/management");
     }
 
     @RequestMapping(method = RequestMethod.GET, value= "/breadcrumb")
