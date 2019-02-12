@@ -45,11 +45,15 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
                         }else{
                             wrongCodeDialog();
+                            Snackbar.make(v, "Invalid Code. Please try again.", Snackbar.LENGTH_LONG)
+                                    .setAction("Invalid Code", null).show();
                         }
                     }
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         t.printStackTrace();
+                        Snackbar.make(v, "Cannot connect to server. Please try again later.", Snackbar.LENGTH_LONG)
+                                .setAction("No connection", null).show();
                     }
                 });
             }
