@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
-//TODO rename this table to Expert
-@Entity @Table(name="Experts")
+@Entity @Table(name="Expert")
 @Getter @Setter
 public class Expert {
 

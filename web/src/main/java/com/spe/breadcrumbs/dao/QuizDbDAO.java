@@ -51,11 +51,11 @@ public class QuizDbDAO implements QuizDAO{
                 questions.add(q);
             }
             con.close();
-//            for(Question q: questions){
-//                //get choices for question
-//                List<Choice> choices = new QuestionDbDAO().getChoices(q.getId());
-//                q.setChoices(choices);
-//            }
+            for(Question q: questions){
+                //get choices for question
+                List<Choice> choices = new QuestionDbDAO().getChoices(q.getId());
+                q.setChoices(choices);
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }
