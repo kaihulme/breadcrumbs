@@ -29,24 +29,33 @@ public class ManagementController {
     private ExpertDAO expertDAO = new ExpertDbDAO();
     private QuestionDAO questionDAO = new QuestionDbDAO();
 
+//    @RequestMapping(method = RequestMethod.GET)
+//    public String tableContent(Model m){
+//        List<Expert> experts = expertDAO.getExpertsWithQuizzes();
+//        List<User> users = new ArrayList<>();
+//        List<Question> questions = new ArrayList<>();
+//        for(Expert e: experts){
+//            for(Quiz quiz: e.getQuizzes()){
+//                List<Question> q = quiz.getQuestions();
+//                List<User> u = quiz.getUsers();
+//                questions.addAll(q);
+//                users.addAll(u);
+//            }
+//        }
+//        m.addAttribute("users",users);
+//        m.addAttribute("experts", experts);
+//        m.addAttribute("questions", questions);
+//        return "views/management";
+//    }
+
     @RequestMapping(method = RequestMethod.GET)
-    public String tableContent(Model m){
-        List<Expert> experts = expertDAO.getExpertsWithQuizzes();
-        List<User> users = new ArrayList<>();
-        List<Question> questions = new ArrayList<>();
-        for(Expert e: experts){
-            for(Quiz quiz: e.getQuizzes()){
-                List<Question> q = quiz.getQuestions();
-                List<User> u = quiz.getUsers();
-                questions.addAll(q);
-                users.addAll(u);
-            }
-        }
-        m.addAttribute("users",users);
-        m.addAttribute("experts", experts);
-        m.addAttribute("questions", questions);
+    public String tableContent(Model m) {
+        m.addAttribute("users",userDAO.getAllUsers());
+        m.addAttribute("experts",expertDAO.getAllExperts());
+        m.addAttribute("questions",questionDAO.getAllQuestions());
         return "views/management";
     }
+
 
     //////////////// USER UPDATE ADD ////////////////////////
 
@@ -105,7 +114,7 @@ public class ManagementController {
     @PostMapping("/addExpert")
     public RedirectView addExpert(@ModelAttribute Expert expert) {
         expertDAO.addExpert(expert);
-        return new RedirectView("http://localhost:8080/management");
+        return new RedirectView("/management");
     }
 
     @PostMapping("/expert/deleteExpert/{id}")
