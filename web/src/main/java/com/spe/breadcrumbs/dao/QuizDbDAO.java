@@ -28,8 +28,6 @@ public class QuizDbDAO implements QuizDAO{
             if(rs.next()){
                 q = new Quiz(rs.getInt("quizId"),rs.getString("title"));
                 con.close();
-//                List<User> users = getUsers(q.getId());
-//                q.setUsers(users);
                 List<Question> questions = getQuestions(q.getId());
                 q.setQuestions(questions);
             }
@@ -53,11 +51,11 @@ public class QuizDbDAO implements QuizDAO{
                 questions.add(q);
             }
             con.close();
-            for(Question q: questions){
-                //get choices for question
-                List<Choice> choices = new QuestionDbDAO().getChoices(q.getId());
-                q.setChoices(choices);
-            }
+//            for(Question q: questions){
+//                //get choices for question
+//                List<Choice> choices = new QuestionDbDAO().getChoices(q.getId());
+//                q.setChoices(choices);
+//            }
         }catch (SQLException e){
             e.printStackTrace();
         }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
+//TODO rename this table to Expert
 @Entity @Table(name="Experts")
 @Getter @Setter
 public class Expert {
@@ -37,7 +38,20 @@ public class Expert {
     }
 
     public Expert() {}
+    //add quiz if not already in list
+    public void addQuiz(Quiz quiz){
+        for(Quiz q: quizzes){
+            if(q.getId() == quiz.getId()) return;
+        }
+        quizzes.add(quiz);
+    }
 
+    public Quiz findQuiz(int id){
+        for(Quiz quiz: quizzes){
+            if(quiz.getId() == id) return quiz;
+        }
+        return null;
+    }
     @Override
     public String toString() {
         return firstName + ' ' + lastName + ' '+  email;

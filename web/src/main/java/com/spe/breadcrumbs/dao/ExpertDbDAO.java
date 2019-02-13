@@ -1,6 +1,9 @@
 package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.Expert;
+import com.spe.breadcrumbs.entity.Question;
+import com.spe.breadcrumbs.entity.Quiz;
+import com.spe.breadcrumbs.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -48,6 +51,51 @@ public class ExpertDbDAO implements ExpertDAO {
             e.printStackTrace();
         }
         return experts;
+    }
+
+    @Override
+    public List<Expert> getExpertsWithQuizzes() {
+        List<Expert> experts = new ArrayList<>();
+        try{
+            Connection con = getConnection();
+            String getExperts = "SELECT Experts.id as expertId," +
+                    "Experts.firstName as expert_FirstName," +
+                    "Experts.lastName as expert_LastName," +
+                    "Experts.email as expert_email," +
+                    "Quiz.quizId as quizId " +
+                    "FROM Experts INNER JOIN Quiz " +
+                    "ON Quiz.expertId = Experts.id";
+            PreparedStatement stmt = con.prepareStatement(getExperts);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){
+                Long expertId = rs.getLong("expertId");
+                int expertIndex = findExpertIsInList(expertId,experts);
+                Expert expert;
+                if(expertIndex == -1){
+                    expert = new Expert(rs.getLong("expertId"),rs.getString("expert_FirstName"),
+                            rs.getString("expert_LastName"),rs.getString("expert_email"),null);
+                    experts.add(expert);
+                    expertIndex = experts.size() - 1;
+                }
+                expert = experts.get(expertIndex);
+                int quizId = rs.getInt("quizId");
+                QuizDAO quizDAO = new QuizDbDAO();
+                Quiz quiz = quizDAO.getQuiz(quizId);
+                List<User> users = quizDAO.getUsers(quizId);
+                quiz.setUsers(users);
+                expert.addQuiz(quiz);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return experts;
+    }
+
+    private int findExpertIsInList(Long expertId,List<Expert> experts){
+        for(int i = 0; i < experts.size(); i++){
+            if(expertId.equals(experts.get(i).getId())) return i;
+        }
+        return -1;
     }
 
     @Override
