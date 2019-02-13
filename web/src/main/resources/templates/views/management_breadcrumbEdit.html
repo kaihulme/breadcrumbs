@@ -91,27 +91,13 @@
 
             <!-- Page Content -->
 
-	        <form>
-		        <div class="form-row">
-			        <div class="col">
-				        <label for="questionInput">Question</label>
-				        <input class="form-control" type="text" id="questionInput" placeholder="e.g. What is endocrinology?">
-			        </div>
-		        </div>
-		        <div class="form-row">
-			        <div class="col">
-				        <label for="clue1Input">Clue 1</label>
-				        <input class="form-control" type="text" id="clue1Input" placeholder="e.g. Medecine">
-			        </div>
-		        </div>
-		        <div class="form-row">
-			        <div class="col">
-				        <label for="clue2Input">Clue 2</label>
-				        <input class="form-control" type="text" id="clue2Input" placeholder="e.g. Hormones">
-			        </div>
-		        </div>
-				<br>
-		        <button type="submit" class="btn btn-info">Submit</button>
+	        <form action="#" th:action="@{'updateBreadcrumb/'+${question.id}}" th:object="${question}" method="post">
+		        <p>Question: <input type="text" th:field="*{question}" /></p>
+		        <!--
+		        <p>Clue 1: <input type="text" th:field="*{choices[0]}" /></p>
+		        <p>Clue 2: <input type="text" th:field="*{choices[1]}" /></p>
+		        -->
+		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 	        </form>
 
             <!-- /Page Content -->

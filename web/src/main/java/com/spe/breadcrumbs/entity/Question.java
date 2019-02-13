@@ -36,4 +36,12 @@ public class Question {
         this.question = question;
     }
 
+    Long getId (Question q) {
+        return id;
+    }
+
+    String getQuestion (Question q) {
+        return question;
+    }
+
 }

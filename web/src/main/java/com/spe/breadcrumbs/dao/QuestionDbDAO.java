@@ -84,7 +84,7 @@ public class QuestionDbDAO implements QuestionDAO {
     public boolean update(Long id, Question q) {
         try{
             String updateQuestion = "UPDATE Question " +
-                    "SET question = ?," +
+                    "SET question = ?" +
                     "WHERE id = ?;";
             Connection con = getConnection();
             PreparedStatement stmt = con.prepareStatement(updateQuestion);

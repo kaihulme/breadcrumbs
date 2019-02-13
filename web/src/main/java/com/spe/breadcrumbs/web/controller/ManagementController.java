@@ -1,7 +1,9 @@
 package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
+import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Expert;
+import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.entity.User;
 import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin
 @Controller
@@ -101,9 +104,19 @@ public class ManagementController {
 
     //////////////// BREADCRUMB UPDATE ////////////////////////
 
-    @RequestMapping(method = RequestMethod.GET, value= "/breadcrumb")
-    public String addBreadcrumb(Model m) {
-        return "views/management_breadcrumbAdd";
+    @RequestMapping(method = RequestMethod.GET, value= "/breadcrumb/{id}")
+    public String updateBreadcrumb(@PathVariable Long id, Model m) {
+        Question match = questionDAO.findById(id);
+        m.addAttribute("question", match);
+        //List<Choice> choices = questionDAO.getChoices(id);
+        //m.addAttribute("choices", choices);
+        return "views/management_breadcrumbEdit";
+    }
+
+    @PostMapping("/breadcrumb/updateBreadcrumb/{id}")
+    public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id) {
+        questionDAO.update(id, question);
+        return new RedirectView("http://localhost:8080/management");
     }
 
 }

@@ -165,14 +165,14 @@
 			        <table class="table table-striped table-hover" id="breadcrumbs">
 				        <thread>
 					        <tr>
-						        <th style="width:10%;" onclick="sortTable(0)">ID</th>
+						        <th style="width:10%;" onclick="sortTable(0)">No.</th>
 						        <th style="width:90%;" onclick="sortTable(1)">Question</th>
 					        </tr>
 				        </thread>
 				        <tbody class="rowlink" data-link="row">
 					        <tr th:each="question : ${questions}">
-						        <td><a th:href="@{'/management/' + ${question.id}}"><span th:text="${question.id}">id</span></a></td>
-						        <td><a th:href="@{'/management/' + ${question.id}}"><span th:text="${question.question}"> question</span></a></td>
+						        <td><a th:href="@{'/management/breadcrumb/' + ${question.id}}"><span th:text="${question.id}">id</span></a></td>
+						        <td><a th:href="@{'/management/breadcrumb/' + ${question.id}}"><span th:text="${question.question}"> question</span></a></td>
 					        </tr>
 				        </tbody>
 			        </table>
