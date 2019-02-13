@@ -67,6 +67,7 @@ public class QRCodeQuestionHandler implements Callback<Question> {
                         } else {
                             q.correctAttemptMade(false);
                             b.setBackgroundColor(rgb(191, 0, 0));
+                            b.setEnabled(false);
                         }
                     }
                 });
