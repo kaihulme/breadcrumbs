@@ -61,9 +61,12 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Opening Camera", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                //QRCodeScannerActivity keeps crashing
                 startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
-
+//                Intent currentQuestion = getIntent();
+//                int index = currentQuestion.getIntExtra("CURRENT_QUESTION",-1);
+//                Intent toQrCode = new Intent(HomeActivity.this,QRCodeScannerActivity.class);
+//                toQrCode.putExtra("CURRENT_QUESTION",index);
+//                startActivity(toQrCode);
                 //this is only for the Beta Version final release will work via QRCodeScanner
 //                Intent prevQuestion = getIntent();
 //                int index = (prevQuestion.getIntExtra("PREV_QUESTION",-1) + 1) % 4;

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bristol.ac.uk.breadcrumbsspe.api.FetchQuestions;
+import bristol.ac.uk.breadcrumbsspe.api.QRCodeQuestionHandler;
 import bristol.ac.uk.breadcrumbsspe.entity.MapState;
 
 //@SpringBootApplication
@@ -18,10 +19,12 @@ public class QuestionActivity extends AppCompatActivity {
     public TextView question_textview;
     public int qIndex;
     public int answer;
+    private String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent i = getIntent();
         qIndex = i.getIntExtra("CURRENT_QUESTION",-1);
+        url = i.getStringExtra("QUESTION_URL");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         buttons = new ArrayList<>();
@@ -32,7 +35,8 @@ public class QuestionActivity extends AppCompatActivity {
 
     //answer question with this index in question list
     private void answer(int q){
-        new FetchQuestions().start(this);
+      //  new FetchQuestions().start(this);
+        new QRCodeQuestionHandler().start(this,url);
         buttons.add((Button)findViewById(R.id.button_answer1));
         buttons.add((Button)findViewById(R.id.button_answer2));
         buttons.add((Button)findViewById(R.id.button_answer3));
