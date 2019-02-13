@@ -61,7 +61,13 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Opening Camera", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
+                //QRCodeScannerActivity keeps crashing
+                //startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
+                Intent prevQuestion = getIntent();
+                int index = (prevQuestion.getIntExtra("PREV_QUESTION",-1) + 1) % 4;
+                Intent answerQuestion = new Intent(HomeActivity.this, QuestionActivity.class);
+                answerQuestion.putExtra("CURRENT_QUESTION",index);
+                startActivity(answerQuestion);
             }
         });
 

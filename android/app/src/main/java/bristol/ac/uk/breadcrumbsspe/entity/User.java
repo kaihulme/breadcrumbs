@@ -3,6 +3,12 @@ package bristol.ac.uk.breadcrumbsspe.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import bristol.ac.uk.breadcrumbsspe.api.UserService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
     private Long id;
@@ -65,6 +71,16 @@ public class User {
 
     public void addToScore(int pointsScored) {
         score += pointsScored;
-        //TODO: Update corresponding database user with new score
+        UserService userService = UserService.retrofit.create(UserService.class);
+        Call<User> userCall = userService.update(id,this);
+        userCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

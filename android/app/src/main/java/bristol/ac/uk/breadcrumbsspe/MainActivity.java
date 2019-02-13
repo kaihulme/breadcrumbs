@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 String code = codeText.getText().toString();
+                code = "RAcJG"; //TODO REMOVE THIS LINE BEFORE BETA
                 UserService userService = UserService.retrofit.create(UserService.class);
                 Call<User> userCall = userService.getUserByCode(code);
                 userCall.enqueue(new Callback<User>() {
