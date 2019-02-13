@@ -38,6 +38,13 @@ public class QRCodeScannerActivity extends AppCompatActivity {
                 if(intent != null){
                     Barcode QRCode = intent.getParcelableExtra(QRCodeCaptureActivity.BarcodeObject);
                     mResultTextView.setText(QRCode.displayValue);
+                    String url = QRCode.displayValue;
+//                    Intent fromHome = getIntent();
+//                    int index = fromHome.getIntExtra("CURRENT_QUESTION",-1);
+
+                    Intent i = new Intent(QRCodeScannerActivity.this,QuestionActivity.class);
+                    i.putExtra("QUESTION_URL",url);
+                    startActivity(i);
                 }else
                     mResultTextView.setText(R.string.no_qrcode_captured);
             }else
