@@ -1,7 +1,12 @@
 package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
+import com.spe.breadcrumbs.entity.Choice;
+import com.spe.breadcrumbs.entity.Expert;
+import com.spe.breadcrumbs.entity.Question;
+import com.spe.breadcrumbs.entity.Quiz;
 import com.spe.breadcrumbs.entity.User;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -11,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin
 @Controller
@@ -24,18 +31,43 @@ public class ManagementController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String tableContent(Model m){
-        m.addAttribute("users",userDAO.getAllUsers());
-        m.addAttribute("experts", expertDAO.getAllExperts());
-        m.addAttribute("questions", questionDAO.getAllQuestions());
+        List<Expert> experts = expertDAO.getExpertsWithQuizzes();
+        List<User> users = new ArrayList<>();
+        List<Question> questions = new ArrayList<>();
+        for(Expert e: experts){
+            for(Quiz quiz: e.getQuizzes()){
+                List<Question> q = quiz.getQuestions();
+                List<User> u = quiz.getUsers();
+                questions.addAll(q);
+                users.addAll(u);
+            }
+        }
+        m.addAttribute("users",users);
+        m.addAttribute("experts", experts);
+        m.addAttribute("questions", questions);
         return "views/management";
     }
 
+    //////////////// USER UPDATE ADD ////////////////////////
 
-//    @GetMapping("/user")
-//    public String userForm(Model m, User user) {
-//        return "views/management_user";
-//    }
+    @RequestMapping(method = RequestMethod.GET, value= "/user/{id}")
+    public String updateUser(@PathVariable Long id, Model m) {
+        User match = userDAO.getUser(id);
+        m.addAttribute("user", match);
+        return "views/management_userEdit";
+    }
 
+    @PostMapping("/user/updateUser/{id}")
+    public RedirectView updateUser(@ModelAttribute User user, @PathVariable Long id) {
+        userDAO.update(id, user);
+        return new RedirectView("http://localhost:8080/management");
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value= "/user")
+    public String addUser(Model m) {
+        m.addAttribute("user", new User());
+        return "views/management_userAdd";
+    }
 
     @PostMapping("/addUser")
     public RedirectView addUser(@ModelAttribute User user) {
@@ -43,20 +75,60 @@ public class ManagementController {
         return new RedirectView("http://localhost:8080/management");
     }
 
-    @RequestMapping(method = RequestMethod.GET, value= "/user")
-    public String addUser(Model m) {
-        m.addAttribute("user", new User());
-        return "views/management_user";
+    @PostMapping("/user/deleteUser/{id}")
+    public RedirectView deleteUser(@PathVariable Long id) {
+        userDAO.deleteUser(id);
+        return new RedirectView("http://localhost:8080/management");
+    }
+
+    //////////////// EXPERT UPDATE ADD /////////////////////
+
+    @RequestMapping(method = RequestMethod.GET, value= "/expert/{id}")
+    public String updateExpert(@PathVariable Long id, Model m) {
+        Expert match = expertDAO.getExpert(id);
+        m.addAttribute("expert", match);
+        return "views/management_expertEdit";
+    }
+
+    @PostMapping("/expert/updateExpert/{id}")
+    public RedirectView updateExpert(@ModelAttribute Expert expert, @PathVariable Long id) {
+        expertDAO.update(id, expert);
+        return new RedirectView("http://localhost:8080/management");
     }
 
     @RequestMapping(method = RequestMethod.GET, value= "/expert")
     public String addExpert(Model m) {
-        return "views/management_expert";
+        m.addAttribute("expert", new Expert());
+        return "views/management_expertAdd";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value= "/breadcrumb")
-    public String tempBreadcrumb(Model m) {
-        return "views/management_breadcrumb";
+    @PostMapping("/addExpert")
+    public RedirectView addExpert(@ModelAttribute Expert expert) {
+        expertDAO.addExpert(expert);
+        return new RedirectView("http://localhost:8080/management");
+    }
+
+    @PostMapping("/expert/deleteExpert/{id}")
+    public RedirectView deleteExpert(@PathVariable Long id) {
+        expertDAO.deleteExpert(id);
+        return new RedirectView("http://localhost:8080/management");
+    }
+
+    //////////////// BREADCRUMB UPDATE ////////////////////////
+
+    @RequestMapping(method = RequestMethod.GET, value= "/breadcrumb/{id}")
+    public String updateBreadcrumb(@PathVariable Long id, Model m) {
+        Question match = questionDAO.findById(id);
+        m.addAttribute("question", match);
+        //List<Choice> choices = questionDAO.getChoices(id);
+        //m.addAttribute("choices", choices);
+        return "views/management_breadcrumbEdit";
+    }
+
+    @PostMapping("/breadcrumb/updateBreadcrumb/{id}")
+    public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id) {
+        questionDAO.update(id, question);
+        return new RedirectView("http://localhost:8080/management");
     }
 
 }

@@ -1,10 +1,6 @@
 <resources>
     <string name="app_name">Breadcrumbs Game</string>
     <string name="question">Question</string>
-    <string name="button1">First Button</string>
-    <string name="button2">Second Button</string>
-    <string name="button3">Third Button</string>
-    <string name="button4">Fourth Button</string>
     <string name="hint">Hint</string>
     <string name="background">Background</string>
     <string name="scan_qrcode_button">Scan QRCode</string>

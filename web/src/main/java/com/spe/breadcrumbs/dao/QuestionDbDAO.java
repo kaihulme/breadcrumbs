@@ -79,4 +79,25 @@ public class QuestionDbDAO implements QuestionDAO {
         }
         return choices;
     }
+
+    @Override
+    public boolean update(Long id, Question q) {
+        try{
+            String updateQuestion = "UPDATE Question " +
+                    "SET question = ?" +
+                    "WHERE id = ?;";
+            Connection con = getConnection();
+            PreparedStatement stmt = con.prepareStatement(updateQuestion);
+            stmt.setString(1,q.getQuestion());
+            stmt.setLong(2,q.getId());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
 }

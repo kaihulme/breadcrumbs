@@ -2,7 +2,6 @@ package com.spe.breadcrumbs.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +9,10 @@ import java.util.List;
 @Entity @Table(name = "User")
 @Getter @Setter
 public class User {
+
     @Id @GeneratedValue
     private Long id;
+
     @Column(name = "firstName")
     private String firstName;
 
@@ -39,9 +40,7 @@ public class User {
         this.score= score;
     }
 
-    public User() {
-
-    }
+    public User() {}
 
     public boolean equals(User u) {
         return (id.equals(u.getId()) || (u.getEmail().toLowerCase().equals(email)));

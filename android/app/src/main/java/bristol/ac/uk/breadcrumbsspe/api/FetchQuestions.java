@@ -52,14 +52,17 @@ public class FetchQuestions implements Callback<List<Question>> {
                             Intent nextQ = new Intent(questionActivity, HomeActivity.class);
                             nextQ.putExtra("PREV_QUESTION", questionActivity.qIndex);
                             questionActivity.startActivity(nextQ);
-                        } else
+                        } else {
                             q.correctAttemptMade(false);
                             b.setBackgroundColor(rgb(191, 0, 0));
                             b.setEnabled(false);
+
+                        }
                     }
                 });
             }
-        }else{
+        }
+        else{
             System.out.println(response.errorBody());
         }
     }

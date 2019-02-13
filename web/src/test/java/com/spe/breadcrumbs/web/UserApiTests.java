@@ -18,49 +18,68 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 
-public class WebApplicationTests {
+public class UserApiTests {
 	//TODO add tests
 	@Test
 	public void contextLoads() {
 	}
-
+    @Test
 	public void testUsersNotNull(){
 	}
 
+    @Test
 	public void testGetUserId(){
 
 	}
 
+    @Test
 	public void testGetUserIdThrowsException(){
 
 	}
 
+    @Test
 	public void testGetUserByCode(){
 
 	}
 
+    @Test
 	public void testGetUserByCodeThrowsException(){
 
 	}
 
+    @Test
 	public void testAddUser(){
 
 	}
 
+    @Test
 	public void testAddUserDuplicateEmail(){
 
 	}
 
+    @Test
 	public void testAddUserDuplicateCode(){
 
 	}
 
+    @Test
 	public void testDeleteUser(){
 
 	}
 
+    @Test
 	public void testDeleteUserThrowsException(){
 
 	}
+
+	@Test
+	public void testUpdateUser(){
+
+    }
+
+    @Test
+    public void tesUpdateUserThrowsException(){
+
+    }
 
 }

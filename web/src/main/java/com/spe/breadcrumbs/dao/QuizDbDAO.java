@@ -28,8 +28,6 @@ public class QuizDbDAO implements QuizDAO{
             if(rs.next()){
                 q = new Quiz(rs.getInt("quizId"),rs.getString("title"));
                 con.close();
-//                List<User> users = getUsers(q.getId());
-//                q.setUsers(users);
                 List<Question> questions = getQuestions(q.getId());
                 q.setQuestions(questions);
             }

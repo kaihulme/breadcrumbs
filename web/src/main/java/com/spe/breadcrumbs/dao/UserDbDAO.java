@@ -16,7 +16,6 @@ public class UserDbDAO implements UserDAO {
 
     @Override
     public List<User> getAllUsers(){
-      //  if(!userCache.isEmpty()) return userCache;
         List<User> users = new ArrayList<>();
         Connection con = getConnection();
         try{
@@ -169,14 +168,41 @@ public class UserDbDAO implements UserDAO {
     }
 
     @Override
+    public boolean update(Long id, User u) {
+        try{
+            String updateUser = "UPDATE User " +
+                    "SET firstName = ?," +
+                    "lastName = ?," +
+                    "email = ?," +
+                    "code = ?," +
+                    "score = ? " +
+                    "WHERE id = ?;";
+            Connection con = getConnection();
+            PreparedStatement stmt = con.prepareStatement(updateUser);
+            stmt.setString(1,u.getFirstName());
+            stmt.setString(2,u.getLastName());
+            stmt.setString(3,u.getEmail());
+            stmt.setString(4,u.getCode());
+            stmt.setInt(5,u.getScore());
+            stmt.setLong(6,u.getId());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public boolean addUser(User u) {
         try{
             Connection con = getConnection();
-            String addUser = "INSERT INTO User(firstName,lastName,email) VALUES(?,?,?)";
+            String addUser = "INSERT INTO User(firstName,lastName,email,code) VALUES(?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(addUser);
             stmt.setString(1,u.getFirstName());
             stmt.setString(2,u.getLastName());
             stmt.setString(3,u.getEmail());
+            stmt.setString(4,u.getCode());
             stmt.executeUpdate();
             con.close();
             return true;
@@ -184,11 +210,6 @@ public class UserDbDAO implements UserDAO {
             e.printStackTrace();
             return false;
         }
-    }
-
-    @Override
-    public boolean update(Long id, User u) {
-        return false;
     }
 
     @Override

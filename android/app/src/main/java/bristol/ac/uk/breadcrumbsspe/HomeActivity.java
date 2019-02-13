@@ -59,8 +59,17 @@ public class HomeActivity extends AppCompatActivity {
         camera_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Opening Camera", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                //QRCodeScannerActivity keeps crashing
+                startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
+
+                //this is only for the Beta Version final release will work via QRCodeScanner
+//                Intent prevQuestion = getIntent();
+//                int index = (prevQuestion.getIntExtra("PREV_QUESTION",-1) + 1) % 4;
+//                Intent answerQuestion = new Intent(HomeActivity.this, QuestionActivity.class);
+//                answerQuestion.putExtra("CURRENT_QUESTION",index);
+//                startActivity(answerQuestion);
             }
         });
 

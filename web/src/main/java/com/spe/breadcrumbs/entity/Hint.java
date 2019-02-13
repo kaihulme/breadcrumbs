@@ -7,8 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity @Table(name = "Hints")
-public class Hints {
+@Entity @Table(name = "Hint")
+public class Hint {
     Question question;
     @Column(name = "hintText") @Setter @Getter
     private String hintText;

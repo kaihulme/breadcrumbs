@@ -1,6 +1,7 @@
 package bristol.ac.uk.breadcrumbsspe;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Build;
@@ -34,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 String code = codeText.getText().toString();
+                code = "RAcJG"; //TODO REMOVE THIS LINE BEFORE BETA
                 UserService userService = UserService.retrofit.create(UserService.class);
-                Call<User> userCall = userService.getUserbyCode(code);
+                Call<User> userCall = userService.getUserByCode(code);
                 userCall.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         t.printStackTrace();
+                        Snackbar.make(v, "Cannot connect to server. Please try again later.", Snackbar.LENGTH_LONG)
+                                .setAction("No connection", null).show();
                     }
                 });
             }

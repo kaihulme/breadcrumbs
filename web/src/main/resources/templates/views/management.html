@@ -125,13 +125,13 @@
 					        </tr>
 				        </thread>
 				        <tbody class="rowlink" data-link="row">
-				        <tr th:each="user : ${users}">
-					        <td><a th:href="@{'/management/' + ${user.id}}"><span th:text="${user.id}">id</span></a></td>
-					        <td><a th:href="@{'/management/' + ${user.id}}"><span th:text="${user.firstName}"> firstName</span></a></td>
-					        <td><a th:href="@{'/management/' + ${user.id}}"><span th:text="${user.lastName}">lastName</span></a></td>
-					        <td><a th:href="@{'/management/' + ${user.id}}"><span th:text="${user.email}">email</span></a></td>
-					        <td><a th:href="@{'/management/' + ${user.id}}"><span th:text="${user.code}">code</span></a></td>
-				        </tr>
+					        <tr th:each="user : ${users}">
+						        <td><a th:href="@{'/management/user/' + ${user.id}}"><span th:text="${user.id}">id</span></a></td>
+						        <td><a th:href="@{'/management/user/' + ${user.id}}"><span th:text="${user.firstName}"> firstName</span></a></td>
+						        <td><a th:href="@{'/management/user/' + ${user.id}}"><span th:text="${user.lastName}">lastName</span></a></td>
+						        <td><a th:href="@{'/management/user/' + ${user.id}}"><span th:text="${user.email}">email</span></a></td>
+						        <td><a th:href="@{'/management/user/' + ${user.id}}"><span th:text="${user.code}">code</span></a></td>
+					        </tr>
 				        </tbody>
 			        </table>
 			        <!-- /User Table -->
@@ -149,12 +149,12 @@
 					        </tr>
 				        </thread>
 				        <tbody class="rowlink" data-link="row">
-				        <tr th:each="expert : ${experts}">
-					        <td><a th:href="@{'/management/' + ${expert.id}}"><span th:text="${expert.id}">id</span></a></td>
-					        <td><a th:href="@{'/management/' + ${expert.id}}"><span th:text="${expert.firstName}"> firstName</span></a></td>
-					        <td><a th:href="@{'/management/' + ${expert.id}}"><span th:text="${expert.lastName}">lastName</span></a></td>
-					        <td><a th:href="@{'/management/' + ${expert.id}}"><span th:text="${expert.email}">email</span></a></td>
-				        </tr>
+					        <tr th:each="expert : ${experts}">
+						        <td><a th:href="@{'/management/expert/' + ${expert.id}}"><span th:text="${expert.id}">id</span></a></td>
+						        <td><a th:href="@{'/management/expert/' + ${expert.id}}"><span th:text="${expert.firstName}"> firstName</span></a></td>
+						        <td><a th:href="@{'/management/expert/' + ${expert.id}}"><span th:text="${expert.lastName}">lastName</span></a></td>
+						        <td><a th:href="@{'/management/expert/' + ${expert.id}}"><span th:text="${expert.email}">email</span></a></td>
+					        </tr>
 				        </tbody>
 			        </table>
 			        <!-- /Expert Table -->
@@ -165,15 +165,15 @@
 			        <table class="table table-striped table-hover" id="breadcrumbs">
 				        <thread>
 					        <tr>
-						        <th style="width:10%;" onclick="sortTable(0)">ID</th>
+						        <th style="width:10%;" onclick="sortTable(0)">No.</th>
 						        <th style="width:90%;" onclick="sortTable(1)">Question</th>
 					        </tr>
 				        </thread>
 				        <tbody class="rowlink" data-link="row">
-				        <tr th:each="question : ${questions}">
-					        <td><a th:href="@{'/management/' + ${question.id}}"><span th:text="${question.id}">id</span></a></td>
-					        <td><a th:href="@{'/management/' + ${question.id}}"><span th:text="${question.question}"> question</span></a></td>
-				        </tr>
+					        <tr th:each="question : ${questions}">
+						        <td><a th:href="@{'/management/breadcrumb/' + ${question.id}}"><span th:text="${question.id}">id</span></a></td>
+						        <td><a th:href="@{'/management/breadcrumb/' + ${question.id}}"><span th:text="${question.question}"> question</span></a></td>
+					        </tr>
 				        </tbody>
 			        </table>
 			        <!-- /Breadcrumb Table -->

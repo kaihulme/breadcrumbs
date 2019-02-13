@@ -91,44 +91,17 @@
 
             <!-- Page Content -->
 
-	        <form>
-		        <div class="form-row">
-			        <div class="col">
-				        <label for="firstNameInput">First Name</label>
-				        <input class="form-control" type="text" id="firstNameInput" placeholder="e.g. Dave">
-			        </div>
-			        <div class="col">
-				        <label for="secondNameInput">Second Name</label>
-				        <input class="form-control" type="text" id="secondNameInput" placeholder="e.g. Smith">
-			        </div>
-		        </div>
-		        <br>
-		        <div class="form-row">
-			        <div class="col">
-				        <div class="form-group">
-					        <label for="emailInput">Email address</label>
-					        <input type="email" class="form-control" id="emailInput" placeholder="e.g. davesmith@example.com">
-				        </div>
-			        </div>
-		        </div>
-		        <div class="form-row">
-			        <div class="col">
-				        <div class="form-group">
-					        <label for="passwordInput">Password</label>
-					        <input type="password" class="form-control" id="passwordInput" placeholder="Must be at least 8 characters">
-				        </div>
-			        </div>
-		        </div>
-		        <div class="form-row">
-			        <div class="col">
-				        <div class="form-group">
-					        <label for="passwordConfirmInput">Confirm Password</label>
-					        <input type="password" class="form-control" id="passwordConfirmInput" placeholder="Please confirm your password">
-				        </div>
-			        </div>
-		        </div>
-		        <br>
-		        <button type="submit" class="btn btn-primary">Submit</button>
+	        <!-- Page Content -->
+	        <form action="#" th:action="@{'deleteExpert/'+${expert.id}}" th:object="${expert}" method="post">
+		        <button type="submit" value="Submit">Delete Expert</button>
+	        </form>
+
+	        <form action="#" th:action="@{'updateExpert/'+${expert.id}}" th:object="${expert}" method="post">
+		        <p>First Name: <input type="text" th:field="*{firstName}" /></p>
+		        <p>Second Name: <input type="text" th:field="*{lastName}" /></p>
+		        <p>Email: <input type="text" th:field="*{email}" /></p>
+		        <p>Password: <input type="text" th:field="*{password}" /></p>
+		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 	        </form>
 
             <!-- /Page Content -->
