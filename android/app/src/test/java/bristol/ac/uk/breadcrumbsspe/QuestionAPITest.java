@@ -12,4 +12,19 @@ public class QuestionAPITest {
     @Test
     public void questionsAreFetched(){
     }
+
+    @Test
+    public void scoreUpdates(){
+
+    }
+
+    @Test
+    public void pressingSameButtonTwiceDoesntAffectScore(){
+
+    }
+
+    @Test
+    public void attemptUpdates(){
+
+    }
 }
