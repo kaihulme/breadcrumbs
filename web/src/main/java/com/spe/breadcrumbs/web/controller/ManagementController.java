@@ -2,6 +2,8 @@ package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.Expert;
+import com.spe.breadcrumbs.entity.Question;
+import com.spe.breadcrumbs.entity.Quiz;
 import com.spe.breadcrumbs.entity.User;
 import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin
 @Controller
@@ -26,10 +30,20 @@ public class ManagementController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String tableContent(Model m){
-        //TODO make this function faster (INNER JOINs)
-        m.addAttribute("users",userDAO.getAllUsers());
-        m.addAttribute("experts", expertDAO.getAllExperts());
-        m.addAttribute("questions", questionDAO.getAllQuestions());
+        List<Expert> experts = expertDAO.getExpertsWithQuizzes();
+        List<User> users = new ArrayList<>();
+        List<Question> questions = new ArrayList<>();
+        for(Expert e: experts){
+            for(Quiz quiz: e.getQuizzes()){
+                List<Question> q = quiz.getQuestions();
+                List<User> u = quiz.getUsers();
+                questions.addAll(q);
+                users.addAll(u);
+            }
+        }
+        m.addAttribute("users",users);
+        m.addAttribute("experts", experts);
+        m.addAttribute("questions", questions);
         return "views/management";
     }
 
