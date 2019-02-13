@@ -60,6 +60,12 @@ public class ManagementController {
         return new RedirectView("http://localhost:8080/management");
     }
 
+    @PostMapping("/user/deleteUser/{id}")
+    public RedirectView deleteUser(@PathVariable Long id) {
+        userDAO.deleteUser(id);
+        return new RedirectView("http://localhost:8080/management");
+    }
+
     //////////////// EXPERT UPDATE ADD /////////////////////
 
     @RequestMapping(method = RequestMethod.GET, value= "/expert/{id}")
@@ -84,6 +90,12 @@ public class ManagementController {
     @PostMapping("/addExpert")
     public RedirectView addExpert(@ModelAttribute Expert expert) {
         expertDAO.addExpert(expert);
+        return new RedirectView("http://localhost:8080/management");
+    }
+
+    @PostMapping("/expert/deleteExpert/{id}")
+    public RedirectView deleteExpert(@PathVariable Long id) {
+        expertDAO.deleteExpert(id);
         return new RedirectView("http://localhost:8080/management");
     }
 
