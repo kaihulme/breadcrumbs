@@ -1,9 +1,6 @@
 package com.spe.breadcrumbs.dao;
 
-import com.spe.breadcrumbs.entity.Expert;
-import com.spe.breadcrumbs.entity.Question;
-import com.spe.breadcrumbs.entity.Quiz;
-import com.spe.breadcrumbs.entity.User;
+import com.spe.breadcrumbs.entity.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -89,6 +86,48 @@ public class ExpertDbDAO implements ExpertDAO {
             e.printStackTrace();
         }
         return experts;
+    }
+
+    @Override
+    public Expert findByEmail(String email) {
+        Expert e;
+        try{
+            Connection con = getConnection();
+            String getExpert = "SELECT * FROM Expert WHERE email = ?";
+            PreparedStatement stmt = con.prepareStatement(getExpert);
+            stmt.setString(1,email);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                e = new Expert(rs.getLong("id"),rs.getString("firstName"),
+                        rs.getString("lastName"),rs.getString("email"),
+                        rs.getString("password"));
+                Role role = getRole(rs.getLong("roleId"));
+                e.setRole(role);
+                return e;
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        return null;
+    }
+
+    private Role getRole(Long id){
+        try{
+            Connection con = getConnection();
+            String getRole = "SELECT * FROM Role WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(getRole);
+            stmt.setLong(1,id);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                Role role = new Role();
+                role.setId(rs.getLong("id"));
+                role.setName(rs.getString("name"));
+                return role;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private int findExpertIsInList(Long expertId,List<Expert> experts){

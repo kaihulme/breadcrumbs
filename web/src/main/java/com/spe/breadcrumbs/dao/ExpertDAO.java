@@ -8,11 +8,13 @@ import java.util.List;
 public interface ExpertDAO {
 
 
-    public Expert getExpert(Long id);
+    Expert getExpert(Long id);
 
     List<Expert> getAllExperts();
 
     List<Expert> getExpertsWithQuizzes();
+
+    Expert findByEmail(String email);
 
     boolean addExpert(Expert e);
 
