@@ -38,15 +38,25 @@
 
           <div class="d-flex justify-content-center" id="loginButton">
 
-            <form id="loginDetails">
-                <input type="text" id="user"><br>
-                <input type="password" id="password">
-            </form>
-              <a th:href="@{participants}">
-                  <button type="button" id="loginBtn" class="btn btn-default">
-                      <span>Click to Enter</span>
+            <!--<form id="loginDetails">-->
+                <!--<input type="text" id="user"><br>-->
+                <!--<input type="password" id="password">-->
+            <!--</form>-->
+              <!--<a th:href="@{participants}">-->
+                  <!--<button type="button" id="loginBtn" class="btn btn-default">-->
+                      <!--<span>Click to Enter</span>-->
+                  <!--</button>-->
+              <!--</a>-->
+              <form th:action = "@{/login}" method="POST" id="loginDetails">
+                  <input type="text" id="user" name="email"><br>
+                  <input type="password" id="password" name="password">
+                  <div align="center" th:if="${param.error}">
+                      <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
+                  </div>
+                  <button type="Submit" id="loginBtn" class="btn btn-default">
+                      <span>Login</span>
                   </button>
-              </a>
+              </form>
           </div>
 
         </div>

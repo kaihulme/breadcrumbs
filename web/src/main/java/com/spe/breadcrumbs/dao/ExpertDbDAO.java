@@ -1,9 +1,8 @@
 package com.spe.breadcrumbs.dao;
 
-import com.spe.breadcrumbs.entity.Expert;
-import com.spe.breadcrumbs.entity.Question;
-import com.spe.breadcrumbs.entity.Quiz;
-import com.spe.breadcrumbs.entity.User;
+import com.spe.breadcrumbs.entity.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +11,10 @@ import java.util.List;
 import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 
 public class ExpertDbDAO implements ExpertDAO {
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
 
     @Override
     public Expert getExpert(Long id) {
@@ -91,6 +94,48 @@ public class ExpertDbDAO implements ExpertDAO {
         return experts;
     }
 
+    @Override
+    public Expert findByEmail(String email) {
+        Expert e;
+        try{
+            Connection con = getConnection();
+            String getExpert = "SELECT * FROM Expert WHERE email = ?";
+            PreparedStatement stmt = con.prepareStatement(getExpert);
+            stmt.setString(1,email);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                e = new Expert(rs.getLong("id"),rs.getString("firstName"),
+                        rs.getString("lastName"),rs.getString("email"),
+                        rs.getString("password"));
+                Role role = getRole(rs.getLong("roleId"));
+                e.setRole(role);
+                return e;
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        return null;
+    }
+
+    private Role getRole(Long id){
+        try{
+            Connection con = getConnection();
+            String getRole = "SELECT * FROM Role WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(getRole);
+            stmt.setLong(1,id);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                Role role = new Role();
+                role.setId(rs.getLong("id"));
+                role.setName(rs.getString("name"));
+                return role;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private int findExpertIsInList(Long expertId,List<Expert> experts){
         for(int i = 0; i < experts.size(); i++){
             if(expertId.equals(experts.get(i).getId())) return i;
@@ -102,12 +147,13 @@ public class ExpertDbDAO implements ExpertDAO {
     public boolean addExpert(Expert e) {
         try {
             Connection con = getConnection();
-            String addExpert = "INSERT INTO Expert(firstName,lastName,email,password) VALUES(?,?,?,?)";
+            String addExpert = "INSERT INTO Expert(firstName,lastName,email,password,roleId) VALUES(?,?,?,?,1)";
             PreparedStatement stmt = con.prepareStatement(addExpert);
             stmt.setString(1,e.getFirstName());
             stmt.setString(2,e.getLastName());
             stmt.setString(3,e.getEmail());
-            stmt.setString(4,e.getPassword());
+            String password = bCryptPasswordEncoder.encode(e.getPassword());
+            stmt.setString(4,password);
             stmt.executeUpdate();
             con.close();
             return true;
