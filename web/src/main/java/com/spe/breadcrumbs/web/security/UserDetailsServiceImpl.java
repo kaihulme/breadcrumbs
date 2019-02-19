@@ -23,6 +23,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Expert e = expertDAO.findByEmail(s);
+        if(e == null)
+            throw new UsernameNotFoundException("expert with e-mail " + s + " wasn't found");
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         Role role = e.getRole();
         grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));

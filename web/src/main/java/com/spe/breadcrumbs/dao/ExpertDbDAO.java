@@ -1,6 +1,8 @@
 package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,6 +11,10 @@ import java.util.List;
 import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 
 public class ExpertDbDAO implements ExpertDAO {
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
 
     @Override
     public Expert getExpert(Long id) {
@@ -141,12 +147,13 @@ public class ExpertDbDAO implements ExpertDAO {
     public boolean addExpert(Expert e) {
         try {
             Connection con = getConnection();
-            String addExpert = "INSERT INTO Expert(firstName,lastName,email,password) VALUES(?,?,?,?)";
+            String addExpert = "INSERT INTO Expert(firstName,lastName,email,password,roleId) VALUES(?,?,?,?,1)";
             PreparedStatement stmt = con.prepareStatement(addExpert);
             stmt.setString(1,e.getFirstName());
             stmt.setString(2,e.getLastName());
             stmt.setString(3,e.getEmail());
-            stmt.setString(4,e.getPassword());
+            String password = bCryptPasswordEncoder.encode(e.getPassword());
+            stmt.setString(4,password);
             stmt.executeUpdate();
             con.close();
             return true;
