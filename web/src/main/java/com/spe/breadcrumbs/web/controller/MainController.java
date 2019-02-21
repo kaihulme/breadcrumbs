@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MainController{
 
-    @RequestMapping(value = {"/","/login"},method = RequestMethod.GET)
-    public String  login(Model m){
-        //m.addAttribute("expert",new Expert());
+    @RequestMapping(value = {"/login"},method = RequestMethod.GET)
+    public String login(){
         return "index";
+    }
+
+    @RequestMapping(value = "/",method = RequestMethod.GET)
+    public String mainPage(){
+        return "redirect:/participants";
     }
 
     @RequestMapping("/questions")

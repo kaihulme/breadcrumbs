@@ -50,6 +50,7 @@
               <form th:action = "@{/login}" method="POST" id="loginDetails">
                   <input type="text" id="user" name="email"><br>
                   <input type="password" id="password" name="password">
+                  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                   <div align="center" th:if="${param.error}">
                       <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
                   </div>
