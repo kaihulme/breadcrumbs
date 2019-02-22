@@ -197,7 +197,8 @@ public class UserDbDAO implements UserDAO {
     public boolean addUser(User u) {
         try{
             Connection con = getConnection();
-            String addUser = "INSERT INTO User(firstName,lastName,email,code) VALUES(?,?,?,?)";
+            //quiz ID is set to one as there will only be one quiz
+            String addUser = "INSERT INTO User(firstName,lastName,email,code,quizId) VALUES(?,?,?,?,1)";
             PreparedStatement stmt = con.prepareStatement(addUser);
             stmt.setString(1,u.getFirstName());
             stmt.setString(2,u.getLastName());

@@ -41,7 +41,7 @@ public class UserController {
         Question q = quiz.findQuestion(questionId);
         List<Choice> choices = questionDAO.getChoices(questionId);
         q.setChoices(choices);
-        //TODO Add attempts table to database
+        //TODO get Attempts from database
         q.setAttempts(q.getChoices());
         m.addAttribute("question",q);
 

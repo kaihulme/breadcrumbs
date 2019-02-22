@@ -26,7 +26,7 @@ public class User {
     private String code;
 
     @Column(name = "score")
-    private int score;
+    private int score = 0;
 
     @Getter @Setter
     private Quiz quiz;
