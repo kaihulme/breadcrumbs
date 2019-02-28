@@ -67,7 +67,7 @@ public class QuestionDbDAO implements QuestionDAO {
         Connection con = getConnection();
         try{
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Choices");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Choice");
             while(rs.next()){
                 if(rs.getLong("question") == questionId){
                     Choice c = new Choice(questionId,rs.getString("choiceText"),rs.getBoolean("answer"));
