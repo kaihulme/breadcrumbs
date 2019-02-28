@@ -107,14 +107,33 @@ public class ExpertDbDAO implements ExpertDAO {
                 e = new Expert(rs.getLong("id"),rs.getString("firstName"),
                         rs.getString("lastName"),rs.getString("email"),
                         rs.getString("password"));
-                Role role = getRole(rs.getLong("roleId"));
-                e.setRole(role);
+                List<Role> roles = getRoles(rs.getLong("id"));
+                e.setRoles(roles);
                 return e;
             }
         } catch (SQLException e1) {
             e1.printStackTrace();
         }
         return null;
+    }
+
+    private List<Role> getRoles(Long id){
+        List<Role> roles = new ArrayList<>();
+        try{
+            Connection con = getConnection();
+            String getRoles = "SELECT * FROM Expert_Role WHERE expertId = ?";
+            PreparedStatement stmt = con.prepareStatement(getRoles);
+            stmt.setLong(1,id);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Long roleId = rs.getLong("roleId");
+                Role role = getRole(roleId);
+                roles.add(role);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roles;
     }
 
     private Role getRole(Long id){

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -26,9 +27,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(e == null)
             throw new UsernameNotFoundException("expert with e-mail " + s + " wasn't found");
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        Role role = e.getRole();
-        grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
-
+        List<Role> roles = e.getRoles();
+        for(Role role: roles){
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
         return new org.springframework.security.core.userdetails.User(e.getEmail(),e.getPassword(),grantedAuthorities);
     }
 }

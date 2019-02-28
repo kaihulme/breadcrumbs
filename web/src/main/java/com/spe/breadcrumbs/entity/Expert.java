@@ -26,7 +26,7 @@ public class Expert {
     @Column(name = "password")
     private String password;
 
-    private Role role;
+    private List<Role> roles;
 
     private List<Quiz> quizzes = new ArrayList<>();
 
