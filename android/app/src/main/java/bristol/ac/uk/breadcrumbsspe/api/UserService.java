@@ -6,6 +6,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -16,8 +17,6 @@ public interface UserService {
 
     @PUT("users/{id}")
     Call<User> update(@Path("id") Long id, @Body User u);
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://129.213.113.83/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+
+
 }

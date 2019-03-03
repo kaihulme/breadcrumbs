@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.api.UserService;
 import bristol.ac.uk.breadcrumbsspe.entity.User;
 import retrofit2.Call;
@@ -35,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 String code = codeText.getText().toString();
-                code = "RAcJG"; //TODO REMOVE THIS LINE BEFORE BETA
-                UserService userService = UserService.retrofit.create(UserService.class);
+                code = "RAcJG"; //TODO REMOVE THIS LINE BEFORE FINAL RELEASE
+                UserService userService = RetrofitClient.retrofit.create(UserService.class);
                 Call<User> userCall = userService.getUserByCode(code);
                 userCall.enqueue(new Callback<User>() {
                     @Override

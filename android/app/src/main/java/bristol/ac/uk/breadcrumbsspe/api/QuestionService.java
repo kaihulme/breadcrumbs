@@ -12,9 +12,4 @@ import retrofit2.http.GET;
 public interface QuestionService {
     @GET("questions")
     Call<List<Question>> getAllQuestions();
-
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://129.213.113.83/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
 }

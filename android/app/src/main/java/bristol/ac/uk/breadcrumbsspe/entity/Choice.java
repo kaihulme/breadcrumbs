@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Choice {
-
+   private Long id;
    private Long questionId;
    private String choiceText;
    private boolean answer;
@@ -18,6 +18,14 @@ public class Choice {
 
     public String getChoiceText() {
         return choiceText;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public boolean isAnswer() {

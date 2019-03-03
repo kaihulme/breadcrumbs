@@ -24,7 +24,7 @@ public class FetchQuestions implements Callback<List<Question>> {
 
     public void start(QuestionActivity questionActivity){
         this.questionActivity = questionActivity;
-        QuestionService questionService = QuestionService.retrofit.create(QuestionService.class);
+        QuestionService questionService = RetrofitClient.retrofit.create(QuestionService.class);
         Call<List<Question>> questionCall = questionService.getAllQuestions();
         questionCall.enqueue(this);
     }

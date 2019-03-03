@@ -3,6 +3,7 @@ package bristol.ac.uk.breadcrumbsspe.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.api.UserService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,7 +72,7 @@ public class User {
 
     public void addToScore(int pointsScored) {
         score += pointsScored;
-        UserService userService = UserService.retrofit.create(UserService.class);
+        UserService userService = RetrofitClient.retrofit.create(UserService.class);
         Call<User> userCall = userService.update(id,this);
         userCall.enqueue(new Callback<User>() {
             @Override

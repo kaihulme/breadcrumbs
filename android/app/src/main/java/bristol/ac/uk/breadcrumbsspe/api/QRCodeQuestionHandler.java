@@ -11,6 +11,7 @@ import bristol.ac.uk.breadcrumbsspe.QRCodeScannerActivity;
 import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.entity.Choice;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,8 +31,12 @@ public class QRCodeQuestionHandler implements Callback<Question> {
 
     public void start(QuestionActivity questionActivity,String url){
         setURL(url);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new BasicAuthInterceptor("jackSmith@hotmail.co.uk", "aurora44"))
+                .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(base_URL)
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         this.questionActivity = questionActivity;
