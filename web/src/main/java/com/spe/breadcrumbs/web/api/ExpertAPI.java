@@ -15,12 +15,12 @@ public class ExpertAPI {
 
     private ExpertDAO expertDAO = new ExpertDbDAO();
 
-    @RequestMapping(method = RequestMethod.GET,value = "{id}")
-    public ResponseEntity getExpert(@PathVariable Long id){
-        Expert e = expertDAO.getExpert(id);
-        if(e != null){
-            return new ResponseEntity<>(e, HttpStatus.OK);
-        }
-        return new ResponseEntity(null,HttpStatus.NOT_FOUND);
-    }
+//    @RequestMapping(method = RequestMethod.GET,value = "{id}")
+//    public ResponseEntity getExpert(@PathVariable Long id){
+//        Expert e = expertDAO.getExpert(id);
+//        if(e != null){
+//            return new ResponseEntity<>(e, HttpStatus.OK);
+//        }
+//        return new ResponseEntity(null,HttpStatus.NOT_FOUND);
+//    }
 }
