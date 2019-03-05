@@ -196,7 +196,8 @@ public class ExpertDbDAO implements ExpertDAO {
             stmt.setString(1,e.getFirstName());
             stmt.setString(2,e.getLastName());
             stmt.setString(3,e.getEmail());
-            stmt.setString(4,e.getPassword());
+            String password = bCryptPasswordEncoder.encode(e.getPassword());
+            stmt.setString(4,password);
             stmt.setLong(5,e.getId());
             stmt.executeUpdate();
             return true;
