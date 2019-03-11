@@ -7,7 +7,7 @@ jobs:
         steps:
             - checkout
             - run:
-                command:  ls /home
+                command:  ls /home/circleci
             - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
                 key: breadcrumbs-web-{{ checksum "pom.xml" }}
             - run: mvn dependency:go-offline # gets the project dependencies
