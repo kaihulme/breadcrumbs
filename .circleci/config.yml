@@ -6,8 +6,7 @@ jobs:
             - image: circleci/openjdk:8-jdk-browsers
         steps:
             - checkout
-            - run:
-                command: ls web
+
             - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
                 key: breadcrumbs-web-{{ checksum "web/pom.xml" }}
             - run: cd web && mvn dependency:go-offline # gets the project dependencies
@@ -15,8 +14,10 @@ jobs:
                 paths:
                     - ~/.m2
                 key: breadcrumbs-web-{{ checksum "web/pom.xml" }}
-            - run: cd web && mvn package
 
+            - run: cd web && mvn package
+            - run:
+                command: ls /home/circleci/Breadcrumbs/web/target/surefire-reports
             - store_test_results:
                 path: web/target/surefire-reports
 
