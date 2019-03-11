@@ -7,7 +7,7 @@ jobs:
         steps:
             - checkout
             - run:
-                commands: ls /home/circleci/Breadcrumbs/web/target/surefire-reports
+                command: ls /home/circleci/Breadcrumbs/web/target/surefire-reports
             - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
                 key: breadcrumbs-web-{{ checksum "web/pom.xml" }}
             - run: cd web && mvn dependency:go-offline # gets the project dependencies
