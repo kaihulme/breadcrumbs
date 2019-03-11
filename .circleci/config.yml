@@ -1,7 +1,7 @@
-version: 2
+version: 1
 jobs:
     build:
-        working_directory: ~/Breadcrumbs
+        working_directory: ~/Breadcrumbs/web
         docker:
             - image: circleci/openjdk:8-jdk-browsers
         steps:
