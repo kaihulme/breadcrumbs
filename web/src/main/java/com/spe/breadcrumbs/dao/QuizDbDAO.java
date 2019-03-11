@@ -26,7 +26,7 @@ public class QuizDbDAO implements QuizDAO{
             stmt.setInt(1,id);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                q = new Quiz(rs.getInt("quizId"),rs.getString("title"));
+                q = new Quiz(rs.getLong("quizId"),rs.getString("title"));
                 con.close();
                 List<Question> questions = getQuestions(q.getId());
                 q.setQuestions(questions);
@@ -38,13 +38,13 @@ public class QuizDbDAO implements QuizDAO{
     }
 
     @Override
-    public List<Question> getQuestions(int id) {
+    public List<Question> getQuestions(Long id) {
         List<Question> questions = new ArrayList<>();
         Connection con = getConnection();
         try{
             String getQuestions = "SELECT * FROM Question WHERE quizId = ?";
             PreparedStatement stmt = con.prepareStatement(getQuestions);
-            stmt.setInt(1,id);
+            stmt.setLong(1,id);
             ResultSet rs =stmt.executeQuery();
             while(rs.next()){
                 Question q = new Question(rs.getLong("id"),rs.getString("question"));

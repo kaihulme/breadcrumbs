@@ -10,7 +10,7 @@ import java.util.List;
 @Entity @Table(name = "Quiz")
 public class Quiz {
     @Id @GeneratedValue @Getter @Setter
-    private int id;
+    private Long id;
     @Column(name = "title") @Getter @Setter
     private String title;
     @Getter @Setter
@@ -19,7 +19,7 @@ public class Quiz {
     @Getter @Setter
     List<User> users = new ArrayList<>();
 
-    public Quiz(int id,String title){
+    public Quiz(Long id,String title){
         this.id = id;
         this.title = title;
     }

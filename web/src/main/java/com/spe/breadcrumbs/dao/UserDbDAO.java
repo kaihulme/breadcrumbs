@@ -86,7 +86,7 @@ public class UserDbDAO implements UserDAO {
                         rs.getString("email"),
                         rs.getString("code"),
                         rs.getInt("score"));
-                quiz = new Quiz(rs.getInt("quizId"),rs.getString("title"));
+                quiz = new Quiz(rs.getLong("quizId"),rs.getString("title"));
                 Question q = new Question(rs.getLong("questionId"),rs.getString("question"));
                 questions.add(q);
                 quiz.setQuestions(questions);
@@ -155,7 +155,7 @@ public class UserDbDAO implements UserDAO {
                         rs.getString("email"),
                         rs.getString("code"),
                         rs.getInt("score"));
-                quiz = new Quiz(rs.getInt("quizId"),rs.getString("title"));
+                quiz = new Quiz(rs.getLong("quizId"),rs.getString("title"));
                 Question q = new Question(rs.getLong("questionId"),rs.getString("question"));
                 questions.add(q);
                 quiz.setQuestions(questions);

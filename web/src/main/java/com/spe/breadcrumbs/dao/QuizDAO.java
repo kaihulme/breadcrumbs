@@ -10,6 +10,6 @@ public interface QuizDAO {
 
     Quiz getQuiz(int id);
     //get all questions with this quiz's id
-    List<Question> getQuestions(int id);
+    List<Question> getQuestions(Long id);
     List<User> getUsers(int id);
 }
