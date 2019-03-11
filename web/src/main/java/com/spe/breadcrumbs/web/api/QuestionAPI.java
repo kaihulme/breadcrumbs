@@ -26,7 +26,7 @@ public class QuestionAPI {
         if(q != null){
             return new ResponseEntity<>(q,HttpStatus.OK);
         }else{
-            return new ResponseEntity(null,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
     }
 }

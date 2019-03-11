@@ -28,7 +28,7 @@ public class UserAPI {
             if(match != null){
                 return new ResponseEntity<>(match, HttpStatus.OK);
             }
-            return new ResponseEntity(null,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
     }
 
@@ -40,31 +40,31 @@ public class UserAPI {
         if(match != null){
             return new ResponseEntity<>(match, HttpStatus.OK);
         }
-        return new ResponseEntity(null,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
 
     //update the user details with that id
     @RequestMapping(method = RequestMethod.PUT,value = "{id}")
     public ResponseEntity update(@PathVariable Long id,@RequestBody User u){
         if(userDAO.update(id,u)){
-            return new ResponseEntity(null,HttpStatus.OK);
+            return new ResponseEntity<>(null,HttpStatus.OK);
         }else{
-            return new ResponseEntity(null,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity addUser(@RequestBody User u){
         if(userDAO.addUser(u)) {
-            return new ResponseEntity(null,HttpStatus.CREATED);
+            return new ResponseEntity<>(null,HttpStatus.CREATED);
         }
-        return new ResponseEntity(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(method = RequestMethod.DELETE,value = "{id}")
     public ResponseEntity deleteUser(@PathVariable Long id){
         if(userDAO.deleteUser(id)){
-            return new ResponseEntity(null,HttpStatus.OK);
+            return new ResponseEntity<>(null,HttpStatus.OK);
         }
         return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }

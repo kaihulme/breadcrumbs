@@ -20,9 +20,9 @@ public class AttemptAPI {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity addAttempt(@RequestBody User u,@RequestBody Choice c){
         if(attemptDAO.addAttempt(u,c)){
-            return new ResponseEntity(null, HttpStatus.CREATED);
+            return new ResponseEntity<>(null, HttpStatus.CREATED);
         }else{
-            return new ResponseEntity(null,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
