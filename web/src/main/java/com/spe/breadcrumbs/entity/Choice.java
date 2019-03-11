@@ -9,7 +9,8 @@ import javax.persistence.Table;
 
 @Entity @Table(name = "Choice")
 public class Choice {
-
+   @Getter @Setter
+   private Long choiceId;
    @Getter @Setter
    private Long questionId;
    @Column(name = "choiceText") @Getter @Setter

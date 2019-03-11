@@ -20,6 +20,7 @@ public class UserController {
     private UserDAO userDAO = new UserDbDAO();
     private QuestionDAO questionDAO = new QuestionDbDAO();
     private QuizDAO quizDAO = new QuizDbDAO();
+    private AttemptDAO attemptDAO = new AttemptDbDAO();
 
     @RequestMapping(method = RequestMethod.GET)
     public String participants(Model m){
@@ -41,10 +42,9 @@ public class UserController {
         Question q = quiz.findQuestion(questionId);
         List<Choice> choices = questionDAO.getChoices(questionId);
         q.setChoices(choices);
-        //TODO get Attempts from database
-        q.setAttempts(q.getChoices());
+        List<Choice> attempts = attemptDAO.getAttempts(questionId,userId);
+        q.setAttempts(attempts);
         m.addAttribute("question",q);
-
         return "views/participants_userProfile_question";
     }
 

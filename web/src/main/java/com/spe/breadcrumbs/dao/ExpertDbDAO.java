@@ -166,7 +166,7 @@ public class ExpertDbDAO implements ExpertDAO {
     public boolean addExpert(Expert e) {
         try {
             Connection con = getConnection();
-            String addExpert = "INSERT INTO Expert(firstName,lastName,email,password,roleId) VALUES(?,?,?,?,1)";
+            String addExpert = "INSERT INTO Expert(firstName,lastName,email,password) VALUES(?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(addExpert);
             stmt.setString(1,e.getFirstName());
             stmt.setString(2,e.getLastName());
