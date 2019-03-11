@@ -5,6 +5,7 @@
     <string name="background">Background</string>
     <string name="scan_qrcode_button">Scan QRCode</string>
     <string name="no_qrcode_captured">No QRCode captured</string>
+    <string name="input_code_manually">Input Code Manually</string>
     <string name="qrcode_error_format">"Error reading QRCode: %1$s"</string>
     <string name="ok">OK</string>
     <string name="permission_camera_rationale">Access to the camera is needed for detection</string>

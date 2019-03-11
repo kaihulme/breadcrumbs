@@ -16,8 +16,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import bristol.ac.uk.breadcrumbsspe.HomeActivity;
+import bristol.ac.uk.breadcrumbsspe.MainActivity;
 import bristol.ac.uk.breadcrumbsspe.R;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSource;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSourcePreview;
@@ -56,6 +60,20 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
         setContentView(R.layout.qrcode_capture);
 
         mPreview = findViewById(R.id.preview);
+
+        Button InputCode = findViewById(R.id.input_code);
+        InputCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Placeholder functionality for the button for manual code input
+                // Was thinking of doing it as an overlay on top of the camera screen which would
+                // have an input text view which will store the code and then look for it in the
+                // database
+                Intent intent = new Intent(QRCodeCaptureActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         boolean autoFocus = true;
         boolean useFlash = false;

@@ -13,4 +13,13 @@
         android:layout_height="0dp"
         android:layout_weight="1">
     </bristol.ac.uk.breadcrumbsspe.camera.CameraSourcePreview>
+
+    <Button
+        android:id="@+id/input_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/input_code_manually"
+        android:background="@color/colorAccent"
+        android:textColor="@color/colorWhite"/>
+
 </LinearLayout>
