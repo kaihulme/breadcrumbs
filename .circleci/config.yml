@@ -20,6 +20,8 @@ jobs:
             - store_artifacts:
                 path: web/target/web-0.0.1-SNAPSHOT.jar
     deploy:
+        machine:
+            enabled: true
         steps:
             - checkout
             - add_ssh_keys:
