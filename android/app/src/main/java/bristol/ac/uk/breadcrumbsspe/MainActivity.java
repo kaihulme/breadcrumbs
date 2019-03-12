@@ -1,6 +1,7 @@
 package bristol.ac.uk.breadcrumbsspe;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Logging in, sending user to Home Screen
     private void login(){
-        Button loginButton = findViewById(R.id.signIn_btn);
+        FloatingActionButton loginButton = findViewById(R.id.signIn_btn);
         EditText codeText = findViewById(R.id.login_code);
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
