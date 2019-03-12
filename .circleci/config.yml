@@ -18,6 +18,5 @@ jobs:
             - run: cd web && mvn package
             - store_test_results:
                 path: web/target/surefire-reports
-            - run: ls web/target/surefire-reports
             - store_artifacts:
                 path: web/target/web-0.0.1-SNAPSHOT.jar
