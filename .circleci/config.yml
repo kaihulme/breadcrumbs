@@ -20,15 +20,27 @@ jobs:
             - store_artifacts:
                 path: web/target/web-0.0.1-SNAPSHOT.jar
     deploy:
-        machine:
-            enabled: true
         steps:
+            - checkout
+            - add_ssh_keys:
+                fingerprints:
+                    - "28:1d:02:09:d4:50:59:e3:de:1b:b4:97:30:7d:2b:51"
             - run:
-                command: cat /home/circleci/.ssh/id_rsa
+                name: fix host authenticity for production server
+                command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
             - run:
-                name: Deploy Over SSH
-                command: |
-                   ssh -v $SSH_USER@$SSH_HOST "<remote deploy command>"
+                name: deploy app
+                command: scp web/target/web-0.0.1-SNAPSHOT.jar $SSH_USERNAME@$SSH_HOST:test
+
+        # machine:
+        #     enabled: true
+        # steps:
+        #     - run:
+        #         command: cat /home/circleci/.ssh/id_rsa
+        #     - run:
+        #         name: Deploy Over SSH
+        #         command: |
+        #            ssh -v $SSH_USER@$SSH_HOST "<remote deploy command>"
 workflows:
     version: 2
     build-and-deploy:
