@@ -33,10 +33,10 @@ jobs:
             - run:
                 name: Deploy Over SSH
                 command: |
-                   ssh -vv $SSH_USER@$SSH_HOST ls
-            # - run:
-            #     name: deploy app
-            #     command: scp web/target/web-0.0.1-SNAPSHOT.jar $SSH_USERNAME@$SSH_HOST:test
+                   ssh $SSH_USER@$SSH_HOST ls
+            - run:
+                name: deploy app
+                command: scp web/target/web-0.0.1-SNAPSHOT.jar $SSH_USERNAME@$SSH_HOST:test
 
         # machine:
         #     enabled: true
