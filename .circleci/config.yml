@@ -31,6 +31,8 @@ jobs:
                 name: fix host authenticity for production server
                 command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
             - run:
+                command: cat /home/circleci/.ssh/id_rsa_281d0209d45059e3de1bb497307d2b51
+            - run:
                 name: Deploy Over SSH
                 command: |
                    ssh -v $SSH_USER@$SSH_HOST "<remote deploy command>"
