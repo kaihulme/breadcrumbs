@@ -33,7 +33,7 @@ jobs:
             - run:
                 name: Deploy Over SSH
                 command: |
-                   ssh $SSH_USER@$SSH_HOST "sudo su ubuntu && cd ~ && run-breadcrumbs.sh"
+                   ssh $SSH_USER@$SSH_HOST "sudo su ubuntu && cd ~ && ls"
 workflows:
     version: 2
     build-and-deploy:
