@@ -30,13 +30,13 @@ jobs:
             - run:
                 name: fix host authenticity for production server
                 command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
-            - run:
-                name: Deploy Over SSH
-                command: |
-                   ssh $SSH_USER@$SSH_HOST ls
+            # - run:
+            #     name: Deploy Over SSH
+            #     command: |
+            #        ssh $SSH_USER@$SSH_HOST ls
             - run:
                 name: deploy app
-                command: sudo scp web/target/web-0.0.1-SNAPSHOT.jar $SSH_USER@$SSH_HOST:test
+                command: scp -v web/target/web-0.0.1-SNAPSHOT.jar $SSH_USER@$SSH_HOST:test
 
         # machine:
         #     enabled: true
