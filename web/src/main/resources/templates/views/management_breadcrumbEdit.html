@@ -124,7 +124,7 @@
 				    <div class="modal-footer">
 					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 						<form id="logoutForm" method="POST" th:action="@{/logout}">
-							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+							<!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
 							<button type="submit" class="btn btn-primary">Confirm</button>
 						</form>
 				    </div>
