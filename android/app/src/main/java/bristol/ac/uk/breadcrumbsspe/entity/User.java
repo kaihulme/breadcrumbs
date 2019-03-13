@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.api.UserService;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,13 +74,14 @@ public class User {
     public void addToScore(int pointsScored) {
         score += pointsScored;
         UserService userService = RetrofitClient.retrofit.create(UserService.class);
-        Call<User> userCall = userService.update(id,this);
-        userCall.enqueue(new Callback<User>() {
+        Call<ResponseBody> userCall = userService.update(id,this);
+        userCall.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // you could add some log statements here
             }
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 t.printStackTrace();
             }
         });

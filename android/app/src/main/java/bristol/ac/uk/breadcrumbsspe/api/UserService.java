@@ -1,6 +1,7 @@
 package bristol.ac.uk.breadcrumbsspe.api;
 
 import bristol.ac.uk.breadcrumbsspe.entity.User;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,7 +17,7 @@ public interface UserService {
     Call<User> getUserByCode(@Query(value = "code",encoded = true) String code);
 
     @PUT("users/{id}")
-    Call<User> update(@Path("id") Long id, @Body User u);
+    Call<ResponseBody> update(@Path("id") Long id, @Body User u);
 
 
 }
