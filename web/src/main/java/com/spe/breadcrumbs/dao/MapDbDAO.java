@@ -2,14 +2,32 @@ package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.Map;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 
 public class MapDbDAO implements MapDAO {
+
+    @Override
+    public List<Map> getAllMaps() {
+        List<Map> maps = new ArrayList<>();
+        Connection con = getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Map");
+            while (rs.next()) {
+                Map m = new Map(rs.getLong("id"), rs.getString("name"),
+                        rs.getBlob("picture"));
+                maps.add(m);
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return maps;
+    }
 
     @Override
     public Map getMap(Long id) {
@@ -35,7 +53,7 @@ public class MapDbDAO implements MapDAO {
     @Override
     public boolean addMap(Map m) {
         Connection con = getConnection();
-        String addMap = "INSERT INTO MAP(name,picture) VALUES(?,?)";
+        String addMap = "INSERT INTO Map(name,picture) VALUES(?,?)";
         try {
             PreparedStatement stmt = con.prepareStatement(addMap);
             stmt.setString(1, m.getName());

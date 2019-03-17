@@ -22,7 +22,6 @@ import java.util.List;
 @CrossOrigin
 @Controller
 @RequestMapping("/management")
-
 public class ManagementController {
 
     private UserDAO userDAO = new UserDbDAO();
