@@ -3,6 +3,9 @@ package com.spe.breadcrumbs.web.controller;
 import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.*;
 import oracle.jdbc.proxy.annotation.Post;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -16,10 +19,7 @@ import javax.imageio.ImageIO;
 import javax.validation.Valid;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,6 +33,9 @@ public class ManagementController {
     private UserDAO userDAO = new UserDbDAO();
     private ExpertDAO expertDAO = new ExpertDbDAO();
     private QuestionDAO questionDAO = new QuestionDbDAO();
+
+    @Value(value = "classpath:static/mapFeatures/questionIcon.png")
+    private Resource questionIcon;
 
 //    @RequestMapping(method = RequestMethod.GET)
 //    public String tableContent(Model m){
@@ -141,7 +144,32 @@ public class ManagementController {
 
     @PostMapping("/breadcrumb/updateBreadcrumb/{id}")
     public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id) {
-        questionDAO.update(id, question);
+
+        // get map from db where id = id as blob
+        // convert to buffered image bi_map
+        // get question icon as png
+        // convert to buffered image bi_questionIcon
+        // draw bi_questionIcon on bi_map
+        // convert buffered image to blob
+        // update map in db where id = id
+        // update question in db where id = id
+
+        try {
+            int x_coord = question.getX_coord();
+            int y_coord = question.getY_coord();
+            Map map = mapDAO.getMap(id);
+            Blob blob = map.getPicture();
+            BufferedImage bi_map = blobToImage(blob);
+            BufferedImage bi_questionIcon = ImageIO.read(questionIcon.getInputStream());
+            Graphics g = bi_map.getGraphics();
+            g.drawImage(bi_questionIcon, x_coord, y_coord, 50, 50, null);
+            Blob newPicture = imageToBlob(bi_map);
+            Map newMap = new Map(id, "venueMap", newPicture);
+            mapDAO.updateMap(id, newMap);
+            questionDAO.update(id, question);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new RedirectView("http://localhost:8080/management");
     }
 
@@ -187,6 +215,19 @@ public class ManagementController {
             ImageIO.write(newImage, "png", baos);
             byte[] bytes = baos.toByteArray();
             return new javax.sql.rowset.serial.SerialBlob(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public BufferedImage blobToImage(Blob blob) {
+        try {
+            byte[] bytes = blob.getBytes(1, (int) blob.length());
+            InputStream in = new ByteArrayInputStream(bytes);
+            return ImageIO.read(in);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {

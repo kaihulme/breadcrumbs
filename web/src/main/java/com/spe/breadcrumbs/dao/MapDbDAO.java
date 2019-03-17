@@ -70,7 +70,7 @@ public class MapDbDAO implements MapDAO {
 
     public boolean updateMap(Long id, Map m) {
         Connection con = getConnection();
-        String updateMap = "UPDATE Map SET name = ?, picture = ?, WHERE id = ?;";
+        String updateMap = "UPDATE Map SET name = ?, picture = ? WHERE id = ?;";
         try {
             PreparedStatement stmt = con.prepareStatement(updateMap);
             stmt.setString(1, m.getName());
