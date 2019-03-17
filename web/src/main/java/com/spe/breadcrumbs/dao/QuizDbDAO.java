@@ -47,7 +47,8 @@ public class QuizDbDAO implements QuizDAO{
             stmt.setLong(1,id);
             ResultSet rs =stmt.executeQuery();
             while(rs.next()){
-                Question q = new Question(rs.getLong("id"),rs.getString("question"));
+                Question q = new Question(rs.getLong("id"),rs.getString("question"),
+                        rs.getInt("x_coord"), rs.getInt("y_coord"));
                 questions.add(q);
             }
             con.close();
