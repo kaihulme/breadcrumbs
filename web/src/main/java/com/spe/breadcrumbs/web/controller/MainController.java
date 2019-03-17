@@ -20,8 +20,6 @@ import java.sql.SQLException;
 @Controller
 public class MainController{
 
-    private MapDAO mapDAO = new MapDbDAO();
-
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public String login() { return "index"; }
 
@@ -46,15 +44,8 @@ public class MainController{
     }
 
     @RequestMapping("/map")
-    public String map() { return "views/map"; }
-
-    @RequestMapping(value = "/picture/{id}", produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<byte[]> getPicture(@PathVariable("id") Long id) throws SQLException {
-        Blob blob = mapDAO.getMap(id).getPicture();
-        byte[] picture = blob.getBytes(1, (int)blob.length());
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_PNG);
-        return new ResponseEntity<byte[]>(picture, headers, HttpStatus.OK);
+    public String map() {
+        return "views/map";
     }
 
 }
