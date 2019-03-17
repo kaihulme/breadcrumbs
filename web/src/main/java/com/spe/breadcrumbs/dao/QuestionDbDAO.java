@@ -64,6 +64,28 @@ public class QuestionDbDAO implements QuestionDAO {
     }
 
     @Override
+    public Question findByCode(String code) {
+        Question q = null;
+        Connection con = getConnection();
+        try{
+            String getQuestion = "SELECT * FROM Question WHERE code = ?";
+            PreparedStatement stmt = con.prepareStatement(getQuestion);
+            stmt.setString(1,code);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                q = new Question(rs.getLong("id"),rs.getString("question"),
+                        rs.getInt("x_coord"), rs.getInt("y_coord"));
+                con.close();
+                List<Choice> choices = getChoices(q.getId());
+                q.setChoices(choices);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return q;
+    }
+
+    @Override
     public List<Choice> getChoices(Long questionId) {
         List<Choice> choices = new ArrayList<>();
         Connection con = getConnection();
