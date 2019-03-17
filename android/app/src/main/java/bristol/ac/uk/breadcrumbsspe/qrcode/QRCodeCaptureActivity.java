@@ -53,6 +53,9 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
 
+    private String m_Text = "";
+
+
     /**
      * Initializes the UI and creates the detector pipeline.
      */
@@ -72,9 +75,27 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                 // have an input text view which will store the code and then look for it in the
                 // database
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(QRCodeCaptureActivity.this);
+                builder.setTitle("Input Code Here");
 
-                Intent intent = new Intent(QRCodeCaptureActivity.this, HomeActivity.class);
-                startActivity(intent);
+                final EditText input = new EditText(QRCodeCaptureActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                builder.setView(input);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        m_Text = input.getText().toString();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
 
