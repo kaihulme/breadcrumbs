@@ -20,7 +20,8 @@ public class QuestionDbDAO implements QuestionDAO {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Question");
             while (rs.next()){
-                Question q = new Question(rs.getLong("id"),rs.getString("question"));
+                Question q = new Question(rs.getLong("id"),rs.getString("question"),
+                             rs.getInt("x_coord"), rs.getInt("y_coord"));
                 questions.add(q);
             }
         }catch(SQLException e) {
@@ -50,7 +51,8 @@ public class QuestionDbDAO implements QuestionDAO {
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 //move it to the first row
-                q = new Question(rs.getLong("id"),rs.getString("question"));
+                q = new Question(rs.getLong("id"),rs.getString("question"),
+                        rs.getInt("x_coord"), rs.getInt("y_coord"));
                 con.close();
                 List<Choice> choices = getChoices(q.getId());
                 q.setChoices(choices);
@@ -84,12 +86,14 @@ public class QuestionDbDAO implements QuestionDAO {
     public boolean update(Long id, Question q) {
         try{
             String updateQuestion = "UPDATE Question " +
-                    "SET question = ?" +
+                    "SET question = ?, x_coord = ?, y_coord = ?" +
                     "WHERE id = ?;";
             Connection con = getConnection();
             PreparedStatement stmt = con.prepareStatement(updateQuestion);
             stmt.setString(1,q.getQuestion());
-            stmt.setLong(2,q.getId());
+            stmt.setInt(2, q.getX_coord());
+            stmt.setInt(3, q.getY_coord());
+            stmt.setLong(4,q.getId());
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {

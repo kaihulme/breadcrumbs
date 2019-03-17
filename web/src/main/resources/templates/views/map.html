@@ -8,8 +8,6 @@
 
 	<button type="button" class="btn btn-info"><a th:href="@{'/map/add'}">+ Map</a></button>
 
-	<!--<img th:attr="src=@{${picture}}"/>-->
-
 	<table class="table table-striped table-hover" id="maps">
 		<thread>
 			<tr>
@@ -22,27 +20,11 @@
 		<tr th:each="map : ${maps}">
 			<td><span th:text="${map.id}">id</span></a></td>
 			<td><span th:text="${map.name}"> name</span></a></td>
-			<!--<td><span th:attr="${map.picture}">map</span></a></td>-->
 		</tr>
 		</tbody>
 	</table>
 
-	<a th:href="@{image/1}">picture</a>
-
 	<img th:src="@{image/1}"/>
-
-	<!--<table class="table table-striped table-hover" id="images">-->
-		<!--<thread>-->
-			<!--<tr>-->
-				<!--<th>image</th>-->
-			<!--</tr>-->
-		<!--</thread>-->
-		<!--<tbody>-->
-		<!--<tr th:each="image : ${images}">-->
-			<!--<td><span th:attr="${image}">images</span></a></td>-->
-		<!--</tr>-->
-		<!--</tbody>-->
-	<!--</table>-->
 
 </body>
 </html>

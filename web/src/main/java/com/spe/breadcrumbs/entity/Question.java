@@ -17,6 +17,29 @@ public class Question {
     @Column(name = "question") @Getter @Setter
     private String question;
 
+    @Column(name = "x_coord")
+    private int x_coord;
+
+    @Column(name = "y_coord")
+    private int y_coord;
+
+    public Question(Long id, String question, int x_coord, int y_coord) {
+        this.id = id;
+        this.question = question;
+        this.x_coord = x_coord;
+        this.y_coord = y_coord;
+    }
+
+    public Question() {}
+
+    Long getId (Question q) {
+        return id;
+    }
+
+    String getQuestion (Question q) {
+        return question;
+    }
+
     @Getter @Setter
     private Quiz quiz;
 
@@ -31,17 +54,5 @@ public class Question {
 
     @Getter @Setter
     private List<Choice> choices = new ArrayList<>();
-    public Question(Long id,String question) {
-        this.id = id;
-        this.question = question;
-    }
-
-    Long getId (Question q) {
-        return id;
-    }
-
-    String getQuestion (Question q) {
-        return question;
-    }
 
 }

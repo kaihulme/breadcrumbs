@@ -18,6 +18,6 @@ public interface QuestionDAO {
 
     List<Choice> getChoices(Long questionId);
 
-    boolean update(Long id,Question q);
+    boolean update(Long id, Question q);
 
 }
