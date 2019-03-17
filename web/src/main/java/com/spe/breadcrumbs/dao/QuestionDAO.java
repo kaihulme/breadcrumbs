@@ -16,6 +16,9 @@ public interface QuestionDAO {
     //finds a question by its id. return null if not found
     Question findById(Long id);
 
+    //finds a question by its code
+    Question findByCode(String code);
+
     List<Choice> getChoices(Long questionId);
 
     boolean update(Long id, Question q);

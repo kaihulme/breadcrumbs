@@ -23,6 +23,8 @@ public class Question {
     @Column(name = "y_coord")
     private int y_coord;
 
+    private String code;
+
     public Question(Long id, String question, int x_coord, int y_coord) {
         this.id = id;
         this.question = question;
@@ -48,6 +50,7 @@ public class Question {
 
     @Getter
     private int score = 0;
+
 
     @Getter @Setter
     private List<Choice> attempts = new ArrayList<>(); //stores the order the user made the attempts (can be less than 4)
