@@ -16,8 +16,17 @@ public class QuestionAPI {
 
     //Questions
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity getQuestions(){
-        return new ResponseEntity<>(questionDAO.getAllQuestions(), HttpStatus.OK);
+    public ResponseEntity getQuestions(@RequestParam(value = "code",required = false,defaultValue = "") String code){
+        if(code.equals("")){
+            return new ResponseEntity<>(questionDAO.getAllQuestions(), HttpStatus.OK);
+        }else{
+            Question q = questionDAO.findByCode(code);
+            if(q == null){
+                return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+            }else{
+                return new ResponseEntity<>(q,HttpStatus.OK);
+            }
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "{id}")
