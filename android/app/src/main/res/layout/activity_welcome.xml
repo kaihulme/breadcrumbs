@@ -30,20 +30,20 @@
         android:gravity="center"
         android:text="@string/currentScore"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/begin_btn"
+        app:layout_constraintBottom_toTopOf="@id/begin_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_textview" />
+        app:layout_constraintTop_toBottomOf="@id/welcome_textview" />
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/begin_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="40dp"
-        android:text="begin"
+        android:layout_gravity="bottom|center"
+        android:src="@drawable/ic_check"
+        android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package bristol.ac.uk.breadcrumbsspe;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,7 +36,7 @@ public class WelcomeActivity extends AppCompatActivity {
         score_textview.setText(scoreText);
     }
     private void goToHome(){
-        Button begin_btn = findViewById(R.id.begin_btn);
+        FloatingActionButton begin_btn = findViewById(R.id.begin_btn);
         begin_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

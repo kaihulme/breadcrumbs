@@ -14,10 +14,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import bristol.ac.uk.breadcrumbsspe.HomeActivity;
@@ -69,6 +71,8 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                 // Was thinking of doing it as an overlay on top of the camera screen which would
                 // have an input text view which will store the code and then look for it in the
                 // database
+
+
                 Intent intent = new Intent(QRCodeCaptureActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
