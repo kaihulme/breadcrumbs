@@ -43,9 +43,9 @@ public class MainController{
         return "views/paths";
     }
 
-    @RequestMapping("/map")
-    public String map() {
-        return "views/map";
-    }
+//    @RequestMapping("/map")
+//    public String map() {
+//        return "views/map";
+//    }
 
 }

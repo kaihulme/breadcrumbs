@@ -1,21 +1,27 @@
 package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
-import com.spe.breadcrumbs.entity.Choice;
-import com.spe.breadcrumbs.entity.Expert;
-import com.spe.breadcrumbs.entity.Question;
-import com.spe.breadcrumbs.entity.Quiz;
-import com.spe.breadcrumbs.entity.User;
+import com.spe.breadcrumbs.entity.*;
 import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.imageio.ImageIO;
 import javax.validation.Valid;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,6 +143,73 @@ public class ManagementController {
     public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id) {
         questionDAO.update(id, question);
         return new RedirectView("http://localhost:8080/management");
+    }
+
+    ////////////////// MAPS //////////////////////////////
+
+    private MapDAO mapDAO = new MapDbDAO();
+
+    @RequestMapping(method = RequestMethod.GET, value= "/map")
+    public String getMap(Model m) {
+        List<Map> maps = mapDAO.getAllMaps();
+        m.addAttribute("maps", maps);
+        return "views/map";
+    }
+
+    @GetMapping("/map/add")
+    public String addMapPage(Model m) {
+        m.addAttribute("map", new Map());
+        return "views/map_addMap";
+    }
+
+    public BufferedImage multipartToImage(MultipartFile file) {
+        try {
+            File f = new File(file.getOriginalFilename());
+            f.createNewFile();
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(file.getBytes());
+            fos.close();
+            return ImageIO.read(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Blob imageToBlob(BufferedImage in) {
+        try {
+            BufferedImage newImage = new BufferedImage(in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g = newImage.createGraphics();
+            g.drawImage(in, 0, 0, null);
+            g.dispose();
+            // IMAGE -> BYTES
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(newImage, "png", baos);
+            byte[] bytes = baos.toByteArray();
+            return new javax.sql.rowset.serial.SerialBlob(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // take in file -> convert to image -> convert to blob + add name -> add new Map
+    @PostMapping("/map/add")
+    public RedirectView addMap(@RequestParam("f") MultipartFile f) {
+        try {
+            BufferedImage bi = multipartToImage(f);
+            Blob picture = imageToBlob(bi);
+            // CREATE AND ADD MAP
+            Map map = new Map((long) 1, "venueMap", picture);
+            mapDAO.addMap(map);
+            return new RedirectView("http://localhost:8080/map");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new RedirectView("http://localhost:8080/map");
     }
 
 }
