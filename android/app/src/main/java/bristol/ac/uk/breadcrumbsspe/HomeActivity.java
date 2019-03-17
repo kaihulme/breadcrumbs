@@ -12,10 +12,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import bristol.ac.uk.breadcrumbsspe.entity.MapState;
+import bristol.ac.uk.breadcrumbsspe.entity.User;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -26,9 +27,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-       drawMap();
-
+        drawMap();
+        updateScore();
 
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -111,6 +111,14 @@ public class HomeActivity extends AppCompatActivity {
         int mapID = ((MapState) this.getApplication()).getCurrentMap();
         ImageView map = findViewById(R.id.map);
         map.setImageResource(mapID);
+    }
+
+    private void updateScore(){
+        TextView score_textview = findViewById(R.id.home_score);
+        String scoreText = "Your current score is: ";
+        User u = UserInSession.getUser();
+        scoreText += u.getScore();
+        score_textview.setText(scoreText);
     }
 
 }
