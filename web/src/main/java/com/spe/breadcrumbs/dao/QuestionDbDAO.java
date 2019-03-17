@@ -86,7 +86,9 @@ public class QuestionDbDAO implements QuestionDAO {
     public boolean update(Long id, Question q) {
         try{
             String updateQuestion = "UPDATE Question " +
-                    "SET question = ?, x_coord = ?, y_coord = ?" +
+                    "SET question = ?," +
+                    "x_coord = ?," +
+                    "y_coord = ? " +
                     "WHERE id = ?;";
             Connection con = getConnection();
             PreparedStatement stmt = con.prepareStatement(updateQuestion);
@@ -101,7 +103,5 @@ public class QuestionDbDAO implements QuestionDAO {
             return false;
         }
     }
-
-
 
 }
