@@ -14,4 +14,13 @@
     <string name="test_string">Testing</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="currentScore">0</string>
+    <string name="back_to_map">back to map</string>
+    <string name="code">Code</string>
+    <string name="your_current_score_is_0">Your current score is: 0</string>
+    <string name="a">A</string>
+    <string name="b">B</string>
+    <string name="c">C</string>
+    <string name="d">D</string>
+    <string name="welcome_paul">Welcome Paul</string>
+    <string name="breadcrumbs_game">Breadcrumbs Game</string>
 </resources>

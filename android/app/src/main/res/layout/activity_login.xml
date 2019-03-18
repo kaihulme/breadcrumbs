@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
     <ImageView
         android:alpha="0.7"
@@ -34,7 +34,7 @@
             android:ems="8"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:hint="Code"
+            android:hint="@string/code"
             android:inputType="textPersonName"
             android:maxLines="1"
             android:textAlignment="center"

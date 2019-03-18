@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.List;
-
 import bristol.ac.uk.breadcrumbsspe.HomeActivity;
 import bristol.ac.uk.breadcrumbsspe.QRCodeScannerActivity;
 import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.entity.Choice;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
+import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +23,7 @@ public class QRCodeQuestionHandler implements Callback<Question> {
     private String base_URL = "http://129.213.113.83/api/questions";
     private QuestionActivity questionActivity;
     private Question q;
-    public void setURL(String url){
+    private void setURL(String url){
         base_URL = url;
         base_URL += "/";
     }
@@ -45,11 +44,15 @@ public class QRCodeQuestionHandler implements Callback<Question> {
         questionCall.enqueue(this);
     }
 
+    public void setQuestionActivity(QuestionActivity questionActivity) {
+        this.questionActivity = questionActivity;
+    }
+
     @Override
     public void onResponse(Call<Question> call, Response<Question> response) {
         if(response.isSuccessful() && response.body() != null){
             q = response.body();
-            questionActivity.question_textview.setText(q.getQuestion());
+            questionActivity.question_text_view.setText(q.getQuestion());
             for (int i = 0; i < 4; i++) {
                 Choice c = q.getChoices().get(i);
                 questionActivity.buttons.get(i).setText(c.getChoiceText());
@@ -65,9 +68,8 @@ public class QRCodeQuestionHandler implements Callback<Question> {
                             b.setBackgroundColor(rgb(0, 191, 0));
                             //wait
                             Intent nextQ = new Intent(questionActivity, HomeActivity.class);
-                            Intent i = new Intent(questionActivity,QRCodeScannerActivity.class);
-                            i.putExtra("CURRENT_QUESTION", q.getId()+1);
-                            System.out.println(q.getId());
+                            nextQ.putExtra("CURRENT_QUESTION", q.getId().intValue());
+                            //System.out.println(q.getId() + "getId");
                             questionActivity.startActivity(nextQ);
                         } else {
                             q.correctAttemptMade(false);
@@ -85,5 +87,7 @@ public class QRCodeQuestionHandler implements Callback<Question> {
     @Override
     public void onFailure(Call<Question> call, Throwable t) {
         t.printStackTrace();
+        Intent nextQ = new Intent(questionActivity, QRCodeCaptureActivity.class);
+        questionActivity.startActivity(nextQ);
     }
 }

@@ -27,6 +27,11 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Intent i = getIntent();
+        int qIndex = i.getIntExtra("CURRENT_QUESTION", -1);
+        System.out.print("qIndex" + qIndex);
+        if(qIndex != -1)
+            updateMap(qIndex);
         drawMap();
         updateScore();
 
@@ -118,6 +123,10 @@ public class HomeActivity extends AppCompatActivity {
         User u = UserInSession.getUser();
         scoreText += u.getScore();
         score_textview.setText(scoreText);
+    }
+
+    private void updateMap(int questionNumber) {
+        ((MapState) this.getApplication()).setCurrentQuestion(questionNumber);
     }
 
 }

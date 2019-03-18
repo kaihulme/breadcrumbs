@@ -12,11 +12,11 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.Spanned;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -26,10 +26,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import bristol.ac.uk.breadcrumbsspe.HomeActivity;
-import bristol.ac.uk.breadcrumbsspe.MainActivity;
+import bristol.ac.uk.breadcrumbsspe.LoginActivity;
+import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.R;
+import bristol.ac.uk.breadcrumbsspe.api.QuestionService;
+import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSource;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSourcePreview;
+import bristol.ac.uk.breadcrumbsspe.entity.Question;
+import retrofit2.Call;
+import retrofit2.Response;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -38,6 +45,8 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+
+import javax.security.auth.callback.Callback;
 
 import static android.view.View.TEXT_ALIGNMENT_CENTER;
 
@@ -74,25 +83,23 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
         InputCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Placeholder functionality for the button for manual code input
-                // Was thinking of doing it as an overlay on top of the camera screen which would
-                // have an input text view which will store the code and then look for it in the
-                // database
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(QRCodeCaptureActivity.this);
                 builder.setTitle("Input Code Here");
 
                 final EditText input = new EditText(QRCodeCaptureActivity.this);
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
                 input.setTextAlignment(TEXT_ALIGNMENT_CENTER);
                 input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
 
                 builder.setView(input);
 
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                         String code = input.getText().toString();
+                        String code = input.getText().toString();
+                        Intent i = new Intent(QRCodeCaptureActivity.this,QuestionActivity.class);
+                        i.putExtra("CODE",code);
+                        startActivity(i);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -108,13 +115,18 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
 
                 DisplayMetrics displayMetrics = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                layoutParams.copyFrom(dialog.getWindow().getAttributes());
 
+                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+                try {
+                    layoutParams.copyFrom(dialog.getWindow().getAttributes());
+                }
+                catch(Exception e){
+                    Snackbar.make(v, "Bug. Please report.", Snackbar.LENGTH_LONG)
+                            .setAction("Bug", null).show();
+                }
                 layoutParams.width =  (int)(displayMetrics.widthPixels * 0.7f);
 
-                dialog.getWindow().setAttributes(layoutParams
-                );
+                dialog.getWindow().setAttributes(layoutParams);
 
             }
         });
