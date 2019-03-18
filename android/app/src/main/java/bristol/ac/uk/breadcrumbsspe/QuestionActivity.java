@@ -24,7 +24,6 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent i = getIntent();
-        //qIndex = i.getIntExtra("CURRENT_QUESTION",-1);
         url = i.getStringExtra("QUESTION_URL");
         code = i.getStringExtra("CODE");
         super.onCreate(savedInstanceState);
