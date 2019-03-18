@@ -28,10 +28,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Intent i = getIntent();
-        long qIndex = i.getLongExtra("CURRENT_QUESTION", -1);
+        int qIndex = i.getIntExtra("CURRENT_QUESTION", -1);
         System.out.print("qIndex" + qIndex);
         if(qIndex != -1)
-            updateMap(1);
+            updateMap(qIndex);
         drawMap();
         updateScore();
 

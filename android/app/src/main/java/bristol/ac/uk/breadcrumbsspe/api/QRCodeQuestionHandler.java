@@ -67,7 +67,8 @@ public class QRCodeQuestionHandler implements Callback<Question> {
                             b.setBackgroundColor(rgb(0, 191, 0));
                             //wait
                             Intent nextQ = new Intent(questionActivity, HomeActivity.class);
-                            nextQ.putExtra("CURRENT_QUESTION", q.getId());
+                            int qId = q.getId().intValue();
+                            nextQ.putExtra("CURRENT_QUESTION", qId);
                             //System.out.println(q.getId() + "getId");
                             questionActivity.startActivity(nextQ);
                         } else {
