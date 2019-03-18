@@ -35,7 +35,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     //answer question with this index in question list
-    private void answer(int q){
+    private void answer(){
         QRCodeQuestionHandler qrCodeQuestionHandler = new QRCodeQuestionHandler();
         qrCodeQuestionHandler.setQuestionActivity(this);
         TextCodeQuestionHandler textCodeQuestionHandler = new TextCodeQuestionHandler();

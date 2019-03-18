@@ -26,7 +26,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import bristol.ac.uk.breadcrumbsspe.HomeActivity;
-import bristol.ac.uk.breadcrumbsspe.MainActivity;
+import bristol.ac.uk.breadcrumbsspe.LoginActivity;
 import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.R;
 import bristol.ac.uk.breadcrumbsspe.api.QuestionService;
@@ -50,7 +50,7 @@ import javax.security.auth.callback.Callback;
 
 import static android.view.View.TEXT_ALIGNMENT_CENTER;
 
-public final class QRCodeCaptureActivity extends AppCompatActivity
+public final class xQRCodeCaptureActivity extends AppCompatActivity
         implements QRCodeTracker.QRcodeGraphicTrackerCallback {
 
     private static final String TAG = "QRcode-reader";
