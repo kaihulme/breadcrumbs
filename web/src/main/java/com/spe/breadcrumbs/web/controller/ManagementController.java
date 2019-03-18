@@ -142,32 +142,42 @@ public class ManagementController {
         return "views/management_breadcrumbEdit";
     }
 
-    @PostMapping("/breadcrumb/updateBreadcrumb/{id}")
-    public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id) {
+    public Blob drawQuestionImage(Long qNo, int x_coord, int y_coord) {
         try {
-
-            int x_coord = question.getX_coord();
-            int y_coord = question.getY_coord();
-
-            String mapName = "venueMap_q" + id.toString();
-            Map map = mapDAO.getMapByName(mapName);
-
-            Blob blob = map.getPicture();
-            BufferedImage bi_map = blobToImage(blob);
+            Map emptyMap = mapDAO.getMapByName("venueMap_empty");
+            Blob blob = emptyMap.getPicture();
+            BufferedImage bi_emptyMap = blobToImage(blob);
             BufferedImage bi_questionIcon = ImageIO.read(questionIcon.getInputStream());
-
-            Graphics g = bi_map.getGraphics();
+            Graphics g = bi_emptyMap.getGraphics();
             g.drawImage(bi_questionIcon, x_coord, y_coord, 50, 50, null);
-
-            Blob newPicture = imageToBlob(bi_map);
-            Map newMap = new Map(id, mapName, newPicture);
-
-            mapDAO.updateMapByName(mapName, newMap);
-            questionDAO.update(id, question);
-
+            return imageToBlob(bi_emptyMap);
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
+    }
+
+    @PostMapping("/breadcrumb/updateBreadcrumb/{id}")
+    public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id) {
+        int x_coord = question.getX_coord();
+        int y_coord = question.getY_coord();
+        String mapName = "venueMap_q" + id.toString();
+
+//            Map map = mapDAO.getMapByName(mapName);
+
+//            Blob blob = map.getPicture();
+//            BufferedImage bi_map = blobToImage(blob);
+//            BufferedImage bi_questionIcon = ImageIO.read(questionIcon.getInputStream());
+//
+//            Graphics g = bi_map.getGraphics();
+//            g.drawImage(bi_questionIcon, x_coord, y_coord, 50, 50, null);
+//
+//            Blob newPicture = imageToBlob(bi_map);
+
+        Blob newPicture = drawQuestionImage(id, x_coord, y_coord);
+        Map newMap = new Map(id, mapName, newPicture);
+        mapDAO.updateMapByName(mapName, newMap);
+        questionDAO.update(id, question);
         return new RedirectView("http://localhost:8080/management");
     }
 
@@ -243,21 +253,65 @@ public class ManagementController {
         return null;
     }
 
-    // take in file -> convert to image -> convert to blob + add name -> add new Map
+//    // take in file -> convert to image -> convert to blob + add name -> add new Map
+//    @PostMapping("/map/add")
+//    public RedirectView addMap(@RequestParam("f") MultipartFile f) {
+//        try {
+//            BufferedImage bi = multipartToImage(f);
+//            Blob picture = imageToBlob(bi);
+//            Map map = mapDAO.getMapByName("venueMap_empty");
+//            if (map == null) {
+//                map = new Map((long) 1, "venueMap_empty", picture);
+//                mapDAO.addMap(map);
+//                return new RedirectView("http://localhost:8080/management/map");
+//            }
+//            else {
+//                map = new Map((long) 1, "venueMap_empty", picture);
+//                mapDAO.updateMapByName("venueMap_empty", map);
+//                return new RedirectView("http://localhost:8080/management/map");
+//            }
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return new RedirectView("http://localhost:8080/management/map");
+//    }
+
+    // purge old maps -> add new empty map -> generate new question maps
     @PostMapping("/map/add")
     public RedirectView addMap(@RequestParam("f") MultipartFile f) {
         try {
+            // purge old maps
+            mapDAO.deleteAllMaps();
+
+            // creates new venueMap_empty from input PNG
             BufferedImage bi = multipartToImage(f);
             Blob picture = imageToBlob(bi);
-            // CREATE AND ADD MAP
-            Map map = new Map((long) 1, "venueMap", picture);
-            mapDAO.addMap(map);
-            return new RedirectView("http://localhost:8080/map");
+            Map emptyMap = new Map((long) 1, "venueMap_empty", picture);
+
+            // adds mew venueMap_empty
+            mapDAO.addMap(emptyMap);
+
+            // draw images for each question
+            List<Question> questions = questionDAO.getAllQuestions();
+            for (Question question:questions) {
+
+                String mapName = "venueMap_q" + question.getId().toString();
+                Blob newPicture = drawQuestionImage(question.getId(), question.getX_coord(), question.getY_coord());
+                Map newMap = new Map(question.getId(), mapName, newPicture);
+
+                if (mapDAO.getMapByName(mapName) != null) {
+                    mapDAO.updateMapByName(mapName, newMap);
+                } else {
+                    mapDAO.addMap(newMap);
+                }
+
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return new RedirectView("http://localhost:8080/map");
+        return new RedirectView("http://localhost:8080/management/map");
     }
 
 }

@@ -138,4 +138,19 @@ public class MapDbDAO implements MapDAO {
         }
     }
 
+    public boolean deleteAllMaps() {
+        Connection con = getConnection();
+        String deleteAllMaps = "TRUNCATE Map";
+        try {
+            PreparedStatement stmt = con.prepareStatement(deleteAllMaps);
+            stmt.executeUpdate();
+            stmt.close();
+            con.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
