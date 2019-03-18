@@ -14,7 +14,7 @@ import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
 public class QRCodeScannerActivity extends AppCompatActivity {
     private TextView mResultTextView;
     private static int QRCodeReaderRequestCode = 1;
-    private static String LogTag = MainActivity.class.getSimpleName();
+    private static String LogTag = LoginActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -39,8 +39,6 @@ public class QRCodeScannerActivity extends AppCompatActivity {
                     Barcode QRCode = intent.getParcelableExtra(QRCodeCaptureActivity.BarcodeObject);
                     //mResultTextView.setText(QRCode.displayValue);
                     String url = QRCode.displayValue;
-//                    Intent fromHome = getIntent();
-//                    int index = fromHome.getIntExtra("CURRENT_QUESTION",-1);
 
                     Intent i = new Intent(QRCodeScannerActivity.this,QuestionActivity.class);
                     i.putExtra("QUESTION_URL",url);
