@@ -50,7 +50,7 @@ import javax.security.auth.callback.Callback;
 
 import static android.view.View.TEXT_ALIGNMENT_CENTER;
 
-public final class xQRCodeCaptureActivity extends AppCompatActivity
+public final class QRCodeCaptureActivity extends AppCompatActivity
         implements QRCodeTracker.QRcodeGraphicTrackerCallback {
 
     private static final String TAG = "QRcode-reader";
