@@ -35,7 +35,7 @@ public class MapDbDAO implements MapDAO {
         String getMap = "SELECT * FROM Map WHERE id = ?";
         try {
             PreparedStatement stmt = con.prepareStatement(getMap);
-            stmt.setInt(1,Math.toIntExact(id));
+            stmt.setInt(1, Math.toIntExact(id));
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 Map m = new Map(rs.getLong("id"), rs.getString("name"),
@@ -46,8 +46,27 @@ public class MapDbDAO implements MapDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        return null;
+        } return null;
+    }
+
+    @Override
+    public Map getMapByName(String name) {
+        Connection con = getConnection();
+        String getMapByName = "SELECT * FROM Map WHERE name = ?";
+        try {
+            PreparedStatement stmt = con.prepareStatement(getMapByName);
+            stmt.setString(1, name);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Map m = new Map(rs.getLong("id"), rs.getString("name"),
+                        rs.getBlob("picture"));
+                stmt.close();
+                con.close();
+                return m;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } return null;
     }
 
     @Override

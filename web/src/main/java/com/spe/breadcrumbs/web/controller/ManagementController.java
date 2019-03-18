@@ -144,34 +144,40 @@ public class ManagementController {
 
     @PostMapping("/breadcrumb/updateBreadcrumb/{id}")
     public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id) {
-
-        // get map from db where id = id as blob
-        // convert to buffered image bi_map
-        // get question icon as png
-        // convert to buffered image bi_questionIcon
-        // draw bi_questionIcon on bi_map
-        // convert buffered image to blob
-        // update map in db where id = id
-        // update question in db where id = id
-
         try {
+
             int x_coord = question.getX_coord();
             int y_coord = question.getY_coord();
+
             Map map = mapDAO.getMap(id);
             Blob blob = map.getPicture();
             BufferedImage bi_map = blobToImage(blob);
             BufferedImage bi_questionIcon = ImageIO.read(questionIcon.getInputStream());
+
             Graphics g = bi_map.getGraphics();
             g.drawImage(bi_questionIcon, x_coord, y_coord, 50, 50, null);
+
             Blob newPicture = imageToBlob(bi_map);
-            Map newMap = new Map(id, "venueMap", newPicture);
+            String mapName = "venueMap_q" + id.toString();
+            Map newMap = new Map(id, mapName, newPicture);
+
             mapDAO.updateMap(id, newMap);
             questionDAO.update(id, question);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         return new RedirectView("http://localhost:8080/management");
     }
+
+    /*
+    *
+    * Make question id compare to map name, i.e question 1 draws onto venueMap_q1
+    * Ensure an empty instance of the map is always present for drawing onto, i.e venueMap_empty
+    * When a new map is added delete all other maps, save as venueMap_empty and create all instances of venueMap_qN
+    * 
+    *
+    * */
 
     ////////////////// MAPS //////////////////////////////
 

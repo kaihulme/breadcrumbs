@@ -12,6 +12,8 @@ public interface MapDAO {
 
     Map getMap(Long id);
 
+    public Map getMapByName(String name);
+
     boolean addMap(Map m);
 
     boolean updateMap(Long id, Map m);
