@@ -27,9 +27,16 @@ import android.widget.Toast;
 
 import bristol.ac.uk.breadcrumbsspe.HomeActivity;
 import bristol.ac.uk.breadcrumbsspe.MainActivity;
+import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.R;
+import bristol.ac.uk.breadcrumbsspe.api.QuestionService;
+import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSource;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSourcePreview;
+import bristol.ac.uk.breadcrumbsspe.entity.Question;
+import retrofit2.Call;
+import retrofit2.Response;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -38,6 +45,8 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+
+import javax.security.auth.callback.Callback;
 
 import static android.view.View.TEXT_ALIGNMENT_CENTER;
 
@@ -92,7 +101,10 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                         String code = input.getText().toString();
+                        String code = input.getText().toString();
+                        Intent i = new Intent(QRCodeCaptureActivity.this,QuestionActivity.class);
+                        i.putExtra("CODE",code);
+                        startActivity(i);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -25,7 +25,7 @@
 
         <Button
             android:id="@+id/button_answer1"
-            android:text="A"
+            android:text="@string/a"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
 
         <Button
             android:id="@+id/button_answer2"
-            android:text="B"
+            android:text="@string/b"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
 
         <Button
             android:id="@+id/button_answer3"
-            android:text="C"
+            android:text="@string/c"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
 
         <Button
             android:id="@+id/button_answer4"
-            android:text="D"
+            android:text="@string/d"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"

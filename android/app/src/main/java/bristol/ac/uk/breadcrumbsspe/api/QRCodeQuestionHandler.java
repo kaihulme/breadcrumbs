@@ -45,6 +45,10 @@ public class QRCodeQuestionHandler implements Callback<Question> {
         questionCall.enqueue(this);
     }
 
+    public void setQuestionActivity(QuestionActivity questionActivity) {
+        this.questionActivity = questionActivity;
+    }
+
     @Override
     public void onResponse(Call<Question> call, Response<Question> response) {
         if(response.isSuccessful() && response.body() != null){
