@@ -14,10 +14,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -36,6 +39,8 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
+import static android.view.View.TEXT_ALIGNMENT_CENTER;
+
 public final class QRCodeCaptureActivity extends AppCompatActivity
         implements QRCodeTracker.QRcodeGraphicTrackerCallback {
 
@@ -53,7 +58,6 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
 
-    private String m_Text = "";
 
 
     /**
@@ -79,13 +83,16 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                 builder.setTitle("Input Code Here");
 
                 final EditText input = new EditText(QRCodeCaptureActivity.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                input.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+
                 builder.setView(input);
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        m_Text = input.getText().toString();
+                         String code = input.getText().toString();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -95,7 +102,20 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                     }
                 });
 
-                builder.show();
+                AlertDialog dialog = builder.create();
+
+                dialog.show();
+
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+                layoutParams.copyFrom(dialog.getWindow().getAttributes());
+
+                layoutParams.width =  (int)(displayMetrics.widthPixels * 0.7f);
+
+                dialog.getWindow().setAttributes(layoutParams
+                );
+
             }
         });
 
