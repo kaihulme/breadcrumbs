@@ -149,7 +149,9 @@ public class ManagementController {
             int x_coord = question.getX_coord();
             int y_coord = question.getY_coord();
 
-            Map map = mapDAO.getMap(id);
+            String mapName = "venueMap_q" + id.toString();
+            Map map = mapDAO.getMapByName(mapName);
+
             Blob blob = map.getPicture();
             BufferedImage bi_map = blobToImage(blob);
             BufferedImage bi_questionIcon = ImageIO.read(questionIcon.getInputStream());
@@ -158,10 +160,9 @@ public class ManagementController {
             g.drawImage(bi_questionIcon, x_coord, y_coord, 50, 50, null);
 
             Blob newPicture = imageToBlob(bi_map);
-            String mapName = "venueMap_q" + id.toString();
             Map newMap = new Map(id, mapName, newPicture);
 
-            mapDAO.updateMap(id, newMap);
+            mapDAO.updateMapByName(mapName, newMap);
             questionDAO.update(id, question);
 
         } catch (IOException e) {

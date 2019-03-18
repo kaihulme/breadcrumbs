@@ -18,6 +18,8 @@ public interface MapDAO {
 
     boolean updateMap(Long id, Map m);
 
+    boolean updateMapByName(String name, Map m);
+
     boolean deleteMap(Long id);
 
 }

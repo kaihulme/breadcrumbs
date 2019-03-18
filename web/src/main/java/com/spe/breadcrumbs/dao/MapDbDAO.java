@@ -105,6 +105,23 @@ public class MapDbDAO implements MapDAO {
         }
     }
 
+    public boolean updateMapByName(String name, Map m) {
+        Connection con = getConnection();
+        String updateMapByName = "UPDATE Map SET picture = ? WHERE name = ?;";
+        try {
+            PreparedStatement stmt = con.prepareStatement(updateMapByName);
+            stmt.setBlob(1, m.getPicture());
+            stmt.setString(2, name);
+            stmt.executeUpdate();
+            stmt.close();
+            con.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean deleteMap(Long id) {
         Connection con = getConnection();
         String deleteMap = "DELETE FROM Map Where id = ?";
