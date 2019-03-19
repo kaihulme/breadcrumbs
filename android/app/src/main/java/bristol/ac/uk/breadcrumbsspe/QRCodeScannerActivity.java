@@ -28,6 +28,7 @@ public class QRCodeScannerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), QRCodeCaptureActivity.class);
                 startActivityForResult(intent, QRCodeReaderRequestCode);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
     }

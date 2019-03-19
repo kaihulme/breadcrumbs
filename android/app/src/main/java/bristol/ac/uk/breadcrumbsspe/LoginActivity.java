@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                             User u = response.body();
                             UserInSession userInSession = UserInSession.getInstance(u);
                             startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                            overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
                         }else{
                             wrongCodeDialog();
                         }

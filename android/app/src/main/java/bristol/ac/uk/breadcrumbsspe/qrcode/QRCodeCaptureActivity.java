@@ -133,6 +133,7 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                             Intent i = new Intent(QRCodeCaptureActivity.this, QuestionActivity.class);
                             i.putExtra("CODE", code);
                             startActivity(i);
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         }
                     }
                 });

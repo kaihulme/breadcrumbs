@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         drawMap();
         updateScore();
 
-        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.home_drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
@@ -47,12 +47,15 @@ public class HomeActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()){
                             case R.id.nav_map:
                                 startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
                                 return true;
                             case R.id.nav_camera:
                                 startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
+                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
                                 return true;
                             case R.id.nav_help:
                                 startActivity(new Intent(HomeActivity.this, HelpActivity.class));
+                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
                                 return true;
                         }
                         return true;
@@ -71,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
 //                Intent toQrCode = new Intent(HomeActivity.this,QRCodeScannerActivity.class);
 //                toQrCode.putExtra("CURRENT_QUESTION",index);
 //                startActivity(toQrCode);
-                //this is only for the Beta Version final release will work via QRCodeScanner
+//                //this is only for the Beta Version final release will work via QRCodeScanner
 //                Intent prevQuestion = getIntent();
 //                int index = (prevQuestion.getIntExtra("PREV_QUESTION",-1) + 1) % 4;
 //                Intent answerQuestion = new Intent(HomeActivity.this, QuestionActivity.class);
@@ -80,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
