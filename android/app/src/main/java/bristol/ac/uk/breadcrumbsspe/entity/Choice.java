@@ -3,8 +3,10 @@ package bristol.ac.uk.breadcrumbsspe.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Choice {
+public class Choice implements Serializable {
    private Long id;
    private Long questionId;
    private String choiceText;
