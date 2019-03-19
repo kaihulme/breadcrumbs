@@ -69,6 +69,7 @@ public class HomeActivity extends AppCompatActivity {
                 Snackbar.make(view, "Opening Camera", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
+                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
 //                Intent currentQuestion = getIntent();
 //                int index = currentQuestion.getIntExtra("CURRENT_QUESTION",-1);
 //                Intent toQrCode = new Intent(HomeActivity.this,QRCodeScannerActivity.class);

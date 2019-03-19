@@ -54,6 +54,7 @@ public class HelpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(HelpActivity.this, HomeActivity.class);
                 startActivity(i);
+                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
             }
         });
 
