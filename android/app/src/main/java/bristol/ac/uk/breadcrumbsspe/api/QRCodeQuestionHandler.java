@@ -82,6 +82,7 @@ public class QRCodeQuestionHandler implements Callback<Question> {
         }else{
             System.out.println(response.errorBody());
             Intent nextQ = new Intent(questionActivity, QRCodeCaptureActivity.class);
+            nextQ.putExtra("DIALOG", true);
             questionActivity.startActivity(nextQ);
         }
     }

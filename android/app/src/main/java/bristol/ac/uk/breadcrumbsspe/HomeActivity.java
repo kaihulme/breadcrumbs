@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
                                 startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
                                 return true;
                             case R.id.nav_help:
-                                startActivity(new Intent(HomeActivity.this, WelcomeActivity.class));
+                                startActivity(new Intent(HomeActivity.this, HelpActivity.class));
                                 return true;
                         }
                         return true;

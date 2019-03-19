@@ -140,6 +140,15 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
         });
 
 
+        Intent i = getIntent();
+        boolean putDialog = i.getBooleanExtra("DIALOG", false);
+        if(putDialog){
+            InputCode.performClick();
+            Toast.makeText(QRCodeCaptureActivity.this, "Incorrect code. Please input the correct code.", Toast.LENGTH_SHORT).show();
+
+        }
+
+
         boolean autoFocus = true;
         boolean useFlash = false;
 
