@@ -84,7 +84,7 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(QRCodeCaptureActivity.this);
-                builder.setTitle("Input Code Here");
+                builder.setTitle("Input Code Here").setIcon(R.drawable.ic_keyboard);
 
                 final EditText input = new EditText(QRCodeCaptureActivity.this);
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
@@ -93,15 +93,8 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
 
                 builder.setView(input);
 
-                builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String code = input.getText().toString();
-                        Intent i = new Intent(QRCodeCaptureActivity.this,QuestionActivity.class);
-                        i.putExtra("CODE",code);
-                        startActivity(i);
-                    }
-                });
+                builder.setPositiveButton("Submit", null);
+
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -124,10 +117,25 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                     Snackbar.make(v, "Bug. Please report.", Snackbar.LENGTH_LONG)
                             .setAction("Bug", null).show();
                 }
-                layoutParams.width =  (int)(displayMetrics.widthPixels * 0.7f);
+                layoutParams.width = (int)(displayMetrics.widthPixels * 0.7f);
 
                 dialog.getWindow().setAttributes(layoutParams);
 
+                Button sumbitButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                sumbitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String code = input.getText().toString();
+                        if (code.length() != 4){
+                            Toast.makeText(QRCodeCaptureActivity.this, "Invalid code. Please input the 4 character code.", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Intent i = new Intent(QRCodeCaptureActivity.this, QuestionActivity.class);
+                            i.putExtra("CODE", code);
+                            startActivity(i);
+                        }
+                    }
+                });
             }
         });
 
