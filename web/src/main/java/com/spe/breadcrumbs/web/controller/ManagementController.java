@@ -37,25 +37,6 @@ public class ManagementController {
     @Value(value = "classpath:static/mapFeatures/questionIcon.png")
     private Resource questionIcon;
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public String tableContent(Model m){
-//        List<Expert> experts = expertDAO.getExpertsWithQuizzes();
-//        List<User> users = new ArrayList<>();
-//        List<Question> questions = new ArrayList<>();
-//        for(Expert e: experts){
-//            for(Quiz quiz: e.getQuizzes()){
-//                List<Question> q = quiz.getQuestions();
-//                List<User> u = quiz.getUsers();
-//                questions.addAll(q);
-//                users.addAll(u);
-//            }
-//        }
-//        m.addAttribute("users",users);
-//        m.addAttribute("experts", experts);
-//        m.addAttribute("questions", questions);
-//        return "views/management";
-//    }
-
     @RequestMapping(method = RequestMethod.GET)
     public String tableContent(Model m) {
         m.addAttribute("users",userDAO.getAllUsers());
@@ -63,7 +44,6 @@ public class ManagementController {
         m.addAttribute("questions",questionDAO.getAllQuestions());
         return "views/management";
     }
-
 
     //////////////// USER UPDATE ADD ////////////////////////
 
@@ -162,33 +142,12 @@ public class ManagementController {
         int x_coord = question.getX_coord();
         int y_coord = question.getY_coord();
         String mapName = "venueMap_q" + id.toString();
-
-//            Map map = mapDAO.getMapByName(mapName);
-
-//            Blob blob = map.getPicture();
-//            BufferedImage bi_map = blobToImage(blob);
-//            BufferedImage bi_questionIcon = ImageIO.read(questionIcon.getInputStream());
-//
-//            Graphics g = bi_map.getGraphics();
-//            g.drawImage(bi_questionIcon, x_coord, y_coord, 50, 50, null);
-//
-//            Blob newPicture = imageToBlob(bi_map);
-
         Blob newPicture = drawQuestionImage(id, x_coord, y_coord);
         Map newMap = new Map(id, mapName, newPicture);
         mapDAO.updateMapByName(mapName, newMap);
         questionDAO.update(id, question);
         return new RedirectView("http://localhost:8080/management");
     }
-
-    /*
-    *
-    * Make question id compare to map name, i.e question 1 draws onto venueMap_q1
-    * Ensure an empty instance of the map is always present for drawing onto, i.e venueMap_empty
-    * When a new map is added delete all other maps, save as venueMap_empty and create all instances of venueMap_qN
-    * 
-    *
-    * */
 
     ////////////////// MAPS //////////////////////////////
 
@@ -253,59 +212,21 @@ public class ManagementController {
         return null;
     }
 
-//    // take in file -> convert to image -> convert to blob + add name -> add new Map
-//    @PostMapping("/map/add")
-//    public RedirectView addMap(@RequestParam("f") MultipartFile f) {
-//        try {
-//            BufferedImage bi = multipartToImage(f);
-//            Blob picture = imageToBlob(bi);
-//            Map map = mapDAO.getMapByName("venueMap_empty");
-//            if (map == null) {
-//                map = new Map((long) 1, "venueMap_empty", picture);
-//                mapDAO.addMap(map);
-//                return new RedirectView("http://localhost:8080/management/map");
-//            }
-//            else {
-//                map = new Map((long) 1, "venueMap_empty", picture);
-//                mapDAO.updateMapByName("venueMap_empty", map);
-//                return new RedirectView("http://localhost:8080/management/map");
-//            }
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return new RedirectView("http://localhost:8080/management/map");
-//    }
-
     // purge old maps -> add new empty map -> generate new question maps
     @PostMapping("/map/add")
     public RedirectView addMap(@RequestParam("f") MultipartFile f) {
         try {
-            // purge old maps
             mapDAO.deleteAllMaps();
-
-            // creates new venueMap_empty from input PNG
             BufferedImage bi = multipartToImage(f);
             Blob picture = imageToBlob(bi);
             Map emptyMap = new Map((long) 1, "venueMap_empty", picture);
-
-            // adds mew venueMap_empty
             mapDAO.addMap(emptyMap);
-
-            // draw images for each question
             List<Question> questions = questionDAO.getAllQuestions();
             for (Question question:questions) {
-
                 String mapName = "venueMap_q" + question.getId().toString();
                 Blob newPicture = drawQuestionImage(question.getId(), question.getX_coord(), question.getY_coord());
                 Map newMap = new Map(question.getId(), mapName, newPicture);
-
-                if (mapDAO.getMapByName(mapName) != null) {
-                    mapDAO.updateMapByName(mapName, newMap);
-                } else {
-                    mapDAO.addMap(newMap);
-                }
-
+                mapDAO.addMap(newMap);
             }
         }
         catch (Exception e) {
