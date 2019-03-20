@@ -4,13 +4,14 @@ package bristol.ac.uk.breadcrumbsspe.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import bristol.ac.uk.breadcrumbsspe.UserInSession;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Question {
+public class Question implements Serializable {
     private Long id;
     private String question;
     private int noOfAttempts;
@@ -55,8 +56,6 @@ public class Question {
         else if (noOfAttempts == 2) score = 50;
         else if (noOfAttempts == 3) score = 25;
         else score = 0;
-
-        //TODO: Update corresponding database question with new score
 
         User u = UserInSession.getUser();
         u.addToScore(score);

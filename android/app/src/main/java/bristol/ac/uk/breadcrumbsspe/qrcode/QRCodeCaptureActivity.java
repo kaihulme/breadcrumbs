@@ -35,6 +35,7 @@ import bristol.ac.uk.breadcrumbsspe.camera.CameraSource;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSourcePreview;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -46,12 +47,30 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
-import javax.security.auth.callback.Callback;
 
 import static android.view.View.TEXT_ALIGNMENT_CENTER;
 
+
 public final class QRCodeCaptureActivity extends AppCompatActivity
-        implements QRCodeTracker.QRcodeGraphicTrackerCallback {
+        implements QRCodeTracker.QRcodeGraphicTrackerCallback,Callback<Question> {
+    private Button InputCode;
+    @Override
+    public void onResponse(Call<Question> call, Response<Question> response) {
+        if(response.isSuccessful() && response.body() != null){
+            Intent i = new Intent(QRCodeCaptureActivity.this,QuestionActivity.class);
+            Question q = response.body();
+            i.putExtra("QUESTION",q);
+            startActivity(i);
+        }else {
+            InputCode.performClick();
+            Toast.makeText(QRCodeCaptureActivity.this, "Incorrect code. Please input the correct code.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onFailure(Call<Question> call, Throwable t) {
+
+    }
 
     private static final String TAG = "QRcode-reader";
 
@@ -79,12 +98,12 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
 
         mPreview = findViewById(R.id.preview);
 
-        Button InputCode = findViewById(R.id.input_code);
+        InputCode = findViewById(R.id.input_code);
         InputCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(QRCodeCaptureActivity.this);
-                builder.setTitle("Input Code Here");
+                builder.setTitle("Input Code Here").setIcon(R.drawable.ic_keyboard);
 
                 final EditText input = new EditText(QRCodeCaptureActivity.this);
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
@@ -93,15 +112,8 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
 
                 builder.setView(input);
 
-                builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String code = input.getText().toString();
-                        Intent i = new Intent(QRCodeCaptureActivity.this,QuestionActivity.class);
-                        i.putExtra("CODE",code);
-                        startActivity(i);
-                    }
-                });
+                builder.setPositiveButton("Submit", null);
+
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -124,12 +136,37 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                     Snackbar.make(v, "Bug. Please report.", Snackbar.LENGTH_LONG)
                             .setAction("Bug", null).show();
                 }
-                layoutParams.width =  (int)(displayMetrics.widthPixels * 0.7f);
+                layoutParams.width = (int)(displayMetrics.widthPixels * 0.7f);
 
                 dialog.getWindow().setAttributes(layoutParams);
 
+                Button submitButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                submitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String code = input.getText().toString();
+                        if (code.length() != 4){
+                            Toast.makeText(QRCodeCaptureActivity.this, "Invalid code. Please input the 4 character code.", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            QuestionService questionService = RetrofitClient.retrofit.create(QuestionService.class);
+                            Call<Question> questionCallback = questionService.getQuestion(code);
+                            questionCallback.enqueue(QRCodeCaptureActivity.this);
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        }
+                    }
+                });
             }
         });
+
+
+        Intent i = getIntent();
+        boolean putDialog = i.getBooleanExtra("DIALOG", false);
+        if(putDialog){
+            InputCode.performClick();
+            Toast.makeText(QRCodeCaptureActivity.this, "Incorrect code. Please input the correct code.", Toast.LENGTH_SHORT).show();
+
+        }
 
 
         boolean autoFocus = true;

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Build;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -32,6 +33,14 @@ public class LoginActivity extends AppCompatActivity {
     private void login(){
         FloatingActionButton loginButton = findViewById(R.id.signIn_btn);
         EditText codeText = findViewById(R.id.login_code);
+        codeText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -46,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                             User u = response.body();
                             UserInSession userInSession = UserInSession.getInstance(u);
                             startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                            overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
                         }else{
                             wrongCodeDialog();
                         }
@@ -78,5 +88,10 @@ public class LoginActivity extends AppCompatActivity {
         })
         .setIcon(android.R.drawable.ic_dialog_alert)
         .show();
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(LoginActivity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

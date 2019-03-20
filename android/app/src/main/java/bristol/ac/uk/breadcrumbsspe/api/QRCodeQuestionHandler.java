@@ -7,6 +7,7 @@ import android.widget.Button;
 import bristol.ac.uk.breadcrumbsspe.HomeActivity;
 import bristol.ac.uk.breadcrumbsspe.QRCodeScannerActivity;
 import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
+import bristol.ac.uk.breadcrumbsspe.R;
 import bristol.ac.uk.breadcrumbsspe.entity.Choice;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
 import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
@@ -71,6 +72,7 @@ public class QRCodeQuestionHandler implements Callback<Question> {
                             nextQ.putExtra("CURRENT_QUESTION", q.getId().intValue());
                             //System.out.println(q.getId() + "getId");
                             questionActivity.startActivity(nextQ);
+                            questionActivity.overridePendingTransition( R.anim.fade_in, R.anim.fade_out );
                         } else {
                             q.correctAttemptMade(false);
                             b.setBackgroundColor(rgb(191, 0, 0));
@@ -81,6 +83,10 @@ public class QRCodeQuestionHandler implements Callback<Question> {
             }
         }else{
             System.out.println(response.errorBody());
+            Intent nextQ = new Intent(questionActivity, QRCodeCaptureActivity.class);
+            nextQ.putExtra("DIALOG", true);
+            questionActivity.startActivity(nextQ);
+            questionActivity.overridePendingTransition( R.anim.fade_in, R.anim.fade_out );
         }
     }
 
@@ -89,5 +95,6 @@ public class QRCodeQuestionHandler implements Callback<Question> {
         t.printStackTrace();
         Intent nextQ = new Intent(questionActivity, QRCodeCaptureActivity.class);
         questionActivity.startActivity(nextQ);
+        questionActivity.overridePendingTransition( R.anim.fade_in, R.anim.fade_out );
     }
 }
