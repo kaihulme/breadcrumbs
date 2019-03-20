@@ -87,7 +87,6 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
     private CameraSourcePreview mPreview;
 
 
-
     /**
      * Initializes the UI and creates the detector pipeline.
      */
@@ -153,21 +152,19 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                             Call<Question> questionCallback = questionService.getQuestion(code);
                             questionCallback.enqueue(QRCodeCaptureActivity.this);
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                            dialog.cancel();
                         }
                     }
                 });
             }
         });
 
-
         Intent i = getIntent();
         boolean putDialog = i.getBooleanExtra("DIALOG", false);
         if(putDialog){
             InputCode.performClick();
             Toast.makeText(QRCodeCaptureActivity.this, "Incorrect code. Please input the correct code.", Toast.LENGTH_SHORT).show();
-
         }
-
 
         boolean autoFocus = true;
         boolean useFlash = false;
