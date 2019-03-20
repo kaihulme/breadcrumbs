@@ -72,7 +72,9 @@ public class UserDbDAO implements UserDAO {
                     "Quiz.quizId as quizId," +
                     "Quiz.title as title," +
                     "Question.id as questionId," +
-                    "Question.question as question " +
+                    "Question.question as question, " +
+                    "Question.x_coord as x_coord, " +
+                    "Question.y_coord as y_coord " +
                     "FROM User INNER JOIN Question " +
                     "INNER JOIN Quiz ON User.quizId = Question.quizId " +
                     "WHERE User.id = ?;";
