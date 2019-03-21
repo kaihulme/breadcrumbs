@@ -24,9 +24,9 @@ function searchTable(event) {
 } document.querySelector('#search').addEventListener('keyup', searchTable, false);
 
 // sort table
-function sortTable(n) {
+function sortTable(id, n) {
   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("users");
+  table = document.getElementById(id);
   switching = true;
   dir = "asc";
   while (switching) {
