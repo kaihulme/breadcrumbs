@@ -27,38 +27,19 @@
         <!-- Page Content  -->
         <div class="container-fluid" id="content">
 
-          <div class="d-flex justify-content-center">
-            <img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="logo"/>
-          </div>
-
-          <!--<div class="d-flex justify-content-center" id="loginDetails">-->
-            <!--<input type="text" id="username" placeholder="Username">-->
-            <!--<input type="password" id="password" placeholder="Password">-->
-          <!--</div>-->
-
-          <div class="d-flex justify-content-center" id="loginButton">
-
-            <!--<form id="loginDetails">-->
-                <!--<input type="text" id="user"><br>-->
-                <!--<input type="password" id="password">-->
-            <!--</form>-->
-              <!--<a th:href="@{participants}">-->
-                  <!--<button type="button" id="loginBtn" class="btn btn-default">-->
-                      <!--<span>Click to Enter</span>-->
-                  <!--</button>-->
-              <!--</a>-->
-              <form th:action = "@{/login}" method="POST" id="loginDetails">
-                  <input type="text" id="user" name="email"><br>
-                  <input type="password" id="password" name="password">
-                  <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-                  <div align="center" th:if="${param.error}">
-                      <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
-                  </div>
-                  <button type="Submit" id="loginBtn" class="btn btn-default">
-                      <span>Login</span>
-                  </button>
-              </form>
-          </div>
+            <div class="wrapper">
+                <div id="loginBox" class="container fadeInDown">
+                    <img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="loginLogo"/>
+                    <form th:action = "@{/login}" method="POST" id="loginDetails">
+                        <input type="text" class="form-control" id="username" name="email" placeholder="login">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="password">
+                        <div th:if="${param.error}" id="loginError">
+                            <p style="font-size: 20; color: #FF1C19;">Invalid, please try again</p>
+                        </div>
+                        <input type="Submit" class="btn" value="Log In" id="loginBtn">
+                    </form>
+                </div>
+            </div>
 
         </div>
 
