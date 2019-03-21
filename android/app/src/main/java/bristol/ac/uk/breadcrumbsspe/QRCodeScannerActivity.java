@@ -1,6 +1,9 @@
 package bristol.ac.uk.breadcrumbsspe;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
+
+import bristol.ac.uk.breadcrumbsspe.entity.MapState;
 import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
 
 public class QRCodeScannerActivity extends AppCompatActivity {
@@ -41,15 +46,41 @@ public class QRCodeScannerActivity extends AppCompatActivity {
                     //mResultTextView.setText(QRCode.displayValue);
                     String url = QRCode.displayValue;
 
-                    Intent i = new Intent(QRCodeScannerActivity.this,QuestionActivity.class);
-                    i.putExtra("QUESTION_URL",url);
-                    startActivity(i);
-                    overridePendingTransition( R.anim.fade_in, R.anim.fade_out );
+                    int currentQuestion = ((MapState) this.getApplication()).getCurrentQuestion() + 1;
+
+                    if (url.endsWith(Integer.toString(currentQuestion))) {
+                        Intent i = new Intent(QRCodeScannerActivity.this, QuestionActivity.class);
+                        i.putExtra("QUESTION_URL", url);
+                        startActivity(i);
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    }
+                    else {
+                        wrongQuestionDialog();
+                    }
                 }else
                     mResultTextView.setText(R.string.no_qrcode_captured);
             }else
                 Log.e(LogTag, String.format(getString(R.string.qrcode_error_format), CommonStatusCodes.getStatusCodeString(resultCode)));
         }else
             super.onActivityResult(requestCode, resultCode, intent);
+    }
+
+    private void wrongQuestionDialog() {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        }
+        else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Wrong question")
+                .setMessage("Sorry that's the wrong question. Keep looking")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }
