@@ -60,6 +60,8 @@ public class MapState extends Application {
         this.currentQuestion = currentQuestion;
     }
 
+    public int getCurrentQuestion() { return this.currentQuestion; }
+
     public void setCluesFound(int cluesFound) {
         this.cluesFound = cluesFound;
     }
