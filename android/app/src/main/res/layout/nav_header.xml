@@ -4,14 +4,23 @@
     android:layout_height="192dp"
     android:background="?attr/colorPrimaryDark"
     android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Light"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
     android:gravity="bottom">
+
+    <ImageView
+        android:id="@+id/drawer_image"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/bio_logo"
+        android:layout_weight="1"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/breadcrumbs_game"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 </LinearLayout>
