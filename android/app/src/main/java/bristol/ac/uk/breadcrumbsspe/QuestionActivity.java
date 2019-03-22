@@ -27,6 +27,11 @@ public class QuestionActivity extends AppCompatActivity {
     private String url;
     private String code;
     private Question q;
+
+    // TODO Credits activity with us and sponsors
+    // TODO Disallow return to question page after answering
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent i = getIntent();

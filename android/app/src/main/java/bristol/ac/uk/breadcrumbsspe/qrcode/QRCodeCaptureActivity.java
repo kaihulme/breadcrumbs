@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -106,7 +107,9 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
 
                 final EditText input = new EditText(QRCodeCaptureActivity.this);
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-                input.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    input.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+                }
                 input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
 
                 builder.setView(input);

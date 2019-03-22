@@ -16,6 +16,9 @@ public class HelpActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
+    // TODO static sponsor page, set logos
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

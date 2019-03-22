@@ -23,6 +23,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
+
+    //TODO help button on the toolbar with help overlays for map, search area
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
