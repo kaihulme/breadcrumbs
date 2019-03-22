@@ -3,11 +3,16 @@ $('#sidebarCollapse').on('click', function () {
     $('#sidebar, #content').toggleClass('active');
 });
 
+$('#loginBtn').on('click', function () {
+    $('#loginBtn').button('dispose');
+    $('#spinner').toggleClass('active');
+});
+
 // Jansy-Bootstrap add link to whole table row
 $('tbody.rowlink').rowlink()
 
 // search table and filter results
-function searchTable(event) {
+function searchUserTable(event) {
     var filter = event.target.value.toUpperCase();
     var rows = document.querySelector("#users").rows;
 
@@ -21,7 +26,23 @@ function searchTable(event) {
             rows[i].style.display = "none";
         }
     }
-} document.querySelector('#search').addEventListener('keyup', searchTable, false);
+} document.querySelector('#search').addEventListener('keyup', searchUserTable, false);
+
+function searchExpertTable(event) {
+    var filter = event.target.value.toUpperCase();
+    var rows = document.querySelector("#experts").rows;
+
+    for (var i = 1; i < rows.length; i++) {
+        var firstCol = rows[i].cells[0].textContent.toUpperCase();
+        var secondCol = rows[i].cells[1].textContent.toUpperCase();
+        var thirdCol = rows[i].cells[2].textContent.toUpperCase();
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+} document.querySelector('#searchExperts').addEventListener('keyup', searchExpertTable, false);
 
 // sort table
 function sortTable(id, n) {

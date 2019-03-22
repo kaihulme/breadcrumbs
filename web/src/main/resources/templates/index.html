@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <!-- Jansy CSS CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+    <!-- Iconic CSS CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/css/index.css">
@@ -29,14 +31,24 @@
 
             <div class="wrapper">
                 <div id="loginBox" class="container fadeInDown">
-                    <img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="loginLogo"/>
+                    <div class="container" id="logoText">
+                        <img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="loginLogo"/>
+                        <h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>
+                    </div>
                     <form th:action = "@{/login}" method="POST" id="loginDetails">
                         <input type="text" class="form-control" id="username" name="email" placeholder="login">
                         <input type="password" class="form-control" id="password" name="password" placeholder="password">
                         <div th:if="${param.error}" id="loginError">
                             <p style="font-size: 20; color: #FF1C19;">Invalid, please try again</p>
                         </div>
-                        <input type="Submit" class="btn" value="Log In" id="loginBtn">
+
+                        <button type="Submit" class="btn btn-outline-light" id="loginBtn">
+                            <span class="oi oi-account-login"></span>
+                        </button>
+                        <!--<div class="spinner-border" role="status" id="spinner">-->
+                            <!--<span class="sr-only">Loading...</span>-->
+                        <!--</div>-->
+
                     </form>
                 </div>
             </div>

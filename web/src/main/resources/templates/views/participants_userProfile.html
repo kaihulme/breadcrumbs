@@ -95,21 +95,14 @@
 			<!-- /Navigation Bar -->
 
             <!-- Page Content -->
-			<div id="pageContent"> <!--class="row justify-content-md-center">-->
+			<div id="pageContent" class="fadeInUp">
 
 				<br><hr class="style1"><br>
 
 	            <!-- User Stats -->
 	            <div class="row justify-content-md-center">
 
-		            <div class="col-4">
-		                <!--<div class="jumbotron" id=stats>-->
-		                    <!--<h5 th:text =" 'User ID: ' + ${user.id}">user_id</h5>-->
-		                    <!--<h5 th:text = "'First Name: ' + ${user.firstName}">First Name: user_firstName</h5>-->
-		                    <!--<h5 th:text="'Surname: ' + ${user.lastName}">Second Name: user_secondName</h5>-->
-		                    <!--<h5 th:text="'Score: ' + ${user.score}">Score: user_score</h5>-->
-		                <!--</div>-->
-
+		            <div class="col-4" id="userStats">
 			            <h2>User Profile</h2>
 			            <!--<p>last updated: 17:02 (24 seconds ago)</p>-->
 			            <table class="table">
@@ -139,11 +132,7 @@
 		            </div>
 
 		            <div class="col-3">
-		                <div class="jumbotron" id=statsJumbo>
-			                <h4 align="left" th:text = "${user.score} + 'bc'">0bc</h4>
-			                <center><h1 th:text = "${user.firstName} + ' ' + ${user.lastName}"></h1></center>
-			                <h4 align="right">100%</h4>
-		                </div>
+			            <img src="http://breadcrumbs.bioscientifica.com/image/venueMap_empty" id="userPath"/>
 		            </div>
 
 	            </div>
@@ -187,6 +176,60 @@
     <!-- /Page Wrapper -->
 
     <!-- Modals -->
+
+    <!-- MUST PASS QUESTION ID INTO MODAL TO GET CHOICES FOR THAT QUESTION-->
+    <!-- SIMILARLY FOR EDITING USERS, EXPERTS AND BREADCRUMBS THROUGH MODAL-->
+    <!-- NEW USERS, EXPERTS AND MAPS CAN BE ADDED WITHOUT ANY ARGUMENTS-->
+
+        <!-- Answer Choice Modal -->
+	    <!--<div class="modal fade" id="choiceModal" tabindex="-1" role="dialog" aria-labelledby="choiceModalLabel" aria-hidden="true">-->
+		    <!--<div class="modal-dialog modal-dialog-centered" role="document">-->
+			    <!--<div class="modal-content">-->
+
+				    <!--<div class="modal-header">-->
+					    <!--<div class="row justify-content-md-center">-->
+						    <!--<div class="col-3">-->
+							    <!--<div class="jumbotron" id=question>-->
+								    <!--<center><h3 th:text = "${question.question} + '?'">Question</h3><center>-->
+							    <!--</div>-->
+						    <!--</div>-->
+					    <!--</div>-->
+
+					    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+						    <!--<span aria-hidden="true">&times;</span>-->
+					    <!--</button>-->
+				    <!--</div>-->
+
+				    <!--<div class="modal-body">-->
+					    <!--&lt;!&ndash; Question Table &ndash;&gt;-->
+					    <!--<div class="row justify-content-md-center">-->
+						    <!--<div class="col-6">-->
+							    <!--<table class="table table-striped table-hover" id=answers>-->
+								    <!--<thead>-->
+								    <!--<tr>-->
+									    <!--<th>Attempt No.</th>-->
+									    <!--<th>Answer</th>-->
+								    <!--</tr>-->
+								    <!--</thead>-->
+								    <!--<tbody>-->
+								    <!--<tr th:each = "attempt: ${question.attempts}">-->
+									    <!--<td th:text = "${question.attempts.indexOf(attempt) + 1}">no</td>-->
+									    <!--<td th:text = "${attempt.choiceText}">attempt</td>-->
+								    <!--</tr>-->
+								    <!--</tbody>-->
+							    <!--</table>-->
+						    <!--</div>-->
+					    <!--</div>-->
+					    <!--&lt;!&ndash; /Question Table &ndash;&gt;-->
+				    <!--</div>-->
+
+				    <!--<div class="modal-footer">-->
+						    <!--<button type="submit" class="btn btn-primary">Ok</button>-->
+				    <!--</div>-->
+			    <!--</div>-->
+		    <!--</div>-->
+	    <!--</div>-->
+        <!-- / Answer Choice Modal-->
 
 	    <!-- Log Out Confirm Modal -->
 	    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">

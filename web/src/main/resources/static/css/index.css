@@ -29,9 +29,12 @@ body {
     left: 0;
     height: 100vh;
     z-index: 999;
-    background: #d63558;
+    /*background: #d63558;*/
+    background: #b22141;
     color: #fff;
     transition: all 0.3s;
+    -webkit-box-shadow: 0 15px 30px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.3);
 }
 
 #sidebar.active {
@@ -40,7 +43,8 @@ body {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #991e39;
+    /*background: #991e39;*/
+    background: #fff;
 }
 
 #sidebar ul.components {
@@ -76,7 +80,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #dd5f7a;
+    background: #d1274d;
     color: #ffffff;
 }
 
@@ -103,6 +107,8 @@ a:focus {
 #sideLogo {
   padding: 10px;
   width: 200px;
+  border: 3px solid #9D2062;
+  margin-bottom: 20px;
 }
 
 /*********** log in ****************/
@@ -120,8 +126,31 @@ a:focus {
   justify-content: center;
 }
 
+#logoText {
+    margin-bottom: 20px;
+}
+
 #loginLogo {
-  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border: 5px solid #9D2062;
+}
+
+#bio {
+    color: #9D2062;
+    margin-bottom: 20px;
+    display: inline;
+}
+
+#scientifica {
+    color: #E7959B;
+    margin-bottom: 20px;
+    display: inline;
+}
+
+#loginBtn {
+    margin-top: 15px;
+    border: 2px solid #969696;
+    color: #969696;
 }
 
 .form-control {
@@ -129,7 +158,10 @@ a:focus {
   margin: 10px;
   width: 375px;
   padding-bottom: 15px;
+  border: 1px solid #969696;
 }
+
+
 
 /*********** main content ************/
 
@@ -157,11 +189,22 @@ hr.style1{
 	border-top: 1px solid #dbdbdb;
 }
 
-#search {
+#search, #searchExperts {
   width: 100%;
   padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border: 1px solid #ddd;
-  margin-bottom: 12px;
+}
+
+/**** USER PAGE ******/
+
+#userPath {
+   height: 400px;
+}
+
+#userStats {
+   padding: 50px;
 }
 
 /************* FADE DOWN ANIMATION ****************/
@@ -193,6 +236,43 @@ hr.style1{
     opacity: 0;
     -webkit-transform: translate3d(0, -100%, 0);
     transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+/************ FADE UP ANIMATION ************/
+
+.fadeInUp {
+  -webkit-animation-name: fadeInUp;
+  animation-name: fadeInUp;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInUp1 {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
   }
   100% {
     opacity: 1;
