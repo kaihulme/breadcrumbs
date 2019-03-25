@@ -55,9 +55,12 @@ import static android.view.View.TEXT_ALIGNMENT_CENTER;
 public final class QRCodeCaptureActivity extends AppCompatActivity
         implements QRCodeTracker.QRcodeGraphicTrackerCallback,Callback<Question> {
     private Button InputCode;
+    private AlertDialog dialog;
     @Override
     public void onResponse(Call<Question> call, Response<Question> response) {
         if(response.isSuccessful() && response.body() != null){
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            dialog.cancel();
             Intent i = new Intent(QRCodeCaptureActivity.this,QuestionActivity.class);
             Question q = response.body();
             i.putExtra("QUESTION",q);
@@ -123,7 +126,7 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                     }
                 });
 
-                AlertDialog dialog = builder.create();
+                dialog = builder.create();
 
                 dialog.show();
 
@@ -154,8 +157,6 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                             QuestionService questionService = RetrofitClient.retrofit.create(QuestionService.class);
                             Call<Question> questionCallback = questionService.getQuestion(code);
                             questionCallback.enqueue(QRCodeCaptureActivity.this);
-                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                            dialog.cancel();
                         }
                     }
                 });
