@@ -31,7 +31,20 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET,value = "{id}")
     public String getUserDetail(@PathVariable Long id,Model m){
         User match = userDAO.getUserWithQuiz(id);
+        List<Question> questions = match.getQuiz().getQuestions();
+        for(Question q: questions){
+            //get no of attempts plus score
+            int noOfAttempts = attemptDAO.getAttempts(q.getId(),id).size();
+            int score;
+            if (noOfAttempts == 1) score = 100;
+            else if (noOfAttempts == 2) score = 50;
+            else if (noOfAttempts == 3) score = 25;
+            else score = 0;
+            q.setNoOfAttempts(noOfAttempts);
+            q.setScore(score);
+        }
         m.addAttribute("user",match);
+
         return "views/participants_userProfile";
     }
 
