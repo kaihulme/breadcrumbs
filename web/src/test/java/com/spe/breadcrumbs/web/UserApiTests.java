@@ -3,11 +3,9 @@ package com.spe.breadcrumbs.web;
 import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.spe.breadcrumbs.dao.AttemptDAO;
-import com.spe.breadcrumbs.dao.AttemptDbDAO;
-import com.spe.breadcrumbs.dao.UserDAO;
-import com.spe.breadcrumbs.dao.UserDbDAO;
+import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.Choice;
+import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.controller.UserController;
 import org.junit.Before;
@@ -25,6 +23,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -87,9 +86,6 @@ public class UserApiTests {
 
     @Test
 	public void testGetUserId(){
-//		userDAO.addUser(user);
-//		User u = userDAO.getUser(1L);
-//		assertEquals(user,u);
 	}
 
     @Test

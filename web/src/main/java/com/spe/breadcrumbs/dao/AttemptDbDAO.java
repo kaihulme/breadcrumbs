@@ -1,5 +1,6 @@
 package com.spe.breadcrumbs.dao;
 
+import com.spe.breadcrumbs.entity.Attempt;
 import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.User;
 
@@ -14,7 +15,9 @@ import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 
 public class AttemptDbDAO implements AttemptDAO {
     @Override
-    public boolean addAttempt(User u, Choice c) {
+    public boolean addAttempt(Attempt a) {
+        User u = a.getUser();
+        Choice c = a.getChoice();
         try{
             Connection con = getConnection();
             String addAttempt = "INSERT INTO Attempt(userId,choiceId,attemptNo) VALUES (?,?,?)";
