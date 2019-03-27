@@ -7,13 +7,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import bristol.ac.uk.breadcrumbsspe.api.AttemptHandler;
+import bristol.ac.uk.breadcrumbsspe.api.AttemptService;
 import bristol.ac.uk.breadcrumbsspe.api.QRCodeQuestionHandler;
+import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.api.TextCodeQuestionHandler;
 import bristol.ac.uk.breadcrumbsspe.entity.Choice;
 import bristol.ac.uk.breadcrumbsspe.entity.MapState;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
+import bristol.ac.uk.breadcrumbsspe.entity.User;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 import static android.graphics.Color.rgb;
 
@@ -63,31 +70,33 @@ public class QuestionActivity extends AppCompatActivity {
                 buttons.get(i).setText(c.getChoiceText());
                 if(c.isAnswer()) answer = i;
             }
-
             for (Button b : buttons) {
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (buttons.indexOf(b) == answer) {
-                            q.correctAttemptMade(true);
-                            b.setBackgroundColor(rgb(0, 191, 0));
-                            Intent nextQ = new Intent(QuestionActivity.this, HomeActivity.class);
-                            nextQ.putExtra("CURRENT_QUESTION", q.getId().intValue());
-                            //System.out.println(q.getId() + "getId");
-                            startActivity(nextQ);
-                        } else {
-                            q.correctAttemptMade(false);
-                            b.setBackgroundColor(rgb(191, 0, 0));
-                            b.setEnabled(false);
-                        }
+                        AttemptService attemptService = RetrofitClient.retrofit.create(AttemptService.class);
+                        User u = UserInSession.getUser();
+                        int a = buttons.indexOf(b);
+                        Call<ResponseBody> responseBodyCall = attemptService.addAttempt(Collections.singletonMap(u,q.getChoices().get(a)));
+                        responseBodyCall.enqueue(new AttemptHandler(QuestionActivity.this,b,q));
+//                        if (buttons.indexOf(b) == answer) {
+//                            q.correctAttemptMade(true);
+//                            b.setBackgroundColor(rgb(0, 191, 0));
+//                            Intent nextQ = new Intent(QuestionActivity.this, HomeActivity.class);
+//                            nextQ.putExtra("CURRENT_QUESTION", q.getId().intValue());
+//                            //System.out.println(q.getId() + "getId");
+//                            startActivity(nextQ);
+//                        } else {
+//                            q.correctAttemptMade(false);
+//                            b.setBackgroundColor(rgb(191, 0, 0));
+//                            b.setEnabled(false);
+//                        }
                     }
                 });
             }
         }
         else if(code == null){
             qrCodeQuestionHandler.start(this,url);
-        }else{
-            textCodeQuestionHandler.start(code,qrCodeQuestionHandler);
         }
     }
 

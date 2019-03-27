@@ -3,11 +3,9 @@ package com.spe.breadcrumbs.web;
 import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.spe.breadcrumbs.dao.AttemptDAO;
-import com.spe.breadcrumbs.dao.AttemptDbDAO;
-import com.spe.breadcrumbs.dao.UserDAO;
-import com.spe.breadcrumbs.dao.UserDbDAO;
+import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.Choice;
+import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.controller.UserController;
 import org.junit.Before;
@@ -25,6 +23,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -42,39 +41,8 @@ public class UserApiTests {
 	//TODO add tests
 	@Autowired
 	private UserController userController;
-	@Mock
-	private DataSource dataSource;
-	@Mock
-	private UserDbDAO userDAO;
-	@Mock
-	private DBConnection dbConnection;
-	@Mock
-	private Connection con;
-	@Mock
-	private ResultSet rs;
-	@Mock
-	private PreparedStatement stmt;
-	private AttemptDAO attemptDAO;
-
-	private User user;
 	@Before
 	public void setUp() throws Exception{
-		assertNotNull(dbConnection);
-		when(con.prepareStatement(any(String.class))).thenReturn(stmt);
-		when(dataSource.getConnection()).thenReturn(con);
-
-		user = new User();
-		user.setId(Integer.toUnsignedLong(1));
-		user.setFirstName("Jane");
-		user.setLastName("Test");
-
-		when(rs.first()).thenReturn(true);
-		when(rs.getLong(1)).thenReturn(Integer.toUnsignedLong(1));
-		when(rs.getString(2)).thenReturn(user.getFirstName());
-		when(rs.getString(3)).thenReturn(user.getLastName());
-		when(stmt.executeQuery()).thenReturn(rs);
-		userDAO = new UserDbDAO();
-		attemptDAO = new AttemptDbDAO();
 	}
 
 	@Test
@@ -87,9 +55,6 @@ public class UserApiTests {
 
     @Test
 	public void testGetUserId(){
-//		userDAO.addUser(user);
-//		User u = userDAO.getUser(1L);
-//		assertEquals(user,u);
 	}
 
     @Test
