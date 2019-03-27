@@ -23,7 +23,7 @@ public class AttemptDbDAO implements AttemptDAO {
             String addAttempt = "INSERT INTO Attempt(userId,choiceId,attemptNo) VALUES (?,?,?)";
             PreparedStatement stmt = con.prepareStatement(addAttempt);
             stmt.setLong(1,u.getId());
-            stmt.setLong(2,u.getId());
+            stmt.setLong(2,c.getChoiceId());
             int count = getCount(c.getQuestionId(),u.getId()) + 1;
             stmt.setInt(3,count);
             stmt.executeUpdate();
