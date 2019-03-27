@@ -15,6 +15,7 @@ import bristol.ac.uk.breadcrumbsspe.api.AttemptService;
 import bristol.ac.uk.breadcrumbsspe.api.QRCodeQuestionHandler;
 import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.api.TextCodeQuestionHandler;
+import bristol.ac.uk.breadcrumbsspe.entity.Attempt;
 import bristol.ac.uk.breadcrumbsspe.entity.Choice;
 import bristol.ac.uk.breadcrumbsspe.entity.MapState;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
@@ -77,7 +78,9 @@ public class QuestionActivity extends AppCompatActivity {
                         AttemptService attemptService = RetrofitClient.retrofit.create(AttemptService.class);
                         User u = UserInSession.getUser();
                         int a = buttons.indexOf(b);
-                        Call<ResponseBody> responseBodyCall = attemptService.addAttempt(Collections.singletonMap(u,q.getChoices().get(a)));
+                        Choice c = q.getChoices().get(a);
+                        Attempt attempt = new Attempt(u,c);
+                        Call<ResponseBody> responseBodyCall = attemptService.addAttempt(attempt);
                         responseBodyCall.enqueue(new AttemptHandler(QuestionActivity.this,b,q));
 //                        if (buttons.indexOf(b) == answer) {
 //                            q.correctAttemptMade(true);
