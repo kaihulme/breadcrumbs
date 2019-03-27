@@ -95,6 +95,7 @@ public class QuestionDbDAO implements QuestionDAO {
             while(rs.next()){
                 if(rs.getLong("question") == questionId){
                     Choice c = new Choice(questionId,rs.getString("choiceText"),rs.getBoolean("answer"));
+                    c.setChoiceId(rs.getLong("id"));
                     choices.add(c);
                 }
             }
