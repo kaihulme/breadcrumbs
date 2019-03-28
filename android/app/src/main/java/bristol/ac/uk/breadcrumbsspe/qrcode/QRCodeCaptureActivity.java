@@ -26,8 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import bristol.ac.uk.breadcrumbsspe.HomeActivity;
-import bristol.ac.uk.breadcrumbsspe.LoginActivity;
 import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.R;
 import bristol.ac.uk.breadcrumbsspe.api.QuestionService;
@@ -76,30 +74,19 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
 
     }
 
+    private CameraSource source;
+    private CameraSourcePreview prev;
+
     private static final String TAG = "QRcode-reader";
-
-    // Intent request code to handle updating play services if needed.
     private static final int RC_HANDLE_GMS = 9001;
-
-    // Permission request codes need to be < 256
     private static final int RC_HANDLE_CAMERA_PERM = 2;
+    public static final String QRcodeObject = "QRcode";
 
-    // Constants used to pass extra data in the intent
-    public static final String BarcodeObject = "QRcode";
-
-    private CameraSource mCameraSource;
-    private CameraSourcePreview mPreview;
-
-
-    /**
-     * Initializes the UI and creates the detector pipeline.
-     */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.qrcode_capture);
-
-        mPreview = findViewById(R.id.preview);
+        prev = findViewById(R.id.preview);
 
         InputCode = findViewById(R.id.input_code);
         InputCode.setOnClickListener(new View.OnClickListener() {
@@ -186,16 +173,15 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
     @Override
     public void onDetectedQrCode(Barcode qrcode) {
         if (qrcode != null) {
-            Intent intent = new Intent();
-            intent.putExtra(BarcodeObject, qrcode);
-            setResult(CommonStatusCodes.SUCCESS, intent);
+            Intent i = new Intent();
+            i.putExtra(QRcodeObject, qrcode);
+            setResult(CommonStatusCodes.SUCCESS, i);
             finish();
         }
     }
 
-    // Handles the requesting of the camera permission.
     private void requestCameraPermission() {
-        Log.w(TAG, "Camera permission is not granted. Requesting permission");
+        Log.w(TAG, "Requesting Camera permission");
 
         final String[] permissions = new String[]{Manifest.permission.CAMERA};
 
@@ -205,20 +191,10 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
         }
     }
 
-    /**
-     * Creates and starts the camera.
-     *
-     * Suppressing InlinedApi since there is a check that the minimum version is met before using
-     * the constant.
-     */
     @SuppressLint("InlinedApi")
     private void createCameraSource(boolean autoFocus, boolean useFlash) {
         Context context = getApplicationContext();
 
-        // A QRcode detector is created to track QRcodes.  An associated multi-processor instance
-        // is set to receive the QRcode detection results, track the QRcodes, and maintain
-        // graphics for each QRcode on screen.  The factory is used by the multi-processor to
-        // create a separate tracker instance for each QRcode.
         BarcodeDetector QRcodeDetector = new BarcodeDetector.Builder(context)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
@@ -226,19 +202,8 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
         QRcodeDetector.setProcessor(new MultiProcessor.Builder<>(QRcodeFactory).build());
 
         if (!QRcodeDetector.isOperational()) {
-            // Note: The first time that an app using the QRcode or face API is installed on a
-            // device, GMS will download a native libraries to the device in order to do detection.
-            // Usually this completes before the app is run for the first time.  But if that
-            // download has not yet completed, then the above call will not detect any QRcodes
-            // and/or faces.
-            //
-            // isOperational() can be used to check if the required native libraries are currently
-            // available.  The detectors will automatically become operational once the library
-            // downloads complete on device.
-            Log.w(TAG, "Detector dependencies are not yet available.");
+            Log.w(TAG, "Detector dependencies not yet available.");
 
-            // Check for low storage.  If there is low storage, the native library will not be
-            // downloaded, so detection will not become operational.
             IntentFilter lowStorageFilter = new IntentFilter(Intent.ACTION_DEVICE_STORAGE_LOW);
             boolean hasLowStorage = registerReceiver(null, lowStorageFilter) != null;
 
@@ -249,9 +214,6 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
             }
         }
 
-        // Creates and starts the camera.  Note that this uses a higher resolution in comparison
-        // to other detection examples to enable the QRcode detector to detect small QRcodes
-        // at long distances.
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
@@ -260,81 +222,55 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                 .setRequestedPreviewSize(metrics.widthPixels, metrics.heightPixels)
                 .setRequestedFps(24.0f);
 
-        // make sure that auto focus is an available option
-
         builder = builder.setFocusMode(autoFocus ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
 
-
-        mCameraSource = builder
+        source = builder
                 .setFlashMode(useFlash ? Camera.Parameters.FLASH_MODE_TORCH : null)
                 .build();
     }
 
-    // Restarts the camera
     @Override
     protected void onResume() {
         super.onResume();
         startCameraSource();
     }
 
-    // Stops the camera
     @Override
     protected void onPause() {
         super.onPause();
-        if (mPreview != null) {
-            mPreview.stop();
+        if (prev != null) {
+            prev.stop();
         }
     }
 
-    /**
-     * Releases the resources associated with the camera source, the associated detectors, and the
-     * rest of the processing pipeline.
-     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPreview != null) {
-            mPreview.release();
+        if (prev != null) {
+            prev.release();
         }
     }
 
-    /**
-     * Callback for the result from requesting permissions. This method
-     * is invoked for every call on {@link #requestPermissions(String[], int)}.
-     * <p>
-     * <strong>Note:</strong> It is possible that the permissions request interaction
-     * with the user is interrupted. In this case you will receive empty permissions
-     * and results arrays which should be treated as a cancellation.
-     * </p>
-     *
-     * @param requestCode  The request code passed in {@link #requestPermissions(String[], int)}.
-     * @param permissions  The requested permissions. Never null.
-     * @param grantResults The grant results for the corresponding permissions
-     *                     which is either {@link PackageManager#PERMISSION_GRANTED}
-     *                     or {@link PackageManager#PERMISSION_DENIED}. Never null.
-     * @see #requestPermissions(String[], int)
-     */
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode != RC_HANDLE_CAMERA_PERM) {
-            Log.d(TAG, "Got unexpected permission result: " + requestCode);
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    public void onRequestPermissionsResult(int rc,
+                                           @NonNull String[] perm,
+                                           @NonNull int[] res) {
+        if (rc != RC_HANDLE_CAMERA_PERM) {
+            Log.d(TAG, "Got unexpected permission result: " + rc);
+            super.onRequestPermissionsResult(rc, perm, res);
             return;
         }
 
-        if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (res.length != 0 && res[0] == PackageManager.PERMISSION_GRANTED) {
             Log.d(TAG, "Camera permission granted - initialize the camera source");
-            // we have permission, so create the camerasource
             boolean autoFocus = true;
             boolean useFlash = false;
             createCameraSource(autoFocus, useFlash);
             return;
         }
 
-        Log.e(TAG, "Permission not granted: results len = " + grantResults.length +
-                " Result code = " + (grantResults.length > 0 ? grantResults[0] : "(empty)"));
+        Log.e(TAG, "Permission not granted: results len = " + res.length +
+                " Result code = " + (res.length > 0 ? res[0] : "(empty)"));
 
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -349,28 +285,23 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                 .show();
     }
 
-    /**
-     * Starts or restarts the camera source, if it exists.  If the camera source doesn't exist yet
-     * (e.g., because onResume was called before the camera source was created), this will be called
-     * again when the camera source is created.
-     */
     private void startCameraSource() throws SecurityException {
-        // check that the device has play services available.
         int code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
                 getApplicationContext());
+
         if (code != ConnectionResult.SUCCESS) {
             Dialog dlg =
                     GoogleApiAvailability.getInstance().getErrorDialog(this, code, RC_HANDLE_GMS);
             dlg.show();
         }
 
-        if (mCameraSource != null) {
+        if (source != null) {
             try {
-                mPreview.start(mCameraSource);
+                prev.start(source);
             } catch (IOException e) {
                 Log.e(TAG, "Unable to start camera source.", e);
-                mCameraSource.release();
-                mCameraSource = null;
+                source.release();
+                source = null;
             }
         }
     }

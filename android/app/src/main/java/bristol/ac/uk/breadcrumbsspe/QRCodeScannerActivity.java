@@ -42,7 +42,7 @@ public class QRCodeScannerActivity extends AppCompatActivity {
         if(requestCode == QRCodeReaderRequestCode){
             if(resultCode == CommonStatusCodes.SUCCESS){
                 if(intent != null){
-                    Barcode QRCode = intent.getParcelableExtra(QRCodeCaptureActivity.BarcodeObject);
+                    Barcode QRCode = intent.getParcelableExtra(QRCodeCaptureActivity.QRcodeObject);
                     //mResultTextView.setText(QRCode.displayValue);
                     String url = QRCode.displayValue;
 
