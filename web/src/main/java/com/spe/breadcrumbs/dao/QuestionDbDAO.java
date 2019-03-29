@@ -5,6 +5,7 @@ import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.web.DBConnection;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,7 @@ public class QuestionDbDAO implements QuestionDAO {
                              rs.getInt("x_coord"), rs.getInt("y_coord"));
                 questions.add(q);
             }
-        }catch(SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        }catch(SQLException | IOException e) {
             e.printStackTrace();
         }
         //add choices
@@ -59,9 +58,7 @@ public class QuestionDbDAO implements QuestionDAO {
                 List<Choice> choices = getChoices(q.getId());
                 q.setChoices(choices);
             }
-        }catch(SQLException e){
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        }catch(SQLException | IOException e){
             e.printStackTrace();
         }
         return q;
@@ -83,9 +80,7 @@ public class QuestionDbDAO implements QuestionDAO {
                 List<Choice> choices = getChoices(q.getId());
                 q.setChoices(choices);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         return q;
@@ -105,9 +100,7 @@ public class QuestionDbDAO implements QuestionDAO {
                     choices.add(c);
                 }
             }
-        }catch (SQLException e){
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        }catch (SQLException | IOException e){
             e.printStackTrace();
         }
         return choices;
@@ -129,7 +122,7 @@ public class QuestionDbDAO implements QuestionDAO {
             stmt.setLong(4,q.getId());
             stmt.executeUpdate();
             return true;
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             return false;
         }

@@ -7,6 +7,7 @@ import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.DBConnection;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,9 +33,7 @@ public class QuizDbDAO implements QuizDAO{
                 List<Question> questions = getQuestions(q.getId());
                 q.setQuestions(questions);
             }
-        }catch (SQLException e){
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        }catch (SQLException | IOException e){
             e.printStackTrace();
         }
         return q;
@@ -60,9 +59,7 @@ public class QuizDbDAO implements QuizDAO{
                 List<Choice> choices = new QuestionDbDAO().getChoices(q.getId());
                 q.setChoices(choices);
             }
-        }catch (SQLException e){
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        }catch (SQLException | IOException e){
             e.printStackTrace();
         }
         return questions;
@@ -83,9 +80,7 @@ public class QuizDbDAO implements QuizDAO{
                 users.add(u);
             }
             con.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        }catch (SQLException | IOException e){
             e.printStackTrace();
         }
         return users;

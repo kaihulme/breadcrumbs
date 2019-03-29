@@ -4,6 +4,7 @@ import com.spe.breadcrumbs.entity.Map;
 import com.spe.breadcrumbs.web.DBConnection;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,7 @@ public class MapDbDAO implements MapDAO {
                 maps.add(m);
             }
             con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         return maps;
@@ -48,9 +47,7 @@ public class MapDbDAO implements MapDAO {
                 con.close();
                 return m;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -71,9 +68,7 @@ public class MapDbDAO implements MapDAO {
                 con.close();
                 return m;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -91,7 +86,7 @@ public class MapDbDAO implements MapDAO {
             stmt.close();
             con.close();
             return true;
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -109,7 +104,7 @@ public class MapDbDAO implements MapDAO {
             stmt.close();
             con.close();
             return true;
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -126,7 +121,7 @@ public class MapDbDAO implements MapDAO {
             stmt.close();
             con.close();
             return true;
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -142,7 +137,7 @@ public class MapDbDAO implements MapDAO {
             stmt.close();
             con.close();
             return true;
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -157,7 +152,7 @@ public class MapDbDAO implements MapDAO {
             stmt.close();
             con.close();
             return true;
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             return false;
         }

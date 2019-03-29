@@ -6,6 +6,7 @@ import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.DBConnection;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +30,7 @@ public class AttemptDbDAO implements AttemptDAO {
             stmt.setInt(3,count);
             stmt.executeUpdate();
             return true;
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -53,7 +54,7 @@ public class AttemptDbDAO implements AttemptDAO {
                 choices.add(c);
             }
             return choices;
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         return choices;

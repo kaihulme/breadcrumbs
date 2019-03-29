@@ -6,6 +6,7 @@ import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.DBConnection;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +28,7 @@ public class UserDbDAO implements UserDAO {
                 users.add(u);
             }
             con.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        }catch (SQLException | IOException e){
             e.printStackTrace();
         }
         return users;
@@ -51,9 +50,7 @@ public class UserDbDAO implements UserDAO {
                con.close();
                return u;
            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        }catch (SQLException | IOException e){
             e.printStackTrace();
         }
         return null;
@@ -99,9 +96,7 @@ public class UserDbDAO implements UserDAO {
                 u.setQuiz(quiz);
             }
             con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (SQLException |IOException e) {
             e.printStackTrace();
         }
         return u;
@@ -122,9 +117,7 @@ public class UserDbDAO implements UserDAO {
                 q = quizDAO.getQuiz(quizId);
             }
             con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (SQLException | IOException  e) {
             e.printStackTrace();
         }
         return q;
@@ -172,9 +165,7 @@ public class UserDbDAO implements UserDAO {
                 quiz.setQuestions(questions);
                 u.setQuiz(quiz);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         return u;
@@ -200,7 +191,7 @@ public class UserDbDAO implements UserDAO {
             stmt.setLong(6,u.getId());
             stmt.executeUpdate();
             return true;
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -220,7 +211,7 @@ public class UserDbDAO implements UserDAO {
             stmt.executeUpdate();
             con.close();
             return true;
-        }catch(SQLException | FileNotFoundException e){
+        }catch(SQLException | IOException e){
             e.printStackTrace();
             return false;
         }
@@ -236,7 +227,7 @@ public class UserDbDAO implements UserDAO {
             stmt.executeUpdate();
             con.close();
             return true;
-        }catch (SQLException | FileNotFoundException e){
+        }catch (SQLException | IOException e){
             e.printStackTrace();
             return false;
         }

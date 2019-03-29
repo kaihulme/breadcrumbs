@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class ExpertDbDAO implements ExpertDAO {
             }
         }catch(SQLException e){
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -55,7 +56,7 @@ public class ExpertDbDAO implements ExpertDAO {
             con.close();
         }catch(SQLException e){
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return experts;
@@ -95,7 +96,7 @@ public class ExpertDbDAO implements ExpertDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return experts;
@@ -120,7 +121,7 @@ public class ExpertDbDAO implements ExpertDAO {
             }
         } catch (SQLException e1) {
             e1.printStackTrace();
-        } catch (FileNotFoundException e1) {
+        } catch (IOException e1) {
             e1.printStackTrace();
         }
         return null;
@@ -141,7 +142,7 @@ public class ExpertDbDAO implements ExpertDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
         }
         return roles;
@@ -162,7 +163,7 @@ public class ExpertDbDAO implements ExpertDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -189,7 +190,7 @@ public class ExpertDbDAO implements ExpertDAO {
             stmt.executeUpdate();
             con.close();
             return true;
-        } catch (SQLException | FileNotFoundException e1) {
+        } catch (SQLException | IOException e1) {
             e1.printStackTrace();
             return false;
         }
@@ -214,7 +215,7 @@ public class ExpertDbDAO implements ExpertDAO {
             stmt.setLong(5,e.getId());
             stmt.executeUpdate();
             return true;
-        } catch (SQLException |FileNotFoundException e1) {
+        } catch (SQLException |IOException e1) {
             e1.printStackTrace();
             return false;
         }
@@ -230,7 +231,7 @@ public class ExpertDbDAO implements ExpertDAO {
             stmt.executeUpdate();
             con.close();
             return true;
-        }catch (SQLException | FileNotFoundException e){
+        }catch (SQLException | IOException e){
             e.printStackTrace();
             return false;
         }
@@ -246,7 +247,7 @@ public class ExpertDbDAO implements ExpertDAO {
             stmt.setString(2,password);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()) return true;
-        }catch (SQLException | FileNotFoundException e) {
+        }catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         return false;
