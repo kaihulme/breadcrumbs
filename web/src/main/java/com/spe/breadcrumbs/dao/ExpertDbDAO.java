@@ -1,14 +1,16 @@
 package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.*;
+import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 
 public class ExpertDbDAO implements ExpertDAO {
 
@@ -19,7 +21,7 @@ public class ExpertDbDAO implements ExpertDAO {
     @Override
     public Expert getExpert(Long id) {
         try{
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             String getExpert = "SELECT * FROM Expert WHERE id = ?";
             PreparedStatement stmt = con.prepareStatement(getExpert);
             stmt.setInt(1,Math.toIntExact(id));
@@ -33,6 +35,8 @@ public class ExpertDbDAO implements ExpertDAO {
             }
         }catch(SQLException e){
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -40,9 +44,9 @@ public class ExpertDbDAO implements ExpertDAO {
     @Override
     public List<Expert> getAllExperts(){
         List<Expert> experts = new ArrayList<>();
-        Connection con = getConnection();
         try {
-            Statement stmt = getConnection().createStatement();
+            Connection con = new DBConnection().getConnection();
+            Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Expert");
             while (rs.next()) {
                 Expert e = new Expert(rs.getLong("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("email")
@@ -52,6 +56,8 @@ public class ExpertDbDAO implements ExpertDAO {
             con.close();
         }catch(SQLException e){
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return experts;
     }
@@ -60,7 +66,7 @@ public class ExpertDbDAO implements ExpertDAO {
     public List<Expert> getExpertsWithQuizzes() {
         List<Expert> experts = new ArrayList<>();
         try{
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             String getExperts = "SELECT Expert.id as expertId," +
                     "Expert.firstName as expert_FirstName," +
                     "Expert.lastName as expert_LastName," +
@@ -90,6 +96,8 @@ public class ExpertDbDAO implements ExpertDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return experts;
     }
@@ -98,7 +106,7 @@ public class ExpertDbDAO implements ExpertDAO {
     public Expert findByEmail(String email) {
         Expert e;
         try{
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             String getExpert = "SELECT * FROM Expert WHERE email = ?";
             PreparedStatement stmt = con.prepareStatement(getExpert);
             stmt.setString(1,email);
@@ -113,6 +121,8 @@ public class ExpertDbDAO implements ExpertDAO {
             }
         } catch (SQLException e1) {
             e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
         return null;
     }
@@ -120,7 +130,7 @@ public class ExpertDbDAO implements ExpertDAO {
     private List<Role> getRoles(Long id){
         List<Role> roles = new ArrayList<>();
         try{
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             String getRoles = "SELECT * FROM Expert_Role WHERE expertId = ?";
             PreparedStatement stmt = con.prepareStatement(getRoles);
             stmt.setLong(1,id);
@@ -132,13 +142,15 @@ public class ExpertDbDAO implements ExpertDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }  catch (IOException e) {
+            e.printStackTrace();
         }
         return roles;
     }
 
     private Role getRole(Long id){
         try{
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             String getRole = "SELECT * FROM Role WHERE id = ?";
             PreparedStatement stmt = con.prepareStatement(getRole);
             stmt.setLong(1,id);
@@ -150,6 +162,8 @@ public class ExpertDbDAO implements ExpertDAO {
                 return role;
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -165,7 +179,7 @@ public class ExpertDbDAO implements ExpertDAO {
     @Override
     public boolean addExpert(Expert e) {
         try {
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             String addExpert = "INSERT INTO Expert(firstName,lastName,email,password) VALUES(?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(addExpert);
             stmt.setString(1,e.getFirstName());
@@ -176,7 +190,7 @@ public class ExpertDbDAO implements ExpertDAO {
             stmt.executeUpdate();
             con.close();
             return true;
-        } catch (SQLException e1) {
+        } catch (SQLException | IOException e1) {
             e1.printStackTrace();
             return false;
         }
@@ -191,7 +205,7 @@ public class ExpertDbDAO implements ExpertDAO {
                     "email = ?," +
                     "password = ? " +
                     "WHERE id = ?;";
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             PreparedStatement stmt = con.prepareStatement(updateExpert);
             stmt.setString(1,e.getFirstName());
             stmt.setString(2,e.getLastName());
@@ -201,7 +215,7 @@ public class ExpertDbDAO implements ExpertDAO {
             stmt.setLong(5,e.getId());
             stmt.executeUpdate();
             return true;
-        } catch (SQLException e1) {
+        } catch (SQLException |IOException e1) {
             e1.printStackTrace();
             return false;
         }
@@ -210,14 +224,14 @@ public class ExpertDbDAO implements ExpertDAO {
     @Override
     public boolean deleteExpert(Long id) {
         try{
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             String deleteExpert = "DELETE FROM Expert Where id = ?";
             PreparedStatement stmt = con.prepareStatement(deleteExpert);
             stmt.setLong(1,id);
             stmt.executeUpdate();
             con.close();
             return true;
-        }catch (SQLException e){
+        }catch (SQLException | IOException e){
             e.printStackTrace();
             return false;
         }
@@ -226,14 +240,14 @@ public class ExpertDbDAO implements ExpertDAO {
     @Override
     public boolean validate(String email, String password) {
         try{
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             String validateExpert = "SELECT * FROM Expert WHERE email = ? AND password = ?";
             PreparedStatement stmt = con.prepareStatement(validateExpert);
             stmt.setString(1,email);
             stmt.setString(2,password);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()) return true;
-        }catch (SQLException e){
+        }catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         return false;

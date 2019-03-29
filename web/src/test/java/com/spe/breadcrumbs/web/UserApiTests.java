@@ -1,6 +1,5 @@
 package com.spe.breadcrumbs.web;
 
-import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.spe.breadcrumbs.dao.*;

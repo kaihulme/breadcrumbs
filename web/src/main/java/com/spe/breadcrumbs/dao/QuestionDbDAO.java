@@ -2,21 +2,22 @@ package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Question;
-import com.spe.breadcrumbs.entity.User;
+import com.spe.breadcrumbs.web.DBConnection;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 
 public class QuestionDbDAO implements QuestionDAO {
 
     @Override
     public List<Question> getAllQuestions() {
         List<Question> questions = new ArrayList<>();
-        Connection con = getConnection();
         try{
+            Connection con = new DBConnection().getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Question");
             while (rs.next()){
@@ -24,7 +25,7 @@ public class QuestionDbDAO implements QuestionDAO {
                              rs.getInt("x_coord"), rs.getInt("y_coord"));
                 questions.add(q);
             }
-        }catch(SQLException e) {
+        }catch(SQLException | IOException e) {
             e.printStackTrace();
         }
         //add choices
@@ -43,8 +44,8 @@ public class QuestionDbDAO implements QuestionDAO {
     @Override
     public Question findById(Long id) {
         Question q = null;
-        Connection con = getConnection();
         try{
+            Connection con = new DBConnection().getConnection();
             String getQuestion = "SELECT * FROM Question WHERE id = ?";
             PreparedStatement stmt = con.prepareStatement(getQuestion);
             stmt.setInt(1,Math.toIntExact(id));
@@ -57,7 +58,7 @@ public class QuestionDbDAO implements QuestionDAO {
                 List<Choice> choices = getChoices(q.getId());
                 q.setChoices(choices);
             }
-        }catch(SQLException e){
+        }catch(SQLException | IOException e){
             e.printStackTrace();
         }
         return q;
@@ -66,8 +67,8 @@ public class QuestionDbDAO implements QuestionDAO {
     @Override
     public Question findByCode(String code) {
         Question q = null;
-        Connection con = getConnection();
         try{
+            Connection con = new DBConnection().getConnection();
             String getQuestion = "SELECT * FROM Question WHERE code = ?";
             PreparedStatement stmt = con.prepareStatement(getQuestion);
             stmt.setString(1,code);
@@ -79,7 +80,7 @@ public class QuestionDbDAO implements QuestionDAO {
                 List<Choice> choices = getChoices(q.getId());
                 q.setChoices(choices);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
         return q;
@@ -88,8 +89,8 @@ public class QuestionDbDAO implements QuestionDAO {
     @Override
     public List<Choice> getChoices(Long questionId) {
         List<Choice> choices = new ArrayList<>();
-        Connection con = getConnection();
         try{
+            Connection con = new DBConnection().getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Choice");
             while(rs.next()){
@@ -99,7 +100,7 @@ public class QuestionDbDAO implements QuestionDAO {
                     choices.add(c);
                 }
             }
-        }catch (SQLException e){
+        }catch (SQLException | IOException e){
             e.printStackTrace();
         }
         return choices;
@@ -113,7 +114,7 @@ public class QuestionDbDAO implements QuestionDAO {
                     "x_coord = ?," +
                     "y_coord = ? " +
                     "WHERE id = ?;";
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             PreparedStatement stmt = con.prepareStatement(updateQuestion);
             stmt.setString(1,q.getQuestion());
             stmt.setInt(2, q.getX_coord());
@@ -121,7 +122,7 @@ public class QuestionDbDAO implements QuestionDAO {
             stmt.setLong(4,q.getId());
             stmt.executeUpdate();
             return true;
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             return false;
         }
