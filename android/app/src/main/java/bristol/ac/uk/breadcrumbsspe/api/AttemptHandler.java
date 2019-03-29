@@ -39,6 +39,7 @@ public class AttemptHandler implements Callback<ResponseBody> {
                //System.out.println(q.getId() + "getId");
                questionActivity.startActivity(nextQ);
                questionActivity.overridePendingTransition( R.anim.fade_in, R.anim.fade_out );
+               questionActivity.finish();
            } else {
                q.correctAttemptMade(false);
                b.setBackgroundColor(rgb(191, 0, 0));
