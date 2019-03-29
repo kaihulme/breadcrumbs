@@ -19,12 +19,13 @@ public class DBConnection{
     private void loadProperties(String filePath) throws IOException {
         FileInputStream input = new FileInputStream(filePath);
         properties.load(input);
-        String dbURL = properties.getProperty("spring.datasource.url");
-        String username = properties.getProperty("spring.datasource.username");
-        String password = properties.getProperty("spring.datasource.password");
+        dbURL = properties.getProperty("spring.datasource.url");
+        username = properties.getProperty("spring.datasource.username");
+        password = properties.getProperty("spring.datasource.password");
     }
     public Connection getConnection() throws IOException {
-        String filePath = "${user.home}/.secret.properties";
+        String home = System.getProperty("user.home");
+        String filePath = home + "/.secret.properties";
         loadProperties(filePath);
         Connection con = null;
         try{
