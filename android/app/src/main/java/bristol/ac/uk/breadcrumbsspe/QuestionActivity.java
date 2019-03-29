@@ -37,7 +37,6 @@ public class QuestionActivity extends AppCompatActivity {
     private Question q;
 
     // TODO Credits activity with us and sponsors
-    // TODO Disallow return to question page after answering
 
 
     @Override

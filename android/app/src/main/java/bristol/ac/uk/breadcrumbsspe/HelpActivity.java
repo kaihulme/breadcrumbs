@@ -75,6 +75,8 @@ public class HelpActivity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.home_help:
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

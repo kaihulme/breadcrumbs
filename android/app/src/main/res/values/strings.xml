@@ -23,4 +23,5 @@
     <string name="d">D</string>
     <string name="welcome_paul">Welcome Paul</string>
     <string name="breadcrumbs_game">Breadcrumbs Game</string>
+    <string name="help_button">Help</string>
 </resources>
