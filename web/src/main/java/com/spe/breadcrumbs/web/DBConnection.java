@@ -24,9 +24,9 @@ public class DBConnection{
         password = properties.getProperty("spring.datasource.password");
     }
     public Connection getConnection() throws IOException {
-        String home = System.getProperty("user.home");
-        String filePath = home + "/.secret.properties";
-        loadProperties(filePath);
+//        String home = System.getProperty("user.home");
+//        String filePath = home + "/.secret.properties";
+//        loadProperties(filePath);
         Connection con = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
