@@ -3,22 +3,21 @@ package com.spe.breadcrumbs.dao;
 import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.entity.Quiz;
 import com.spe.breadcrumbs.entity.User;
-import com.spe.breadcrumbs.web.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spe.breadcrumbs.web.DBConnection;
 
+import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.spe.breadcrumbs.web.DBConnection.getConnection;
 
 public class UserDbDAO implements UserDAO {
 
     @Override
     public List<User> getAllUsers(){
         List<User> users = new ArrayList<>();
-        Connection con = getConnection();
         try{
+            Connection con = new DBConnection().getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM User");
             while (rs.next()){
@@ -30,15 +29,17 @@ public class UserDbDAO implements UserDAO {
             con.close();
         }catch (SQLException e){
             e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         return users;
     }
 
     @Override
     public User getUser(Long id) {
-        Connection con = getConnection();
         User u;
         try{
+            Connection con = new DBConnection().getConnection();
             String getUser = "SELECT * FROM User WHERE id = ?";
             PreparedStatement stmt = con.prepareStatement(getUser);
             stmt.setInt(1,Math.toIntExact(id));
@@ -52,6 +53,8 @@ public class UserDbDAO implements UserDAO {
            }
         }catch (SQLException e){
             e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -61,8 +64,8 @@ public class UserDbDAO implements UserDAO {
         User u = null;
         Quiz quiz;
         List<Question> questions = new ArrayList<>();
-        Connection con = getConnection();
         try{
+            Connection con = new DBConnection().getConnection();
             String getUser = "SELECT User.id as userId," +
                     "User.firstName as firstName," +
                     "User.lastName as lastName," +
@@ -98,6 +101,8 @@ public class UserDbDAO implements UserDAO {
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         return u;
     }
@@ -106,7 +111,7 @@ public class UserDbDAO implements UserDAO {
     public Quiz getQuiz(Long id) {
         Quiz q = null;
         try{
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             String getQuiz = "SELECT quizId FROM User WHERE id = ?";
             PreparedStatement stmt = con.prepareStatement(getQuiz);
             stmt.setLong(1,id);
@@ -118,6 +123,8 @@ public class UserDbDAO implements UserDAO {
             }
             con.close();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return q;
@@ -134,7 +141,7 @@ public class UserDbDAO implements UserDAO {
         Quiz quiz;
         List<Question> questions = new ArrayList<>();
         try{
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             String getUser = "SELECT User.id as userId," +
                     "User.firstName as firstName,"+
                     "User.lastName as lastName," +
@@ -167,6 +174,8 @@ public class UserDbDAO implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         return u;
     }
@@ -181,7 +190,7 @@ public class UserDbDAO implements UserDAO {
                     "code = ?," +
                     "score = ? " +
                     "WHERE id = ?;";
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             PreparedStatement stmt = con.prepareStatement(updateUser);
             stmt.setString(1,u.getFirstName());
             stmt.setString(2,u.getLastName());
@@ -191,7 +200,7 @@ public class UserDbDAO implements UserDAO {
             stmt.setLong(6,u.getId());
             stmt.executeUpdate();
             return true;
-        } catch (SQLException e) {
+        } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
             return false;
         }
@@ -200,7 +209,7 @@ public class UserDbDAO implements UserDAO {
     @Override
     public boolean addUser(User u) {
         try{
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             //quiz ID is set to one as there will only be one quiz
             String addUser = "INSERT INTO User(firstName,lastName,email,code,quizId) VALUES(?,?,?,?,1)";
             PreparedStatement stmt = con.prepareStatement(addUser);
@@ -211,7 +220,7 @@ public class UserDbDAO implements UserDAO {
             stmt.executeUpdate();
             con.close();
             return true;
-        }catch(SQLException e){
+        }catch(SQLException | FileNotFoundException e){
             e.printStackTrace();
             return false;
         }
@@ -220,14 +229,14 @@ public class UserDbDAO implements UserDAO {
     @Override
     public boolean deleteUser(Long id) {
         try{
-            Connection con = getConnection();
+            Connection con = new DBConnection().getConnection();
             String deleteUser = "DELETE FROM User Where id = ?";
             PreparedStatement stmt = con.prepareStatement(deleteUser);
             stmt.setLong(1,id);
             stmt.executeUpdate();
             con.close();
             return true;
-        }catch (SQLException e){
+        }catch (SQLException | FileNotFoundException e){
             e.printStackTrace();
             return false;
         }
