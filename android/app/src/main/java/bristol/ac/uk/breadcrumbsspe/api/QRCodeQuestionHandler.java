@@ -8,10 +8,14 @@ import bristol.ac.uk.breadcrumbsspe.HomeActivity;
 import bristol.ac.uk.breadcrumbsspe.QRCodeScannerActivity;
 import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.R;
+import bristol.ac.uk.breadcrumbsspe.UserInSession;
+import bristol.ac.uk.breadcrumbsspe.entity.Attempt;
 import bristol.ac.uk.breadcrumbsspe.entity.Choice;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
+import bristol.ac.uk.breadcrumbsspe.entity.User;
 import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,20 +68,13 @@ public class QRCodeQuestionHandler implements Callback<Question> {
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (questionActivity.buttons.indexOf(b) == questionActivity.answer) {
-                            q.correctAttemptMade(true);
-                            b.setBackgroundColor(rgb(0, 191, 0));
-                            //wait
-                            Intent nextQ = new Intent(questionActivity, HomeActivity.class);
-                            nextQ.putExtra("CURRENT_QUESTION", q.getId().intValue());
-                            //System.out.println(q.getId() + "getId");
-                            questionActivity.startActivity(nextQ);
-                            questionActivity.overridePendingTransition( R.anim.fade_in, R.anim.fade_out );
-                        } else {
-                            q.correctAttemptMade(false);
-                            b.setBackgroundColor(rgb(191, 0, 0));
-                            b.setEnabled(false);
-                        }
+                        AttemptService attemptService = RetrofitClient.retrofit.create(AttemptService.class);
+                        User u = UserInSession.getUser();
+                        int a = questionActivity.buttons.indexOf(b);
+                        Choice c = q.getChoices().get(a);
+                        Attempt attempt = new Attempt(u,c);
+                        Call<ResponseBody> responseBodyCall = attemptService.addAttempt(attempt);
+                        responseBodyCall.enqueue(new AttemptHandler(questionActivity,b,q));
                     }
                 });
             }
