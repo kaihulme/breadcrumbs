@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +22,11 @@ import java.sql.SQLException;
 public class MainController{
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String login() { return "index"; }
+    public String login(Model m) {
+        String test = System.getProperty("user.home");
+        m.addAttribute("test",test);
+        return "index";
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String mainPage(){

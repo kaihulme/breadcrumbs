@@ -54,7 +54,6 @@ public class QuestionActivity extends AppCompatActivity {
 
     //answer question with this index in question list
     private void answer(){
-        //TODO Post Attempt in database
         buttons.add((Button)findViewById(R.id.button_answer1));
         buttons.add((Button)findViewById(R.id.button_answer2));
         buttons.add((Button)findViewById(R.id.button_answer3));
@@ -81,18 +80,6 @@ public class QuestionActivity extends AppCompatActivity {
                         Attempt attempt = new Attempt(u,c);
                         Call<ResponseBody> responseBodyCall = attemptService.addAttempt(attempt);
                         responseBodyCall.enqueue(new AttemptHandler(QuestionActivity.this,b,q));
-//                        if (buttons.indexOf(b) == answer) {
-//                            q.correctAttemptMade(true);
-//                            b.setBackgroundColor(rgb(0, 191, 0));
-//                            Intent nextQ = new Intent(QuestionActivity.this, HomeActivity.class);
-//                            nextQ.putExtra("CURRENT_QUESTION", q.getId().intValue());
-//                            //System.out.println(q.getId() + "getId");
-//                            startActivity(nextQ);
-//                        } else {
-//                            q.correctAttemptMade(false);
-//                            b.setBackgroundColor(rgb(191, 0, 0));
-//                            b.setEnabled(false);
-//                        }
                     }
                 });
             }
