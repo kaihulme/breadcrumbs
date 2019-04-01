@@ -22,9 +22,7 @@ import java.sql.SQLException;
 public class MainController{
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String login(Model m) {
-        String test = System.getProperty("user.home");
-        m.addAttribute("test",test);
+    public String login() {
         return "index";
     }
 

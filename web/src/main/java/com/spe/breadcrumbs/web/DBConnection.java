@@ -24,13 +24,13 @@ public class DBConnection{
         password = properties.getProperty("spring.datasource.password");
     }
     public Connection getConnection() throws IOException {
-//        String home = System.getProperty("user.home");
-//        String filePath = home + "/.secret.properties";
-//        loadProperties(filePath);
+        String home = System.getProperty("user.home");
+        String filePath = home + "/.secret.properties";
+        loadProperties(filePath);
         Connection con = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://@129.213.29.31:3306/breadcrumbsData","root","Breadcrumbs1!");
+            con = DriverManager.getConnection(dbURL,username,password);
         }catch(ClassNotFoundException e){
             System.out.println("driver wasn't found");
         }catch (SQLException e){

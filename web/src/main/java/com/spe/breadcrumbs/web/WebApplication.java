@@ -11,8 +11,6 @@ import java.util.Properties;
 public class WebApplication {
 
 	public static void main(String[] args) {
-		String userHome = System.getProperty("user.home");
-		System.out.println(userHome);
 		SpringApplication app = new SpringApplication(WebApplication.class);
 		app.run();
 	}
