@@ -7,65 +7,59 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/content_frame_home"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/home_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/AppTitleStyle">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/home_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                android:theme="@style/AppTitleStyle">
-
-                <ImageButton
-                    android:id="@+id/home_help"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:src="@drawable/ic_help_outline"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginEnd="12dp"
-                    android:contentDescription="@string/help_button"/>
-
-            </android.support.v7.widget.Toolbar>
-
-            <TextView
-                android:id="@+id/home_score"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/your_current_score_is_0"
-                android:textSize="20sp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textAlignment="center"/>
-
-            <ImageView
-                android:id="@+id/map"
-                android:layout_width="wrap_content"
-                android:layout_height="515dp"
-                android:layout_gravity="center_vertical"
-                app:srcCompat="@drawable/map_portrait"
-                android:layout_weight="2"/>
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/camera_button"
+            <ImageButton
+                android:id="@+id/home_help"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="16dp" />
+                android:background="@color/colorPrimary"
+                android:src="@drawable/ic_help_outline"
+                android:layout_gravity="end"
+                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@string/help_button"/>
 
-        </LinearLayout>
+        </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.CoordinatorLayout>
+        <TextView
+            android:id="@+id/home_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/your_current_score_is_0"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textAlignment="center"/>
+
+        <ImageView
+            android:id="@+id/map"
+            android:layout_width="wrap_content"
+            android:layout_height="515dp"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/map_portrait"
+            android:layout_weight="2"
+            android:contentDescription="@string/map"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/camera_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:src="@drawable/ic_camera"
+            android:layout_margin="16dp" />
+
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewOverlay;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -75,8 +76,8 @@ public class HomeActivity extends AppCompatActivity {
         camera_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Opening Camera", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Opening Camera", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
                 startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
                 overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
 //                Intent currentQuestion = getIntent();
@@ -100,14 +101,23 @@ public class HomeActivity extends AppCompatActivity {
                 LayoutInflater inflater = getLayoutInflater();
                 View helpView = inflater.inflate(R.layout.home_help_layout, mDrawerLayout, false);
                 mDrawerLayout.addView(helpView);
+//                setContentView(helpView);
+                helpButton.setClickable(false);
+                camera_button.setClickable(false);
 
-                FloatingActionButton backToHome = findViewById(R.id.test);
+
+                FloatingActionButton backToHome = findViewById(R.id.help_view_submit);
                 backToHome.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                        // TODO remove help layout
+//                        setContentView(R.layout.activity_home);
+                        mDrawerLayout.removeView(helpView);
+                        helpButton.setClickable(true);
+                        camera_button.setClickable(true);
                     }
                 });
+
             }
         });
 

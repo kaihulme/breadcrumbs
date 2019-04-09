@@ -24,4 +24,8 @@
     <string name="welcome_paul">Welcome Paul</string>
     <string name="breadcrumbs_game">Breadcrumbs Game</string>
     <string name="help_button">Help</string>
+    <string name="map">Map</string>
+    <string name="score_help">Here is your current score!</string>
+    <string name="map_help">This is the Map.\n\n Navigate around the space and search for hint and question QR codes located in the areas marked by the search icon.</string>
+    <string name="camera_help">Click here to go to the camera</string>
 </resources>
