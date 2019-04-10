@@ -14,7 +14,7 @@
         <item
             android:checkable="false"
             android:id="@+id/nav_help"
-            android:icon="@drawable/ic_menu_help"
-            android:title="Help" />
+            android:icon="@drawable/ic_star"
+            android:title="Sponsors" />
     </group>
 </menu>

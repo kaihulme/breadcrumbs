@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home_help_layout">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/black"
-        android:alpha="0.6"/>
+        android:alpha="0.55"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/map_help1"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/help_colour"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:alpha="1">
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -30,36 +39,34 @@
             android:textAllCaps="true"
             android:textColorHighlight="@color/colorWhite"
             android:textSize="20sp"
-            android:textColor="@color/colorAccent"
-            android:layout_weight="1.5"
-            android:gravity="center_vertical"
+            android:textColor="@color/help_colour"
+            android:layout_weight="0.3"
+            android:gravity="center_vertical|bottom"
             android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/help_view_map"
             android:layout_width="wrap_content"
-            android:layout_height="515dp"
-            android:layout_gravity="center_vertical"
+            android:layout_height="0dp"
             android:text="@string/map_help"
-            android:gravity="center_vertical"
+            android:gravity="bottom"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/colorAccent"
-            android:layout_weight="1"
-            android:background="@drawable/textview_border"
-            android:contentDescription="@string/map"/>
+            android:textColor="@color/help_colour"
+            android:layout_weight="2"
+            android:contentDescription="@string/map" />
 
        <TextView
            android:layout_width="match_parent"
            android:layout_height="0dp"
-           android:layout_weight="1"
+           android:layout_weight="0.35"
            android:text="@string/camera_help"
            android:textAlignment="center"
-           android:gravity="center_vertical"
-           android:textColor="@color/colorAccent"
+           android:gravity="start"
+           android:textColor="@color/help_colour"
            android:textSize="20sp"
-           android:textStyle="bold"/>
+           android:textStyle="bold" />
 
     </LinearLayout>
 

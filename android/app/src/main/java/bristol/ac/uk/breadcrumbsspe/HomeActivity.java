@@ -1,10 +1,8 @@
 package bristol.ac.uk.breadcrumbsspe;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -12,11 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewOverlay;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,8 +24,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
-
-    //TODO help_button button on the toolbar with help_button overlays for map, search area
 
 
     @Override
@@ -57,15 +50,18 @@ public class HomeActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()){
                             case R.id.nav_map:
                                 startActivity(new Intent(HomeActivity.this, HomeActivity.class));
-                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 return true;
                             case R.id.nav_camera:
                                 startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
-                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 return true;
                             case R.id.nav_help:
-                                startActivity(new Intent(HomeActivity.this, HelpActivity.class));
-                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                startActivity(new Intent(HomeActivity.this, SponsorActivity.class));
+//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 return true;
                         }
                         return true;
@@ -79,7 +75,7 @@ public class HomeActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Opening Camera", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
-                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 //                Intent currentQuestion = getIntent();
 //                int index = currentQuestion.getIntExtra("CURRENT_QUESTION",-1);
 //                Intent toQrCode = new Intent(HomeActivity.this,QRCodeScannerActivity.class);
@@ -110,7 +106,6 @@ public class HomeActivity extends AppCompatActivity {
                 backToHome.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       // TODO remove help layout
 //                        setContentView(R.layout.activity_home);
                         mDrawerLayout.removeView(helpView);
                         helpButton.setClickable(true);

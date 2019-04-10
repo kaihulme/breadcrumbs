@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HelpActivity"
+        <activity android:name=".SponsorActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".LoginActivity"

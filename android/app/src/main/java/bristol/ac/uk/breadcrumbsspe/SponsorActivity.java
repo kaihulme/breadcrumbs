@@ -12,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-public class HelpActivity extends AppCompatActivity {
+public class SponsorActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
@@ -22,7 +22,7 @@ public class HelpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help);
+        setContentView(R.layout.activity_sponsor);
 
         mDrawerLayout = findViewById(R.id.help_drawer_layout);
 
@@ -35,16 +35,20 @@ public class HelpActivity extends AppCompatActivity {
                         mDrawerLayout.closeDrawers();
                         switch (menuItem.getItemId()){
                             case R.id.nav_map:
-                                startActivity(new Intent(HelpActivity.this, HomeActivity.class));
-                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                startActivity(new Intent(SponsorActivity.this, HomeActivity.class));
+//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 return true;
                             case R.id.nav_camera:
-                                startActivity(new Intent(HelpActivity.this, QRCodeScannerActivity.class));
-                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                startActivity(new Intent(SponsorActivity.this, QRCodeScannerActivity.class));
+//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 return true;
                             case R.id.nav_help:
-                                startActivity(new Intent(HelpActivity.this, HelpActivity.class));
-                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                startActivity(new Intent(SponsorActivity.this, SponsorActivity.class));
+//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
                                 return true;
                         }
                         return true;
@@ -55,9 +59,9 @@ public class HelpActivity extends AppCompatActivity {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HelpActivity.this, HomeActivity.class);
+                Intent i = new Intent(SponsorActivity.this, HomeActivity.class);
                 startActivity(i);
-                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
@@ -74,8 +78,6 @@ public class HelpActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-            case R.id.home_help:
                 return true;
         }
         return super.onOptionsItemSelected(item);
