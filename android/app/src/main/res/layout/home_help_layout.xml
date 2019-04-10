@@ -34,13 +34,12 @@
             android:id="@+id/help_view_score"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="@string/score_help"
             android:textStyle="bold"
             android:textAllCaps="true"
             android:textColorHighlight="@color/colorWhite"
             android:textSize="20sp"
             android:textColor="@color/help_colour"
-            android:layout_weight="0.3"
+            android:layout_weight="0.35"
             android:gravity="center_vertical|bottom"
             android:textAlignment="center"/>
 
@@ -51,7 +50,7 @@
             android:text="@string/map_help"
             android:gravity="bottom"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/help_colour"
             android:layout_weight="2"
@@ -65,7 +64,7 @@
            android:textAlignment="center"
            android:gravity="start"
            android:textColor="@color/help_colour"
-           android:textSize="20sp"
+           android:textSize="18sp"
            android:textStyle="bold" />
 
     </LinearLayout>
