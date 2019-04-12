@@ -29,4 +29,8 @@
     <string name="map_help">Navigate around the space and search for hint and question QR codes located in the areas marked by the search icon.\n</string>
     <string name="map_help1">This is the Map</string>
     <string name="camera_help">Click here to go to the camera and scan them</string>
+    <string name="sponsor_1">First Sponsor</string>
+    <string name="sponsor_2">Second Sponsor</string>
+    <string name="sponsor_3">Third Sponsor</string>
+    <string name="sponsor_4">Fourth Sponsor</string>
 </resources>
