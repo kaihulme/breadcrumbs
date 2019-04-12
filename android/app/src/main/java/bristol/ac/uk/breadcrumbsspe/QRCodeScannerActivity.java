@@ -74,7 +74,7 @@ public class QRCodeScannerActivity extends AppCompatActivity {
             builder = new AlertDialog.Builder(this);
         }
         builder.setTitle("Wrong question")
-                .setMessage("Sorry that's the wrong question. Keep looking")
+                .setMessage("Sorry that's the wrong question. Keep looking!")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
