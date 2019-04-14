@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Build;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;

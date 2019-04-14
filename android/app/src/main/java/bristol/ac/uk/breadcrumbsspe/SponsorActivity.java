@@ -18,9 +18,6 @@ public class SponsorActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
-    // TODO static sponsor page, set logos
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +59,10 @@ public class SponsorActivity extends AppCompatActivity {
             }
         });
 
-        mDrawerLayout = findViewById(R.id.help_drawer_layout);
+        mDrawerLayout = findViewById(R.id.sponsor_drawer_layout);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.sponsor_nav_view);
+        navigationView.setCheckedItem(R.id.nav_sponsors);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -72,6 +70,11 @@ public class SponsorActivity extends AppCompatActivity {
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
                         switch (menuItem.getItemId()){
+                            case R.id.nav_account:
+                                startActivity(new Intent(SponsorActivity.this, WelcomeActivity.class));
+//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                return true;
                             case R.id.nav_map:
                                 startActivity(new Intent(SponsorActivity.this, HomeActivity.class));
 //                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
@@ -82,18 +85,17 @@ public class SponsorActivity extends AppCompatActivity {
 //                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 return true;
-                            case R.id.nav_help:
+                            case R.id.nav_sponsors:
                                 startActivity(new Intent(SponsorActivity.this, SponsorActivity.class));
 //                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
                                 return true;
                         }
                         return true;
                     }
                 });
 
-        FloatingActionButton continueButton = findViewById(R.id.help_continue);
+        FloatingActionButton continueButton = findViewById(R.id.sponsor_continue);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +106,7 @@ public class SponsorActivity extends AppCompatActivity {
         });
 
 
-        Toolbar toolbar = findViewById(R.id.help_toolbar);
+        Toolbar toolbar = findViewById(R.id.sponsor_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);

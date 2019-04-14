@@ -3,23 +3,24 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
-        <item name="colorControlNormal">@color/editTextNormal</item>
-        <item name="colorControlHighlight">@color/editTextHightlight</item>
-        <item name="colorControlActivated">@color/editTextActivated</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorWhite</item>
     </style>
 
     <style name="AppTitleStyle" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorControlNormal">@color/editTextNormal</item>
-        <item name="colorControlHighlight">@color/editTextHightlight</item>
-        <item name="colorControlActivated">@color/editTextActivated</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/colorWhite</item>
         <item name="android:textColorSecondary">@color/colorWhite</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
 
     <!--<style name="SlideAnimation.Activity" parent="@android:style/Animation.Activity">-->

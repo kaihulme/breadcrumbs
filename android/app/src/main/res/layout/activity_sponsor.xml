@@ -2,7 +2,7 @@
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/help_drawer_layout"
+    android:id="@+id/sponsor_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -12,13 +12,13 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/content_frame_help"
+            android:id="@+id/content_frame_sponsor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/help_toolbar"
+                android:id="@+id/sponsor_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
@@ -86,7 +86,7 @@
 
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/help_continue"
+                android:id="@+id/sponsor_continue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
@@ -99,7 +99,7 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/sponsor_nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
