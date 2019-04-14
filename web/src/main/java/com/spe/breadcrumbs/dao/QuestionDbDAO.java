@@ -65,6 +65,27 @@ public class QuestionDbDAO implements QuestionDAO {
     }
 
     @Override
+    public List<Question> getQuestionsAnswered(Long userId) {
+        List<Question> questionsAnswered = new ArrayList<>();
+        try{
+            Connection connection = new DBConnection().getConnection();
+            String getQuestionsAnswered = "SELECT question FROM Attempt INNER JOIN Choice on Choice.id = Attempt.choiceId " +
+                    "WHERE Choice.answer = true AND Attempt.userId = ?";
+            PreparedStatement stmt = connection.prepareStatement(getQuestionsAnswered);
+            stmt.setLong(1,userId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Question q = findById(rs.getLong("question"));
+                questionsAnswered.add(q);
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return questionsAnswered;
+    }
+
+    @Override
     public Question findByCode(String code) {
         Question q = null;
         try{

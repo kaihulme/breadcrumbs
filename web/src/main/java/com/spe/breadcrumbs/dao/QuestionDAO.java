@@ -16,6 +16,9 @@ public interface QuestionDAO {
     //finds a question by its id. return null if not found
     Question findById(Long id);
 
+    //get questions that user with id userId has answered
+    List<Question> getQuestionsAnswered(Long userId);
+
     //finds a question by its code
     Question findByCode(String code);
 
