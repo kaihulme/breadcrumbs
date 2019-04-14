@@ -1,22 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home_help_layout">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:alpha="0.55"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/map_help1"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/help_colour"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent">
+        android:orientation="vertical">
 
-        <android.support.design.widget.FloatingActionButton
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:src="@drawable/ic_help_outline"
-        android:layout_margin="16dp" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"/>
+
+        <TextView
+            android:id="@+id/help_view_score"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textColorHighlight="@color/colorWhite"
+            android:textSize="20sp"
+            android:textColor="@color/help_colour"
+            android:layout_weight="0.35"
+            android:gravity="center_vertical|bottom"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/help_view_map"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/map_help"
+            android:gravity="bottom"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/help_colour"
+            android:layout_weight="2"
+            android:contentDescription="@string/map" />
+
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="0.35"
+           android:text="@string/camera_help"
+           android:textAlignment="center"
+           android:gravity="start"
+           android:textColor="@color/help_colour"
+           android:textSize="18sp"
+           android:textStyle="bold" />
 
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/help_view_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_check"
+        android:layout_margin="16dp"
+        android:layout_gravity="center|end" />
+
 
 </FrameLayout>

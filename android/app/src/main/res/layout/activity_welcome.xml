@@ -1,49 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/welcome_drawer_layout">
 
-    <TextView
-        android:id="@+id/welcome_textview"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/welcome_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/AppTitleStyle" />
+
+        <TextView
+            android:id="@+id/welcome_textview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/welcome_paul"
+            android:textSize="36sp"
+            android:gravity="center"
+            android:layout_weight="2"/>
+
+        <TextView
+            android:id="@+id/score_textview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:gravity="center"
+            android:text="@string/currentScore"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/begin_btn"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorWhite"
+            android:text="@string/continue_map"
+            android:textSize="15sp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/welcome_nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/welcome_paul"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:background="@color/colorPrimaryDark"
+        app:itemTextColor="@color/colorWhite"
+        app:itemIconTint="@color/colorWhite"
+        app:menu="@menu/drawer_view"
+        app:headerLayout="@layout/nav_header"/>
 
-    <TextView
-        android:id="@+id/score_textview"
-        android:layout_width="111dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="13dp"
-        android:gravity="center"
-        android:text="@string/currentScore"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/begin_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/welcome_textview" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/begin_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:src="@drawable/ic_check"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.DrawerLayout>

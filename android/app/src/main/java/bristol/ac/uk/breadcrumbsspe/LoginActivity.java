@@ -6,15 +6,18 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Build;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.widget.Toast;
 
 import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.api.UserService;
 import bristol.ac.uk.breadcrumbsspe.entity.User;
+import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,8 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         t.printStackTrace();
-                        Snackbar.make(v, "Cannot connect to server. Please try again later.", Snackbar.LENGTH_LONG)
-                                .setAction("No connection", null).show();
+                        Toast.makeText(LoginActivity.this, "Cannot connect to server. Please try again later.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

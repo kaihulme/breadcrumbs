@@ -1,10 +1,8 @@
 package bristol.ac.uk.breadcrumbsspe;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -12,10 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,10 +23,6 @@ import bristol.ac.uk.breadcrumbsspe.entity.User;
 public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
-
-
-    //TODO help_button button on the toolbar with help_button overlays for map, search area
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +38,8 @@ public class HomeActivity extends AppCompatActivity {
 
         mDrawerLayout = findViewById(R.id.home_drawer_layout);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.home_nav_view);
+        navigationView.setCheckedItem(R.id.nav_map);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -54,17 +47,25 @@ public class HomeActivity extends AppCompatActivity {
                         //menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
                         switch (menuItem.getItemId()){
+                            case R.id.nav_account:
+                                startActivity(new Intent(HomeActivity.this, WelcomeActivity.class));
+//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                return true;
                             case R.id.nav_map:
                                 startActivity(new Intent(HomeActivity.this, HomeActivity.class));
-                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 return true;
                             case R.id.nav_camera:
                                 startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
-                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 return true;
-                            case R.id.nav_help:
-                                startActivity(new Intent(HomeActivity.this, HelpActivity.class));
-                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                            case R.id.nav_sponsors:
+                                startActivity(new Intent(HomeActivity.this, SponsorActivity.class));
+//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 return true;
                         }
                         return true;
@@ -75,10 +76,10 @@ public class HomeActivity extends AppCompatActivity {
         camera_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Opening Camera", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Opening Camera", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
                 startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
-                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 //                Intent currentQuestion = getIntent();
 //                int index = currentQuestion.getIntExtra("CURRENT_QUESTION",-1);
 //                Intent toQrCode = new Intent(HomeActivity.this,QRCodeScannerActivity.class);
@@ -100,14 +101,22 @@ public class HomeActivity extends AppCompatActivity {
                 LayoutInflater inflater = getLayoutInflater();
                 View helpView = inflater.inflate(R.layout.home_help_layout, mDrawerLayout, false);
                 mDrawerLayout.addView(helpView);
+//                setContentView(helpView);
+                helpButton.setClickable(false);
+                camera_button.setClickable(false);
 
-                FloatingActionButton backToHome = findViewById(R.id.test);
+
+                FloatingActionButton backToHome = findViewById(R.id.help_view_submit);
                 backToHome.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       // TODO remove help layout
+//                        setContentView(R.layout.activity_home);
+                        mDrawerLayout.removeView(helpView);
+                        helpButton.setClickable(true);
+                        camera_button.setClickable(true);
                     }
                 });
+
             }
         });
 
