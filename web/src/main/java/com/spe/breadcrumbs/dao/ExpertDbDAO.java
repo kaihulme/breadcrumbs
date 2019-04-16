@@ -17,11 +17,16 @@ public class ExpertDbDAO implements ExpertDAO {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
+    private DBConnection dbConnection;
+
+    public ExpertDbDAO(DBConnection d){
+        dbConnection = d;
+    }
 
     @Override
     public Expert getExpert(Long id) {
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getExpert = "SELECT * FROM Expert WHERE id = ?";
             PreparedStatement stmt = con.prepareStatement(getExpert);
             stmt.setInt(1,Math.toIntExact(id));
@@ -45,7 +50,7 @@ public class ExpertDbDAO implements ExpertDAO {
     public List<Expert> getAllExperts(){
         List<Expert> experts = new ArrayList<>();
         try {
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Expert");
             while (rs.next()) {
@@ -66,7 +71,7 @@ public class ExpertDbDAO implements ExpertDAO {
     public List<Expert> getExpertsWithQuizzes() {
         List<Expert> experts = new ArrayList<>();
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getExperts = "SELECT Expert.id as expertId," +
                     "Expert.firstName as expert_FirstName," +
                     "Expert.lastName as expert_LastName," +
@@ -88,7 +93,7 @@ public class ExpertDbDAO implements ExpertDAO {
                 }
                 expert = experts.get(expertIndex);
                 int quizId = rs.getInt("quizId");
-                QuizDAO quizDAO = new QuizDbDAO();
+                QuizDAO quizDAO = new QuizDbDAO(dbConnection);
                 Quiz quiz = quizDAO.getQuiz(quizId);
                 List<User> users = quizDAO.getUsers(quizId);
                 quiz.setUsers(users);
@@ -106,7 +111,7 @@ public class ExpertDbDAO implements ExpertDAO {
     public Expert findByEmail(String email) {
         Expert e;
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getExpert = "SELECT * FROM Expert WHERE email = ?";
             PreparedStatement stmt = con.prepareStatement(getExpert);
             stmt.setString(1,email);
@@ -130,7 +135,7 @@ public class ExpertDbDAO implements ExpertDAO {
     private List<Role> getRoles(Long id){
         List<Role> roles = new ArrayList<>();
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getRoles = "SELECT * FROM Expert_Role WHERE expertId = ?";
             PreparedStatement stmt = con.prepareStatement(getRoles);
             stmt.setLong(1,id);
@@ -150,7 +155,7 @@ public class ExpertDbDAO implements ExpertDAO {
 
     private Role getRole(Long id){
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getRole = "SELECT * FROM Role WHERE id = ?";
             PreparedStatement stmt = con.prepareStatement(getRole);
             stmt.setLong(1,id);
@@ -179,7 +184,7 @@ public class ExpertDbDAO implements ExpertDAO {
     @Override
     public boolean addExpert(Expert e) {
         try {
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String addExpert = "INSERT INTO Expert(firstName,lastName,email,password) VALUES(?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(addExpert);
             stmt.setString(1,e.getFirstName());
@@ -205,7 +210,7 @@ public class ExpertDbDAO implements ExpertDAO {
                     "email = ?," +
                     "password = ? " +
                     "WHERE id = ?;";
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(updateExpert);
             stmt.setString(1,e.getFirstName());
             stmt.setString(2,e.getLastName());
@@ -224,7 +229,7 @@ public class ExpertDbDAO implements ExpertDAO {
     @Override
     public boolean deleteExpert(Long id) {
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String deleteExpert = "DELETE FROM Expert Where id = ?";
             PreparedStatement stmt = con.prepareStatement(deleteExpert);
             stmt.setLong(1,id);
@@ -240,7 +245,7 @@ public class ExpertDbDAO implements ExpertDAO {
     @Override
     public boolean validate(String email, String password) {
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String validateExpert = "SELECT * FROM Expert WHERE email = ? AND password = ?";
             PreparedStatement stmt = con.prepareStatement(validateExpert);
             stmt.setString(1,email);

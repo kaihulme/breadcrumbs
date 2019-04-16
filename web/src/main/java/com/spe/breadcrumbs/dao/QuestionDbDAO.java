@@ -12,12 +12,16 @@ import java.util.List;
 
 
 public class QuestionDbDAO implements QuestionDAO {
+    private DBConnection dbConnection;
+    public QuestionDbDAO(DBConnection d){
+        dbConnection = d;
+    }
 
     @Override
     public List<Question> getAllQuestions() {
         List<Question> questions = new ArrayList<>();
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Question");
             while (rs.next()){
@@ -45,7 +49,7 @@ public class QuestionDbDAO implements QuestionDAO {
     public Question findById(Long id) {
         Question q = null;
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getQuestion = "SELECT * FROM Question WHERE id = ?";
             PreparedStatement stmt = con.prepareStatement(getQuestion);
             stmt.setInt(1,Math.toIntExact(id));
@@ -68,10 +72,10 @@ public class QuestionDbDAO implements QuestionDAO {
     public List<Question> getQuestionsAnswered(Long userId) {
         List<Question> questionsAnswered = new ArrayList<>();
         try{
-            Connection connection = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getQuestionsAnswered = "SELECT question FROM Attempt INNER JOIN Choice on Choice.id = Attempt.choiceId " +
                     "WHERE Choice.answer = true AND Attempt.userId = ?";
-            PreparedStatement stmt = connection.prepareStatement(getQuestionsAnswered);
+            PreparedStatement stmt = con.prepareStatement(getQuestionsAnswered);
             stmt.setLong(1,userId);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
@@ -89,7 +93,7 @@ public class QuestionDbDAO implements QuestionDAO {
     public Question findByCode(String code) {
         Question q = null;
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getQuestion = "SELECT * FROM Question WHERE code = ?";
             PreparedStatement stmt = con.prepareStatement(getQuestion);
             stmt.setString(1,code);
@@ -111,7 +115,7 @@ public class QuestionDbDAO implements QuestionDAO {
     public List<Choice> getChoices(Long questionId) {
         List<Choice> choices = new ArrayList<>();
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Choice");
             while(rs.next()){
@@ -135,7 +139,7 @@ public class QuestionDbDAO implements QuestionDAO {
                     "x_coord = ?," +
                     "y_coord = ? " +
                     "WHERE id = ?;";
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(updateQuestion);
             stmt.setString(1,q.getQuestion());
             stmt.setInt(2, q.getX_coord());

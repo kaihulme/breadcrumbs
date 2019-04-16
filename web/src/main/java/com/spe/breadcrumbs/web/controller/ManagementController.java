@@ -2,6 +2,7 @@ package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.*;
+import com.spe.breadcrumbs.web.DBConnection;
 import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -30,9 +31,9 @@ import java.util.List;
 @RequestMapping("/management")
 public class ManagementController {
 
-    private UserDAO userDAO = new UserDbDAO();
-    private ExpertDAO expertDAO = new ExpertDbDAO();
-    private QuestionDAO questionDAO = new QuestionDbDAO();
+    private UserDAO userDAO = new UserDbDAO(new DBConnection());
+    private ExpertDAO expertDAO = new ExpertDbDAO(new DBConnection());
+    private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
 
     @Value(value = "classpath:static/mapFeatures/questionIcon.png")
     private Resource questionIcon;
@@ -151,7 +152,7 @@ public class ManagementController {
 
     ////////////////// MAPS //////////////////////////////
 
-    private MapDAO mapDAO = new MapDbDAO();
+    private MapDAO mapDAO = new MapDbDAO(new DBConnection());
 
     @RequestMapping(method = RequestMethod.GET, value= "/map")
     public String getMap(Model m) {

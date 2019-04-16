@@ -8,6 +8,7 @@ import com.spe.breadcrumbs.entity.Attempt;
 import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.entity.User;
+import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,8 @@ import java.util.Map;
 @RequestMapping("/api/attempts")
 
 public class AttemptAPI {
-    private AttemptDAO attemptDAO = new AttemptDbDAO();
-    private QuestionDAO questionDAO = new QuestionDbDAO();
+    private AttemptDAO attemptDAO = new AttemptDbDAO(new DBConnection());
+    private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
 
     //given a user and a choice, posts the attempt to the database
     @RequestMapping(method = RequestMethod.POST)

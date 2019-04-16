@@ -17,12 +17,16 @@ import java.util.List;
 
 
 public class QuizDbDAO implements QuizDAO{
+    private DBConnection dbConnection;
+    public QuizDbDAO(DBConnection d){
+        dbConnection = d;
+    }
 
     @Override
     public Quiz getQuiz(int id) {
         Quiz q = null;
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getQuiz = "SELECT * FROM Quiz WHERE quizId = ?";
             PreparedStatement stmt = con.prepareStatement(getQuiz);
             stmt.setInt(1,id);
@@ -43,7 +47,7 @@ public class QuizDbDAO implements QuizDAO{
     public List<Question> getQuestions(Long id) {
         List<Question> questions = new ArrayList<>();
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getQuestions = "SELECT * FROM Question WHERE quizId = ?";
             PreparedStatement stmt = con.prepareStatement(getQuestions);
             stmt.setLong(1,id);
@@ -56,7 +60,7 @@ public class QuizDbDAO implements QuizDAO{
             con.close();
             for(Question q: questions){
                 //get choices for question
-                List<Choice> choices = new QuestionDbDAO().getChoices(q.getId());
+                List<Choice> choices = new QuestionDbDAO(dbConnection).getChoices(q.getId());
                 q.setChoices(choices);
             }
         }catch (SQLException | IOException e){
@@ -69,7 +73,7 @@ public class QuizDbDAO implements QuizDAO{
     public List<User> getUsers(int id){
         List<User> users = new ArrayList<>();
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getUsers = "SELECT * FROM User WHERE quizId = ?";
             PreparedStatement stmt = con.prepareStatement(getUsers);
             stmt.setInt(1,id);

@@ -5,6 +5,7 @@ import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.entity.Quiz;
 import com.spe.breadcrumbs.entity.User;
+import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,10 @@ import java.util.List;
 
 
 public class UserController {
-    private UserDAO userDAO = new UserDbDAO();
-    private QuestionDAO questionDAO = new QuestionDbDAO();
-    private QuizDAO quizDAO = new QuizDbDAO();
-    private AttemptDAO attemptDAO = new AttemptDbDAO();
+    private UserDAO userDAO = new UserDbDAO(new DBConnection());
+    private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
+    private QuizDAO quizDAO = new QuizDbDAO(new DBConnection());
+    private AttemptDAO attemptDAO = new AttemptDbDAO(new DBConnection());
 
     @RequestMapping(method = RequestMethod.GET)
     public String participants(Model m){

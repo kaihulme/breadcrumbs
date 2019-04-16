@@ -11,12 +11,15 @@ import java.util.List;
 
 
 public class MapDbDAO implements MapDAO {
-
+    private DBConnection dbConnection;
+    public MapDbDAO(DBConnection d){
+        dbConnection = d;
+    }
     @Override
     public List<Map> getAllMaps() {
         List<Map> maps = new ArrayList<>();
         try {
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Map");
             while (rs.next()) {
@@ -36,7 +39,7 @@ public class MapDbDAO implements MapDAO {
 
         String getMap = "SELECT * FROM Map WHERE id = ?";
         try {
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(getMap);
             stmt.setInt(1, Math.toIntExact(id));
             ResultSet rs = stmt.executeQuery();
@@ -57,7 +60,7 @@ public class MapDbDAO implements MapDAO {
     public Map getMapByName(String name) {
         String getMapByName = "SELECT * FROM Map WHERE name = ?";
         try {
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(getMapByName);
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
@@ -78,7 +81,7 @@ public class MapDbDAO implements MapDAO {
     public boolean addMap(Map m) {
         String addMap = "INSERT INTO Map(name,picture) VALUES(?,?)";
         try {
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(addMap);
             stmt.setString(1, m.getName());
             stmt.setBlob(2, m.getPicture());
@@ -95,7 +98,7 @@ public class MapDbDAO implements MapDAO {
     public boolean updateMap(Long id, Map m) {
         String updateMap = "UPDATE Map SET name = ?, picture = ? WHERE id = ?;";
         try {
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(updateMap);
             stmt.setString(1, m.getName());
             stmt.setBlob(2, m.getPicture());
@@ -113,7 +116,7 @@ public class MapDbDAO implements MapDAO {
     public boolean updateMapByName(String name, Map m) {
         String updateMapByName = "UPDATE Map SET picture = ? WHERE name = ?;";
         try {
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(updateMapByName);
             stmt.setBlob(1, m.getPicture());
             stmt.setString(2, name);
@@ -130,7 +133,7 @@ public class MapDbDAO implements MapDAO {
     public boolean deleteMap(Long id) {
         String deleteMap = "DELETE FROM Map Where id = ?";
         try {
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(deleteMap);
             stmt.setLong(1, id);
             stmt.executeUpdate();
@@ -146,7 +149,7 @@ public class MapDbDAO implements MapDAO {
     public boolean deleteAllMaps() {
         String deleteAllMaps = "TRUNCATE Map";
         try {
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(deleteAllMaps);
             stmt.executeUpdate();
             stmt.close();

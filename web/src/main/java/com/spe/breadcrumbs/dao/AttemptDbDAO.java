@@ -16,12 +16,17 @@ import java.util.List;
 
 
 public class AttemptDbDAO implements AttemptDAO {
+    private DBConnection dbConnection;
+
+    public AttemptDbDAO(DBConnection dbConnection){
+        this.dbConnection = dbConnection;
+    }
     @Override
     public boolean addAttempt(Attempt a) {
         User u = a.getUser();
         Choice c = a.getChoice();
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String addAttempt = "INSERT INTO Attempt(userId,choiceId,attemptNo) VALUES (?,?,?)";
             PreparedStatement stmt = con.prepareStatement(addAttempt);
             stmt.setLong(1,u.getId());
@@ -41,7 +46,7 @@ public class AttemptDbDAO implements AttemptDAO {
     public List<Choice> getAttempts(Long questionId, Long userId){
         List<Choice> choices = new ArrayList<>();
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getAttempts = "SELECT * FROM Attempt INNER JOIN Choice ON Choice.id = Attempt.choiceId " +
                     "WHERE Choice.question = ? AND Attempt.userId = ?";
             PreparedStatement stmt = con.prepareStatement(getAttempts);
