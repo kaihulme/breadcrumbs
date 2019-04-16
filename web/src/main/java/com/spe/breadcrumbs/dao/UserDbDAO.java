@@ -52,7 +52,7 @@ public class UserDbDAO implements UserDAO {
                u = new User(rs.getLong("id"), rs.getString("firstName"),
                        rs.getString("lastName"), rs.getString("email"),
                        rs.getString("code"),rs.getInt("score"));
-               con.close();
+//               con.close();
                return u;
            }
         }catch (SQLException | IOException e){
@@ -214,7 +214,7 @@ public class UserDbDAO implements UserDAO {
             stmt.setString(3,u.getEmail());
             stmt.setString(4,u.getCode());
             stmt.executeUpdate();
-            con.close();
+//            con.close();
             return true;
         }catch(SQLException | IOException e){
             e.printStackTrace();
