@@ -7,6 +7,7 @@ import com.spe.breadcrumbs.dao.UserDbDAO;
 import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.entity.Quiz;
 import com.spe.breadcrumbs.entity.User;
+import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequestMapping("/api/users")
 
 public class UserAPI {
-    private UserDAO userDAO = new UserDbDAO();
+    private UserDAO userDAO = new UserDbDAO(new DBConnection());
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity getUsers(@RequestParam(value = "code",required = false,defaultValue = "") String code){

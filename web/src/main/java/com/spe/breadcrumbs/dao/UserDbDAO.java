@@ -13,12 +13,17 @@ import java.util.List;
 
 
 public class UserDbDAO implements UserDAO {
+    private DBConnection dbConnection;
+
+    public UserDbDAO(DBConnection d){
+        dbConnection = d;
+    }
 
     @Override
     public List<User> getAllUsers(){
         List<User> users = new ArrayList<>();
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM User");
             while (rs.next()){
@@ -38,7 +43,7 @@ public class UserDbDAO implements UserDAO {
     public User getUser(Long id) {
         User u;
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getUser = "SELECT * FROM User WHERE id = ?";
             PreparedStatement stmt = con.prepareStatement(getUser);
             stmt.setInt(1,Math.toIntExact(id));
@@ -47,7 +52,7 @@ public class UserDbDAO implements UserDAO {
                u = new User(rs.getLong("id"), rs.getString("firstName"),
                        rs.getString("lastName"), rs.getString("email"),
                        rs.getString("code"),rs.getInt("score"));
-               con.close();
+//               con.close();
                return u;
            }
         }catch (SQLException | IOException e){
@@ -62,7 +67,7 @@ public class UserDbDAO implements UserDAO {
         Quiz quiz;
         List<Question> questions = new ArrayList<>();
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getUser = "SELECT User.id as userId," +
                     "User.firstName as firstName," +
                     "User.lastName as lastName," +
@@ -106,14 +111,14 @@ public class UserDbDAO implements UserDAO {
     public Quiz getQuiz(Long id) {
         Quiz q = null;
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getQuiz = "SELECT quizId FROM User WHERE id = ?";
             PreparedStatement stmt = con.prepareStatement(getQuiz);
             stmt.setLong(1,id);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 int quizId = rs.getInt("quizId");
-                QuizDAO quizDAO = new QuizDbDAO();
+                QuizDAO quizDAO = new QuizDbDAO(dbConnection);
                 q = quizDAO.getQuiz(quizId);
             }
             con.close();
@@ -134,7 +139,7 @@ public class UserDbDAO implements UserDAO {
         Quiz quiz;
         List<Question> questions = new ArrayList<>();
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String getUser = "SELECT User.id as userId," +
                     "User.firstName as firstName,"+
                     "User.lastName as lastName," +
@@ -181,7 +186,7 @@ public class UserDbDAO implements UserDAO {
                     "code = ?," +
                     "score = ? " +
                     "WHERE id = ?;";
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(updateUser);
             stmt.setString(1,u.getFirstName());
             stmt.setString(2,u.getLastName());
@@ -200,7 +205,7 @@ public class UserDbDAO implements UserDAO {
     @Override
     public boolean addUser(User u) {
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             //quiz ID is set to one as there will only be one quiz
             String addUser = "INSERT INTO User(firstName,lastName,email,code,quizId) VALUES(?,?,?,?,1)";
             PreparedStatement stmt = con.prepareStatement(addUser);
@@ -209,7 +214,7 @@ public class UserDbDAO implements UserDAO {
             stmt.setString(3,u.getEmail());
             stmt.setString(4,u.getCode());
             stmt.executeUpdate();
-            con.close();
+//            con.close();
             return true;
         }catch(SQLException | IOException e){
             e.printStackTrace();
@@ -220,7 +225,7 @@ public class UserDbDAO implements UserDAO {
     @Override
     public boolean deleteUser(Long id) {
         try{
-            Connection con = new DBConnection().getConnection();
+            Connection con = dbConnection.getConnection();
             String deleteUser = "DELETE FROM User Where id = ?";
             PreparedStatement stmt = con.prepareStatement(deleteUser);
             stmt.setLong(1,id);

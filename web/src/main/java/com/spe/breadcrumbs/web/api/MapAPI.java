@@ -3,6 +3,7 @@ package com.spe.breadcrumbs.web.api;
 import com.spe.breadcrumbs.dao.MapDAO;
 import com.spe.breadcrumbs.dao.MapDbDAO;
 import com.spe.breadcrumbs.entity.Map;
+import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/maps")
 public class MapAPI {
 
-    private MapDAO mapDAO = new MapDbDAO();
+    private MapDAO mapDAO = new MapDbDAO(new DBConnection());
 
     @RequestMapping(method = RequestMethod.GET,value = "{id}")
     public ResponseEntity getMap(@PathVariable Long id) {

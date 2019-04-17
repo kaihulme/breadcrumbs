@@ -4,6 +4,7 @@ import com.spe.breadcrumbs.dao.ExpertDAO;
 import com.spe.breadcrumbs.dao.ExpertDbDAO;
 import com.spe.breadcrumbs.entity.Expert;
 import com.spe.breadcrumbs.entity.Role;
+import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +20,7 @@ import java.util.Set;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private ExpertDAO expertDAO = new ExpertDbDAO();
+    private ExpertDAO expertDAO = new ExpertDbDAO(new DBConnection());
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

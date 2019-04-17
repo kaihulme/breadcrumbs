@@ -11,7 +11,7 @@ import java.util.List;
 public class User {
 
     @Id @GeneratedValue
-    private Long id;
+    private final Long id;
 
     @Column(name = "firstName")
     private String firstName;
@@ -40,9 +40,17 @@ public class User {
         this.score= score;
     }
 
-    public User() {}
+    public User() {id = 0L;}
 
-    public boolean equals(User u) {
+//    public boolean equals(User u) {
+//    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof User)) {
+            return false;
+        }
+        User u = (User) obj;
         return (id.equals(u.getId()) || (u.getEmail().toLowerCase().equals(email)));
     }
 

@@ -3,6 +3,7 @@ package com.spe.breadcrumbs.web.controller;
 import com.spe.breadcrumbs.dao.MapDAO;
 import com.spe.breadcrumbs.dao.MapDbDAO;
 import com.spe.breadcrumbs.entity.Map;
+import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
 @RequestMapping("/image")
 public class ImageController {
 
-    private MapDAO mapDAO = new MapDbDAO();
+    private MapDAO mapDAO = new MapDbDAO(new DBConnection());
 
     @RequestMapping(value = "/{image}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> postImage(@PathVariable("image") String image) throws SQLException {

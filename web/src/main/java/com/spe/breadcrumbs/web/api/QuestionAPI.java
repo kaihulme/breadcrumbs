@@ -3,6 +3,7 @@ package com.spe.breadcrumbs.web.api;
 import com.spe.breadcrumbs.dao.QuestionDAO;
 import com.spe.breadcrumbs.dao.QuestionDbDAO;
 import com.spe.breadcrumbs.entity.Question;
+import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/questions")
 
 public class QuestionAPI {
-    private QuestionDAO questionDAO = new QuestionDbDAO();
+    private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
 
     //Questions
     @RequestMapping(method = RequestMethod.GET)
