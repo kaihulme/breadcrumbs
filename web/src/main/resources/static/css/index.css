@@ -7,7 +7,7 @@
 }
 
 body {
-    background: #fafafa;
+    background: #f4f2f2;
 }
 
 /****************** navbar *********************/
@@ -29,12 +29,12 @@ body {
     left: 0;
     height: 100vh;
     z-index: 999;
-    /*background: #d63558;*/
-    background: #b22141;
+    background: #9d2043;
     color: #fff;
     transition: all 0.3s;
-    -webkit-box-shadow: 0 15px 30px 0 rgba(0,0,0,0.3);
-    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.3);
+    /*-webkit-box-shadow: 0 15px 30px 0 rgba(0,0,0,0.3);*/
+    /*box-shadow: 0 15px 30px 0 rgba(0,0,0,0.3);*/
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 #sidebar.active {
@@ -44,7 +44,7 @@ body {
 #sidebar .sidebar-header {
     padding: 20px;
     /*background: #991e39;*/
-    background: #fff;
+    background: #9d2043;
 }
 
 #sidebar ul.components {
@@ -58,19 +58,19 @@ body {
 }
 
 #sidebar ul li a:hover {
-    color: #991e39;
+    color: #921c36;
     background: #fff;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #991e39;
+    background: #921c36;
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    background: #991e39;
+    background: #921c36;
 }
 
 a[data-toggle="collapse"] {
@@ -80,7 +80,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #d1274d;
+    background: #a93c5b
     color: #ffffff;
 }
 
@@ -105,10 +105,25 @@ a:focus {
 }
 
 #sideLogo {
-  padding: 10px;
-  width: 200px;
-  border: 3px solid #9D2062;
-  margin-bottom: 20px;
+  padding: 5px;
+  width: 210px;
+  border: 3px solid #FFFFFF; /*#9D2062;*/
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+#bio {
+    /*color: #9D2062;*/
+    color: #FFFFFF;
+    margin-bottom: 20px;
+    display: inline;
+}
+
+#scientifica {
+    /*color: #E7959B;*/
+    color: #FFFFFF;
+    /*margin-bottom: 20px;*/
+    display: inline;
 }
 
 /*********** log in ****************/
@@ -117,9 +132,7 @@ a:focus {
   background: #fff;
   padding: 30px;
   margin-top: 10vh;
-  margin-left: 45vh;
-  width: 90%;
-  max-width: 450px;
+  min-width: 400px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   text-align: center;
@@ -135,33 +148,32 @@ a:focus {
   border: 5px solid #9D2062;
 }
 
-#bio {
-    color: #9D2062;
-    margin-bottom: 20px;
-    display: inline;
-}
-
-#scientifica {
-    color: #E7959B;
-    margin-bottom: 20px;
-    display: inline;
-}
-
 #loginBtn {
-    margin-top: 15px;
+    margin-top: 10px;
     border: 2px solid #969696;
     color: #969696;
 }
 
-.form-control {
-  padding: 10px;
-  margin: 10px;
-  width: 375px;
+#usernameLogin, #passwordLogin {
+  margin-bottom: 10px;
+  /*width: 375px;*/
   padding-bottom: 15px;
   border: 1px solid #969696;
 }
 
+#bioLogin {
+    color: #9D2062;
+    /*color: #FFFFFF;*/
+    margin-bottom: 20px;
+    display: inline;
+}
 
+#scientificaLogin {
+    color: #E7959B;
+    /*color: #FFFFFF;*/
+    /*margin-bottom: 20px;*/
+    display: inline;
+}
 
 /*********** main content ************/
 
@@ -192,19 +204,101 @@ hr.style1{
 #search, #searchExperts {
   width: 100%;
   padding: 10px;
-  margin-top: 10px;
+  /*margin-top: 10px;*/
   margin-bottom: 10px;
   border: 1px solid #ddd;
+}
+
+.table {
+  background: #FFFFFF;
+  border: 1px solid #dedcdc; /*#9D2062;*/
+}
+
+th {
+    background: #FFFFFF;
+}
+
+.container {
+  background: #FFFFFF;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-info {
+   /* background: #569b76;*/
+   background: #68aebf;
+}
+
+.btn-danger {
+  background: #d14444;
+}
+
+#title {
+    background: #9d2043;
+    color: #FFFFFF;
+    font-style: italic;
+    margin-left: -30px;
+    margin-right: 0px;
+    padding-left: 30px;
+    padding-top: 10px;
+    margin-bottom:20px;
 }
 
 /**** USER PAGE ******/
 
 #userPath {
-   height: 400px;
+   height: 300px;
+   margin: 20px;
 }
 
 #userStats {
    padding: 50px;
+}
+
+#editMap {
+   height: 300px;
+   margin: 20px;
+}
+
+.slider-handle {
+    background: #969696;
+}
+
+#mapButton {
+    margin-bottom: 10px;
+}
+
+/**** MANAGEMENT PAGE ******/
+
+.tab-content {
+    padding: 20px;
+    border-left: 1px solid #dedcdc;
+    border-right: 1px solid #dedcdc;
+    border-bottom: 1px solid #dedcdc;
+    border-radius: 0 0 4px 4px;
+}
+
+#addUser, #addExpert {
+    /*margin-bottom: 10px;*/
+}
+
+/*
+#addUserForm {
+    padding: 20px;
+    border: 1px solid #dedcdc;
+    border-radius: 0 0 4px 4px;
+}
+*/
+
+.form-control {
+
+}
+
+#carouselControls {
+
+    max-width: 300px;
+
 }
 
 /************* FADE DOWN ANIMATION ****************/

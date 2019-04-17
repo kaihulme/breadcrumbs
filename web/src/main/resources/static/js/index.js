@@ -11,6 +11,16 @@ $('#loginBtn').on('click', function () {
 // Jansy-Bootstrap add link to whole table row
 $('tbody.rowlink').rowlink()
 
+// slider counter
+$("#x_coord").slider();
+$("#x_coord").on("slide", function(slideEvt) {
+	$("#x_coordSliderVal").text(slideEvt.value);
+});
+$("#y_coord").slider();
+$("#y_coord").on("slide", function(slideEvt) {
+	$("#y_coordSliderVal").text(slideEvt.value);
+});
+
 // search table and filter results
 function searchUserTable(event) {
     var filter = event.target.value.toUpperCase();

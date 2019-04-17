@@ -24,37 +24,29 @@
 
 <body>
 
-    <div class="wrapper">
+    <div class="d-flex justify-content-center">
+        <div id="loginBox" class="col-3 fadeInDown">
 
-        <!-- Page Content  -->
-        <div class="container-fluid" id="content">
-
-            <div class="wrapper">
-                <div id="loginBox" class="container fadeInDown">
-                    <div class="container" id="logoText">
-                        <img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="loginLogo"/>
-                        <h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>
-                    </div>
-                    <form th:action = "@{/login}" method="POST" id="loginDetails">
-                        <input type="text" class="form-control" id="username" name="email" placeholder="login">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="password">
-                        <div th:if="${param.error}" id="loginError">
-                            <p style="font-size: 20; color: #FF1C19;">Invalid, please try again</p>
-                        </div>
-
-                        <button type="Submit" class="btn btn-outline-light" id="loginBtn">
-                            <span class="oi oi-account-login"></span>
-                        </button>
-                        <!--<div class="spinner-border" role="status" id="spinner">-->
-                            <!--<span class="sr-only">Loading...</span>-->
-                        <!--</div>-->
-
-                    </form>
-                </div>
+            <div id="logoText">
+                <img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="loginLogo"/>
+                <h2 id="bioLogin">Bio</h2><h2 id="scientificaLogin">Scientifica</h2>
             </div>
+            <form th:action = "@{/login}" method="POST" id="loginDetails">
+                <input type="text" class="form-control" id="usernameLogin" name="email" placeholder="login">
+                <input type="password" class="form-control" id="passwordLogin" name="password" placeholder="password">
+                <div th:if="${param.error}" id="loginError">
+                    <p style="font-size: 20; color: #FF1C19;">Invalid, please try again</p>
+                </div>
+
+                <button type="Submit" class="btn btn-outline-light" id="loginBtn">
+                    <span class="oi oi-account-login"></span>
+                </button>
+                <!--<div class="spinner-border" role="status" id="spinner">-->
+                    <!--<span class="sr-only">Loading...</span>-->
+                <!--</div>-->
+            </form>
 
         </div>
-
     </div>
 
     <!-- jQuery JS CDN-->

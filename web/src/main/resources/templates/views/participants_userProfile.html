@@ -35,7 +35,7 @@
 
 			<div class="sidebar-header text-center">
 				<img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="sideLogo" />
-				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>
+<!--				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>-->
 			</div>
 
 			<ul class="list-unstyled components">
@@ -98,74 +98,94 @@
             <!-- Page Content -->
 			<div id="pageContent" class="fadeInUp">
 
-				<br><hr class="style1"><br>
-
-	            <!-- User Stats -->
-	            <div class="row justify-content-md-center">
-
-		            <div class="col-4" id="userStats">
-			            <h2>User Profile</h2>
-			            <!--<p>last updated: 17:02 (24 seconds ago)</p>-->
-			            <table class="table">
-				            <tbody>
-				            <tr>
-					            <td>User ID</td>
-					            <td th:text = "${user.id}">user_id</td>
-				            </tr>
-				            <tr>
-					            <td>First Name</td>
-					            <td th:text = "${user.firstName}">user_firstName</td>
-				            </tr>
-				            <tr>
-					            <td>Second Name</td>
-					            <td th:text = "${user.lastName}">user_secondName</td>
-				            </tr>
-				            <tr>
-					            <td>Score</td>
-					            <td th:text = "${user.score}">user_score</td>
-				            </tr>
-				            <tr>
-					            <td>Completion</td>
-					            <td>100%</td>
-				            </tr>
-				            </tbody>
-			            </table>
-		            </div>
-
-		            <div class="col-3">
-			            <img src="http://breadcrumbs.bioscientifica.com/image/venueMap_empty" id="userPath"/>
-		            </div>
-
-	            </div>
-
-				<br>
 				<hr class="style1">
-				<br>
 
-	            <!-- Question Table -->
 				<div class="row justify-content-md-center">
 					<div class="col-8">
-			            <table class="table table-striped table-hover" id=questions>
-			                <thead>
-			                    <tr>
-			                        <th>Questions</th>
-			                        <th>Attempts</th>
-			                        <th>Score</th>
-			                    </tr>
-			                </thead>
-			                <tbody class="rowlink" data-link="row">
-			                    <tr th:each="question : ${user.quiz.questions}">
-			                        <td><a th:href = "@{'/participants/' +${user.id} + '/questions/' + ${question.id}}"><span th:text="${question.question}">Question</span></a></td>
-			                        <td><a th:href = "@{'/participants/' +${user.id} + '/questions/' + ${question.id}}"><span th:text="${question.noOfAttempts}">Attempts</span></td>
-			                        <td><a th:href = "@{'/participants/' +${user.id} + '/questions/' + ${question.id}}"><span th:text="${question.score}">Score</span></td>
-			                    </tr>
-			                </tbody>
-			            </table>
+						<div class="container">
+
+							<!-- User Stats -->
+							<div class="row" id="title">
+								<h2>User Profile</h2>
+							</div>
+
+							<p>Breadcrumb trail user information.</p>
+
+							<div class="row justify-content-md-center">
+								<div class="col-5" id="userStats">
+									<table class="table">
+										<tbody>
+										<tr>
+											<td>User ID</td>
+											<td th:text = "${user.id}">user_id</td>
+										</tr>
+										<tr>
+											<td>First Name</td>
+											<td th:text = "${user.firstName}">user_firstName</td>
+										</tr>
+										<tr>
+											<td>Second Name</td>
+											<td th:text = "${user.lastName}">user_secondName</td>
+										</tr>
+										<tr>
+											<td>Score</td>
+											<td th:text = "${user.score}">user_score</td>
+										</tr>
+										<tr>
+											<td>Completion</td>
+											<td>100%</td>
+										</tr>
+										</tbody>
+									</table>
+								</div>
+
+								<div class="col-5">
+									<img src="http://breadcrumbs.bioscientifica.com/image/venueMap_empty" id="userPath"/>
+								</div>
+							</div>
+
+						</div>
 					</div>
 				</div>
-	            <!-- /Question Table -->
 
-				<br><hr class="style1"><br>
+<!--				<br>-->
+<!--				<hr class="style1">-->
+<!--				<br>-->
+
+				<div class="row justify-content-md-center">
+					<div class="col-8">
+						<div class="container">
+
+							<div class="row" id="title">
+								<h2>Questions</h2>
+							</div>
+
+							<p>Questions information, click on a question for more detail.</p>
+
+							<!-- Question Table -->
+							<table class="table table-striped table-hover" id=questions>
+									<thead>
+										<tr>
+											<th>Questions</th>
+											<th>Attempts</th>
+											<th>Score</th>
+										</tr>
+									</thead>
+									<tbody class="rowlink" data-link="row">
+										<tr th:each="question : ${user.quiz.questions}">
+											<td><a th:href = "@{'/participants/' +${user.id} + '/questions/' + ${question.id}}"><span th:text="${question.question}">Question</span></a></td>
+											<td><a th:href = "@{'/participants/' +${user.id} + '/questions/' + ${question.id}}"><span th:text="${question.noOfAttempts}">Attempts</span></td>
+											<td><a th:href = "@{'/participants/' +${user.id} + '/questions/' + ${question.id}}"><span th:text="${question.score}">Score</span></td>
+										</tr>
+									</tbody>
+								</table>
+							<!-- /Question Table -->
+
+						</div>
+					</div>
+				</div>
+
+				<hr class="style1">
 
 			</div>
             <!-- /Page Content -->
@@ -178,58 +198,44 @@
 
     <!-- Modals -->
 
-    <!-- MUST PASS QUESTION ID INTO MODAL TO GET CHOICES FOR THAT QUESTION-->
-    <!-- SIMILARLY FOR EDITING USERS, EXPERTS AND BREADCRUMBS THROUGH MODAL-->
-    <!-- NEW USERS, EXPERTS AND MAPS CAN BE ADDED WITHOUT ANY ARGUMENTS-->
-
         <!-- Answer Choice Modal -->
-	    <!--<div class="modal fade" id="choiceModal" tabindex="-1" role="dialog" aria-labelledby="choiceModalLabel" aria-hidden="true">-->
-		    <!--<div class="modal-dialog modal-dialog-centered" role="document">-->
-			    <!--<div class="modal-content">-->
+<!--	    <div class="modal fade" id="choiceModal" tabindex="-1" role="dialog" aria-labelledby="choiceModalLabel" aria-hidden="true">-->
+<!--		    <div class="modal-dialog modal-dialog-centered" role="document">-->
+<!--			    <div class="modal-content">-->
 
-				    <!--<div class="modal-header">-->
-					    <!--<div class="row justify-content-md-center">-->
-						    <!--<div class="col-3">-->
-							    <!--<div class="jumbotron" id=question>-->
-								    <!--<center><h3 th:text = "${question.question} + '?'">Question</h3><center>-->
-							    <!--</div>-->
-						    <!--</div>-->
-					    <!--</div>-->
+<!--				    <div class="modal-header">-->
+<!--						<h3 th:text = "${question.question} + '?'">Question</h3>-->
+<!--				    </div>-->
 
-					    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-						    <!--<span aria-hidden="true">&times;</span>-->
-					    <!--</button>-->
-				    <!--</div>-->
+<!--				    <div class="modal-body">-->
+<!--					    &lt;!&ndash; Question Table &ndash;&gt;-->
+<!--					    <div class="row justify-content-md-center">-->
+<!--						    <div class="col-6">-->
+<!--							    <table class="table table-striped table-hover" id=answers>-->
+<!--								    <thead>-->
+<!--								    <tr>-->
+<!--									    <th>Attempt No.</th>-->
+<!--									    <th>Answer</th>-->
+<!--								    </tr>-->
+<!--								    </thead>-->
+<!--								    <tbody>-->
+<!--								    <tr th:each = "attempt: ${question.attempts}">-->
+<!--									    <td th:text = "${question.attempts.indexOf(attempt) + 1}">no</td>-->
+<!--									    <td th:text = "${attempt.choiceText}">attempt</td>-->
+<!--								    </tr>-->
+<!--								    </tbody>-->
+<!--							    </table>-->
+<!--						    </div>-->
+<!--					    </div>-->
+<!--					    &lt;!&ndash; /Question Table &ndash;&gt;-->
+<!--				    </div>-->
 
-				    <!--<div class="modal-body">-->
-					    <!--&lt;!&ndash; Question Table &ndash;&gt;-->
-					    <!--<div class="row justify-content-md-center">-->
-						    <!--<div class="col-6">-->
-							    <!--<table class="table table-striped table-hover" id=answers>-->
-								    <!--<thead>-->
-								    <!--<tr>-->
-									    <!--<th>Attempt No.</th>-->
-									    <!--<th>Answer</th>-->
-								    <!--</tr>-->
-								    <!--</thead>-->
-								    <!--<tbody>-->
-								    <!--<tr th:each = "attempt: ${question.attempts}">-->
-									    <!--<td th:text = "${question.attempts.indexOf(attempt) + 1}">no</td>-->
-									    <!--<td th:text = "${attempt.choiceText}">attempt</td>-->
-								    <!--</tr>-->
-								    <!--</tbody>-->
-							    <!--</table>-->
-						    <!--</div>-->
-					    <!--</div>-->
-					    <!--&lt;!&ndash; /Question Table &ndash;&gt;-->
-				    <!--</div>-->
-
-				    <!--<div class="modal-footer">-->
-						    <!--<button type="submit" class="btn btn-primary">Ok</button>-->
-				    <!--</div>-->
-			    <!--</div>-->
-		    <!--</div>-->
-	    <!--</div>-->
+<!--				    <div class="modal-footer">-->
+<!--						    <button type="submit" class="btn btn-primary">Ok</button>-->
+<!--				    </div>-->
+<!--			    </div>-->
+<!--		    </div>-->
+<!--	    </div>-->
         <!-- / Answer Choice Modal-->
 
 	    <!-- Log Out Confirm Modal -->

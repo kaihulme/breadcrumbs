@@ -29,37 +29,43 @@
 
     <div class="wrapper">
 
-        <!-- Sidebar  -->
+		<!-- Sidebar  -->
 		<nav id="sidebar">
 
+			<!-- Sidebar Header -->
 			<div class="sidebar-header text-center">
-				<img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="logo" />
-				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>
+				<img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="sideLogo" />
+				<!--				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>-->
 			</div>
 
+			<!-- Sidebar Content -->
 			<ul class="list-unstyled components">
-				<li>
+				<li class="active">
 					<a th:href="@{/participants}">Users</a>
 				</li>
 				<li>
 					<a href="#analysis" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Analysis</a>
 					<ul class="collapse list-unstyled" id="analysis">
 						<li>
-							<a th:href="@{/questions}">Questions</a>
+							<a data-toggle="modal" data-target="#notBuiltModal">Questions</a>
+							<!--<a th:href="@{/questions}">Questions</a>-->
 						</li>
 						<li>
-							<a th:href="@{/paths}">Paths</a>
+							<a data-toggle="modal" data-target="#notBuiltModal">Paths</a>
+							<!--<a th:href="@{/paths}">Paths</a>-->
 						</li>
 					</ul>
 				</li>
-				<li class="active">
-					<a th:href="@{/management}">Management</a>
+				<li>
+					<!--<a data-toggle="modal" data-target="#notBuiltModal">Management</a>-->
+					<a th:href="@{management}">Management</a>
 				</li>
 			</ul>
 
 		</nav>
+		<!-- /Sidebar -->
 
-        <!-- Main Page  -->
+		<!-- Main Page  -->
         <div id="content">
 
             <!-- Navigation Bar -->
@@ -91,18 +97,105 @@
 			<!-- /Navigation Bar -->
 
             <!-- Page Content -->
-	        <form action="#" th:action="@{'deleteUser/'+${user.id}}" th:object="${user}" method="post">
-	            <button type="submit" value="Submit">Delete User</button>
-	        </form>
+			<div id="pageContent" class="fadeInUp">
 
-	        <form action="#" th:action="@{'updateUser/'+${user.id}}" th:object="${user}" method="post">
-		        <p>First Name: <input type="text" th:field="*{firstName}" /></p>
-		        <p>Second Name: <input type="text" th:field="*{lastName}" /></p>
-		        <p>Email: <input type="text" th:field="*{email}" /></p>
-		        <p>Code: <input type="text" th:field="*{code}" /></p>
-		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-	        </form>
+				<hr class="style1">
 
+				<div class="row justify-content-md-center">
+					<div class="col-4">
+						<div class="container">
+
+							<div class="row" id="title">
+								<h2>User Management</h2>
+							</div>
+
+							<p>Edit user's information.</p>
+
+							<div class="d-flex justify-content-center">
+								<div class="col-10">
+
+									<form id="addUserForm" action="#" th:action="@{'updateUser/'+${user.id}}" th:object="${user}" method="post">
+
+										<div class="form-group row">
+											<label for="firstName" class="col-4 col-form-label">First Name</label>
+											<div class="col-8">
+												<input type="text" class="form-control" id="firstName" th:field="*{firstName}" />
+											</div>
+										</div>
+										<div class="form-group row">
+											<label for="lastName" class="col-4 col-form-label">Last Name</label>
+											<div class="col-8">
+												<input type="text" class="form-control" id="lastName" th:field="*{lastName}" /></p>
+											</div>
+										</div>
+										<div class="form-group row">
+											<label for="email" class="col-4 col-form-label">Email</label>
+											<div class="col-8">
+												<input type="text" class="form-control" id="email" th:field="*{email}" /></p>
+											</div>
+										</div>
+										<div class="form-group row">
+											<label for="code" class="col-4 col-form-label">Code</label>
+											<div class="col-8">
+												<input type="text" class="form-control" id="code" th:field="*{code}" /></p>
+											</div>
+										</div>
+<!--										<button type="Submit" class="btn" id="addUserBtn">-->
+<!--											<span class="oi oi-account-login"></span>-->
+<!--										</button>-->
+										<div class="form-group row">
+											<div class="col-4">
+												<input type="submit" class="form-control" value="Submit" />
+											</div>
+										</div>
+
+									</form>
+
+								</div>
+							</div>
+
+<!--							<div class="row justify-content-md-center">-->
+<!--									<form id="addUserForm" action="#" th:action="@{'updateUser/'+${user.id}}" th:object="${user}" method="post">-->
+
+<!--										<div class="form-group row">-->
+<!--											<label for="firstName" class="col-4 col-form-label">First Name</label>-->
+<!--											<div class="col-6">-->
+<!--												<input type="text" class="form-control" id="firstName" th:field="*{firstName}" />-->
+<!--											</div>-->
+<!--										</div>-->
+<!--										<div class="form-group row">-->
+<!--											<label for="lastName" class="col-4 col-form-label">Last Name</label>-->
+<!--											<div class="col-6">-->
+<!--												<input type="text" class="form-control" id="lastName" th:field="*{lastName}" /></p>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--										<div class="form-group row">-->
+<!--											<label for="email" class="col-4 col-form-label">Email</label>-->
+<!--											<div class="col-6">-->
+<!--												<input type="text" class="form-control" id="email" th:field="*{email}" /></p>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--										<div class="form-group row">-->
+<!--											<label for="code" class="col-4 col-form-label">Code</label>-->
+<!--											<div class="col-6">-->
+<!--												<input type="text" class="form-control" id="code" th:field="*{code}" /></p>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--										<div class="form-group row">-->
+<!--											<input type="submit" class="col-4 form-control" value="Submit" />-->
+<!--											<input type="reset" class="col-4 form-control" value="Reset" />-->
+<!--										</div>-->
+
+<!--									</form>-->
+<!--							</div>-->
+
+						</div>
+					</div>
+				</div>
+
+				<hr class="style1">
+
+			</div>
             <!-- /Page Content -->
 
         </div>

@@ -13,5 +13,9 @@ public class WebApplication {
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(WebApplication.class);
 		app.run();
+
+		String home = System.getProperty("user.home");
+		System.out.println(home);
+
 	}
 }

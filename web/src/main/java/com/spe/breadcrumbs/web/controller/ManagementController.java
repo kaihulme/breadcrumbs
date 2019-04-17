@@ -30,6 +30,7 @@ import java.util.List;
 @RequestMapping("/management")
 public class ManagementController {
 
+    private MapDAO mapDAO = new MapDbDAO();
     private UserDAO userDAO = new UserDbDAO();
     private ExpertDAO expertDAO = new ExpertDbDAO();
     private QuestionDAO questionDAO = new QuestionDbDAO();
@@ -39,9 +40,15 @@ public class ManagementController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String tableContent(Model m) {
+
         m.addAttribute("users",userDAO.getAllUsers());
         m.addAttribute("experts",expertDAO.getAllExperts());
         m.addAttribute("questions",questionDAO.getAllQuestions());
+        m.addAttribute( "maps", mapDAO.getAllMaps());
+
+        m.addAttribute("user", new User());
+        m.addAttribute("expert", new Expert());
+
         return "views/management";
     }
 
@@ -73,7 +80,7 @@ public class ManagementController {
     }
 
     @PostMapping("/user/deleteUser/{id}")
-    public RedirectView deleteUser(@PathVariable Long id) {
+    public RedirectView deleteUserFromEdit(@PathVariable Long id) {
         userDAO.deleteUser(id);
         return new RedirectView("http://localhost:8080/management");
     }
@@ -119,6 +126,13 @@ public class ManagementController {
         m.addAttribute("question", match);
         //List<Choice> choices = questionDAO.getChoices(id);
         //m.addAttribute("choices", choices);
+        int x_max = 2001;
+        int y_max = 2002;
+//        int[] max = new int[]{ x_max, y_max };
+
+        m.addAttribute("x_max", x_max);
+        m.addAttribute("y_max", y_max);
+
         return "views/management_breadcrumbEdit";
     }
 
@@ -138,7 +152,7 @@ public class ManagementController {
     }
 
     @PostMapping("/breadcrumb/updateBreadcrumb/{id}")
-    public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id) {
+    public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id, Model m) {
         int x_coord = question.getX_coord();
         int y_coord = question.getY_coord();
         String mapName = "venueMap_q" + id.toString();
@@ -146,25 +160,24 @@ public class ManagementController {
         Map newMap = new Map(id, mapName, newPicture);
         mapDAO.updateMapByName(mapName, newMap);
         questionDAO.update(id, question);
-        return new RedirectView("http://localhost:8080/management");
+        String returnURL = "http://localhost:8080/management/breadcrumb/" + id;
+        return new RedirectView(returnURL);
     }
 
     ////////////////// MAPS //////////////////////////////
 
-    private MapDAO mapDAO = new MapDbDAO();
+//    @RequestMapping(method = RequestMethod.GET, value= "/map")
+//    public String getMap(Model m) {
+//        List<Map> maps = mapDAO.getAllMaps();
+//        m.addAttribute("maps", maps);
+//        return "views/map";
+//    }
 
-    @RequestMapping(method = RequestMethod.GET, value= "/map")
-    public String getMap(Model m) {
-        List<Map> maps = mapDAO.getAllMaps();
-        m.addAttribute("maps", maps);
-        return "views/map";
-    }
-
-    @GetMapping("/map/add")
-    public String addMapPage(Model m) {
-        m.addAttribute("map", new Map());
-        return "views/map_addMap";
-    }
+//    @GetMapping("/addMap")
+//    public String addMapPage(Model m) {
+//        m.addAttribute("map", new Map());
+//        return "views/map_addMap";
+//    }
 
     public BufferedImage multipartToImage(MultipartFile file) {
         try {
@@ -213,7 +226,7 @@ public class ManagementController {
     }
 
     // purge old maps -> add new empty map -> generate new question maps
-    @PostMapping("/map/add")
+    @PostMapping("/addMap")
     public RedirectView addMap(@RequestParam("f") MultipartFile f) {
         try {
             mapDAO.deleteAllMaps();
@@ -232,7 +245,7 @@ public class ManagementController {
         catch (Exception e) {
             e.printStackTrace();
         }
-        return new RedirectView("http://localhost:8080/management/map");
+        return new RedirectView("http://localhost:8080/management/");
     }
 
 }

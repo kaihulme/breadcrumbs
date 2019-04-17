@@ -15,8 +15,10 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 		<!-- Jansy CSS CDN -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
-		<!-- Iconic CSS CDN-->
+		<!-- Iconic CSS CDN -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
+		<!-- SliderJS CSS CDN -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.css">
 
 		<!-- Custom CSS -->
 		<link rel="stylesheet" type="text/css" href="/css/index.css">
@@ -34,7 +36,7 @@
 
 			<div class="sidebar-header text-center">
 				<img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="sideLogo" />
-				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>
+<!--				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>-->
 			</div>
 
 			<ul class="list-unstyled components">
@@ -92,15 +94,76 @@
 
             <!-- Page Content -->
 
-	        <form action="#" th:action="@{'updateBreadcrumb/'+${question.id}}" th:object="${question}" method="post">
-		        <p>Question: <input type="text" th:field="*{question}"/></p>
-		        <p>X-Coordinate: <input type="text" th:field="*{x_coord}"/></p>
-		        <p>Y-Coordinate: <input type="text" th:field="*{y_coord}"/></p>
-		        <!--<p>Clue 1: <input type="text" th:field="*{choices[0]}" /></p>-->
-		        <!--<p>Clue 2: <input type="text" th:field="*{choices[1]}" /></p>-->
-		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-	        </form>
+			<hr class="style1">
 
+			<div class="row justify-content-md-center">
+
+				<div class="col-4">
+					<div class="container">
+
+						<div class="row" id="title">
+							<h2>Breadcrumb</h2>
+						</div>
+
+						<p>Edit question text and location on map.</p>
+
+						<form action="#" th:action="@{'updateBreadcrumb/'+${question.id}}" th:object="${question}" method="post">
+
+							<div class="form-group row">
+								<label for="question" class="col-4 col-form-label">Question</label>
+								<div class="col-8">
+									<textarea class="form-control" id="question" th:field="*{question}" rows="3"/></textarea>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="x_coord" class="col-4 col-form-label">X</label>
+								<div class="col-8">
+									<input id="x_coord" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
+									<span id="x_coordCurrentSliderValLabel"><span id="x_coordSliderVal"></span></span>
+
+<!--									<input id="x_coord" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-max=1000 data-slider-step="1" data-slider-value="500" th:attr="data-slider-max=#{max[0]}">-->
+<!--									<span id="x_coordCurrentSliderValLabel"><span id="x_coordSliderVal"> </span></span>-->
+
+<!--									<input type="range" class="range-field" min="0" max="2000" id="x_coord">-->
+<!--									<input type="text" class="form-control" id="x_coord" th:field="*{x_coord}" /></p>-->
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="y_coord" class="col-4 col-form-label">Y</label>
+								<div class="col-8">
+									<input id="y_coord" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
+									<span id="y_coordCurrentSliderValLabel"><span id="y_coordSliderVal"> </span></span>
+
+<!--&lt;!&ndash;									<input type="range" class="range-field" min="0" max="2000" id="y_coord">&ndash;&gt;-->
+<!--&lt;!&ndash;									<input type="text" class="form-control" id="y_coord" th:field="*{y_coord}" /></p>&ndash;&gt;-->
+								</div>
+							</div>
+							<div class="form-group row justify-content-md-center">
+								<div class="col-4">
+									<input type="submit" class="form-control" value="Submit" />
+								</div>
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+
+				<div class="col-4">
+					<div class="container fadeInUp">
+
+						<div class="row" id="title">
+							<h2>Map Location</h2>
+						</div>
+
+						<p>Location of current question on map.</p>
+
+						<img th:src="@{'/image/venueMap_q' + ${question.id}}" id="editMap">
+
+					</div>
+				</div>
+
+			</div>
             <!-- /Page Content -->
 
         </div>
@@ -167,6 +230,8 @@
 		<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js}"></script>
 		<!-- Jansy-Bootstrap JS CDN -->
 		<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js}"></script>
+		<!-- SliderJS JS CDN -->
+		<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.js}"></script>
 
 		<!-- Custom JS -->
 		<script type="text/javascript" th:src="@{/js/index.js}"></script>

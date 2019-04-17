@@ -3,6 +3,8 @@
 
 <head>
 
+<!--		<div th:insert="/fragments/header :: header"></div>-->
+
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,13 +32,15 @@
 	<!-- Page Wrapper -->
 	<div class="wrapper">
 
+<!--		<div th:insert="fragments/sidebar :: sidebar"></div>-->
+
 		<!-- Sidebar  -->
 		<nav id="sidebar">
 
 			<!-- Sidebar Header -->
 			<div class="sidebar-header text-center">
 				<img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="sideLogo" />
-				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>
+<!--				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>-->
 			</div>
 
 			<!-- Sidebar Content -->
@@ -100,42 +104,46 @@
 			<!-- Page Content -->
 			<div id="pageContent" class="fadeInUp">
 
-				<br><hr class="style1"><br>
+				<hr class="style1">
 
 				<div class="row justify-content-md-center">
 					<div class="col-8">
-						<input type="search" id="search" placeholder="Search">
+						<div class="container">
+
+							<div class="row" id="title">
+								<h2>Breadcrumbs Users</h2>
+							</div>
+
+							<p>Breadcrumbs user data, click on user to see more details.</p>
+
+							<input type="search" id="search" placeholder="Search">
+
+							<!-- User Table -->
+							<table class="table table-striped table-hover" id="users">
+								<thread>
+									<tr>
+										<th onclick="sortTable(users, 0)">User ID</th>
+										<th onclick="sortTable(users, 1)">First Name</th>
+										<th onclick="sortTable(users, 2)">Second Name</th>
+										<th onclick="sortTable(users, 3)">Score</th>
+									</tr>
+								</thread>
+								<tbody class="rowlink" data-link="row">
+									<tr th:each="user : ${users}">
+										<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.id}">id</span></a></td>
+										<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.firstName}"> firstName</span></a></td>
+										<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.lastName}">lastName</span></a></td>
+										<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.score}">score</span></a></td>
+									</tr>
+								</tbody>
+							</table>
+							<!-- /User Table -->
+
+						</div>
 					</div>
 				</div>
 
-				<div class="row justify-content-md-center">
-					<div class="col-8">
-
-						<!-- User Table -->
-						<table class="table table-striped table-hover" id="users">
-							<thread>
-								<tr>
-									<th style="width:10%;" onclick="sortTable(users, 0)">User ID</th>
-									<th style="width:15%;" onclick="sortTable(users, 1)">First Name</th>
-									<th style="width:65%;" onclick="sortTable(users, 2)">Second Name</th>
-									<th style="width:10%;" onclick="sortTable(users, 3)">Score</th>
-								</tr>
-							</thread>
-							<tbody class="rowlink" data-link="row">
-								<tr th:each="user : ${users}">
-									<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.id}">id</span></a></td>
-									<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.firstName}"> firstName</span></a></td>
-									<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.lastName}">lastName</span></a></td>
-									<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.score}">score</span></a></td>
-					            </tr>
-							</tbody>
-				        </table>
-						<!-- /User Table -->
-
-					</div>
-				</div>
-
-				<br><hr class="style1"><br>
+				<hr class="style1">
 
 			</div>
 			<!-- /Page Content -->

@@ -35,7 +35,7 @@
             <!-- Sidebar Header -->
 			<div class="sidebar-header text-center">
 				<img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="sideLogo" />
-				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>
+<!--				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>-->
 			</div>
 
             <!-- Sidebar Content -->
@@ -99,41 +99,41 @@
             <!-- Page Content -->
 	        <div id="pageContent">
 
-		        <br><hr class="style1"><br>
+				<hr class="style1">
 
-		        <div class="row justify-content-md-center">
-			        <div class="col-3">
-			            <div class="jumbotron" id=question>
-			                  <center><h3 th:text = "${question.question} + '?'">Question</h3><center>
-			            </div>
-		            </div>
-		        </div>
+				<div class="row justify-content-md-center">
+					<div class="col-8">
+						<div class="container">
 
-		        <br><hr class="style1"><br>
+							<div class="row" id="title">
+								<h3 th:text = "${question.question}">Question</h3>
+							</div>
 
-	            <!-- Question Table -->
-		        <div class="row justify-content-md-center">
-			        <div class="col-6">
-			            <table class="table table-striped table-hover" id=answers>
-			                <thead>
-			                    <tr>
-			                        <th>Attempt No.</th>
-			                        <th>Answer</th>
-			                    </tr>
-			                </thead>
-			                <tbody>
-			                    <tr th:each = "attempt: ${question.attempts}">
-			                        <td th:text = "${question.attempts.indexOf(attempt) + 1}">no</td>
-			                        <td th:text = "${attempt.choiceText}">attempt</td>
-			                    </tr>
+							<!-- Question Table -->
+<!--							<div class="col-6">-->
+								<table class="table table-striped table-hover" id=answers>
+									<thead>
+										<tr>
+											<th>Attempt No.</th>
+											<th>Answer</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each = "attempt: ${question.attempts}">
+											<td th:text = "${question.attempts.indexOf(attempt) + 1}">no</td>
+											<td th:text = "${attempt.choiceText}">attempt</td>
+										</tr>
 
-			                </tbody>
-			            </table>
-			        </div>
-		        </div>
-	            <!-- /Question Table -->
+									</tbody>
+								</table>
+<!--							</div>-->
+							<!-- /Question Table -->
 
-		        <br><hr class="style1"><br>
+						</div>
+					</div>
+				</div>
+
+				<hr class="style1">
 
 	        </div>
             <!-- /Page Content -->
