@@ -1,5 +1,6 @@
 package bristol.ac.uk.breadcrumbsspe;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -47,6 +48,12 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
+                final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Authenticating...");
+                progressDialog.show();
+
                 String code = codeText.getText().toString();
                 code = "RAcJG"; //TODO REMOVE THIS LINE BEFORE FINAL RELEASE
                 UserService userService = RetrofitClient.retrofit.create(UserService.class);
@@ -54,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
                 userCall.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
+                        progressDialog.dismiss();
+
                         if(response.isSuccessful()){
                             User u = response.body();
                             UserInSession userInSession = UserInSession.getInstance(u);
