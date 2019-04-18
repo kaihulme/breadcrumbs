@@ -34,7 +34,7 @@
 
 			<div class="sidebar-header text-center">
 				<img src="/css/images/bioscientificaLogo.jpg" class="rounded-circle" id="sideLogo" />
-				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>
+<!--				<h2 id="bio">Bio</h2><h2 id="scientifica">Scientifica</h2>-->
 			</div>
 
 			<ul class="list-unstyled components">
@@ -92,18 +92,59 @@
 
             <!-- Page Content -->
 
-	        <!-- Page Content -->
-	        <form action="#" th:action="@{'deleteExpert/'+${expert.id}}" th:object="${expert}" method="post">
-		        <button type="submit" value="Submit">Delete Expert</button>
-	        </form>
+			<hr class="style1">
 
-	        <form action="#" th:action="@{'updateExpert/'+${expert.id}}" th:object="${expert}" method="post">
-		        <p>First Name: <input type="text" th:field="*{firstName}" /></p>
-		        <p>Second Name: <input type="text" th:field="*{lastName}" /></p>
-		        <p>Email: <input type="text" th:field="*{email}" /></p>
-		        <p>Password: <input type="text" th:field="*{password}" /></p>
-		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-	        </form>
+			<div class="row justify-content-md-center">
+
+				<div class="col-4">
+					<div class="container">
+
+						<div class="row" id="title">
+							<h2>Expert</h2>
+						</div>
+
+						<p>Edit expert's information.</p>
+
+						<form id="addExpertForm" action="#" th:action="@{'updateExpert/'+${expert.id}}" th:object="${expert}" method="post">
+
+							<div class="form-group row">
+								<label for="firstName" class="col-4 col-form-label">First Name</label>
+								<div class="col-8">
+									<input type="text" class="form-control" id="firstName" th:field="*{firstName}" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="lastName" class="col-4 col-form-label">Last Name</label>
+								<div class="col-8">
+									<input type="text" class="form-control" id="lastName" th:field="*{lastName}" /></p>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="email" class="col-4 col-form-label">Email</label>
+								<div class="col-8">
+									<input type="text" class="form-control" id="email" th:field="*{email}" /></p>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="code" class="col-4 col-form-label">Password</label>
+								<div class="col-8">
+									<input type="password" class="form-control" id="code" th:field="*{password}" /></p>
+								</div>
+							</div>
+
+							<div class="form-group row justify-content-md-center">
+								<div class="col-4">
+									<input type="submit" class="form-control" value="Submit" />
+								</div>
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+			</div>
+
+			<hr class="style1">
 
             <!-- /Page Content -->
 

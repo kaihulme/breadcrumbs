@@ -24,6 +24,8 @@ public interface QuestionDAO {
 
     List<Choice> getChoices(Long questionId);
 
+    boolean updateChoices(Long questionId, List<Choice> choices);
+
     boolean update(Long id, Question q);
 
 }

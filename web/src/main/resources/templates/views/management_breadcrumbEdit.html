@@ -138,6 +138,18 @@
 <!--&lt;!&ndash;									<input type="text" class="form-control" id="y_coord" th:field="*{y_coord}" /></p>&ndash;&gt;-->
 								</div>
 							</div>
+
+
+							<div th:each="choice : ${choices}">
+
+								<label for="question" class="col-4 col-form-label">Question</label>
+								<div class="col-8">
+									<input type="text" class="form-control" id="choice" th:field="*{choice}"/>
+								</div>
+
+							</div>
+
+
 							<div class="form-group row justify-content-md-center">
 								<div class="col-4">
 									<input type="submit" class="form-control" value="Submit" />

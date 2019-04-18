@@ -132,6 +132,36 @@ public class QuestionDbDAO implements QuestionDAO {
     }
 
     @Override
+    public boolean updateChoices( Long questionId, List<Choice> choices ) {
+
+        List<Long> updatedChoices = new ArrayList<>();
+
+        try{
+
+            Connection con = dbConnection.getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Choice");
+
+            for ( Choice choice : choices ) {
+                while (rs.next()) {
+                    Long choiceId = rs.getLong("id");
+                    Long question = rs.getLong("question");
+                    if (question.equals(questionId) && !updatedChoices.contains(choiceId)) {
+                        updatedChoices.add(choiceId);
+                        rs.updateString("choiceText", choice.getChoiceText());
+                        break;
+                    }
+                }
+            }
+
+            return true;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public boolean update(Long id, Question q) {
         try{
             String updateQuestion = "UPDATE Question " +

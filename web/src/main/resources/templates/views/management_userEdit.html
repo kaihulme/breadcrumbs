@@ -96,106 +96,62 @@
 			</nav>
 			<!-- /Navigation Bar -->
 
-            <!-- Page Content -->
-			<div id="pageContent" class="fadeInUp">
+			<!-- Page Content -->
 
-				<hr class="style1">
+			<hr class="style1">
 
-				<div class="row justify-content-md-center">
-					<div class="col-4">
-						<div class="container">
+			<div class="row justify-content-md-center">
 
-							<div class="row" id="title">
-								<h2>User Management</h2>
+				<div class="col-4">
+					<div class="container">
+
+						<div class="row" id="title">
+							<h2>User</h2>
+						</div>
+
+						<p>Edit user's information.</p>
+
+						<form id="addUserForm" action="#" th:action="@{'updateUser/'+${user.id}}" th:object="${user}" method="post">
+
+							<div class="form-group row">
+								<label for="firstName" class="col-4 col-form-label">First Name</label>
+								<div class="col-8">
+									<input type="text" class="form-control" id="firstName" th:field="*{firstName}" />
+								</div>
 							</div>
-
-							<p>Edit user's information.</p>
-
-							<div class="d-flex justify-content-center">
-								<div class="col-10">
-
-									<form id="addUserForm" action="#" th:action="@{'updateUser/'+${user.id}}" th:object="${user}" method="post">
-
-										<div class="form-group row">
-											<label for="firstName" class="col-4 col-form-label">First Name</label>
-											<div class="col-8">
-												<input type="text" class="form-control" id="firstName" th:field="*{firstName}" />
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="lastName" class="col-4 col-form-label">Last Name</label>
-											<div class="col-8">
-												<input type="text" class="form-control" id="lastName" th:field="*{lastName}" /></p>
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="email" class="col-4 col-form-label">Email</label>
-											<div class="col-8">
-												<input type="text" class="form-control" id="email" th:field="*{email}" /></p>
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="code" class="col-4 col-form-label">Code</label>
-											<div class="col-8">
-												<input type="text" class="form-control" id="code" th:field="*{code}" /></p>
-											</div>
-										</div>
-<!--										<button type="Submit" class="btn" id="addUserBtn">-->
-<!--											<span class="oi oi-account-login"></span>-->
-<!--										</button>-->
-										<div class="form-group row">
-											<div class="col-4">
-												<input type="submit" class="form-control" value="Submit" />
-											</div>
-										</div>
-
-									</form>
-
+							<div class="form-group row">
+								<label for="lastName" class="col-4 col-form-label">Last Name</label>
+								<div class="col-8">
+									<input type="text" class="form-control" id="lastName" th:field="*{lastName}" /></p>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="email" class="col-4 col-form-label">Email</label>
+								<div class="col-8">
+									<input type="text" class="form-control" id="email" th:field="*{email}" /></p>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="code" class="col-4 col-form-label">Code</label>
+								<div class="col-8">
+									<input type="text" class="form-control" id="code" th:field="*{code}" /></p>
 								</div>
 							</div>
 
-<!--							<div class="row justify-content-md-center">-->
-<!--									<form id="addUserForm" action="#" th:action="@{'updateUser/'+${user.id}}" th:object="${user}" method="post">-->
+							<div class="form-group row justify-content-md-center">
+								<div class="col-4">
+									<input type="submit" class="form-control" value="Submit" />
+								</div>
+							</div>
 
-<!--										<div class="form-group row">-->
-<!--											<label for="firstName" class="col-4 col-form-label">First Name</label>-->
-<!--											<div class="col-6">-->
-<!--												<input type="text" class="form-control" id="firstName" th:field="*{firstName}" />-->
-<!--											</div>-->
-<!--										</div>-->
-<!--										<div class="form-group row">-->
-<!--											<label for="lastName" class="col-4 col-form-label">Last Name</label>-->
-<!--											<div class="col-6">-->
-<!--												<input type="text" class="form-control" id="lastName" th:field="*{lastName}" /></p>-->
-<!--											</div>-->
-<!--										</div>-->
-<!--										<div class="form-group row">-->
-<!--											<label for="email" class="col-4 col-form-label">Email</label>-->
-<!--											<div class="col-6">-->
-<!--												<input type="text" class="form-control" id="email" th:field="*{email}" /></p>-->
-<!--											</div>-->
-<!--										</div>-->
-<!--										<div class="form-group row">-->
-<!--											<label for="code" class="col-4 col-form-label">Code</label>-->
-<!--											<div class="col-6">-->
-<!--												<input type="text" class="form-control" id="code" th:field="*{code}" /></p>-->
-<!--											</div>-->
-<!--										</div>-->
-<!--										<div class="form-group row">-->
-<!--											<input type="submit" class="col-4 form-control" value="Submit" />-->
-<!--											<input type="reset" class="col-4 form-control" value="Reset" />-->
-<!--										</div>-->
+						</form>
 
-<!--									</form>-->
-<!--							</div>-->
-
-						</div>
 					</div>
 				</div>
-
-				<hr class="style1">
-
 			</div>
+
+			<hr class="style1">
+
             <!-- /Page Content -->
 
         </div>

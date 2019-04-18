@@ -2,6 +2,7 @@ package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.*;
+import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.web.DBConnection;
 import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,21 +32,20 @@ import java.util.List;
 @RequestMapping("/management")
 public class ManagementController {
 
-    private MapDAO mapDAO = new MapDbDAO();
-    private UserDAO userDAO = new UserDbDAO();
-    private ExpertDAO expertDAO = new ExpertDbDAO();
-    private QuestionDAO questionDAO = new QuestionDbDAO();
+    private MapDAO mapDAO = new MapDbDAO(new DBConnection());
+    private UserDAO userDAO = new UserDbDAO(new DBConnection());
+    private ExpertDAO expertDAO = new ExpertDbDAO(new DBConnection());
+    private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
 
     @Value(value = "classpath:static/mapFeatures/questionIcon.png")
     private Resource questionIcon;
 
     @RequestMapping(method = RequestMethod.GET)
     public String tableContent(Model m) {
-
+        m.addAttribute("maps", mapDAO.getAllMaps());
         m.addAttribute("users",userDAO.getAllUsers());
         m.addAttribute("experts",expertDAO.getAllExperts());
         m.addAttribute("questions",questionDAO.getAllQuestions());
-        m.addAttribute( "maps", mapDAO.getAllMaps());
 
         m.addAttribute("user", new User());
         m.addAttribute("expert", new Expert());
@@ -123,14 +123,16 @@ public class ManagementController {
 
     @RequestMapping(method = RequestMethod.GET, value= "/breadcrumb/{id}")
     public String updateBreadcrumb(@PathVariable Long id, Model m) {
+
         Question match = questionDAO.findById(id);
         m.addAttribute("question", match);
-        //List<Choice> choices = questionDAO.getChoices(id);
-        //m.addAttribute("choices", choices);
+
+        List<Choice> choices = questionDAO.getChoices(id);
+        m.addAttribute("choices", choices);
+
         int x_max = 2001;
         int y_max = 2002;
 //        int[] max = new int[]{ x_max, y_max };
-
         m.addAttribute("x_max", x_max);
         m.addAttribute("y_max", y_max);
 
@@ -166,19 +168,6 @@ public class ManagementController {
     }
 
     ////////////////// MAPS //////////////////////////////
-
-//    @RequestMapping(method = RequestMethod.GET, value= "/map")
-//    public String getMap(Model m) {
-//        List<Map> maps = mapDAO.getAllMaps();
-//        m.addAttribute("maps", maps);
-//        return "views/map";
-//    }
-
-//    @GetMapping("/addMap")
-//    public String addMapPage(Model m) {
-//        m.addAttribute("map", new Map());
-//        return "views/map_addMap";
-//    }
 
     public BufferedImage multipartToImage(MultipartFile file) {
         try {
