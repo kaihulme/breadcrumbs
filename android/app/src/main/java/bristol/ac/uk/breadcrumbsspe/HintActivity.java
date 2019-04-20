@@ -31,4 +31,10 @@ public class HintActivity extends AppCompatActivity {
     private void updateHintText() {
 
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(HintActivity.this, HomeActivity.class));
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
 }

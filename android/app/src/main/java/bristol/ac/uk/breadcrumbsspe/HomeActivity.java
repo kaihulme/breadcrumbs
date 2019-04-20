@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -72,14 +74,20 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 });
 
-        FloatingActionButton camera_button = findViewById(R.id.camera_button);
-        camera_button.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton cameraButton = findViewById(R.id.camera_button);
+
+        Animation scale_fab_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_in);
+        cameraButton.startAnimation(scale_fab_in);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Snackbar.make(view, "Opening Camera", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
+                Animation scale_fab_out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_out);
+                cameraButton.startAnimation(scale_fab_out);
                 startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
 //                Intent currentQuestion = getIntent();
 //                int index = currentQuestion.getIntExtra("CURRENT_QUESTION",-1);
 //                Intent toQrCode = new Intent(HomeActivity.this,QRCodeScannerActivity.class);
@@ -103,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
                 mDrawerLayout.addView(helpView);
 //                setContentView(helpView);
                 helpButton.setClickable(false);
-                camera_button.setClickable(false);
+                cameraButton.setClickable(false);
 
 
                 FloatingActionButton backToHome = findViewById(R.id.help_view_submit);
@@ -113,7 +121,7 @@ public class HomeActivity extends AppCompatActivity {
 //                        setContentView(R.layout.activity_home);
                         mDrawerLayout.removeView(helpView);
                         helpButton.setClickable(true);
-                        camera_button.setClickable(true);
+                        cameraButton.setClickable(true);
                     }
                 });
 
@@ -168,6 +176,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private void updateMap(int questionNumber) {
         ((MapState) this.getApplication()).setCurrentQuestion(questionNumber);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(HomeActivity.this, WelcomeActivity.class));
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
 }

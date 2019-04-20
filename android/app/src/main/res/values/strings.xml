@@ -13,7 +13,8 @@
     <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
     <string name="test_string">Testing</string>
     <string name="title_activity_test">TestActivity</string>
-    <string name="currentScore">0</string>
+    <string name="currentScore">Score: 0</string>
+    <string name="details">Name\nEmail: </string>
     <string name="back_to_map">back to map</string>
     <string name="code">Code</string>
     <string name="your_current_score_is_0">Your current score is: 0</string>

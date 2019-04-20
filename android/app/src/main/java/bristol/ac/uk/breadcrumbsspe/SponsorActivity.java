@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 
 public class SponsorActivity extends AppCompatActivity {
@@ -96,12 +98,18 @@ public class SponsorActivity extends AppCompatActivity {
                 });
 
         FloatingActionButton continueButton = findViewById(R.id.sponsor_continue);
+
+        Animation scale_fab_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_in);
+        continueButton.startAnimation(scale_fab_in);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Animation scale_fab_out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_out);
+                continueButton.startAnimation(scale_fab_out);
                 Intent i = new Intent(SponsorActivity.this, HomeActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
             }
         });
 
@@ -121,5 +129,11 @@ public class SponsorActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SponsorActivity.this, HomeActivity.class));
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

@@ -26,16 +26,31 @@
             android:text="@string/welcome_paul"
             android:textSize="36sp"
             android:gravity="center"
-            android:layout_weight="2"/>
+            android:layout_weight="2"
+            android:background="@drawable/textview_border"
+            android:textColor="@color/colorWhite"/>
+
+        <TextView
+            android:id="@+id/details_textview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:text="@string/details"
+            android:textSize="20sp"
+            android:background="@drawable/textview_border"
+            android:textColor="@color/colorWhite"/>
 
         <TextView
             android:id="@+id/score_textview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="9"
+            android:layout_weight="5"
             android:gravity="center"
             android:text="@string/currentScore"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:background="@color/colorScore"
+            android:textColor="@color/colorWhite"/>
 
         <Button
             android:id="@+id/begin_btn"

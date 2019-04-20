@@ -39,7 +39,9 @@
                     android:scaleType="fitCenter"
                     android:background="@color/colorWhite"
                     android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"/>
 
                 <ImageButton
                     android:id="@+id/sponsor_2"
@@ -50,7 +52,9 @@
                     android:scaleType="fitCenter"
                     android:background="@color/colorWhite"
                     android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"/>
 
             </LinearLayout>
 
@@ -69,7 +73,9 @@
                     android:scaleType="fitCenter"
                     android:background="@color/colorWhite"
                     android:layout_weight="1"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"/>
 
                 <ImageButton
                     android:id="@+id/sponsor_4"
@@ -80,7 +86,9 @@
                     android:scaleType="fitCenter"
                     android:background="@color/colorWhite"
                     android:layout_weight="1"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp" />
 
             </LinearLayout>
 

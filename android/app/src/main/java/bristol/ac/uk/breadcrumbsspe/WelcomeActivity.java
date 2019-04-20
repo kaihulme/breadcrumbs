@@ -28,6 +28,7 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         displayName();
         displayScore();
+        displayDetails();
         goToHome();
         makeDrawer();
     }
@@ -47,6 +48,19 @@ public class WelcomeActivity extends AppCompatActivity {
         scoreText += u.getScore();
         score_textview.setText(scoreText);
     }
+
+    private void displayDetails(){
+        TextView detailsView = findViewById(R.id.details_textview);
+        User u = UserInSession.getUser();
+        String details = "";
+        details += u.getFirstName();
+        details += " ";
+        details += u.getLastName();
+        details += "\nEmail: ";
+        details += u.getEmail();
+        detailsView.setText(details);
+    }
+
     private void goToHome(){
         Button begin_btn = findViewById(R.id.begin_btn);
         begin_btn.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +126,12 @@ public class WelcomeActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
 }

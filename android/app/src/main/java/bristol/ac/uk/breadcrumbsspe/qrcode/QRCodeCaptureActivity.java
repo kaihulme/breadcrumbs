@@ -26,8 +26,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import bristol.ac.uk.breadcrumbsspe.HomeActivity;
 import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.R;
+import bristol.ac.uk.breadcrumbsspe.SponsorActivity;
 import bristol.ac.uk.breadcrumbsspe.api.QuestionService;
 import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSource;
@@ -304,5 +306,11 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                 source = null;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(QRCodeCaptureActivity.this, HomeActivity.class));
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

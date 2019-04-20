@@ -2,7 +2,8 @@
 <resources>
     <color name="colorPrimary">#A10E50</color>
     <color name="colorPrimaryDark">#800B40</color>
-    <color name="colorAccent">#CC1266</color>
+    <color name="colorAccent">#A10E50</color>
+    <color name="colorScore">#CC1266</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="buttonColor">#000000</color>
     <color name="editTextNormal">#A10E50</color>

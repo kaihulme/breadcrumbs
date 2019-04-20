@@ -142,4 +142,10 @@ public class QRCodeScannerActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(QRCodeScannerActivity.this, HomeActivity.class));
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
 }

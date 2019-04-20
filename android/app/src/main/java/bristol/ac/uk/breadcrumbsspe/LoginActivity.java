@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.os.Build;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.app.AlertDialog;
@@ -45,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        Animation scale_fab_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_in);
+        loginButton.startAnimation(scale_fab_in);
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -62,12 +67,14 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         progressDialog.dismiss();
-
                         if(response.isSuccessful()){
+                            Animation scale_fab_out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_out);
+                            loginButton.startAnimation(scale_fab_out);
                             User u = response.body();
                             UserInSession userInSession = UserInSession.getInstance(u);
                             startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
                             overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+                            finish();
                         }else{
                             wrongCodeDialog();
                         }
@@ -104,5 +111,10 @@ public class LoginActivity extends AppCompatActivity {
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(LoginActivity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }
