@@ -2,19 +2,10 @@ package bristol.ac.uk.breadcrumbsspe;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,9 +13,8 @@ import bristol.ac.uk.breadcrumbsspe.entity.MapState;
 import bristol.ac.uk.breadcrumbsspe.entity.User;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends DrawerActivity {
 
-    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,42 +27,8 @@ public class HomeActivity extends AppCompatActivity {
             updateMap(qIndex);
         drawMap();
         updateScore();
-
-        mDrawerLayout = findViewById(R.id.home_drawer_layout);
-
-        NavigationView navigationView = findViewById(R.id.home_nav_view);
+        makeDrawer();
         navigationView.setCheckedItem(R.id.nav_map);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        //menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-                        switch (menuItem.getItemId()){
-                            case R.id.nav_account:
-                                startActivity(new Intent(HomeActivity.this, WelcomeActivity.class));
-//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                                return true;
-                            case R.id.nav_map:
-                                startActivity(new Intent(HomeActivity.this, HomeActivity.class));
-//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                                return true;
-                            case R.id.nav_camera:
-                                startActivity(new Intent(HomeActivity.this, QRCodeScannerActivity.class));
-//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                                return true;
-                            case R.id.nav_sponsors:
-                                startActivity(new Intent(HomeActivity.this, SponsorActivity.class));
-//                                overridePendingTransition(R.anim.slide_right, R.anim.slide_right1);
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                                return true;
-                        }
-                        return true;
-                    }
-                });
 
         FloatingActionButton cameraButton = findViewById(R.id.camera_button);
 
@@ -101,49 +57,7 @@ public class HomeActivity extends AppCompatActivity {
 //                startActivity(answerQuestion);
             }
         });
-
-        ImageButton helpButton = findViewById(R.id.home_help);
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater inflater = getLayoutInflater();
-                View helpView = inflater.inflate(R.layout.home_help_layout, mDrawerLayout, false);
-                mDrawerLayout.addView(helpView);
-//                setContentView(helpView);
-                helpButton.setClickable(false);
-                cameraButton.setClickable(false);
-
-
-                FloatingActionButton backToHome = findViewById(R.id.help_view_submit);
-                backToHome.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                        setContentView(R.layout.activity_home);
-                        mDrawerLayout.removeView(helpView);
-                        helpButton.setClickable(true);
-                        cameraButton.setClickable(true);
-                    }
-                });
-
-            }
-        });
-
-        Toolbar toolbar = findViewById(R.id.home_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+        helpButton(cameraButton);
     }
 
     /*private void buttonClick(){

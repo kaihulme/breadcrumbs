@@ -29,7 +29,6 @@ import android.widget.Toast;
 import bristol.ac.uk.breadcrumbsspe.HomeActivity;
 import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.R;
-import bristol.ac.uk.breadcrumbsspe.SponsorActivity;
 import bristol.ac.uk.breadcrumbsspe.api.QuestionService;
 import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSource;

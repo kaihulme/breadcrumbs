@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import bristol.ac.uk.breadcrumbsspe.api.AttemptHandler;
@@ -17,13 +16,10 @@ import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.api.TextCodeQuestionHandler;
 import bristol.ac.uk.breadcrumbsspe.entity.Attempt;
 import bristol.ac.uk.breadcrumbsspe.entity.Choice;
-import bristol.ac.uk.breadcrumbsspe.entity.MapState;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
 import bristol.ac.uk.breadcrumbsspe.entity.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-
-import static android.graphics.Color.rgb;
 
 //@SpringBootApplication
 public class QuestionActivity extends AppCompatActivity {
