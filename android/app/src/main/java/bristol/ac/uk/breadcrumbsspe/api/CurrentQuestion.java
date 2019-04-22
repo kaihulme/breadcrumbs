@@ -12,7 +12,7 @@ import retrofit2.Response;
 public class CurrentQuestion implements Callback<List<Question>> {
 
     private Long currentQuestion;
-    public void start(Long userId){
+    public void start(){
         AttemptService attemptService = RetrofitClient.retrofit.create(AttemptService.class);
         User u = UserInSession.getUser();
         Call<List<Question>> questionsCall = attemptService.getQuestionsAnswered(u.getId());
@@ -29,8 +29,8 @@ public class CurrentQuestion implements Callback<List<Question>> {
 
     }
 
-    public Long getCurrentQuestion(Long userId){
-        start(userId);
+    public Long getCurrentQuestion(){
+        start();
         return currentQuestion;
     }
 
