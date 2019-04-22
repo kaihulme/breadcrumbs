@@ -43,7 +43,7 @@ public class MapState extends Application {
             }
         }
 
-        else if (currentQuestion == 3) {
+        else if (currentQuestion >= 3) {
             if (cluesFound == 11) currentMap = R.drawable.venuemap_q4_c11_l0;
             else if (cluesFound == 10) currentMap = R.drawable.venuemap_q4_c10_l0;
             else if (cluesFound == 01) currentMap = R.drawable.venuemap_q4_c01_l0;

@@ -2,16 +2,20 @@ package bristol.ac.uk.breadcrumbsspe.api;
 
 import java.util.List;
 
+import bristol.ac.uk.breadcrumbsspe.HomeActivity;
 import bristol.ac.uk.breadcrumbsspe.UserInSession;
+import bristol.ac.uk.breadcrumbsspe.entity.MapState;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
 import bristol.ac.uk.breadcrumbsspe.entity.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static java.lang.Long.valueOf;
+
 public class CurrentQuestion implements Callback<List<Question>> {
 
-    private Long currentQuestion;
+    private Long currentQuestion = valueOf(0);
     public void start(){
         AttemptService attemptService = RetrofitClient.retrofit.create(AttemptService.class);
         User u = UserInSession.getUser();
@@ -26,7 +30,6 @@ public class CurrentQuestion implements Callback<List<Question>> {
             Question lastQuestion = questions.get(questions.size() - 1);
             currentQuestion = lastQuestion.getId() + 1;
         }
-
     }
 
     public Long getCurrentQuestion(){

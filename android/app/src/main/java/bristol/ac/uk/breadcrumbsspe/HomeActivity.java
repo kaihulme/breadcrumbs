@@ -15,7 +15,6 @@ import bristol.ac.uk.breadcrumbsspe.entity.User;
 
 public class HomeActivity extends DrawerActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +24,9 @@ public class HomeActivity extends DrawerActivity {
         System.out.print("qIndex" + qIndex);
         if(qIndex != -1)
             updateMap(qIndex);
+        else{
+            updateMap(LoginActivity.currentQuestion.getCurrentQuestion().intValue());
+        }
         drawMap();
         updateScore();
         makeDrawer();

@@ -33,6 +33,7 @@ import bristol.ac.uk.breadcrumbsspe.api.QuestionService;
 import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSource;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSourcePreview;
+import bristol.ac.uk.breadcrumbsspe.entity.MapState;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,10 +61,15 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
         if(response.isSuccessful() && response.body() != null){
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             dialog.cancel();
-            Intent i = new Intent(QRCodeCaptureActivity.this,QuestionActivity.class);
             Question q = response.body();
-            i.putExtra("QUESTION",q);
-            startActivity(i);
+            int currentQuestion = ((MapState) getApplication()).getCurrentQuestion();
+            if(q.getId().intValue() == currentQuestion) {
+                Intent i = new Intent(QRCodeCaptureActivity.this, QuestionActivity.class);
+                i.putExtra("QUESTION", q);
+                startActivity(i);
+            }
+            else
+                wrongQuestionDialog();
         }else {
             InputCode.performClick();
             Toast.makeText(QRCodeCaptureActivity.this, "Incorrect code. Please input the correct code.", Toast.LENGTH_SHORT).show();
@@ -170,6 +176,26 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
             requestCameraPermission();
         }
     }
+
+    private void wrongQuestionDialog() {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Wrong question")
+                .setMessage("Sorry that's the wrong question. Keep looking!")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+
 
     @Override
     public void onDetectedQrCode(Barcode qrcode) {

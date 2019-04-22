@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
+import bristol.ac.uk.breadcrumbsspe.api.CurrentQuestion;
 import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.api.UserService;
 import bristol.ac.uk.breadcrumbsspe.entity.User;
@@ -24,6 +25,8 @@ import retrofit2.Response;
 
 
 public class LoginActivity extends AppCompatActivity {
+
+    public static CurrentQuestion currentQuestion = new CurrentQuestion();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                             loginButton.startAnimation(scale_fab_out);
                             User u = response.body();
                             UserInSession userInSession = UserInSession.getInstance(u);
+                            currentQuestion.start();
                             startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
                             overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
                             finish();
