@@ -146,7 +146,7 @@
 									<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].choiceId}"/>
 									<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].questionId}"/>
 									<input type="text" class="form-control" id="choice" th:field="*{choices[__${itemStat.index}__].choiceText}"/>
-									<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].answer}"/>
+									<input type="checkbox" class="form-control" id= "answer" name="answer" th:field="*{choices[__${itemStat.index}__].answer}" th:value="${choice.answer}"/>
 								</div>
 
 							</div>
