@@ -19,7 +19,7 @@
         android:textAlignment="center"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="@color/help_colour"/>
+        android:textColor="@color/colorAccent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:textAllCaps="true"
             android:textColorHighlight="@color/colorWhite"
             android:textSize="20sp"
-            android:textColor="@color/help_colour"
+            android:textColor="@color/colorAccent"
             android:layout_weight="0.35"
             android:gravity="center_vertical|bottom"
             android:textAlignment="center"/>
@@ -52,7 +52,7 @@
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/help_colour"
+            android:textColor="@color/colorAccent"
             android:layout_weight="2"
             android:contentDescription="@string/map" />
 
@@ -63,7 +63,7 @@
            android:text="@string/camera_help"
            android:textAlignment="center"
            android:gravity="start"
-           android:textColor="@color/help_colour"
+           android:textColor="@color/colorAccent"
            android:textSize="18sp"
            android:textStyle="bold" />
 

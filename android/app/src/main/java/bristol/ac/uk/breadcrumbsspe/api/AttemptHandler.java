@@ -19,9 +19,9 @@ public class AttemptHandler implements Callback<ResponseBody> {
     private QuestionActivity questionActivity;
     private Button b;
     private Question q;
-   public  AttemptHandler(QuestionActivity questionActivity,Button b,Question q){
+   public  AttemptHandler(QuestionActivity questionActivity, Button b, Question q){
         this.questionActivity = questionActivity;
-        this.b =b;
+        this.b = b;
         this.q = q;
     }
     public void setQuestionActivity(QuestionActivity questionActivity) {

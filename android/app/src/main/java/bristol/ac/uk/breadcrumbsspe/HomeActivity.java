@@ -24,9 +24,8 @@ public class HomeActivity extends DrawerActivity {
         System.out.print("qIndex" + qIndex);
         if(qIndex != -1)
             updateMap(qIndex);
-        else{
+        if(LoginActivity.currentQuestion.getUpdated())
             updateMap(LoginActivity.currentQuestion.getCurrentQuestion().intValue());
-        }
         drawMap();
         updateScore();
         makeDrawer();
