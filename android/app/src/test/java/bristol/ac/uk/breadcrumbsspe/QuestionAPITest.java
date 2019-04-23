@@ -8,6 +8,7 @@ import org.junit.Test;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</qIndex>
  */
 public class QuestionAPITest {
+    //TODO look into Espresso
 
     @Test
     public void questionsAreFetched(){

@@ -11,9 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.xml.stream.Location;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.sql.Time;
 
 import static org.junit.Assert.*;
@@ -26,10 +23,8 @@ public class MeetingDataLayerTests {
     private DBConnection dbConnection;
 
     private MeetingDAO meetingDAO;
-    private UserDAO userDAO;
-    private ExpertDAO expertDAO;
+
     private TestConnection testConnection = new TestConnection();
-    private User testUser;
     private Meeting testMeeting;
     @Before
     public void setUp() throws Exception{
@@ -48,16 +43,13 @@ public class MeetingDataLayerTests {
 		('Ashley','Johnson','AJ@yahoo.com','T5va9',0,1),
 		('Loretta','Andrews','LA@gmail.com','N4Kax',0,1);
 		 */
+		UserDAO userDAO;
+        ExpertDAO expertDAO;
         assertNotNull(dbConnection);
         when(dbConnection.getConnection()).thenReturn(testConnection.getConnection());
         meetingDAO = new MeetingDbDAO(dbConnection);
         userDAO = new UserDbDAO(dbConnection);
         expertDAO = new ExpertDbDAO(dbConnection);
-//        System.setErr(new PrintStream(new OutputStream(){public void write(int i){}}));
-        testUser = new User();
-        testUser.setFirstName("Jane");
-        testUser.setLastName("Andrews");
-        testUser.setEmail("Jane.Andrews@gmail.com");
 
         User u = userDAO.getUser(1L);
         Expert e = expertDAO.getExpert(1L);

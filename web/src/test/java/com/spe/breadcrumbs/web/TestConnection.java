@@ -21,7 +21,7 @@ public class TestConnection {
         return con;
     }
 
-    public void executeSQLFile(String fileName) throws FileNotFoundException {
+    public void executeSQLFile(String fileName){
         String contents;
         try {
             contents = new String(Files.readAllBytes(Paths.get("src","test","resources",fileName)));
