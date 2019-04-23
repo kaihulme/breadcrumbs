@@ -23,5 +23,6 @@ public class Choice {
       this.choiceText = choiceText;
       this.answer = answer;
    }
+   public Choice(){}
 
 }

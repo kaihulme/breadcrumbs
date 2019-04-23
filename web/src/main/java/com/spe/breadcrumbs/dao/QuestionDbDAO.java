@@ -136,26 +136,43 @@ public class QuestionDbDAO implements QuestionDAO {
 
         List<Long> updatedChoices = new ArrayList<>();
 
-        try{
-
-            Connection con = dbConnection.getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Choice");
-
-            for ( Choice choice : choices ) {
-                while (rs.next()) {
-                    Long choiceId = rs.getLong("id");
-                    Long question = rs.getLong("question");
-                    if (question.equals(questionId) && !updatedChoices.contains(choiceId)) {
-                        updatedChoices.add(choiceId);
-                        rs.updateString("choiceText", choice.getChoiceText());
-                        break;
-                    }
-                }
+//        try{
+//
+//            Connection con = dbConnection.getConnection();
+//            String getChoices = "SELECT * FROM Choice WHERE question = ?";
+//            PreparedStatement stmt = con.prepareStatement(getChoices);
+//            stmt.setLong(1,questionId);
+//            ResultSet rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                Long choiceId = rs.getLong("id");
+//                Long question = rs.getLong("question");
+//                updateChoice(choiceId,)
+//            }
+//
+//            return true;
+//        } catch (SQLException | IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+        for(Choice c: choices){
+            if(!updateChoice(c.getChoiceId(),c)){
+                return false;
             }
-
+        }
+        return true;
+    }
+    private boolean updateChoice(Long choiceId, Choice c){
+        try{
+            String updateChoice = "UPDATE Choice SET choiceText = ?," +
+                    "answer = ? WHERE id = ?";
+            Connection con = dbConnection.getConnection();
+            PreparedStatement stmt = con.prepareStatement(updateChoice);
+            stmt.setString(1,c.getChoiceText());
+            stmt.setBoolean(2,c.isAnswer());
+            stmt.setLong(3,choiceId);
+            stmt.executeUpdate();
             return true;
-        } catch (SQLException | IOException e) {
+        } catch (SQLException| IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -176,6 +193,7 @@ public class QuestionDbDAO implements QuestionDAO {
             stmt.setInt(3, q.getY_coord());
             stmt.setLong(4,q.getId());
             stmt.executeUpdate();
+            updateChoices(id,q.getChoices());
             return true;
         } catch (SQLException | IOException e) {
             e.printStackTrace();

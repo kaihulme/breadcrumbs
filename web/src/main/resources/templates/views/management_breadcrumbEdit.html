@@ -140,11 +140,13 @@
 							</div>
 
 
-							<div th:each="choice : ${choices}">
-
-								<label for="question" class="col-4 col-form-label">Question</label>
+							<div th:each="choice,itemStat : *{choices}">
+								<label for="question" class="col-4 col-form-label" th:text ="Choice + ' ' + ${itemStat.index + 1}">Question </label>
 								<div class="col-8">
-									<input type="text" class="form-control" id="choice" th:field="*{choice}"/>
+									<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].choiceId}"/>
+									<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].questionId}"/>
+									<input type="text" class="form-control" id="choice" th:field="*{choices[__${itemStat.index}__].choiceText}"/>
+									<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].answer}"/>
 								</div>
 
 							</div>
