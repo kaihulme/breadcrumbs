@@ -35,7 +35,7 @@ public class ExpertDbDAO implements ExpertDAO {
                 //move it to the first row
                 Expert e = new Expert(rs.getLong("id"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("email")
                         , rs.getString("password"));
-                con.close();
+//                con.close();
                 return e;
             }
         }catch(SQLException e){

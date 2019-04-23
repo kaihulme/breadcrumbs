@@ -50,7 +50,7 @@ public class UserDataLayerTests {
 		assertNotNull(dbConnection);
 		when(dbConnection.getConnection()).thenReturn(testConnection.getConnection());
 		userDAO = new UserDbDAO(dbConnection);
-		System.setErr(new PrintStream(new OutputStream(){public void write(int i){}}));
+//		System.setErr(new PrintStream(new OutputStream(){public void write(int i){}}));
 		testUser = new User();
 		testUser.setFirstName("Jane");
 		testUser.setLastName("Andrews");

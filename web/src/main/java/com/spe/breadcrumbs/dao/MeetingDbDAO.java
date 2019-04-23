@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeetingDbDAO implements MeetingDAO {
-    private DBConnection dbConnection = new DBConnection();
+    private DBConnection dbConnection;
+    public MeetingDbDAO(DBConnection dbConnection){
+        this.dbConnection = dbConnection;
+    }
     @Override
     public boolean createMeeting(Meeting m) {
         try{
@@ -34,7 +37,7 @@ public class MeetingDbDAO implements MeetingDAO {
     public boolean updateMeeting(Long userId, Long expertId, Meeting m) {
         try{
             Connection con = dbConnection.getConnection();
-            String updateMeeting = "UPDATE Meeting SET meeting_time = ? AND location = ? WHERE userId = ? AND expertId = ?";
+            String updateMeeting = "UPDATE Meeting SET meeting_time = ?, location = ? WHERE userId = ? AND expertId = ?";
             PreparedStatement stmt = con.prepareStatement(updateMeeting);
             stmt.setTime(1,m.getMeeting_time());
             stmt.setString(2,m.getLocation());
