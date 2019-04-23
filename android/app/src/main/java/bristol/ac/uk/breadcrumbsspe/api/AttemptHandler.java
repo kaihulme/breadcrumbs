@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.widget.Button;
 
 import bristol.ac.uk.breadcrumbsspe.HomeActivity;
-import bristol.ac.uk.breadcrumbsspe.LoginActivity;
 import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.R;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
@@ -32,7 +31,6 @@ public class AttemptHandler implements Callback<ResponseBody> {
     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
        if(response.isSuccessful()){
            if (questionActivity.buttons.indexOf(b) == questionActivity.answer) {
-               LoginActivity.currentQuestion.start();
                q.correctAttemptMade(true);
                b.setBackgroundColor(rgb(0, 191, 0));
                //wait

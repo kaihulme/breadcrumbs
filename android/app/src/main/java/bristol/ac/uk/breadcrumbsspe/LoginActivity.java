@@ -15,9 +15,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
-import bristol.ac.uk.breadcrumbsspe.api.CurrentQuestion;
+import java.util.List;
+
+import bristol.ac.uk.breadcrumbsspe.api.AttemptService;
 import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.api.UserService;
+import bristol.ac.uk.breadcrumbsspe.entity.MapState;
+import bristol.ac.uk.breadcrumbsspe.entity.Question;
 import bristol.ac.uk.breadcrumbsspe.entity.User;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,9 +29,7 @@ import retrofit2.Response;
 
 
 public class LoginActivity extends AppCompatActivity {
-
-    public static CurrentQuestion currentQuestion = new CurrentQuestion();
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,16 +67,41 @@ public class LoginActivity extends AppCompatActivity {
                 userCall.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
-                        progressDialog.dismiss();
                         if(response.isSuccessful()){
-                            Animation scale_fab_out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_out);
-                            loginButton.startAnimation(scale_fab_out);
                             User u = response.body();
                             UserInSession userInSession = UserInSession.getInstance(u);
-                            currentQuestion.start();
-                            startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
-                            overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
-                            finish();
+
+                            AttemptService attemptService = RetrofitClient.retrofit.create(AttemptService.class);
+                            Call<List<Question>> questionsCall = attemptService.getQuestionsAnswered(u.getId());
+                            questionsCall.enqueue(new Callback<List<Question>>() {
+                                @Override
+                                public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+                                    if(response.isSuccessful() && response.body()!= null){
+                                        progressDialog.dismiss();
+                                        List<Question> questions = response.body();
+                                        Question lastQuestion = questions.get(questions.size() - 1);
+                                        int currentQuestion = lastQuestion.getId().intValue();
+
+                                        ((MapState) getApplication()).setCurrentQuestion(currentQuestion);
+
+                                        Animation scale_fab_out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_out);
+                                        loginButton.startAnimation(scale_fab_out);
+
+                                        startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                                        overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+                                        finish();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<List<Question>> call, Throwable t) {
+                                    t.printStackTrace();
+                                    Toast.makeText(LoginActivity.this, "Cannot connect to server. Please try again later.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+//                            currentQuestion.start();
+
                         }else{
                             wrongCodeDialog();
                         }

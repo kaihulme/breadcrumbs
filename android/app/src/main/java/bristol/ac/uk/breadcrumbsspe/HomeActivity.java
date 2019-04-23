@@ -9,7 +9,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.sql.Time;
+
+import bristol.ac.uk.breadcrumbsspe.entity.Expert;
 import bristol.ac.uk.breadcrumbsspe.entity.MapState;
+import bristol.ac.uk.breadcrumbsspe.entity.Meeting;
 import bristol.ac.uk.breadcrumbsspe.entity.User;
 
 
@@ -22,10 +26,12 @@ public class HomeActivity extends DrawerActivity {
         Intent i = getIntent();
         int qIndex = i.getIntExtra("CURRENT_QUESTION", -1);
         System.out.print("qIndex" + qIndex);
-        if(qIndex != -1)
+        if(qIndex != -1) {
             updateMap(qIndex);
-        if(LoginActivity.currentQuestion.getUpdated())
-            updateMap(LoginActivity.currentQuestion.getCurrentQuestion().intValue());
+        }
+
+        if(((MapState)this.getApplication()).getCurrentQuestion() == 8)
+            startMeeting();
         drawMap();
         updateScore();
         makeDrawer();
@@ -91,6 +97,12 @@ public class HomeActivity extends DrawerActivity {
 
     private void updateMap(int questionNumber) {
         ((MapState) this.getApplication()).setCurrentQuestion(questionNumber);
+    }
+
+    private void startMeeting(){
+        Expert e = new Expert("Place", "Holder", "placeholder@gmail.com", "password");
+        Meeting meeting = new Meeting(e, UserInSession.getUser(), new Time(0), "placeholder location");
+        System.out.println("Placeholder " + ((MapState)getApplication()).getCurrentQuestion());
     }
 
     @Override
