@@ -132,8 +132,8 @@
 											<td th:text = "${user.score}">user_score</td>
 										</tr>
 										<tr>
-											<td>Completion</td>
-											<td>100%</td>
+											<td>Progress</td>
+											<td th:text = "${user.progress}+'%'">0%</td>
 										</tr>
 										</tbody>
 									</table>

@@ -42,6 +42,8 @@ public class User {
 
     public User() {id = 0L;}
 
+    private float progress = 0;
+
 //    public boolean equals(User u) {
 //    }
 

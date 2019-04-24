@@ -25,12 +25,37 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String participants(Model m){
-        m.addAttribute("users",userDAO.getAllUsers());
+
+        List<User> users = userDAO.getAllUsers();
+
+        for (User u : users) {
+
+            int completed = 0;
+
+            User match = userDAO.getUserWithQuiz(u.getId());
+
+            List<Question> questions = match.getQuiz().getQuestions();
+
+            for (Question q : questions) {
+                if (attemptDAO.getAttempts(q.getId(),u.getId()).size() > 0) {
+                    completed++;
+                }
+            }
+
+            float progress = 100 * ((float)completed / (float)questions.size());
+            u.setProgress(progress);
+
+        }
+
+        m.addAttribute("users", users);
         return "views/participants";
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "{id}")
     public String getUserDetail(@PathVariable Long id,Model m){
+
+        int completed = 0;
+
         User match = userDAO.getUserWithQuiz(id);
         List<Question> questions = match.getQuiz().getQuestions();
         for(Question q: questions){
@@ -43,8 +68,14 @@ public class UserController {
             else score = 0;
             q.setNoOfAttempts(noOfAttempts);
             q.setScore(score);
+            if (score > 0) completed++;
+
         }
-        m.addAttribute("user",match);
+
+        float progress = 100 * ((float)completed / (float)questions.size());
+
+        match.setProgress(progress);
+        m.addAttribute("user", match);
 
         return "views/participants_userProfile";
     }

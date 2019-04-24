@@ -126,6 +126,7 @@
 										<th onclick="sortTable(users, 1)">First Name</th>
 										<th onclick="sortTable(users, 2)">Second Name</th>
 										<th onclick="sortTable(users, 3)">Score</th>
+										<th onclick="sortTable(users, 4)">Progress</th>
 									</tr>
 								</thread>
 								<tbody class="rowlink" data-link="row">
@@ -134,6 +135,7 @@
 										<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.firstName}"> firstName</span></a></td>
 										<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.lastName}">lastName</span></a></td>
 										<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.score}">score</span></a></td>
+										<td><a th:href="@{'/participants/' + ${user.id}}"><span th:text="${user.progress} + '%'">progress</span></a></td>
 									</tr>
 								</tbody>
 							</table>
