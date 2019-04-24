@@ -201,6 +201,12 @@ hr.style1{
 	border-top: 1px solid #dbdbdb;
 }
 
+hr.style2{
+	border-top: 1px solid #dbdbdb;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 #search, #searchExperts {
   width: 100%;
   padding: 10px;

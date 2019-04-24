@@ -35,6 +35,7 @@ public class ManagementController {
     private MapDAO mapDAO = new MapDbDAO(new DBConnection());
     private UserDAO userDAO = new UserDbDAO(new DBConnection());
     private ExpertDAO expertDAO = new ExpertDbDAO(new DBConnection());
+    private MeetingDAO meetingDAO = new MeetingDbDAO(new DBConnection());
     private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
 
     @Value(value = "classpath:static/mapFeatures/questionIcon.png")
@@ -43,9 +44,10 @@ public class ManagementController {
     @RequestMapping(method = RequestMethod.GET)
     public String tableContent(Model m) {
         m.addAttribute("maps", mapDAO.getAllMaps());
-        m.addAttribute("users",userDAO.getAllUsers());
-        m.addAttribute("experts",expertDAO.getAllExperts());
-        m.addAttribute("questions",questionDAO.getAllQuestions());
+        m.addAttribute("users", userDAO.getAllUsers());
+        m.addAttribute("experts", expertDAO.getAllExperts());
+        m.addAttribute("meetings", meetingDAO.getMeetings());
+        m.addAttribute("questions", questionDAO.getAllQuestions());
 
         m.addAttribute("user", new User());
         m.addAttribute("expert", new Expert());
