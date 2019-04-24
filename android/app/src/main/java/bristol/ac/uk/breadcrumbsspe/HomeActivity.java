@@ -1,6 +1,7 @@
 package bristol.ac.uk.breadcrumbsspe;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.sql.Time;
 
@@ -81,11 +84,17 @@ public class HomeActivity extends DrawerActivity {
         });
     }*/
 
-    private void drawMap () {
-        int mapID = ((MapState) this.getApplication()).getCurrentMap();
+    private void drawMap() {
+        Bitmap bm = ((MapState) this.getApplication()).getCurrentMap();
         ImageView map = findViewById(R.id.map);
-        map.setImageResource(mapID);
+        map.setImageBitmap(bm);
     }
+
+//    private void drawMap () {
+//        int mapID = ((MapState) this.getApplication()).getCurrentMap();
+//        ImageView map = findViewById(R.id.map);
+//        map.setImageResource(mapID);
+//    }
 
     private void updateScore(){
         TextView score_textview = findViewById(R.id.home_score);
