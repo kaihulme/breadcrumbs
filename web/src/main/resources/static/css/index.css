@@ -296,9 +296,12 @@ th {
 }
 
 #carouselControls {
-
     max-width: 300px;
+}
 
+#answer {
+    padding-top: 10px;
+    padding-right: 5px;
 }
 
 /************* FADE DOWN ANIMATION ****************/

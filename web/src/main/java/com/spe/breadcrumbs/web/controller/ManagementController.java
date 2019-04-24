@@ -156,13 +156,20 @@ public class ManagementController {
 
     @PostMapping("/breadcrumb/updateBreadcrumb/{id}")
     public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id, Model m) {
+        questionDAO.update(id, question);
+        String returnURL = "http://localhost:8080/management/breadcrumb/" + id;
+        return new RedirectView(returnURL);
+    }
+
+    @PostMapping("/breadcrumb/updateBreadcrumbLocation/{id}")
+    public RedirectView updateBreadcrumbLocation(@ModelAttribute Question question, @PathVariable Long id, Model m) {
         int x_coord = question.getX_coord();
         int y_coord = question.getY_coord();
         String mapName = "venueMap_q" + id.toString();
         Blob newPicture = drawQuestionImage(id, x_coord, y_coord);
         Map newMap = new Map(id, mapName, newPicture);
         mapDAO.updateMapByName(mapName, newMap);
-        questionDAO.update(id, question);
+        questionDAO.updateLocation(id, question);
         String returnURL = "http://localhost:8080/management/breadcrumb/" + id;
         return new RedirectView(returnURL);
     }

@@ -98,55 +98,40 @@
 
 			<div class="row justify-content-md-center">
 
-				<div class="col-4">
+				<div class="col-6">
 					<div class="container">
 
 						<div class="row" id="title">
-							<h2>Breadcrumb</h2>
+							<h2>Question</h2>
 						</div>
 
-						<p>Edit question text and location on map.</p>
+						<p>Edit question and its choices.</p>
 
 						<form action="#" th:action="@{'updateBreadcrumb/'+${question.id}}" th:object="${question}" method="post">
 
 							<div class="form-group row">
-								<label for="question" class="col-4 col-form-label">Question</label>
-								<div class="col-8">
+								<label for="question" class="col-2 col-form-label">Question</label>
+								<div class="col-10">
 									<textarea class="form-control" id="question" th:field="*{question}" rows="3"/></textarea>
 								</div>
 							</div>
-							<div class="form-group row">
-								<label for="x_coord" class="col-4 col-form-label">X</label>
-								<div class="col-8">
-									<input id="x_coord" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
-									<span id="x_coordCurrentSliderValLabel"><span id="x_coordSliderVal"></span></span>
 
-<!--									<input id="x_coord" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-max=1000 data-slider-step="1" data-slider-value="500" th:attr="data-slider-max=#{max[0]}">-->
-<!--									<span id="x_coordCurrentSliderValLabel"><span id="x_coordSliderVal"> </span></span>-->
+							<div class="form-group row" th:each="choice,itemStat : *{choices}">
 
-<!--									<input type="range" class="range-field" min="0" max="2000" id="x_coord">-->
-<!--									<input type="text" class="form-control" id="x_coord" th:field="*{x_coord}" /></p>-->
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="y_coord" class="col-4 col-form-label">Y</label>
-								<div class="col-8">
-									<input id="y_coord" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
-									<span id="y_coordCurrentSliderValLabel"><span id="y_coordSliderVal"> </span></span>
+								<label for="question" class="col-2 col-form-label" th:text ="Choice + ' ' + ${itemStat.index + 1}">Choice</label>
 
-<!--&lt;!&ndash;									<input type="range" class="range-field" min="0" max="2000" id="y_coord">&ndash;&gt;-->
-<!--&lt;!&ndash;									<input type="text" class="form-control" id="y_coord" th:field="*{y_coord}" /></p>&ndash;&gt;-->
-								</div>
-							</div>
+								<div class="col-9">
 
-
-							<div th:each="choice,itemStat : *{choices}">
-								<label for="question" class="col-4 col-form-label" th:text ="Choice + ' ' + ${itemStat.index + 1}">Question </label>
-								<div class="col-8">
 									<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].choiceId}"/>
 									<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].questionId}"/>
-									<input type="text" class="form-control" id="choice" th:field="*{choices[__${itemStat.index}__].choiceText}"/>
+
+									<textarea type="text" class="form-control" id="choice" th:field="*{choices[__${itemStat.index}__].choiceText}" rows="2"></textarea>
+
+								</div>
+								<div class="col-1">
+
 									<input type="checkbox" class="form-control" id= "answer" name="answer" th:field="*{choices[__${itemStat.index}__].answer}" th:value="${choice.answer}"/>
+
 								</div>
 
 							</div>
@@ -170,9 +155,43 @@
 							<h2>Map Location</h2>
 						</div>
 
-						<p>Location of current question on map.</p>
+						<p>Change the location of current question on map.</p>
 
 						<img th:src="@{'/image/venueMap_q' + ${question.id}}" id="editMap">
+
+						<form action="#" th:action="@{'updateBreadcrumbLocation/'+${question.id}}" th:object="${question}" method="post">
+
+							<div class="form-group row">
+								<label for="x_coord" class="col-2 col-form-label">X</label>
+								<div class="col-10">
+									<input id="x_coord" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
+									<span id="x_coordCurrentSliderValLabel"><span id="x_coordSliderVal"></span></span>
+
+									<!--									<input id="x_coord" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-max=1000 data-slider-step="1" data-slider-value="500" th:attr="data-slider-max=#{max[0]}">-->
+									<!--									<span id="x_coordCurrentSliderValLabel"><span id="x_coordSliderVal"> </span></span>-->
+
+									<!--									<input type="range" class="range-field" min="0" max="2000" id="x_coord">-->
+									<!--									<input type="text" class="form-control" id="x_coord" th:field="*{x_coord}" /></p>-->
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="y_coord" class="col-2 col-form-label">Y</label>
+								<div class="col-10">
+									<input id="y_coord" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
+									<span id="y_coordCurrentSliderValLabel"><span id="y_coordSliderVal"> </span></span>
+
+									<!--&lt;!&ndash;									<input type="range" class="range-field" min="0" max="2000" id="y_coord">&ndash;&gt;-->
+									<!--&lt;!&ndash;									<input type="text" class="form-control" id="y_coord" th:field="*{y_coord}" /></p>&ndash;&gt;-->
+								</div>
+							</div>
+
+							<div class="form-group row justify-content-md-center">
+								<div class="col-4">
+									<input type="submit" class="form-control" value="Submit" />
+								</div>
+							</div>
+
+						</form>
 
 					</div>
 				</div>

@@ -28,4 +28,5 @@ public interface QuestionDAO {
 
     boolean update(Long id, Question q);
 
+    boolean updateLocation(Long id, Question q);
 }

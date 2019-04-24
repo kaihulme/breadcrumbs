@@ -136,24 +136,6 @@ public class QuestionDbDAO implements QuestionDAO {
 
         List<Long> updatedChoices = new ArrayList<>();
 
-//        try{
-//
-//            Connection con = dbConnection.getConnection();
-//            String getChoices = "SELECT * FROM Choice WHERE question = ?";
-//            PreparedStatement stmt = con.prepareStatement(getChoices);
-//            stmt.setLong(1,questionId);
-//            ResultSet rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                Long choiceId = rs.getLong("id");
-//                Long question = rs.getLong("question");
-//                updateChoice(choiceId,)
-//            }
-//
-//            return true;
-//        } catch (SQLException | IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
         for(Choice c: choices){
             if(!updateChoice(c.getChoiceId(),c)){
                 return false;
@@ -182,18 +164,34 @@ public class QuestionDbDAO implements QuestionDAO {
     public boolean update(Long id, Question q) {
         try{
             String updateQuestion = "UPDATE Question " +
-                    "SET question = ?," +
-                    "x_coord = ?," +
-                    "y_coord = ? " +
+                    "SET question = ?" +
                     "WHERE id = ?;";
             Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(updateQuestion);
             stmt.setString(1,q.getQuestion());
-            stmt.setInt(2, q.getX_coord());
-            stmt.setInt(3, q.getY_coord());
-            stmt.setLong(4,q.getId());
+            stmt.setLong(2,q.getId());
             stmt.executeUpdate();
             updateChoices(id,q.getChoices());
+            return true;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateLocation(Long id, Question q) {
+        try{
+            String updateQuestion = "UPDATE Question " +
+                    "SET x_coord = ?," +
+                    "y_coord = ? " +
+                    "WHERE id = ?;";
+            Connection con = dbConnection.getConnection();
+            PreparedStatement stmt = con.prepareStatement(updateQuestion);
+            stmt.setInt(1, q.getX_coord());
+            stmt.setInt(2, q.getY_coord());
+            stmt.setLong(3,q.getId());
+            stmt.executeUpdate();
             return true;
         } catch (SQLException | IOException e) {
             e.printStackTrace();
