@@ -79,8 +79,12 @@ public class LoginActivity extends AppCompatActivity {
                                     if(response.isSuccessful() && response.body()!= null){
                                         progressDialog.dismiss();
                                         List<Question> questions = response.body();
-                                        Question lastQuestion = questions.get(questions.size() - 1);
-                                        int currentQuestion = lastQuestion.getId().intValue();
+
+                                        int currentQuestion = 0;
+                                        if (!questions.isEmpty()) {
+                                            Question lastQuestion = questions.get(questions.size());
+                                            currentQuestion = lastQuestion.getId().intValue();
+                                        }
 
                                         ((MapState) getApplication()).setCurrentQuestion(currentQuestion);
 
