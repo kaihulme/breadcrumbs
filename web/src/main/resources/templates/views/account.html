@@ -110,12 +110,31 @@
                     <div class="container">
 
                         <div class="row" id="title">
-                            <h2>Account Profile</h2>
+                            <h2>Account</h2>
                         </div>
 
                         <p>Your account details and upcoming meetings.</p>
 
-
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>ID</td>
+                                    <td th:text = "${expert.id}"></td>
+                                </tr>
+                                <tr>
+                                    <td>First Name</td>
+                                    <td th:text = "${expert.firstName}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Second Name</td>
+                                    <td th:text = "${expert.lastName}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td th:text = "${expert.email}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>
