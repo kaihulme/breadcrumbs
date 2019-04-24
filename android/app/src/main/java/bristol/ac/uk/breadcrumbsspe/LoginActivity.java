@@ -26,6 +26,7 @@ import bristol.ac.uk.breadcrumbsspe.entity.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.internal.EverythingIsNonNull;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -82,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         int currentQuestion = 0;
                                         if (!questions.isEmpty()) {
-                                            Question lastQuestion = questions.get(questions.size()-1);
+                                            Question lastQuestion = questions.get(questions.size() - 1);
                                             currentQuestion = lastQuestion.getId().intValue();
                                         }
 
@@ -103,8 +104,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this, "Cannot connect to server. Please try again later.", Toast.LENGTH_SHORT).show();
                                 }
                             });
-
-//                            currentQuestion.start();
 
                         }else{
                             wrongCodeDialog();
