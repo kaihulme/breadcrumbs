@@ -40,6 +40,11 @@ public class MainController{
         return "views/management";
     }
 
+    @RequestMapping("/account")
+    public String account(){
+        return "views/account";
+    }
+
     @RequestMapping("/paths")
     public String paths(){
         return "views/paths";

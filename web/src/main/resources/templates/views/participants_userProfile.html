@@ -67,14 +67,14 @@
         <!-- Main Page  -->
         <div id="content">
 
-            <!-- Navigation Bar -->
+			<!-- Navigation Bar -->
 			<nav class="navbar navbar-expand-lg" id="navbar">
 				<div class="container-fluid">
 
 					<!-- Navbar Left -->
 					<div class="navbar-header">
 						<button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-			  				<span class="oi oi-align-left" title="align-left" aria-hidden="true"></span>
+							<span class="oi oi-align-left" title="align-left" aria-hidden="true"></span>
 						</button>
 					</div>
 
@@ -82,10 +82,10 @@
 					<ul class="nav navbar-nav navbar-right">
 						<div class="btn-group">
 							<button type="button" class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        		<span class="oi oi-person"></span>
-            				</button>
+								<span class="oi oi-person"></span>
+							</button>
 							<div class="dropdown-menu dropdown-menu-right">
-								<button class="dropdown-item" type="button" data-toggle="modal" data-target="#notBuiltModal">Account</button>
+								<button class="dropdown-item" type="button"><a th:href="@{/account}">Account</a></button>
 								<button class="dropdown-item" type="button" data-toggle="modal" data-target="#logoutModal">Log Out</button>
 							</div>
 						</div>
