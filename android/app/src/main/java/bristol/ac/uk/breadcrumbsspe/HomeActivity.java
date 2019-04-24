@@ -85,10 +85,16 @@ public class HomeActivity extends DrawerActivity {
     }*/
 
     private void drawMap() {
-        Bitmap bm = ((MapState) this.getApplication()).getCurrentMap();
         ImageView map = findViewById(R.id.map);
-        map.setImageBitmap(bm);
+        String url = ((MapState) this.getApplication()).getCurrentMap();
+        Picasso.get().load(url).into(map);
     }
+
+//    private void drawMap() {
+//        Bitmap bm = ((MapState) this.getApplication()).getCurrentMap();
+//        ImageView map = findViewById(R.id.map);
+//        map.setImageBitmap(bm);
+//    }
 
 //    private void drawMap () {
 //        int mapID = ((MapState) this.getApplication()).getCurrentMap();

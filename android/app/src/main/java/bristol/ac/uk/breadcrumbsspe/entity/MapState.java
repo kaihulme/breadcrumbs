@@ -13,27 +13,34 @@ import bristol.ac.uk.breadcrumbsspe.R;
 
 public class MapState extends Application {
 
-    private Bitmap currentMap;
+    private String currentMap = "http://breadcrumbs.bioscientifica.com/image/venueMap_empty";
+
+//    private Bitmap currentMap;
 //    private int currentMap;
 
     private int currentQuestion = 0;
     private int cluesFound = 11;
     private int firstClueFound = 10;
 
-    public Bitmap getCurrentMap() {
-        try {
-
-            int questionNo = currentQuestion + 1;
-            String mapURL = "http://breadcrumbs.bioscientifica.com/image/venueMap_q" + questionNo;
-            URL url = new URL(mapURL);
-            currentMap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return currentMap;
+    public String getCurrentMap() {
+        int questionNo = currentQuestion + 1;
+        return "http://breadcrumbs.bioscientifica.com/image/venueMap_q" + questionNo;
     }
+
+//    public Bitmap getCurrentMap() {
+//        try {
+//
+//            int questionNo = currentQuestion + 1;
+//            String mapURL = "http://breadcrumbs.bioscientifica.com/image/venueMap_q" + questionNo;
+//            URL url = new URL(mapURL);
+//            currentMap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return currentMap;
+//    }
 
 //    public int getCurrentMap() {
 //        if (currentQuestion == 0) {
