@@ -30,19 +30,22 @@ public class UserController {
 
         for (User u : users) {
 
-            int completed = 0;
+            //            int completed = 0;
 
             User match = userDAO.getUserWithQuiz(u.getId());
 
             List<Question> questions = match.getQuiz().getQuestions();
 
-            for (Question q : questions) {
-                if (attemptDAO.getAttempts(q.getId(),u.getId()).size() > 0) {
-                    completed++;
-                }
-            }
+            List<Question> completed = questionDAO.getQuestionsAnswered(u.getId());
 
-            float progress = 100 * ((float)completed / (float)questions.size());
+
+//            for (Question q : questions) {
+//                if (attemptDAO.getAttempts(q.getId(),u.getId()).size() > 0) {
+//                    completed++;
+//                }
+//            }
+
+            float progress = 100 * ((float)completed.size() / (float)questions.size());
             u.setProgress(progress);
 
         }
