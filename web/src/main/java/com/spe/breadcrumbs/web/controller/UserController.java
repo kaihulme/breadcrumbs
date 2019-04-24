@@ -27,14 +27,12 @@ public class UserController {
     public String participants(Model m){
 
         List<User> users = userDAO.getAllUsers();
-
+        User match = userDAO.getUserWithQuiz(users.get(0).getId());
+        List<Question> questions = match.getQuiz().getQuestions();
         for (User u : users) {
 
             //            int completed = 0;
 
-            User match = userDAO.getUserWithQuiz(u.getId());
-
-            List<Question> questions = match.getQuiz().getQuestions();
 
             List<Question> completed = questionDAO.getQuestionsAnswered(u.getId());
 
