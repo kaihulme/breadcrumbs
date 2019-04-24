@@ -1,7 +1,6 @@
 package bristol.ac.uk.breadcrumbsspe;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.view.View;

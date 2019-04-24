@@ -1,1 +1,1 @@
-include ':app' , ':gradle'
+include ':app' , ':gradle', ':libs:picasso-master'

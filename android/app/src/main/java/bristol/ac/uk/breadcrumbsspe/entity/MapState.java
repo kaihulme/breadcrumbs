@@ -1,15 +1,6 @@
 package bristol.ac.uk.breadcrumbsspe.entity;
 
 import android.app.Application;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.net.URL;
-
-import bristol.ac.uk.breadcrumbsspe.R;
 
 public class MapState extends Application {
 
