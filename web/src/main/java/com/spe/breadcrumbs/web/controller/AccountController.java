@@ -4,6 +4,8 @@ import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.*;
 import com.spe.breadcrumbs.web.DBConnection;
 import com.spe.breadcrumbs.web.security.SecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +19,17 @@ import java.util.List;
 
 public class AccountController {
 
-    private SecurityService securityService = new SecurityService();
     private ExpertDAO expertDAO = new ExpertDbDAO(new DBConnection());
+    private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+    @Autowired
+    private SecurityService securityService;
+
 
     @RequestMapping(method = RequestMethod.GET)
     public String participants(Model m){
+//        context.scan("com.spe.breadcrumbs.security");
+//        context.refresh();
+//        securityService = context.getBean(SecurityService.class);
 
         String username = securityService.findLoggedInUsername();
 

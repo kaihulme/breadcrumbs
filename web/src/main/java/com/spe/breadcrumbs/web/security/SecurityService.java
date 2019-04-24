@@ -18,7 +18,7 @@ public class SecurityService {
     private UserDetailsService userDetailsService = new UserDetailsServiceImpl();
 
     public String findLoggedInUsername(){
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(userDetails instanceof UserDetails){
             return ((UserDetails) userDetails).getUsername();
         }
