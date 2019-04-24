@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         int currentQuestion = 0;
                                         if (!questions.isEmpty()) {
-                                            Question lastQuestion = questions.get(questions.size());
+                                            Question lastQuestion = questions.get(questions.size()-1);
                                             currentQuestion = lastQuestion.getId().intValue();
                                         }
 
