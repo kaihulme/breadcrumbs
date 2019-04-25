@@ -294,7 +294,7 @@ public class ManagementController {
         meeting.setUser(user);
         meeting.setMeeting_time(time);
 
-        meetingDAO.updateMeeting(meeting.getExpertId(), meeting.getUserId(), meeting);
+        meetingDAO.updateMeeting( meeting.getUserId(),meeting.getExpertId(), meeting);
         return new RedirectView("http://localhost:8080/management");
     }
 
