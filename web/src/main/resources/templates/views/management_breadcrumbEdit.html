@@ -138,7 +138,6 @@
 
 							</div>
 
-
 							<div class="form-group row justify-content-md-center">
 								<div class="col-4">
 									<input type="submit" class="form-control" value="Submit" />
@@ -239,28 +238,49 @@
 									<h2 th:text="'Hint '+${iStat.count}">Hint</h2>
 								</div>
 
-								<p>Edit hint text, location and image.</p>
+								<div class="row">
+									<div class="col-10">
+										<p>Edit hint text, location and image.</p>
+									</div>
+									<div class="col-2">
+										<form action="#" th:action="@{'/management/deleteHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
+											<button type="submit" value="Submit" class="btn btn-danger btn-sm">
+												<span class="oi oi-delete" title="align-left" aria-hidden="true"></span>
+											</button>
+										</form>
+									</div>
+								</div>
 
-								<table class="table">
-									<tbody>
-									<tr>
-										<td>Hint ID</td>
-										<td th:text = "${hint.id}"></td>
-									</tr>
-									<tr>
-										<td>Hint Text</td>
-										<td th:text = "${hint.hintText}"></td>
-									</tr>
-									<tr>
-										<td>x-coord</td>
-										<td th:text = "${hint.x_coord}"></td>
-									</tr>
-									<tr>
-										<td>y-coord</td>
-										<td th:text = "${hint.y_coord}"></td>
-									</tr>
-									</tbody>
-								</table>
+								<form action="#" th:action="@{'/management/updateHint/'+${question.id}}" th:object="${hint}" method="post">
+
+									<div class="form-group row">
+										<label for="hintText" class="col-4 col-form-label">Hint text</label>
+										<div class="col-8">
+											<input class="form-control" id="hintText" type="text" th:field="*{hintText}"/>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="x_coord" class="col-4 col-form-label">X</label>
+										<div class="col-8">
+											<input class="form-control" id="x_coord" type="text" th:field="*{x_coord}"/>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="y_coord" class="col-4 col-form-label">Y</label>
+										<div class="col-8">
+											<input class="form-control" id="y_coord" type="text" th:field="*{y_coord}"/>
+										</div>
+									</div>
+
+									<div class="form-group row justify-content-md-center">
+										<div class="col-4">
+											<input type="submit" class="form-control" value="Submit" />
+										</div>
+									</div>
+
+								</form>
 
 							</div>
 						</div>
@@ -297,28 +317,70 @@
 									<h2 th:text="'Hint '+${iStat.count}">Hint</h2>
 								</div>
 
-								<p>Edit hint text, location and image.</p>
+								<div class="row">
+									<div class="col-10">
+										<p>Edit hint text, location and image.</p>
+									</div>
+									<div class="col-2">
+										<form action="#" th:action="@{'/management/deleteHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
+											<button type="submit" value="Submit" class="btn btn-danger btn-sm">
+												<span class="oi oi-delete" title="align-left" aria-hidden="true"></span>
+											</button>
+										</form>
+									</div>
+								</div>
 
-								<table class="table">
-									<tbody>
-									<tr>
-										<td>Hint ID</td>
-										<td th:text = "${hint.id}"></td>
-									</tr>
-									<tr>
-										<td>Hint Text</td>
-										<td th:text = "${hint.hintText}"></td>
-									</tr>
-									<tr>
-										<td>x-coord</td>
-										<td th:text = "${hint.x_coord}"></td>
-									</tr>
-									<tr>
-										<td>y-coord</td>
-										<td th:text = "${hint.y_coord}"></td>
-									</tr>
-									</tbody>
-								</table>
+								<form action="#" th:action="@{'/management/updateHint/'+${question.id}}" th:object="${hint}" method="post">
+
+									<div class="form-group row">
+										<label for="hintText" class="col-4 col-form-label">Hint text</label>
+										<div class="col-8">
+											<input class="form-control" id="hintText" type="text" th:field="*{hintText}"/>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="x_coord" class="col-4 col-form-label">X</label>
+										<div class="col-8">
+											<input class="form-control" id="x_coord" type="text" th:field="*{x_coord}"/>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label for="y_coord" class="col-4 col-form-label">Y</label>
+										<div class="col-8">
+											<input class="form-control" id="y_coord" type="text" th:field="*{y_coord}"/>
+										</div>
+									</div>
+
+									<div class="form-group row justify-content-md-center">
+										<div class="col-4">
+											<input type="submit" class="form-control" value="Submit" />
+										</div>
+									</div>
+
+								</form>
+
+<!--								<table class="table">-->
+<!--									<tbody>-->
+<!--									<tr>-->
+<!--										<td>Hint ID</td>-->
+<!--										<td th:text = "${hint.id}"></td>-->
+<!--									</tr>-->
+<!--									<tr>-->
+<!--										<td>Hint Text</td>-->
+<!--										<td th:text = "${hint.hintText}"></td>-->
+<!--									</tr>-->
+<!--									<tr>-->
+<!--										<td>x-coord</td>-->
+<!--										<td th:text = "${hint.x_coord}"></td>-->
+<!--									</tr>-->
+<!--									<tr>-->
+<!--										<td>y-coord</td>-->
+<!--										<td th:text = "${hint.y_coord}"></td>-->
+<!--									</tr>-->
+<!--									</tbody>-->
+<!--								</table>-->
 
 							</div>
 						</div>

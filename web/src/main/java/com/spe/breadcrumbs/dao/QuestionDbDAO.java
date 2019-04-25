@@ -173,6 +173,45 @@ public class QuestionDbDAO implements QuestionDAO {
         }
     }
 
+    @Override
+    public boolean deleteHint(Long hint_id) {
+        try{
+            Connection con = dbConnection.getConnection();
+            String deleteHint = "DELETE FROM Hint Where id = ?";
+            PreparedStatement stmt = con.prepareStatement(deleteHint);
+            stmt.setLong(1,hint_id);
+            stmt.executeUpdate();
+            con.close();
+            return true;
+        }catch (SQLException | IOException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateHint(Hint h) {
+        try{
+            String updateUser = "UPDATE Hint " +
+                    "SET hintText = ?," +
+                    "x_coord = ?," +
+                    "y_coord = ? " +
+                    "WHERE id = ?;";
+            Connection con = dbConnection.getConnection();
+            PreparedStatement stmt = con.prepareStatement(updateUser);
+            stmt.setString(1,h.getHintText());
+            stmt.setInt(2,h.getX_coord());
+            stmt.setInt(3,h.getY_coord());
+            stmt.setLong(4,h.getId());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
     /////////////// UPDATE /////////////////////
 
     @Override

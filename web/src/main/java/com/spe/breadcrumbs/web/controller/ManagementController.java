@@ -190,6 +190,17 @@ public class ManagementController {
         return new RedirectView("/management/breadcrumb/"+question_id);
     }
 
+    @PostMapping("/deleteHint/{question_id}&{hint_id}")
+    public RedirectView addHint(@PathVariable Long question_id, @PathVariable Long hint_id) {
+        questionDAO.deleteHint(hint_id);
+        return new RedirectView("/management/breadcrumb/"+question_id);
+    }
+    @PostMapping("/updateHint/{question_id}")
+    public RedirectView updateHint(@ModelAttribute Hint hint, @PathVariable Long question_id) {
+        questionDAO.updateHint(hint);
+        return new RedirectView("/management/breadcrumb/"+question_id);
+    }
+
     ////////////////// MAPS //////////////////////////////
 
     public BufferedImage multipartToImage(MultipartFile file) {
