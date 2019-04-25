@@ -332,10 +332,15 @@
 											<tbody>
 											<!--										<tbody class="rowlink" data-link="row">-->
 											<tr th:each="meeting : ${meetings}">
-												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></a></td>
-												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></a></td>
-												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.meeting_time}">id</span></a></td>
-												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.location}">id</span></a></td>
+												<td><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></td>
+												<td><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></td>
+												<td><span th:text="${meeting.time}">id</span></td>
+												<td><span th:text="${meeting.location}">id</span></td>
+												<td></td>
+<!--												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></a></td>-->
+<!--												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></a></td>-->
+<!--												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.meeting_time}">id</span></a></td>-->
+<!--												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.location}">id</span></a></td>-->
 											</tr>
 											</tbody>
 										</table>
@@ -502,7 +507,7 @@
 		</div>
 		<!-- /Edit Map Modal -->
 
-		<!-- Add User Modal -->
+		<!-- Add Meeeting Modal -->
 		<div class="modal fade" id="addMeetingModal" tabindex="-1" role="dialog" aria-labelledby="addMeetingModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 
@@ -521,7 +526,7 @@
 								<label for="meetingExpert" class="col-4 col-form-label">Expert</label>
 								<div class="col-8">
 									<div class="form-group">
-										<select class="form-control" th:field="${meeting.expert}" id="meetingExpert">
+										<select class="form-control" th:field="*{expertId}" id="meetingExpert">
 											<option value="0">select expert</option>
 											<option th:each="expert : ${experts}" th:value="${expert.id}" th:text="${expert.firstName} + ' ' + ${expert.lastName}"></option>
 										</select>
@@ -533,7 +538,7 @@
 								<label for="meetingUser" class="col-4 col-form-label">User</label>
 								<div class="col-8">
 									<div class="form-group">
-										<select class="form-control" th:field="${meeting.expert}" id="meetingUser">
+										<select class="form-control" th:field="*{userId}" id="meetingUser">
 											<option value="0">select expert</option>
 											<option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
 										</select>
@@ -541,12 +546,12 @@
 								</div>
 							</div>
 
-<!--							<div class="form-group row">-->
-<!--								<label for="meeting_time" class="col-4 col-form-label">Time</label>-->
-<!--								<div class="col-8">-->
-<!--									<input class="form-control" id="meeting_time" th:field="*{meeting_time}" rows="3"/>-->
-<!--								</div>-->
-<!--							</div>-->
+							<div class="form-group row">
+								<label for="meeting_time" class="col-4 col-form-label">Time</label>
+								<div class="col-8">
+									<input type="time" class="form-control" id="meeting_time" th:field="*{time}" rows="3"/>
+								</div>
+							</div>
 
 							<div class="form-group row">
 								<label for="meetingLocation" class="col-4 col-form-label">Location</label>
@@ -566,7 +571,7 @@
 
 			</div>
 		</div>
-		<!-- /Add User Modal -->
+		<!-- /Add Meeeting Modal -->
 
 	    <!-- Log Out Confirm Modal -->
 	    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">

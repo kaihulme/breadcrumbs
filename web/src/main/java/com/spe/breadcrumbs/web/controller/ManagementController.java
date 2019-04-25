@@ -24,6 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -248,4 +249,24 @@ public class ManagementController {
         return new RedirectView("http://localhost:8080/management/");
     }
 
+    //////////////////////////// MEETINGS /////////////////////////////////
+
+    @PostMapping("/addMeeting")
+    public RedirectView addMeeting(@ModelAttribute Meeting meeting) {
+
+        System.out.println("TIME: " + meeting.getTime());
+
+        Expert expert = expertDAO.getExpert(meeting.getExpertId());
+        User user = userDAO.getUser(meeting.getUserId());
+        Time time = java.sql.Time.valueOf(meeting.getTime()+":00");
+
+        meeting.setExpert(expert);
+        meeting.setUser(user);
+        meeting.setMeeting_time(time);
+
+        meetingDAO.createMeeting(meeting);
+        return new RedirectView("/management");
+    }
+
 }
+
