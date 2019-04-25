@@ -336,7 +336,13 @@
 												<td><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></td>
 												<td><span th:text="${meeting.time}">id</span></td>
 												<td><span th:text="${meeting.location}">id</span></td>
-												<td></td>
+												<td>
+													<form action="#" th:action="@{'/management/meeting/deleteMeeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}" th:object="${user}" method="post">
+														<button type="submit" value="Submit" class="btn btn-danger btn-sm">
+															<span class="oi oi-delete" title="align-left" aria-hidden="true"></span>
+														</button>
+													</form>
+												</td>
 <!--												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></a></td>-->
 <!--												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></a></td>-->
 <!--												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.meeting_time}">id</span></a></td>-->

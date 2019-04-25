@@ -268,5 +268,11 @@ public class ManagementController {
         return new RedirectView("/management");
     }
 
+    @PostMapping("/meeting/deleteMeeting/{user_id}&{expert_id}")
+    public RedirectView deleteUserFromEdit(@PathVariable Long user_id, @PathVariable Long expert_id) {
+        meetingDAO.deleteMeeting(user_id, expert_id);
+        return new RedirectView("http://localhost:8080/management");
+    }
+
 }
 
