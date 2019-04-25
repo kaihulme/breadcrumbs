@@ -132,6 +132,8 @@ public class QuestionDbDAO implements QuestionDAO {
         return choices;
     }
 
+    /////////////////// HINTS /////////////////////////
+
     @Override
     public List<Hint> getHints(Long questionId) {
         List<Hint> hints = new ArrayList<>();
@@ -151,6 +153,27 @@ public class QuestionDbDAO implements QuestionDAO {
             return null;
         }
     }
+
+    @Override
+    public boolean addHint(Hint h, Long question_id) {
+        try{
+            Connection con = dbConnection.getConnection();
+            String addHint = "INSERT INTO Hint(question, hintText,x_coord,y_coord) VALUES(?,?,?,?)";
+            PreparedStatement stmt = con.prepareStatement(addHint);
+            stmt.setLong(1,question_id);
+            stmt.setString(2,h.getHintText());
+            stmt.setInt(3,h.getX_coord());
+            stmt.setInt(4,h.getY_coord());
+            stmt.executeUpdate();
+//            con.close();
+            return true;
+        }catch(SQLException | IOException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /////////////// UPDATE /////////////////////
 
     @Override
     public boolean updateChoices( Long questionId, List<Choice> choices ) {

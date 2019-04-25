@@ -107,7 +107,7 @@
 							<h2>Question</h2>
 						</div>
 
-						<p>Edit question and its choices.</p>
+						<p>Edit question and its choices (please check the correct answer).</p>
 
 						<form action="#" th:action="@{'updateBreadcrumb/'+${question.id}}" th:object="${question}" method="post">
 
@@ -159,7 +159,9 @@
 
 						<p>Change the location of current question on map.</p>
 
-						<img th:src="@{'/image/venueMap_q' + ${question.id}}" id="editMap">
+						<div class="row justify-content-md-center">
+							<img th:src="@{'/image/venueMap_q' + ${question.id}}" id="editMap">
+						</div>
 
 						<form action="#" th:action="@{'updateBreadcrumbLocation/'+${question.id}}" th:object="${question}" method="post">
 
@@ -200,39 +202,128 @@
 
 			</div>
 
-			<div class="row justify-content-md-center">
+			<div th:switch="${#lists.size(hints)}">
 
-				<div th:each="hint : ${hints}" class="col-4">
-					<div class="container">
+				<div th:case="'0'">
 
-						<div class="row" id="title">
-							<h2>Hint</h2>
+					<div class="row justify-content-md-center">
+						<div class="col-4">
+							<div class="container">
+
+								<div class="row" id="title">
+									<h2>Hint</h2>
+								</div>
+
+								<p>Add a hint for this question.</p>
+
+								<div class="row justify-content-md-center">
+									<button class="btn btn-outline-secondary btn-lg" id="addHintBtn" type="button" data-toggle="modal" data-target="#addHintModal">
+										<span class="oi oi-plus" title="align-center" aria-hidden="true"></span>
+									</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div th:case="'1'">
+
+					<div class="row justify-content-md-center">
+
+						<div th:each="hint, iStat : ${hints}" class="col-4">
+							<div class="container">
+
+								<div class="row" id="title">
+									<h2 th:text="'Hint '+${iStat.count}">Hint</h2>
+								</div>
+
+								<p>Edit hint text, location and image.</p>
+
+								<table class="table">
+									<tbody>
+									<tr>
+										<td>Hint ID</td>
+										<td th:text = "${hint.id}"></td>
+									</tr>
+									<tr>
+										<td>Hint Text</td>
+										<td th:text = "${hint.hintText}"></td>
+									</tr>
+									<tr>
+										<td>x-coord</td>
+										<td th:text = "${hint.x_coord}"></td>
+									</tr>
+									<tr>
+										<td>y-coord</td>
+										<td th:text = "${hint.y_coord}"></td>
+									</tr>
+									</tbody>
+								</table>
+
+							</div>
 						</div>
 
-						<p>Edit hint text, location and image.</p>
+						<div class="col-4">
+							<div class="container">
 
-						<table class="table">
-							<tbody>
-							<tr>
-								<td>Hint ID</td>
-								<td th:text = "${hint.id}"></td>
-							</tr>
-							<tr>
-								<td>Hint Text</td>
-								<td th:text = "${hint.hintText}"></td>
-							</tr>
-							<tr>
-								<td>x-coord</td>
-								<td th:text = "${hint.x_coord}"></td>
-							</tr>
-							<tr>
-								<td>y-coord</td>
-								<td th:text = "${hint.y_coord}"></td>
-							</tr>
-							</tbody>
-						</table>
+								<div class="row" id="title">
+									<h2>Hint 2</h2>
+								</div>
+
+								<p>Add another hint for this question.</p>
+
+								<div class="row justify-content-md-center">
+									<button class="btn btn-outline-secondary btn-lg" id="addHintBtn" type="button" data-toggle="modal" data-target="#addHintModal">
+										<span class="oi oi-plus" title="align-center" aria-hidden="true"></span>
+									</button>
+								</div>
+
+							</div>
+						</div>
 
 					</div>
+
+				</div>
+
+				<div th:case="*">
+
+					<div class="row justify-content-md-center">
+						<div th:each="hint, iStat : ${hints}" class="col-4">
+							<div class="container">
+
+								<div class="row" id="title">
+									<h2 th:text="'Hint '+${iStat.count}">Hint</h2>
+								</div>
+
+								<p>Edit hint text, location and image.</p>
+
+								<table class="table">
+									<tbody>
+									<tr>
+										<td>Hint ID</td>
+										<td th:text = "${hint.id}"></td>
+									</tr>
+									<tr>
+										<td>Hint Text</td>
+										<td th:text = "${hint.hintText}"></td>
+									</tr>
+									<tr>
+										<td>x-coord</td>
+										<td th:text = "${hint.x_coord}"></td>
+									</tr>
+									<tr>
+										<td>y-coord</td>
+										<td th:text = "${hint.y_coord}"></td>
+									</tr>
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</div>
+
 				</div>
 
 			</div>
@@ -246,6 +337,55 @@
     <!-- /Page Wrapper -->
 
     <!-- Modals -->
+
+	<!-- Add Hint Modal -->
+	<div class="modal fade" id="addHintModal" tabindex="-1" role="dialog" aria-labelledby="addHintModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+
+			<form action="#" th:action="@{'/management/addHint/'+${question.id}}" th:object="${hint}" method="post">
+
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="addHintModalLabel">Add Hint</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="form-group row">
+							<label for="hintText" class="col-4 col-form-label">Hint text</label>
+							<div class="col-8">
+								<input class="form-control" id="hintText" th:field="*{hintText}"/>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="x_coord" class="col-4 col-form-label">X</label>
+							<div class="col-8">
+								<input class="form-control" id="x_coord" th:field="*{x_coord}"/>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="y_coord" class="col-4 col-form-label">Y</label>
+							<div class="col-8">
+								<input class="form-control" id="y_coord" th:field="*{y_coord}"/>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" value="Submit" class="btn btn-info">Submit</button>
+					</div>
+				</div>
+
+			</form>
+
+		</div>
+	</div>
+	<!-- /Add Hint Modal -->
 
 	    <!-- Log Out Confirm Modal -->
 	    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">

@@ -310,6 +310,13 @@ th {
     padding-right: 5px;
 }
 
+#addHintBtn {
+    width: 100px;
+    height: 100px;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
 /************* FADE DOWN ANIMATION ****************/
 
 .fadeInDown {

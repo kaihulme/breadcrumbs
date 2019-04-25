@@ -137,6 +137,9 @@ public class ManagementController {
         List<Hint> hints = questionDAO.getHints(id);
         m.addAttribute("hints", hints);
 
+        Hint hint = new Hint();
+        m.addAttribute("hint", hint);
+
 //        int x_max = 2001;
 //        int y_max = 2002;
 //        int[] max = new int[]{ x_max, y_max };
@@ -183,7 +186,11 @@ public class ManagementController {
 
     ////////////////// HINTS //////////////////////////////
 
-
+    @PostMapping("/addHint/{question_id}")
+    public RedirectView addHint(@ModelAttribute Hint hint, @PathVariable Long question_id) {
+        questionDAO.addHint(hint, question_id);
+        return new RedirectView("/management/breadcrumb/"+question_id);
+    }
 
     ////////////////// MAPS //////////////////////////////
 
@@ -253,6 +260,7 @@ public class ManagementController {
         catch (Exception e) {
             e.printStackTrace();
         }
+
         return new RedirectView("http://localhost:8080/management/");
     }
 

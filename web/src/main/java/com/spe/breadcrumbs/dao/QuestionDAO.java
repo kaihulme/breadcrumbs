@@ -27,6 +27,8 @@ public interface QuestionDAO {
 
     List<Hint> getHints(Long questionId);
 
+    boolean addHint(Hint h, Long question_id);
+
     boolean updateChoices(Long questionId, List<Choice> choices);
 
     boolean update(Long id, Question q);
