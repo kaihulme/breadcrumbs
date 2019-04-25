@@ -142,7 +142,7 @@ public class QuestionDbDAO implements QuestionDAO {
             stmt.setLong(1,questionId);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                Hint h = new Hint(rs.getString("hintText"),rs.getInt("x_coord"),rs.getInt("y_coord"),rs.getBlob("picture"));
+                Hint h = new Hint(rs.getLong("id"),rs.getString("hintText"),rs.getInt("x_coord"),rs.getInt("y_coord"),rs.getBlob("picture"));
                 hints.add(h);
             }
             return hints;

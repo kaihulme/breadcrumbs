@@ -128,17 +128,20 @@ public class ManagementController {
     @RequestMapping(method = RequestMethod.GET, value= "/breadcrumb/{id}")
     public String updateBreadcrumb(@PathVariable Long id, Model m) {
 
-        Question match = questionDAO.findById(id);
-        m.addAttribute("question", match);
+        Question questions = questionDAO.findById(id);
+        m.addAttribute("question", questions);
 
         List<Choice> choices = questionDAO.getChoices(id);
         m.addAttribute("choices", choices);
 
-        int x_max = 2001;
-        int y_max = 2002;
+        List<Hint> hints = questionDAO.getHints(id);
+        m.addAttribute("hints", hints);
+
+//        int x_max = 2001;
+//        int y_max = 2002;
 //        int[] max = new int[]{ x_max, y_max };
-        m.addAttribute("x_max", x_max);
-        m.addAttribute("y_max", y_max);
+//        m.addAttribute("x_max", x_max);
+//        m.addAttribute("y_max", y_max);
 
         return "views/management_breadcrumbEdit";
     }
@@ -177,6 +180,10 @@ public class ManagementController {
         String returnURL = "http://localhost:8080/management/breadcrumb/" + id;
         return new RedirectView(returnURL);
     }
+
+    ////////////////// HINTS //////////////////////////////
+
+
 
     ////////////////// MAPS //////////////////////////////
 

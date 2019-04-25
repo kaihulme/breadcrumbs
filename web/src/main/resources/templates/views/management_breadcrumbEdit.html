@@ -199,7 +199,45 @@
 				</div>
 
 			</div>
-            <!-- /Page Content -->
+
+			<div class="row justify-content-md-center">
+
+				<div th:each="hint : ${hints}" class="col-4">
+					<div class="container">
+
+						<div class="row" id="title">
+							<h2>Hint</h2>
+						</div>
+
+						<p>Edit hint text, location and image.</p>
+
+						<table class="table">
+							<tbody>
+							<tr>
+								<td>Hint ID</td>
+								<td th:text = "${hint.id}"></td>
+							</tr>
+							<tr>
+								<td>Hint Text</td>
+								<td th:text = "${hint.hintText}"></td>
+							</tr>
+							<tr>
+								<td>x-coord</td>
+								<td th:text = "${hint.x_coord}"></td>
+							</tr>
+							<tr>
+								<td>y-coord</td>
+								<td th:text = "${hint.y_coord}"></td>
+							</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+
+			</div>
+
+			<!-- /Page Content -->
 
         </div>
         <!-- /Main Page -->
