@@ -60,6 +60,7 @@ CREATE TABLE Hint(
   question INT NOT NULL,
   x_coord INT,
   y_coord INT,
+  picture BLOB,
   FOREIGN KEY (question) REFERENCES Question(id),
   PRIMARY KEY (id)
 );

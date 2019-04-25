@@ -6,13 +6,15 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.sql.Blob;
 
 @Entity @Table(name = "Hint")
+@Setter @Getter
 public class Hint {
 
     Question question;
 
-    @Column(name = "hintText") @Setter @Getter
+    @Column(name = "hintText")
     private String hintText;
 
     @Column(name = "x_coord")
@@ -20,5 +22,15 @@ public class Hint {
 
     @Column(name = "y_coord")
     private int y_coord;
+
+    @Column (name="picture")
+    private Blob picture;
+
+    public Hint(String hintText,int x_coord,int y_coord, Blob picture){
+        this.hintText = hintText;
+        this.x_coord =x_coord;
+        this.y_coord = y_coord;
+        this.picture = picture;
+    }
 
 }

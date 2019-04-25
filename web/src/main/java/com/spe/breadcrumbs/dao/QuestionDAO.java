@@ -1,6 +1,7 @@
 package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.Choice;
+import com.spe.breadcrumbs.entity.Hint;
 import com.spe.breadcrumbs.entity.Question;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public interface QuestionDAO {
     Question findByCode(String code);
 
     List<Choice> getChoices(Long questionId);
+
+    List<Hint> getHints(Long questionId);
 
     boolean updateChoices(Long questionId, List<Choice> choices);
 

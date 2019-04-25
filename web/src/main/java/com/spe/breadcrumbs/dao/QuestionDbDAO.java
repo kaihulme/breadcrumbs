@@ -1,6 +1,7 @@
 package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.Choice;
+import com.spe.breadcrumbs.entity.Hint;
 import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.web.DBConnection;
 
@@ -129,6 +130,26 @@ public class QuestionDbDAO implements QuestionDAO {
             e.printStackTrace();
         }
         return choices;
+    }
+
+    @Override
+    public List<Hint> getHints(Long questionId) {
+        List<Hint> hints = new ArrayList<>();
+        try{
+            Connection con = dbConnection.getConnection();
+            String getHints = "SELECT * FROM Hint WHERE question = ?";
+            PreparedStatement stmt = con.prepareStatement(getHints);
+            stmt.setLong(1,questionId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Hint h = new Hint(rs.getString("hintText"),rs.getInt("x_coord"),rs.getInt("y_coord"),rs.getBlob("picture"));
+                hints.add(h);
+            }
+            return hints;
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
