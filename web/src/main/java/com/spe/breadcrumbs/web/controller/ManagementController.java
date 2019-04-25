@@ -81,13 +81,13 @@ public class ManagementController {
     @PostMapping("/addUser")
     public RedirectView addUser(@ModelAttribute User user) {
         userDAO.addUser(user);
-        return new RedirectView("http://localhost:8080/management");
+        return new RedirectView("/management");
     }
 
     @PostMapping("/user/deleteUser/{id}")
     public RedirectView deleteUserFromEdit(@PathVariable Long id) {
         userDAO.deleteUser(id);
-        return new RedirectView("http://localhost:8080/management");
+        return new RedirectView("/management");
     }
 
     //////////////// EXPERT UPDATE ADD /////////////////////
@@ -102,7 +102,7 @@ public class ManagementController {
     @PostMapping("/expert/updateExpert/{id}")
     public RedirectView updateExpert(@ModelAttribute Expert expert, @PathVariable Long id) {
         expertDAO.update(id, expert);
-        return new RedirectView("http://localhost:8080/management");
+        return new RedirectView("/management");
     }
 
     @RequestMapping(method = RequestMethod.GET, value= "/expert")
@@ -120,7 +120,7 @@ public class ManagementController {
     @PostMapping("/expert/deleteExpert/{id}")
     public RedirectView deleteExpert(@PathVariable Long id) {
         expertDAO.deleteExpert(id);
-        return new RedirectView("http://localhost:8080/management");
+        return new RedirectView("/management");
     }
 
     //////////////// BREADCRUMB UPDATE ////////////////////////
@@ -167,8 +167,7 @@ public class ManagementController {
     @PostMapping("/breadcrumb/updateBreadcrumb/{id}")
     public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id, Model m) {
         questionDAO.update(id, question);
-        String returnURL = "http://localhost:8080/management/breadcrumb/" + id;
-        return new RedirectView(returnURL);
+        return new RedirectView("/management/breadcrumb/" + id);
     }
 
     @PostMapping("/breadcrumb/updateBreadcrumbLocation/{id}")
@@ -180,8 +179,7 @@ public class ManagementController {
         Map newMap = new Map(id, mapName, newPicture);
         mapDAO.updateMapByName(mapName, newMap);
         questionDAO.updateLocation(id, question);
-        String returnURL = "http://localhost:8080/management/breadcrumb/" + id;
-        return new RedirectView(returnURL);
+        return new RedirectView("/management/breadcrumb/" + id);
     }
 
     ////////////////// HINTS //////////////////////////////
@@ -261,7 +259,7 @@ public class ManagementController {
             e.printStackTrace();
         }
 
-        return new RedirectView("http://localhost:8080/management/");
+        return new RedirectView("/management");
     }
 
     //////////////////////////// MEETINGS /////////////////////////////////
@@ -284,7 +282,7 @@ public class ManagementController {
     @PostMapping("/meeting/deleteMeeting/{user_id}&{expert_id}")
     public RedirectView deleteUserFromEdit(@PathVariable Long user_id, @PathVariable Long expert_id) {
         meetingDAO.deleteMeeting(user_id, expert_id);
-        return new RedirectView("http://localhost:8080/management");
+        return new RedirectView("/management");
     }
 
     @RequestMapping(method = RequestMethod.GET, value= "/meeting/{user_id}&{expert_id}")
@@ -310,7 +308,7 @@ public class ManagementController {
         meeting.setMeeting_time(time);
 
         meetingDAO.updateMeeting( meeting.getUserId(),meeting.getExpertId(), meeting);
-        return new RedirectView("http://localhost:8080/management");
+        return new RedirectView("/management");
     }
 
 }
