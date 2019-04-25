@@ -310,7 +310,7 @@
 
 								<div class="tab-pane" id="meeting" role="tabpanel" aria-labelledby="meeting-tab">
 
-									<p>List of meetings.</p>
+									<p>Add a meeting user with '+', delete them with 'x', or click on them to edit their details.</p>
 
 									<div class="row justify-content-md-center">
 
@@ -332,21 +332,23 @@
 											<tbody>
 											<!--										<tbody class="rowlink" data-link="row">-->
 											<tr th:each="meeting : ${meetings}">
-												<td><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></td>
-												<td><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></td>
-												<td><span th:text="${meeting.time}">id</span></td>
-												<td><span th:text="${meeting.location}">id</span></td>
+<!--												<td><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></td>-->
+<!--												<td><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></td>-->
+<!--												<td><span th:text="${meeting.time}">id</span></td>-->
+<!--												<td><span th:text="${meeting.location}">id</span></td>-->
+
+												<td><a th:href="@{'/management/meeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}"><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></a></td>
+												<td><a th:href="@{'/management/meeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}"><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></a></td>
+												<td><a th:href="@{'/management/meeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}"><span th:text="${meeting.time}">id</span></a></td>
+												<td><a th:href="@{'/management/meeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}"><span th:text="${meeting.location}">id</span></a></td>
+
 												<td>
-													<form action="#" th:action="@{'/management/meeting/deleteMeeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}" th:object="${user}" method="post">
+													<form action="#" th:action="@{'/management/meeting/deleteMeeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}" th:object="${meeting}" method="post">
 														<button type="submit" value="Submit" class="btn btn-danger btn-sm">
 															<span class="oi oi-delete" title="align-left" aria-hidden="true"></span>
 														</button>
 													</form>
 												</td>
-<!--												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></a></td>-->
-<!--												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></a></td>-->
-<!--												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.meeting_time}">id</span></a></td>-->
-<!--												<td><a th:href="@{'/management/meeting/' + ${meeting.user.id} + '&' + ${meeting.expert.id}"><span th:text="${meeting.location}">id</span></a></td>-->
 											</tr>
 											</tbody>
 										</table>
@@ -533,7 +535,7 @@
 								<div class="col-8">
 									<div class="form-group">
 										<select class="form-control" th:field="*{expertId}" id="meetingExpert">
-											<option value="0">select expert</option>
+											<option value="0">Select an expert...</option>
 											<option th:each="expert : ${experts}" th:value="${expert.id}" th:text="${expert.firstName} + ' ' + ${expert.lastName}"></option>
 										</select>
 									</div>
@@ -545,7 +547,7 @@
 								<div class="col-8">
 									<div class="form-group">
 										<select class="form-control" th:field="*{userId}" id="meetingUser">
-											<option value="0">select expert</option>
+											<option value="0">Select a user...</option>
 											<option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
 										</select>
 									</div>
@@ -555,7 +557,7 @@
 							<div class="form-group row">
 								<label for="meeting_time" class="col-4 col-form-label">Time</label>
 								<div class="col-8">
-									<input type="time" class="form-control" id="meeting_time" th:field="*{time}" rows="3"/>
+									<input type="time" class="form-control" id="meeting_time" th:field="*{time}"/>
 								</div>
 							</div>
 

@@ -254,8 +254,6 @@ public class ManagementController {
     @PostMapping("/addMeeting")
     public RedirectView addMeeting(@ModelAttribute Meeting meeting) {
 
-        System.out.println("TIME: " + meeting.getTime());
-
         Expert expert = expertDAO.getExpert(meeting.getExpertId());
         User user = userDAO.getUser(meeting.getUserId());
         Time time = java.sql.Time.valueOf(meeting.getTime()+":00");
@@ -271,6 +269,32 @@ public class ManagementController {
     @PostMapping("/meeting/deleteMeeting/{user_id}&{expert_id}")
     public RedirectView deleteUserFromEdit(@PathVariable Long user_id, @PathVariable Long expert_id) {
         meetingDAO.deleteMeeting(user_id, expert_id);
+        return new RedirectView("http://localhost:8080/management");
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value= "/meeting/{user_id}&{expert_id}")
+    public String updateMeeting(@PathVariable Long user_id, @PathVariable Long expert_id, Model m) {
+        List<Expert> experts = expertDAO.getAllExperts();
+        List<User> users = userDAO.getAllUsers();
+        Meeting meeting = meetingDAO.getMeeting(user_id, expert_id);
+        m.addAttribute("experts", experts);
+        m.addAttribute("users", users);
+        m.addAttribute("meeting", meeting);
+        return "views/management_meetingEdit";
+    }
+
+    @PostMapping("/meeting/updateMeeting")
+    public RedirectView updateMeeting(@ModelAttribute Meeting meeting) {
+
+        Expert expert = expertDAO.getExpert(meeting.getExpertId());
+        User user = userDAO.getUser(meeting.getUserId());
+        Time time = java.sql.Time.valueOf(meeting.getTime()+":00");
+
+        meeting.setExpert(expert);
+        meeting.setUser(user);
+        meeting.setMeeting_time(time);
+
+        meetingDAO.updateMeeting(meeting.getExpertId(), meeting.getUserId(), meeting);
         return new RedirectView("http://localhost:8080/management");
     }
 

@@ -44,6 +44,9 @@ public class MeetingDbDAO implements MeetingDAO {
             stmt.setLong(3,userId);
             stmt.setLong(4,expertId);
             stmt.executeUpdate();
+
+            System.out.println(m.getLocation());
+
             return true;
         } catch (IOException | SQLException e) {
             e.printStackTrace();
@@ -137,6 +140,8 @@ public class MeetingDbDAO implements MeetingDAO {
                 Time t = rs.getTime("meeting_time");
                 String loc = rs.getString("location");
                 m = new Meeting(expert,user,t,loc);
+                String time = t.toString();
+                m.setTime(time.substring(0, 5));
             }
         } catch (IOException | SQLException e) {
             e.printStackTrace();
