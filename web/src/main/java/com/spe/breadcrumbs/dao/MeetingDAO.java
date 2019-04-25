@@ -9,5 +9,6 @@ public interface MeetingDAO {
     boolean updateMeeting(Long userId,Long expertId,Meeting m);
     boolean deleteMeeting(Long userId,Long expertId);
     List<Meeting> getMeetings();
+    List<Meeting> getMeetingsWithExpert(Long expertId);
     Meeting getMeeting(Long userId,Long expertId);
 }

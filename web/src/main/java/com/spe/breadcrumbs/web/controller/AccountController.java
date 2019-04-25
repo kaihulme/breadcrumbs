@@ -16,14 +16,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/account")
 
-
 public class AccountController {
 
-    private ExpertDAO expertDAO = new ExpertDbDAO(new DBConnection());
-    private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
     @Autowired
     private SecurityService securityService;
-
+    private ExpertDAO expertDAO = new ExpertDbDAO(new DBConnection());
+    private MeetingDAO meetingDAO = new MeetingDbDAO(new DBConnection());
+    private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 
     @RequestMapping(method = RequestMethod.GET)
     public String participants(Model m){
@@ -32,18 +31,13 @@ public class AccountController {
 //        securityService = context.getBean(SecurityService.class);
 
         String username = securityService.findLoggedInUsername();
-
-        System.out.println("Expert username: " + username);
-
         Expert expert = expertDAO.findByEmail(username);
-
-        System.out.println("Expert ID: " + expert.getId());
+        List<Meeting> meetings = meetingDAO.getMeetingsWithExpert(expert.getId());
 
         m.addAttribute("expert", expert);
+        m.addAttribute("meetings", meetings);
 
         return "views/account";
     }
-
-
 
 }

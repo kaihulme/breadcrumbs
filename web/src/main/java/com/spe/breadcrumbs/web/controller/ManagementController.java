@@ -51,6 +51,7 @@ public class ManagementController {
 
         m.addAttribute("user", new User());
         m.addAttribute("expert", new Expert());
+        m.addAttribute("meeting", new Meeting());
 
         return "views/management";
     }

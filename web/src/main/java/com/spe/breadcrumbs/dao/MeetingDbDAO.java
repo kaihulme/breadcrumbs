@@ -93,6 +93,31 @@ public class MeetingDbDAO implements MeetingDAO {
     }
 
     @Override
+    public List<Meeting> getMeetingsWithExpert(Long expertId) {
+        UserDAO userDAO = new UserDbDAO(dbConnection);
+        ExpertDAO expertDAO = new ExpertDbDAO(dbConnection);
+        List<Meeting> meetings = new ArrayList<>();
+        try{
+            Connection con = dbConnection.getConnection();
+            String getMeetings = "SELECT * FROM Meeting WHERE expertId = ?";
+            PreparedStatement stmt = con.prepareStatement(getMeetings);
+            stmt.setLong(1,expertId);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                User user = userDAO.getUser(rs.getLong("userId"));
+                Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
+                Time t = rs.getTime("meeting_time");
+                String loc = rs.getString("location");
+                Meeting m = new Meeting(expert,user,t,loc);
+                meetings.add(m);
+            }
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+        return meetings;
+    }
+
+    @Override
     public Meeting getMeeting(Long userId, Long expertId) {
         UserDAO userDAO = new UserDbDAO(dbConnection);
         ExpertDAO expertDAO = new ExpertDbDAO(dbConnection);
