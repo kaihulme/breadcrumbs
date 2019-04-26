@@ -41,6 +41,8 @@ public class ManagementController {
 
     @Value(value = "classpath:static/mapFeatures/questionIcon.png")
     private Resource questionIcon;
+    @Value(value = "classpath:static/mapFeatures/hintIcon.png")
+    private Resource hintIcon;
 
     @RequestMapping(method = RequestMethod.GET)
     public String tableContent(Model m) {
@@ -149,61 +151,23 @@ public class ManagementController {
         return "views/management_breadcrumbEdit";
     }
 
-    public Blob drawQuestionImage(Long qNo, int x_coord, int y_coord) {
-        try {
-            Map emptyMap = mapDAO.getMapByName("venueMap_empty");
-            Blob blob = emptyMap.getPicture();
-            BufferedImage bi_emptyMap = blobToImage(blob);
-            BufferedImage bi_questionIcon = ImageIO.read(questionIcon.getInputStream());
-            Graphics g = bi_emptyMap.getGraphics();
-            g.drawImage(bi_questionIcon, x_coord, y_coord, 50, 50, null);
-            return imageToBlob(bi_emptyMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     @PostMapping("/breadcrumb/updateBreadcrumb/{id}")
     public RedirectView updateBreadcrumb(@ModelAttribute Question question, @PathVariable Long id, Model m) {
         questionDAO.update(id, question);
         return new RedirectView("/management/breadcrumb/" + id);
     }
 
-    @PostMapping("/breadcrumb/updateBreadcrumbLocation/{id}")
-    public RedirectView updateBreadcrumbLocation(@ModelAttribute Question question, @PathVariable Long id, Model m) {
-        int x_coord = question.getX_coord();
-        int y_coord = question.getY_coord();
-        String mapName = "venueMap_q" + id.toString();
-        Blob newPicture = drawQuestionImage(id, x_coord, y_coord);
-        Map newMap = new Map(id, mapName, newPicture);
-        mapDAO.updateMapByName(mapName, newMap);
-        questionDAO.updateLocation(id, question);
-        return new RedirectView("/management/breadcrumb/" + id);
-    }
-
     ////////////////// HINTS //////////////////////////////
 
-    @PostMapping("/addHint/{question_id}")
-    public RedirectView addHint(@ModelAttribute Hint hint, @PathVariable Long question_id) {
-        questionDAO.addHint(hint, question_id);
-        return new RedirectView("/management/breadcrumb/"+question_id);
-    }
-
-    @PostMapping("/deleteHint/{question_id}&{hint_id}")
-    public RedirectView addHint(@PathVariable Long question_id, @PathVariable Long hint_id) {
-        questionDAO.deleteHint(hint_id);
-        return new RedirectView("/management/breadcrumb/"+question_id);
-    }
     @PostMapping("/updateHint/{question_id}")
     public RedirectView updateHint(@ModelAttribute Hint hint, @PathVariable Long question_id) {
         questionDAO.updateHint(hint);
         return new RedirectView("/management/breadcrumb/"+question_id);
     }
 
-    ////////////////// MAPS //////////////////////////////
+    ////////////////// IMAGE HANDLING //////////////////////////////
 
-    public BufferedImage multipartToImage(MultipartFile file) {
+    private BufferedImage multipartToImage(MultipartFile file) {
         try {
             File f = new File(file.getOriginalFilename());
             f.createNewFile();
@@ -217,7 +181,7 @@ public class ManagementController {
         return null;
     }
 
-    public Blob imageToBlob(BufferedImage in) {
+    private Blob imageToBlob(BufferedImage in) {
         try {
             BufferedImage newImage = new BufferedImage(in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D g = newImage.createGraphics();
@@ -236,7 +200,7 @@ public class ManagementController {
         return null;
     }
 
-    public BufferedImage blobToImage(Blob blob) {
+    private BufferedImage blobToImage(Blob blob) {
         try {
             byte[] bytes = blob.getBytes(1, (int) blob.length());
             InputStream in = new ByteArrayInputStream(bytes);
@@ -249,21 +213,164 @@ public class ManagementController {
         return null;
     }
 
+    //////////////// MAPS ////////////////////////////////
+
+    private Blob drawQuestionImage(Question question) {
+        try {
+
+            Map emptyMap = mapDAO.getMapByName("venueMap_empty");
+            Blob map = emptyMap.getPicture();
+
+            BufferedImage bi_map = blobToImage(map);
+            BufferedImage bi_questionIcon = ImageIO.read(questionIcon.getInputStream());
+
+            Graphics g = bi_map.getGraphics();
+            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
+
+            return imageToBlob(bi_map);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private Blob drawQuestionWithBothHintsImage(Question question, List<Hint> hints) {
+        try {
+
+            Map emptyMap = mapDAO.getMapByName("venueMap_empty");
+            Blob map = emptyMap.getPicture();
+
+            BufferedImage bi_map = blobToImage(map);
+            BufferedImage bi_questionIcon = ImageIO.read(questionIcon.getInputStream());
+            BufferedImage bi_hintIcon = ImageIO.read(hintIcon.getInputStream());
+
+            Graphics g = bi_map.getGraphics();
+            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
+            for (Hint hint : hints) {
+                g.drawImage(bi_hintIcon, hint.getX_coord(), hint.getY_coord(), 50, 50, null);
+            }
+
+            return imageToBlob(bi_map);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private Blob drawQuestionWithOneHintImage(Question question, Hint hint) {
+        try {
+
+            Map emptyMap = mapDAO.getMapByName("venueMap_empty");
+            Blob map = emptyMap.getPicture();
+
+            BufferedImage bi_map = blobToImage(map);
+            BufferedImage bi_questionIcon = ImageIO.read(questionIcon.getInputStream());
+            BufferedImage bi_hintIcon = ImageIO.read(hintIcon.getInputStream());
+
+            Graphics g = bi_map.getGraphics();
+            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
+            g.drawImage(bi_hintIcon, hint.getX_coord(), hint.getY_coord(), 50, 50, null);
+
+            return imageToBlob(bi_map);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private boolean addQuestionMap(Question question) {
+
+        String mapName, hintString;
+        Blob mapImage;
+        Map map;
+
+        List<Hint> hints = questionDAO.getHints(question.getId());
+
+        try {
+
+            if (hints.size() > 1) {
+                mapName = "venueMap_q" + question.getId().toString() + "_c11";
+                mapImage = drawQuestionWithBothHintsImage(question, hints);
+                map = new Map(question.getId(), mapName, mapImage);
+                mapDAO.addMap(map);
+            }
+
+            int i = 0;
+            for (Hint hint : hints) {
+                if (i == 0) hintString = "_c10";
+                else        hintString = "_c01";
+                mapName = "venueMap_q" + question.getId().toString() + hintString;
+                mapImage = drawQuestionWithOneHintImage(question, hint);
+                map = new Map(question.getId(), mapName, mapImage);
+                mapDAO.addMap(map);
+                i++;
+            }
+
+            mapName = "venueMap_q" + question.getId().toString();
+            mapImage = drawQuestionImage(question);
+            map = new Map(question.getId(), mapName, mapImage);
+            mapDAO.addMap(map);
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean updateQuestionMap(Question question) {
+
+        String mapName, hintString;
+        Blob mapImage;
+        Map map;
+
+        List<Hint> hints = questionDAO.getHints(question.getId());
+
+        try {
+
+            if (hints.size() > 1) {
+                mapName = "venueMap_q" + question.getId().toString() + "_c11";
+                mapImage = drawQuestionWithBothHintsImage(question, hints);
+                map = new Map(question.getId(), mapName, mapImage);
+                mapDAO.updateMapByName(mapName, map);
+            }
+
+            int i = 0;
+            for (Hint hint : hints) {
+                if (i == 0) hintString = "_c10";
+                else        hintString = "_c01";
+                mapName = "venueMap_q" + question.getId().toString() + hintString;
+                mapImage = drawQuestionWithOneHintImage(question, hint);
+                map = new Map(question.getId(), mapName, mapImage);
+                mapDAO.updateMapByName(mapName, map);
+                i++;
+            }
+
+            mapName = "venueMap_q" + question.getId().toString();
+            mapImage = drawQuestionImage(question);
+            map = new Map(question.getId(), mapName, mapImage);
+            mapDAO.updateMapByName(mapName, map);
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     // purge old maps -> add new empty map -> generate new question maps
     @PostMapping("/addMap")
-    public RedirectView addMap(@RequestParam("f") MultipartFile f) {
+    public RedirectView changeMap(@RequestParam("f") MultipartFile f) {
+
         try {
             mapDAO.deleteAllMaps();
+
             BufferedImage bi = multipartToImage(f);
             Blob picture = imageToBlob(bi);
-            Map emptyMap = new Map((long) 1, "venueMap_empty", picture);
+            Map emptyMap = new Map((long)0, "venueMap_empty", picture);
             mapDAO.addMap(emptyMap);
+
             List<Question> questions = questionDAO.getAllQuestions();
             for (Question question:questions) {
-                String mapName = "venueMap_q" + question.getId().toString();
-                Blob newPicture = drawQuestionImage(question.getId(), question.getX_coord(), question.getY_coord());
-                Map newMap = new Map(question.getId(), mapName, newPicture);
-                mapDAO.addMap(newMap);
+                addQuestionMap(question);
             }
         }
         catch (Exception e) {
@@ -271,6 +378,43 @@ public class ManagementController {
         }
 
         return new RedirectView("/management");
+    }
+
+    @PostMapping("/breadcrumb/updateBreadcrumbLocation/{id}")
+    public RedirectView updateBreadcrumbLocation(@ModelAttribute Question question, @PathVariable Long id, Model m) {
+        updateQuestionMap(question);
+        questionDAO.updateLocation(id, question);
+        return new RedirectView("/management/breadcrumb/" + id);
+    }
+
+    @PostMapping("/breadcrumb/updateHintLocation/{id}")
+    public RedirectView updateHintLocation(@ModelAttribute Hint hint, @PathVariable Long id, Model m) {
+        questionDAO.updateHintLocation(hint);
+        Question question = questionDAO.findById(id);
+        updateQuestionMap(question);
+        return new RedirectView("/management/breadcrumb/" + id);
+    }
+
+    @PostMapping("/addHint/{question_id}")
+    public RedirectView addHint(@ModelAttribute Hint hint, @PathVariable Long question_id) {
+
+        questionDAO.addHint(hint, question_id);
+        Question question = questionDAO.findById(question_id);
+        mapDAO.deleteMapsForQuestion(question_id);
+        addQuestionMap(question);
+
+        return new RedirectView("/management/breadcrumb/"+question_id);
+    }
+
+    @PostMapping("/deleteHint/{question_id}&{hint_id}")
+    public RedirectView addHint(@PathVariable Long question_id, @PathVariable Long hint_id) {
+
+        questionDAO.deleteHint(hint_id);
+        Question question = questionDAO.findById(question_id);
+        mapDAO.deleteMapsForQuestion(question_id);
+        addQuestionMap(question);
+
+        return new RedirectView("/management/breadcrumb/"+question_id);
     }
 
     //////////////////////////// MEETINGS /////////////////////////////////

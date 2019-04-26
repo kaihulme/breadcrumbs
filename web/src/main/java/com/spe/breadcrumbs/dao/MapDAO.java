@@ -22,6 +22,8 @@ public interface MapDAO {
 
     boolean deleteMap(Long id);
 
+    public boolean deleteMapsForQuestion(Long questionId);
+
     public boolean deleteAllMaps();
 
 }

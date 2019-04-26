@@ -230,9 +230,9 @@
 				<div th:case="'1'">
 
 					<div class="row justify-content-md-center">
+						<div th:each="hint, iStat : ${hints}">
 
-						<div th:each="hint, iStat : ${hints}" class="col-4">
-							<div class="container">
+							<div class="container col-4">
 
 								<div class="row" id="title">
 									<h2 th:text="'Hint '+${iStat.count}">Hint</h2>
@@ -260,6 +260,26 @@
 										</div>
 									</div>
 
+									<div class="form-group row justify-content-md-center">
+										<div class="col-4">
+											<input type="submit" class="form-control" value="Submit" />
+										</div>
+									</div>
+
+								</form>
+
+							</div>
+
+							<div class="container col-4">
+
+								<div class="row" id="title">
+									<h2>Map Location</h2>
+								</div>
+
+								<p>Change location of hint on map.</p>
+
+								<form action="#" th:action="@{'/management/updateHintLocation/'+${question.id}}" th:object="${hint}" method="post">
+
 									<div class="form-group row">
 										<label for="x_coord" class="col-4 col-form-label">X</label>
 										<div class="col-8">
@@ -283,7 +303,12 @@
 								</form>
 
 							</div>
+
 						</div>
+
+					</div>
+
+					<div class="row justify-content-md-center">
 
 						<div class="col-4">
 							<div class="container">

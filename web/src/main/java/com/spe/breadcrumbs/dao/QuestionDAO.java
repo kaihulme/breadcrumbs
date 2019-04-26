@@ -33,6 +33,8 @@ public interface QuestionDAO {
 
     boolean updateHint(Hint h);
 
+    boolean updateHintLocation(Hint h);
+
     boolean updateChoices(Long questionId, List<Choice> choices);
 
     boolean update(Long id, Question q);

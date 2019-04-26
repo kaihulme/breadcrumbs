@@ -13,7 +13,9 @@ import java.util.List;
 
 
 public class QuestionDbDAO implements QuestionDAO {
+
     private DBConnection dbConnection;
+
     public QuestionDbDAO(DBConnection d){
         dbConnection = d;
     }
@@ -193,16 +195,12 @@ public class QuestionDbDAO implements QuestionDAO {
     public boolean updateHint(Hint h) {
         try{
             String updateUser = "UPDATE Hint " +
-                    "SET hintText = ?," +
-                    "x_coord = ?," +
-                    "y_coord = ? " +
+                    "SET hintText = ? " +
                     "WHERE id = ?;";
             Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(updateUser);
             stmt.setString(1,h.getHintText());
-            stmt.setInt(2,h.getX_coord());
-            stmt.setInt(3,h.getY_coord());
-            stmt.setLong(4,h.getId());
+            stmt.setLong(2,h.getId());
             stmt.executeUpdate();
             return true;
         } catch (SQLException | IOException e) {
@@ -211,6 +209,24 @@ public class QuestionDbDAO implements QuestionDAO {
         }
     }
 
+    @Override
+    public boolean updateHintLocation(Hint h) {
+        try{
+            String updateUser = "UPDATE Hint " +
+                    "SET x_coord = ?, y_coord = ? " +
+                    "WHERE id = ?;";
+            Connection con = dbConnection.getConnection();
+            PreparedStatement stmt = con.prepareStatement(updateUser);
+            stmt.setInt(1,h.getX_coord());
+            stmt.setInt(2,h.getY_coord());
+            stmt.setLong(3,h.getId());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     /////////////// UPDATE /////////////////////
 

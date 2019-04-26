@@ -17,6 +17,9 @@ public class Map {
     @Id @GeneratedValue
     private Long id;
 
+    @Column(name="questionId")
+    private Long questionId;
+
     @Column(name="name")
     private String name;
 
@@ -25,8 +28,8 @@ public class Map {
 
     public Map() {}
 
-    public Map(Long id, String name, Blob picture) {
-        this.id = id;
+    public Map(Long questionId, String name, Blob picture) {
+        this.questionId = questionId;
         this.name = name;
         this.picture = picture;
     }
