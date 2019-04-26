@@ -29,8 +29,8 @@ public class DBConnection{
         Connection con = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection(dbURL,username,password);
-            con = DriverManager.getConnection("jdbc:mysql://@129.213.29.31:3306/breadcrumbsData","root","Breadcrumbs1!");
+            con = DriverManager.getConnection(dbURL,username,password);
+//            con = DriverManager.getConnection("jdbc:mysql://@129.213.29.31:3306/breadcrumbsData","root","Breadcrumbs1!");
         }catch(ClassNotFoundException e){
             System.out.println("driver wasn't found");
         }catch (SQLException e){

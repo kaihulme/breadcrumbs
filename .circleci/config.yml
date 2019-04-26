@@ -6,6 +6,9 @@ jobs:
             - image: circleci/openjdk:8u181-jdk
         steps:
             - checkout
+            - run:
+                name: Create Properties File
+                command: cat > $HOME/.secret.properties && echo $DB_URL >> $HOME/.secret.properties &&  echo $DB_USER >> $HOME/.secret.properties && echo $DB_PASS >> $HOME/.secret.properties
             - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
                 key: breadcrumbs-web-{{ checksum "web/pom.xml" }}
             - run: cd web && mvn dependency:go-offline # gets the project dependencies
