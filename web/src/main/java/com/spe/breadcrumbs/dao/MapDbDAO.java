@@ -162,7 +162,6 @@ public class MapDbDAO implements MapDAO {
             stmt.setLong(1, question_id);
             stmt.executeUpdate();
             stmt.close();
-            con.close();
             return true;
         } catch (SQLException | IOException e) {
             e.printStackTrace();

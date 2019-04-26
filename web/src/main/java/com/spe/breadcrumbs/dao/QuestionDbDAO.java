@@ -5,7 +5,6 @@ import com.spe.breadcrumbs.entity.Hint;
 import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.web.DBConnection;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class QuestionDbDAO implements QuestionDAO {
     }
 
     @Override
-    public Question findById(Long id) {
+    public Question getQuestion(Long id) {
         Question q = null;
         try{
             Connection con = dbConnection.getConnection();
@@ -61,7 +60,6 @@ public class QuestionDbDAO implements QuestionDAO {
                 //move it to the first row
                 q = new Question(rs.getLong("id"),rs.getString("question"),
                         rs.getInt("x_coord"), rs.getInt("y_coord"));
-                con.close();
                 List<Choice> choices = getChoices(q.getId());
                 q.setChoices(choices);
             }
@@ -69,6 +67,34 @@ public class QuestionDbDAO implements QuestionDAO {
             e.printStackTrace();
         }
         return q;
+    }
+
+    @Override
+    public boolean deleteQuestion(Long id) {
+        try{
+            Connection con = dbConnection.getConnection();
+            //first delete hints
+            List<Hint> hints = getHints(id);
+            for(Hint h: hints){
+                assert(deleteHint(h.getId()));
+            }
+            //delete choices afterwards
+            List<Choice> choices = getChoices(id);
+            for(Choice c: choices){
+                assert(deleteChoice(c.getChoiceId()));
+            }
+            //delete the maps associated with question
+            MapDAO mapDAO = new MapDbDAO(dbConnection);
+            assert(mapDAO.deleteMapsForQuestion(id));
+            String deleteQuestion = "DELETE FROM Question WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(deleteQuestion);
+            stmt.setLong(1,id);
+            stmt.executeUpdate();
+            return true;
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -82,7 +108,7 @@ public class QuestionDbDAO implements QuestionDAO {
             stmt.setLong(1,userId);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                Question q = findById(rs.getLong("question"));
+                Question q = getQuestion(rs.getLong("question"));
                 questionsAnswered.add(q);
             }
         } catch (SQLException | IOException e) {
@@ -183,7 +209,6 @@ public class QuestionDbDAO implements QuestionDAO {
             PreparedStatement stmt = con.prepareStatement(deleteHint);
             stmt.setLong(1,hint_id);
             stmt.executeUpdate();
-            con.close();
             return true;
         }catch (SQLException | IOException e){
             e.printStackTrace();
@@ -273,6 +298,21 @@ public class QuestionDbDAO implements QuestionDAO {
             updateChoices(id,q.getChoices());
             return true;
         } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteChoice(Long choiceId) {
+        try{
+            Connection con = dbConnection.getConnection();
+            String deleteQuestion = "DELETE FROM Choice WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(deleteQuestion);
+            stmt.setLong(1,choiceId);
+            stmt.executeUpdate();
+            return true;
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
             return false;
         }

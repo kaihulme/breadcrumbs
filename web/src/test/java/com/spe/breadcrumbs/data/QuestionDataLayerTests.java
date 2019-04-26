@@ -12,8 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -60,6 +59,14 @@ public class QuestionDataLayerTests {
         assertEquals(h.getHintText(),"made of calcium");
         h = hints.get(1);
         assertEquals(h.getHintText(),"have a laminar appearance");
+    }
+
+    @Test
+    public void testDeleteQuestion(){
+        Question q = questionDAO.getQuestion(1L);
+        assertNotNull(q);
+        assert(questionDAO.deleteQuestion(1L));
+        assertNull(questionDAO.getQuestion(1L));
     }
 
 }

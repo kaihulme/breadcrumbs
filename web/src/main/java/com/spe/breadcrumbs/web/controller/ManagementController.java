@@ -4,28 +4,21 @@ import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.*;
 import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.web.DBConnection;
-import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.imageio.ImageIO;
-import javax.validation.Valid;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -130,7 +123,7 @@ public class ManagementController {
     @RequestMapping(method = RequestMethod.GET, value= "/breadcrumb/{id}")
     public String updateBreadcrumb(@PathVariable Long id, Model m) {
 
-        Question questions = questionDAO.findById(id);
+        Question questions = questionDAO.getQuestion(id);
         m.addAttribute("question", questions);
 
         List<Choice> choices = questionDAO.getChoices(id);
@@ -390,7 +383,7 @@ public class ManagementController {
     @PostMapping("/breadcrumb/updateHintLocation/{id}")
     public RedirectView updateHintLocation(@ModelAttribute Hint hint, @PathVariable Long id, Model m) {
         questionDAO.updateHintLocation(hint);
-        Question question = questionDAO.findById(id);
+        Question question = questionDAO.getQuestion(id);
         updateQuestionMap(question);
         return new RedirectView("/management/breadcrumb/" + id);
     }
@@ -399,7 +392,7 @@ public class ManagementController {
     public RedirectView addHint(@ModelAttribute Hint hint, @PathVariable Long question_id) {
 
         questionDAO.addHint(hint, question_id);
-        Question question = questionDAO.findById(question_id);
+        Question question = questionDAO.getQuestion(question_id);
         mapDAO.deleteMapsForQuestion(question_id);
         addQuestionMap(question);
 
@@ -410,7 +403,7 @@ public class ManagementController {
     public RedirectView addHint(@PathVariable Long question_id, @PathVariable Long hint_id) {
 
         questionDAO.deleteHint(hint_id);
-        Question question = questionDAO.findById(question_id);
+        Question question = questionDAO.getQuestion(question_id);
         mapDAO.deleteMapsForQuestion(question_id);
         addQuestionMap(question);
 

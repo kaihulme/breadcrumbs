@@ -89,7 +89,9 @@ CREATE TABLE Map(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(40),
     picture BLOB,
-    PRIMARY KEY(id)
+    questionId INT,
+    PRIMARY KEY(id),
+    FOREIGN KEY (questionId) REFERENCES Question(id)
 );
 CREATE TABLE Meeting(
     userId INT NOT NULL,

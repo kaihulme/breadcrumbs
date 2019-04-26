@@ -32,7 +32,7 @@ public class QuestionAPI {
 
     @RequestMapping(method = RequestMethod.GET,value = "{id}")
     public ResponseEntity getQuestion(@PathVariable Long id) {
-        Question q = questionDAO.findById(id);
+        Question q = questionDAO.getQuestion(id);
         if(q != null){
             return new ResponseEntity<>(q,HttpStatus.OK);
         }else{

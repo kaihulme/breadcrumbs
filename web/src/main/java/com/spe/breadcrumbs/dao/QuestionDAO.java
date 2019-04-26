@@ -15,7 +15,9 @@ public interface QuestionDAO {
     List<Question> find(String t);
 
     //finds a question by its id. return null if not found
-    Question findById(Long id);
+    Question getQuestion(Long id);
+
+    boolean deleteQuestion(Long id);
 
     //get questions that user with id userId has answered
     List<Question> getQuestionsAnswered(Long userId);
@@ -26,6 +28,7 @@ public interface QuestionDAO {
     List<Choice> getChoices(Long questionId);
 
     List<Hint> getHints(Long questionId);
+
 
     boolean addHint(Hint h, Long question_id);
 
@@ -39,5 +42,6 @@ public interface QuestionDAO {
 
     boolean update(Long id, Question q);
 
+    boolean deleteChoice(Long choiceId);
     boolean updateLocation(Long id, Question q);
 }

@@ -1,8 +1,10 @@
 package com.spe.breadcrumbs.web;
 
-import com.spe.breadcrumbs.dao.QuestionDAO;
-import com.spe.breadcrumbs.dao.QuestionDbDAO;
+import com.spe.breadcrumbs.dao.*;
+import com.spe.breadcrumbs.entity.Expert;
+import com.spe.breadcrumbs.entity.Meeting;
 import com.spe.breadcrumbs.entity.Question;
+import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.controller.MainController;
 import net.bytebuddy.asm.Advice;
 import org.junit.Before;
@@ -24,7 +26,7 @@ import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+//TODO provide a mock db for these tests
 //class for making sure whether web mappings are working
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -34,8 +36,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class WebTests {
     @Autowired
     private MockMvc mockMvc;
+    private DBConnection dbConnection = new DBConnection();
+    private QuestionDAO questionDAO = new QuestionDbDAO(dbConnection);
+    private UserDAO userDAO = new UserDbDAO(dbConnection);
+    private ExpertDAO expertDAO = new ExpertDbDAO(dbConnection);
+    private MeetingDAO meetingDAO = new MeetingDbDAO(dbConnection);
 
-    private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
 
     @Autowired
     private MainController mainController;
@@ -86,10 +92,37 @@ public class WebTests {
     @WithUserDetails("jackSmith@hotmail.co.uk")
     public void testQuestionPagesAreLoading() throws Exception{
         List<Question> questions = questionDAO.getAllQuestions();
-        for(Question q: questions){
-            this.mockMvc.perform(get("/management/breadcrumb/" + q.getId()))
-                    .andExpect(status().isOk());
-        }
+        Question q = questions.get(0);
+        this.mockMvc.perform(get("/management/breadcrumb/" + q.getId()))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    @WithUserDetails("jackSmith@hotmail.co.uk")
+    public void testUserPagesAreLoading() throws Exception{
+        List<User> users = userDAO.getAllUsers();
+        User u = users.get(0);
+        this.mockMvc.perform(get("/management/user/" + u.getId()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithUserDetails("jackSmith@hotmail.co.uk")
+    public void testExpertPagesAreLoading() throws Exception{
+        List<Expert> experts = expertDAO.getAllExperts();
+        Expert e = experts.get(0);
+        this.mockMvc.perform(get("/management/expert/" + e.getId()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithUserDetails("jackSmith@hotmail.co.uk")
+    public void testMeetingPagesAreLoading() throws Exception{
+        List<Meeting> meetings = meetingDAO.getMeetings();
+        Meeting m = meetings.get(0);
+        this.mockMvc.perform(get("/management/meeting/" + m.getUser().getId() + "&" + m.getExpert().getId()))
+                .andExpect(status().isOk());
     }
 
 
