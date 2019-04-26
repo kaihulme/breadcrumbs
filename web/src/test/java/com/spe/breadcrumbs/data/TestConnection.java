@@ -1,4 +1,4 @@
-package com.spe.breadcrumbs.web;
+package com.spe.breadcrumbs.data;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

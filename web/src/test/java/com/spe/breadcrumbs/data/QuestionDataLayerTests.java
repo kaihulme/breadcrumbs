@@ -1,7 +1,8 @@
-package com.spe.breadcrumbs.web;
+package com.spe.breadcrumbs.data;
 
 import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.*;
+import com.spe.breadcrumbs.web.DBConnection;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Time;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

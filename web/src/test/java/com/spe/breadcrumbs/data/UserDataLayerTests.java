@@ -1,8 +1,9 @@
-package com.spe.breadcrumbs.web;
+package com.spe.breadcrumbs.data;
 
 
 import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.User;
+import com.spe.breadcrumbs.web.DBConnection;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,6 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 
 public class UserDataLayerTests {
-	//TODO add QuestionDataTests
 
 	@Mock
 	private DBConnection dbConnection;

@@ -1,9 +1,10 @@
-package com.spe.breadcrumbs.web;
+package com.spe.breadcrumbs.data;
 
 import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.Expert;
 import com.spe.breadcrumbs.entity.Meeting;
 import com.spe.breadcrumbs.entity.User;
+import com.spe.breadcrumbs.web.DBConnection;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
