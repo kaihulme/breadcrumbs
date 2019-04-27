@@ -217,7 +217,7 @@ public class QuestionDbDAO implements QuestionDAO {
     }
 
     @Override
-    public boolean updateHint(Hint h) {
+    public boolean updateHint(Hint h, Long id) {
         try{
             String updateUser = "UPDATE Hint " +
                     "SET hintText = ? " +
@@ -225,7 +225,7 @@ public class QuestionDbDAO implements QuestionDAO {
             Connection con = dbConnection.getConnection();
             PreparedStatement stmt = con.prepareStatement(updateUser);
             stmt.setString(1,h.getHintText());
-            stmt.setLong(2,h.getId());
+            stmt.setLong(2,id);
             stmt.executeUpdate();
             return true;
         } catch (SQLException | IOException e) {
@@ -235,7 +235,7 @@ public class QuestionDbDAO implements QuestionDAO {
     }
 
     @Override
-    public boolean updateHintLocation(Hint h) {
+    public boolean updateHintLocation(Hint h, Long id) {
         try{
             String updateUser = "UPDATE Hint " +
                     "SET x_coord = ?, y_coord = ? " +
@@ -244,7 +244,7 @@ public class QuestionDbDAO implements QuestionDAO {
             PreparedStatement stmt = con.prepareStatement(updateUser);
             stmt.setInt(1,h.getX_coord());
             stmt.setInt(2,h.getY_coord());
-            stmt.setLong(3,h.getId());
+            stmt.setLong(3,id);
             stmt.executeUpdate();
             return true;
         } catch (SQLException | IOException e) {

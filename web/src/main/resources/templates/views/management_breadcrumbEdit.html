@@ -98,10 +98,11 @@
 
 			<hr class="style1">
 
-			<div class="row justify-content-md-center">
+			<div>
 
-				<div class="col-6">
-					<div class="container">
+				<div class="row justify-content-md-center fadeInUp">
+
+					<div class="container col-6">
 
 						<div class="row" id="title">
 							<h2>Question</h2>
@@ -147,10 +148,8 @@
 						</form>
 
 					</div>
-				</div>
 
-				<div class="col-4">
-					<div class="container fadeInUp">
+					<div class="container col-4">
 
 						<div class="row" id="title">
 							<h2>Map Location</h2>
@@ -162,31 +161,26 @@
 							<img th:src="@{'/image/venueMap_q' + ${question.id}}" id="editMap">
 						</div>
 
+						<div class="row justify-content-md-center">
+							<span>(</span>
+							<span id="x_coordSliderVal" th:text="@{${question.x_coord}}"></span>
+							<span>, </span>
+							<span id="y_coordSliderVal" th:text="@{${question.y_coord}}"></span>
+							<span>)</span>
+						</div>
+
+						<br>
+
 						<form action="#" th:action="@{'updateBreadcrumbLocation/'+${question.id}}" th:object="${question}" method="post">
 
-							<div class="form-group row">
-								<label for="x_coord" class="col-2 col-form-label">X</label>
-								<div class="col-10">
+							<div class="form-group row justify-content-md-center">
 									<input id="x_coord" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
-									<span id="x_coordCurrentSliderValLabel"><span id="x_coordSliderVal"></span></span>
-
-									<!--									<input id="x_coord" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-max=1000 data-slider-step="1" data-slider-value="500" th:attr="data-slider-max=#{max[0]}">-->
-									<!--									<span id="x_coordCurrentSliderValLabel"><span id="x_coordSliderVal"> </span></span>-->
-
-									<!--									<input type="range" class="range-field" min="0" max="2000" id="x_coord">-->
-									<!--									<input type="text" class="form-control" id="x_coord" th:field="*{x_coord}" /></p>-->
-								</div>
 							</div>
-							<div class="form-group row">
-								<label for="y_coord" class="col-2 col-form-label">Y</label>
-								<div class="col-10">
+							<div class="form-group row justify-content-md-center">
 									<input id="y_coord" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
-									<span id="y_coordCurrentSliderValLabel"><span id="y_coordSliderVal"> </span></span>
-
-									<!--&lt;!&ndash;									<input type="range" class="range-field" min="0" max="2000" id="y_coord">&ndash;&gt;-->
-									<!--&lt;!&ndash;									<input type="text" class="form-control" id="y_coord" th:field="*{y_coord}" /></p>&ndash;&gt;-->
-								</div>
 							</div>
+
+							<br>
 
 							<div class="form-group row justify-content-md-center">
 								<div class="col-4">
@@ -197,15 +191,18 @@
 						</form>
 
 					</div>
+
 				</div>
 
 			</div>
+
+			<hr class="style1 fadeInUp">
 
 			<div th:switch="${#lists.size(hints)}">
 
 				<div th:case="'0'">
 
-					<div class="row justify-content-md-center">
+					<div class="row justify-content-md-center fadeInUp">
 						<div class="col-4">
 							<div class="container">
 
@@ -229,29 +226,38 @@
 
 				<div th:case="'1'">
 
-					<div class="row justify-content-md-center">
-						<div th:each="hint, iStat : ${hints}">
+					<div th:each="hint, iStat : ${hints}">
+						<div class="row justify-content-md-center fadeInUp">
 
 							<div class="container col-4">
 
 								<div class="row" id="title">
-									<h2 th:text="'Hint '+${iStat.count}">Hint</h2>
+<!--									<h2 th:text="'Hint '+${iStat.count}">Hint</h2>-->
+									<h2>Hint Content</h2>
 								</div>
+
+								<div class="jumbotron">
+									<h3 th:text="@{'Hint '+${iStat.count}}"></h3>
+									<hr class="style1">
+									<p th:text="@{${hint.hintText}}"></p>
+								</div>
+
+								<hr class="style1">
 
 								<div class="row">
 									<div class="col-10">
-										<p>Edit hint text, location and image.</p>
+										<p>Edit hint text.</p>
 									</div>
-									<div class="col-2">
-										<form action="#" th:action="@{'/management/deleteHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
-											<button type="submit" value="Submit" class="btn btn-danger btn-sm">
-												<span class="oi oi-delete" title="align-left" aria-hidden="true"></span>
-											</button>
-										</form>
-									</div>
+<!--									<div class="col-2">-->
+<!--										<form action="#" th:action="@{'/management/deleteHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">-->
+<!--											<button type="submit" value="Submit" class="btn btn-danger btn-sm">-->
+<!--												<span class="oi oi-delete" title="align-left" aria-hidden="true"></span>-->
+<!--											</button>-->
+<!--										</form>-->
+<!--									</div>-->
 								</div>
 
-								<form action="#" th:action="@{'/management/updateHint/'+${question.id}}" th:object="${hint}" method="post">
+								<form action="#" th:action="@{'/management/updateHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
 
 									<div class="form-group row">
 										<label for="hintText" class="col-4 col-form-label">Hint text</label>
@@ -262,7 +268,10 @@
 
 									<div class="form-group row justify-content-md-center">
 										<div class="col-4">
-											<input type="submit" class="form-control" value="Submit" />
+											<button type="submit" class="form-control" name="action" value="submit">update</button>
+										</div>
+										<div class="col-4">
+											<button type="submit" class="form-control" name="action" value="delete">delete</button>
 										</div>
 									</div>
 
@@ -278,21 +287,30 @@
 
 								<p>Change location of hint on map.</p>
 
-								<form action="#" th:action="@{'/management/updateHintLocation/'+${question.id}}" th:object="${hint}" method="post">
+								<div class="row justify-content-md-center">
+									<img th:src="@{'/image/venueMap_q' + ${question.id}+ '_c10'}" id="editMap">
+								</div>
 
-									<div class="form-group row">
-										<label for="x_coord" class="col-4 col-form-label">X</label>
-										<div class="col-8">
-											<input class="form-control" id="x_coord" type="text" th:field="*{x_coord}"/>
-										</div>
+								<div class="row justify-content-md-center">
+									<span>(</span>
+									<span id="hint_x_coordSliderVal1" th:text="@{${hint.x_coord}}"></span>
+									<span>, </span>
+									<span id="hint_y_coordSliderVal1" th:text="@{${hint.y_coord}}"></span>
+									<span>)</span>
+								</div>
+
+								<br>
+
+								<form action="#" th:action="@{'/management/updateHintLocation/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
+
+									<div class="form-group row justify-content-md-center">
+										<input id="hint_x_coord1" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
+									</div>
+									<div class="form-group row justify-content-md-center">
+										<input id="hint_y_coord1" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
 									</div>
 
-									<div class="form-group row">
-										<label for="y_coord" class="col-4 col-form-label">Y</label>
-										<div class="col-8">
-											<input class="form-control" id="y_coord" type="text" th:field="*{y_coord}"/>
-										</div>
-									</div>
+									<br>
 
 									<div class="form-group row justify-content-md-center">
 										<div class="col-4">
@@ -305,10 +323,9 @@
 							</div>
 
 						</div>
-
 					</div>
 
-					<div class="row justify-content-md-center">
+					<div class="row justify-content-md-center fadeInUp">
 
 						<div class="col-4">
 							<div class="container">
@@ -334,28 +351,38 @@
 
 				<div th:case="*">
 
-					<div class="row justify-content-md-center">
-						<div th:each="hint, iStat : ${hints}" class="col-4">
-							<div class="container">
+					<div th:each="hint, iStat : ${hints}">
+						<div class="row justify-content-md-center fadeInUp">
+
+							<div class="container col-4">
 
 								<div class="row" id="title">
-									<h2 th:text="'Hint '+${iStat.count}">Hint</h2>
+									<!--									<h2 th:text="'Hint '+${iStat.count}">Hint</h2>-->
+									<h2>Hint Content</h2>
 								</div>
+
+								<div class="jumbotron">
+									<h3 th:text="@{'Hint '+${iStat.count}}"></h3>
+									<hr class="style1">
+									<p th:text="@{${hint.hintText}}"></p>
+								</div>
+
+								<hr class="style1">
 
 								<div class="row">
 									<div class="col-10">
-										<p>Edit hint text, location and image.</p>
+										<p>Edit hint text.</p>
 									</div>
-									<div class="col-2">
-										<form action="#" th:action="@{'/management/deleteHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
-											<button type="submit" value="Submit" class="btn btn-danger btn-sm">
-												<span class="oi oi-delete" title="align-left" aria-hidden="true"></span>
-											</button>
-										</form>
-									</div>
+									<!--									<div class="col-2">-->
+									<!--										<form action="#" th:action="@{'/management/deleteHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">-->
+									<!--											<button type="submit" value="Submit" class="btn btn-danger btn-sm">-->
+									<!--												<span class="oi oi-delete" title="align-left" aria-hidden="true"></span>-->
+									<!--											</button>-->
+									<!--										</form>-->
+									<!--									</div>-->
 								</div>
 
-								<form action="#" th:action="@{'/management/updateHint/'+${question.id}}" th:object="${hint}" method="post">
+								<form action="#" th:action="@{'/management/updateHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
 
 									<div class="form-group row">
 										<label for="hintText" class="col-4 col-form-label">Hint text</label>
@@ -364,19 +391,52 @@
 										</div>
 									</div>
 
-									<div class="form-group row">
-										<label for="x_coord" class="col-4 col-form-label">X</label>
-										<div class="col-8">
-											<input class="form-control" id="x_coord" type="text" th:field="*{x_coord}"/>
+									<div class="form-group row justify-content-md-center">
+										<div class="col-4">
+											<button type="submit" class="form-control" name="action" value="submit">update</button>
+										</div>
+										<div class="col-4">
+											<button type="submit" class="form-control" name="action" value="delete">delete</button>
 										</div>
 									</div>
 
-									<div class="form-group row">
-										<label for="y_coord" class="col-4 col-form-label">Y</label>
-										<div class="col-8">
-											<input class="form-control" id="y_coord" type="text" th:field="*{y_coord}"/>
-										</div>
+								</form>
+
+							</div>
+
+							<div class="container col-4">
+
+								<div class="row" id="title">
+									<h2>Map Location</h2>
+								</div>
+
+								<p>Change location of hint on map.</p>
+
+								<div class="row justify-content-md-center">
+									<img th:if="${iStat.count == 1 }" th:src="@{'/image/venueMap_q' + ${question.id}+ '_c10'}" id="editMap">
+									<img th:if="${iStat.count == 2 }" th:src="@{'/image/venueMap_q' + ${question.id}+ '_c01'}" id="editMap">
+								</div>
+
+								<div class="row justify-content-md-center">
+									<span>(</span>
+									<span th:id="hint_x_coordSliderVal+${iStat.count}" th:text="@{${hint.x_coord}}"></span>
+									<span>, </span>
+									<span th:id="hint_y_coordSliderVal+${iStat.count}" th:text="@{${hint.y_coord}}"></span>
+									<span>)</span>
+								</div>
+
+								<br>
+
+								<form action="#" th:action="@{'/management/updateHintLocation/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
+
+									<div class="form-group row justify-content-md-center">
+										<input th:id="'hint_x_coord'+${iStat.count}" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
 									</div>
+									<div class="form-group row justify-content-md-center">
+										<input th:id="'hint_y_coord'+${iStat.count}" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
+									</div>
+
+									<br>
 
 									<div class="form-group row justify-content-md-center">
 										<div class="col-4">
@@ -386,34 +446,16 @@
 
 								</form>
 
-<!--								<table class="table">-->
-<!--									<tbody>-->
-<!--									<tr>-->
-<!--										<td>Hint ID</td>-->
-<!--										<td th:text = "${hint.id}"></td>-->
-<!--									</tr>-->
-<!--									<tr>-->
-<!--										<td>Hint Text</td>-->
-<!--										<td th:text = "${hint.hintText}"></td>-->
-<!--									</tr>-->
-<!--									<tr>-->
-<!--										<td>x-coord</td>-->
-<!--										<td th:text = "${hint.x_coord}"></td>-->
-<!--									</tr>-->
-<!--									<tr>-->
-<!--										<td>y-coord</td>-->
-<!--										<td th:text = "${hint.y_coord}"></td>-->
-<!--									</tr>-->
-<!--									</tbody>-->
-<!--								</table>-->
-
 							</div>
+
 						</div>
 					</div>
 
 				</div>
 
 			</div>
+
+			<hr class="style1">
 
 			<!-- /Page Content -->
 
@@ -444,20 +486,6 @@
 							<label for="hintText" class="col-4 col-form-label">Hint text</label>
 							<div class="col-8">
 								<input class="form-control" id="hintText" th:field="*{hintText}"/>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="x_coord" class="col-4 col-form-label">X</label>
-							<div class="col-8">
-								<input class="form-control" id="x_coord" th:field="*{x_coord}"/>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="y_coord" class="col-4 col-form-label">Y</label>
-							<div class="col-8">
-								<input class="form-control" id="y_coord" th:field="*{y_coord}"/>
 							</div>
 						</div>
 

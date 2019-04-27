@@ -20,6 +20,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;
+import java.util.Random;
 
 @CrossOrigin
 @Controller
@@ -150,14 +151,6 @@ public class ManagementController {
         return new RedirectView("/management/breadcrumb/" + id);
     }
 
-    ////////////////// HINTS //////////////////////////////
-
-    @PostMapping("/updateHint/{question_id}")
-    public RedirectView updateHint(@ModelAttribute Hint hint, @PathVariable Long question_id) {
-        questionDAO.updateHint(hint);
-        return new RedirectView("/management/breadcrumb/"+question_id);
-    }
-
     ////////////////// IMAGE HANDLING //////////////////////////////
 
     private BufferedImage multipartToImage(MultipartFile file) {
@@ -238,7 +231,19 @@ public class ManagementController {
             BufferedImage bi_hintIcon = ImageIO.read(hintIcon.getInputStream());
 
             Graphics g = bi_map.getGraphics();
-            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
+
+//            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
+
+            Random rand = new Random();
+
+            int d = 400;
+            int circle_x_coord = question.getX_coord() - (d/2) + rand.nextInt(d/2) - (d/4);
+            int circle_y_coord = question.getY_coord() - (d/2) + rand.nextInt(d/2) - (d/4);
+
+            Color colour = new Color(64, 128, 188, 127);
+            g.setColor(colour);
+            g.fillOval(circle_x_coord, circle_y_coord, d, d);
+
             for (Hint hint : hints) {
                 g.drawImage(bi_hintIcon, hint.getX_coord(), hint.getY_coord(), 50, 50, null);
             }
@@ -261,7 +266,18 @@ public class ManagementController {
             BufferedImage bi_hintIcon = ImageIO.read(hintIcon.getInputStream());
 
             Graphics g = bi_map.getGraphics();
-            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
+//            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
+
+            Random rand = new Random();
+
+            int d = 200;
+            int circle_x_coord = question.getX_coord() - (d/2) + rand.nextInt(d/2) - (d/4);
+            int circle_y_coord = question.getY_coord() - (d/2) + rand.nextInt(d/2) - (d/4);
+
+            Color colour = new Color(64, 128, 188, 127);
+            g.setColor(colour);
+            g.fillOval(circle_x_coord, circle_y_coord, d, d);
+
             g.drawImage(bi_hintIcon, hint.getX_coord(), hint.getY_coord(), 50, 50, null);
 
             return imageToBlob(bi_map);
@@ -380,12 +396,12 @@ public class ManagementController {
         return new RedirectView("/management/breadcrumb/" + id);
     }
 
-    @PostMapping("/breadcrumb/updateHintLocation/{id}")
-    public RedirectView updateHintLocation(@ModelAttribute Hint hint, @PathVariable Long id, Model m) {
-        questionDAO.updateHintLocation(hint);
-        Question question = questionDAO.getQuestion(id);
+    @PostMapping("//updateHintLocation/{question_id}&{hint_id}")
+    public RedirectView updateHintLocation(@ModelAttribute Hint hint, @PathVariable Long question_id, @PathVariable Long hint_id, Model m) {
+        questionDAO.updateHintLocation(hint, hint_id);
+        Question question = questionDAO.getQuestion(question_id);
         updateQuestionMap(question);
-        return new RedirectView("/management/breadcrumb/" + id);
+        return new RedirectView("/management/breadcrumb/" + question_id);
     }
 
     @PostMapping("/addHint/{question_id}")
@@ -399,13 +415,23 @@ public class ManagementController {
         return new RedirectView("/management/breadcrumb/"+question_id);
     }
 
-    @PostMapping("/deleteHint/{question_id}&{hint_id}")
-    public RedirectView addHint(@PathVariable Long question_id, @PathVariable Long hint_id) {
+    @PostMapping(value = "/updateHint/{question_id}&{hint_id}")
+    public RedirectView updateHint(@ModelAttribute Hint hint, @PathVariable Long question_id, @PathVariable Long hint_id, @RequestParam(value="action", required=true) String action) {
 
-        questionDAO.deleteHint(hint_id);
-        Question question = questionDAO.getQuestion(question_id);
-        mapDAO.deleteMapsForQuestion(question_id);
-        addQuestionMap(question);
+        switch (action) {
+
+            case "submit":
+                questionDAO.updateHint(hint, hint_id);
+                break;
+
+            case "delete":
+                questionDAO.deleteHint(hint_id);
+                Question question = questionDAO.getQuestion(question_id);
+                mapDAO.deleteMapsForQuestion(question_id);
+                addQuestionMap(question);
+                break;
+
+        }
 
         return new RedirectView("/management/breadcrumb/"+question_id);
     }

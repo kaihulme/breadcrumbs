@@ -11,7 +11,7 @@ $('#loginBtn').on('click', function () {
 // Jansy-Bootstrap add link to whole table row
 $('tbody.rowlink').rowlink()
 
-// slider counter
+// question slider counter
 $("#x_coord").slider();
 $("#x_coord").on("slide", function(slideEvt) {
 	$("#x_coordSliderVal").text(slideEvt.value);
@@ -19,6 +19,26 @@ $("#x_coord").on("slide", function(slideEvt) {
 $("#y_coord").slider();
 $("#y_coord").on("slide", function(slideEvt) {
 	$("#y_coordSliderVal").text(slideEvt.value);
+});
+
+// hint 1 slider counter
+$("#hint_x_coord1").slider();
+$("#hint_x_coord1").on("slide", function(slideEvt) {
+	$("#hint_x_coordSliderVal1").text(slideEvt.value);
+});
+$("#hint_y_coord1").slider();
+$("#hint_y_coord1").on("slide", function(slideEvt) {
+	$("#hint_y_coordSliderVal1").text(slideEvt.value);
+});
+
+// hint 2 slider counter
+$("#hint_x_coord2").slider();
+$("#hint_x_coord2").on("slide", function(slideEvt) {
+	$("#hint_x_coordSliderVal2").text(slideEvt.value);
+});
+$("#hint_y_coord2").slider();
+$("#hint_y_coord2").on("slide", function(slideEvt) {
+	$("#hint_y_coordSliderVal2").text(slideEvt.value);
 });
 
 // search table and filter results
