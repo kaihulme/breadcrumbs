@@ -413,7 +413,8 @@
 								<p>Change location of hint on map.</p>
 
 								<div class="row justify-content-md-center">
-									<img th:src="@{'/image/venueMap_q' + ${question.id}+ '_c10'}" id="editMap">
+									<img th:if="${iStat.count == 1 }" th:src="@{'/image/venueMap_q' + ${question.id}+ '_c10'}" id="editMap">
+									<img th:if="${iStat.count == 2 }" th:src="@{'/image/venueMap_q' + ${question.id}+ '_c01'}" id="editMap">
 								</div>
 
 								<div class="row justify-content-md-center">
@@ -559,8 +560,6 @@
 		<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js}"></script>
 		<!-- SliderJS JS CDN -->
 		<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.js}"></script>
-		<!-- EqualHeights JS CDN -->
-<!--		<script language="javascript" type="text/javascript" src="jquery.equalheights.js"></script>-->
 
 		<!-- Custom JS -->
 		<script type="text/javascript" th:src="@{/js/index.js}"></script>

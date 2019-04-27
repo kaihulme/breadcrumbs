@@ -41,22 +41,6 @@ $("#hint_y_coord2").on("slide", function(slideEvt) {
 	$("#hint_y_coordSliderVal2").text(slideEvt.value);
 });
 
-//function equalHeight(group) {
-//	var tallest = 0;
-//	group.each(function() {
-//		var thisHeight = $(this).height();
-//		if(thisHeight > tallest) {
-//			tallest = thisHeight;
-//		}
-//	});
-//	group.height(tallest);
-//}
-//
-//$(document).ready(function() {
-
-//	equalHeight($(".col-question"));
-//});
-
 // search table and filter results
 function searchUserTable(event) {
     var filter = event.target.value.toUpperCase();
