@@ -230,7 +230,17 @@ public class ManagementController {
             BufferedImage bi_hintIcon = ImageIO.read(hintIcon.getInputStream());
 
             Graphics g = bi_map.getGraphics();
-            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
+
+//            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
+
+            int d = 400;
+            int circle_x_coord = question.getX_coord() - (d/2);
+            int circle_y_coord = question.getY_coord() - (d/2);
+
+            Color colour = new Color(64, 128, 188, 127);
+            g.setColor(colour);
+            g.fillOval(circle_x_coord, circle_y_coord, d, d);
+
             for (Hint hint : hints) {
                 g.drawImage(bi_hintIcon, hint.getX_coord(), hint.getY_coord(), 50, 50, null);
             }
@@ -253,7 +263,16 @@ public class ManagementController {
             BufferedImage bi_hintIcon = ImageIO.read(hintIcon.getInputStream());
 
             Graphics g = bi_map.getGraphics();
-            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
+//            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
+
+            int d = 200;
+            int circle_x_coord = question.getX_coord() - (d/2);
+            int circle_y_coord = question.getY_coord() - (d/2);
+
+            Color colour = new Color(64, 128, 188, 127);
+            g.setColor(colour);
+            g.fillOval(circle_x_coord, circle_y_coord, d, d);
+
             g.drawImage(bi_hintIcon, hint.getX_coord(), hint.getY_coord(), 50, 50, null);
 
             return imageToBlob(bi_map);
