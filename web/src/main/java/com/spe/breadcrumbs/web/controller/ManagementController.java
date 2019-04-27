@@ -20,6 +20,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;
+import java.util.Random;
 
 @CrossOrigin
 @Controller
@@ -233,9 +234,11 @@ public class ManagementController {
 
 //            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
 
+            Random rand = new Random();
+
             int d = 400;
-            int circle_x_coord = question.getX_coord() - (d/2);
-            int circle_y_coord = question.getY_coord() - (d/2);
+            int circle_x_coord = question.getX_coord() - (d/2) + rand.nextInt(d/2) - (d/4);
+            int circle_y_coord = question.getY_coord() - (d/2) + rand.nextInt(d/2) - (d/4);
 
             Color colour = new Color(64, 128, 188, 127);
             g.setColor(colour);
@@ -265,9 +268,11 @@ public class ManagementController {
             Graphics g = bi_map.getGraphics();
 //            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
 
+            Random rand = new Random();
+
             int d = 200;
-            int circle_x_coord = question.getX_coord() - (d/2);
-            int circle_y_coord = question.getY_coord() - (d/2);
+            int circle_x_coord = question.getX_coord() - (d/2) + rand.nextInt(d/2) - (d/4);
+            int circle_y_coord = question.getY_coord() - (d/2) + rand.nextInt(d/2) - (d/4);
 
             Color colour = new Color(64, 128, 188, 127);
             g.setColor(colour);
