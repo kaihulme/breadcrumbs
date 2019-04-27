@@ -293,29 +293,24 @@
 
 								<div class="row justify-content-md-center">
 									<span>(</span>
-									<span id="x_coordCurrentSliderValLabel"><span id="x_coordSliderVal" th:text="@{${question.x_coord}}"></span>
-							<span>, </span>
-							<span id="y_coordCurrentSliderValLabel"><span id="y_coordSliderVal" th:text="@{${question.y_coord}}"></span>
-							<span>)</span>
+									<span id="hint_x_coordSliderVal1" th:text="@{${hint.x_coord}}"></span>
+									<span>, </span>
+									<span id="hint_y_coordSliderVal1" th:text="@{${hint.y_coord}}"></span>
+									<span>)</span>
 								</div>
 
 								<br>
 
 								<form action="#" th:action="@{'/management/updateHintLocation/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
 
-									<div class="form-group row">
-										<label for="x_coord" class="col-4 col-form-label">X</label>
-										<div class="col-8">
-											<input class="form-control" id="x_coord" type="text" th:field="*{x_coord}"/>
-										</div>
+									<div class="form-group row justify-content-md-center">
+										<input id="hint_x_coord1" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
+									</div>
+									<div class="form-group row justify-content-md-center">
+										<input id="hint_y_coord1" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
 									</div>
 
-									<div class="form-group row">
-										<label for="y_coord" class="col-4 col-form-label">Y</label>
-										<div class="col-8">
-											<input class="form-control" id="y_coord" type="text" th:field="*{y_coord}"/>
-										</div>
-									</div>
+									<br>
 
 									<div class="form-group row justify-content-md-center">
 										<div class="col-4">
@@ -421,21 +416,26 @@
 									<img th:src="@{'/image/venueMap_q' + ${question.id}+ '_c10'}" id="editMap">
 								</div>
 
+								<div class="row justify-content-md-center">
+									<span>(</span>
+									<span th:id="hint_x_coordSliderVal+${iStat.count}" th:text="@{${hint.x_coord}}"></span>
+									<span>, </span>
+									<span th:id="hint_y_coordSliderVal+${iStat.count}" th:text="@{${hint.y_coord}}"></span>
+									<span>)</span>
+								</div>
+
+								<br>
+
 								<form action="#" th:action="@{'/management/updateHintLocation/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
 
-									<div class="form-group row">
-										<label for="x_coord" class="col-4 col-form-label">X</label>
-										<div class="col-8">
-											<input class="form-control" id="x_coord" type="text" th:field="*{x_coord}"/>
-										</div>
+									<div class="form-group row justify-content-md-center">
+										<input th:id="'hint_x_coord'+${iStat.count}" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
+									</div>
+									<div class="form-group row justify-content-md-center">
+										<input th:id="'hint_y_coord'+${iStat.count}" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
 									</div>
 
-									<div class="form-group row">
-										<label for="y_coord" class="col-4 col-form-label">Y</label>
-										<div class="col-8">
-											<input class="form-control" id="y_coord" type="text" th:field="*{y_coord}"/>
-										</div>
-									</div>
+									<br>
 
 									<div class="form-group row justify-content-md-center">
 										<div class="col-4">
