@@ -150,14 +150,6 @@ public class ManagementController {
         return new RedirectView("/management/breadcrumb/" + id);
     }
 
-    ////////////////// HINTS //////////////////////////////
-
-    @PostMapping("/updateHint/{question_id}")
-    public RedirectView updateHint(@ModelAttribute Hint hint, @PathVariable Long question_id) {
-        questionDAO.updateHint(hint);
-        return new RedirectView("/management/breadcrumb/"+question_id);
-    }
-
     ////////////////// IMAGE HANDLING //////////////////////////////
 
     private BufferedImage multipartToImage(MultipartFile file) {
@@ -380,12 +372,12 @@ public class ManagementController {
         return new RedirectView("/management/breadcrumb/" + id);
     }
 
-    @PostMapping("/breadcrumb/updateHintLocation/{id}")
-    public RedirectView updateHintLocation(@ModelAttribute Hint hint, @PathVariable Long id, Model m) {
-        questionDAO.updateHintLocation(hint);
-        Question question = questionDAO.getQuestion(id);
+    @PostMapping("//updateHintLocation/{question_id}&{hint_id}")
+    public RedirectView updateHintLocation(@ModelAttribute Hint hint, @PathVariable Long question_id, @PathVariable Long hint_id, Model m) {
+        questionDAO.updateHintLocation(hint, hint_id);
+        Question question = questionDAO.getQuestion(question_id);
         updateQuestionMap(question);
-        return new RedirectView("/management/breadcrumb/" + id);
+        return new RedirectView("/management/breadcrumb/" + question_id);
     }
 
     @PostMapping("/addHint/{question_id}")
@@ -399,13 +391,23 @@ public class ManagementController {
         return new RedirectView("/management/breadcrumb/"+question_id);
     }
 
-    @PostMapping("/deleteHint/{question_id}&{hint_id}")
-    public RedirectView addHint(@PathVariable Long question_id, @PathVariable Long hint_id) {
+    @PostMapping(value = "/updateHint/{question_id}&{hint_id}")
+    public RedirectView updateHint(@ModelAttribute Hint hint, @PathVariable Long question_id, @PathVariable Long hint_id, @RequestParam(value="action", required=true) String action) {
 
-        questionDAO.deleteHint(hint_id);
-        Question question = questionDAO.getQuestion(question_id);
-        mapDAO.deleteMapsForQuestion(question_id);
-        addQuestionMap(question);
+        switch (action) {
+
+            case "submit":
+                questionDAO.updateHint(hint, hint_id);
+                break;
+
+            case "delete":
+                questionDAO.deleteHint(hint_id);
+                Question question = questionDAO.getQuestion(question_id);
+                mapDAO.deleteMapsForQuestion(question_id);
+                addQuestionMap(question);
+                break;
+
+        }
 
         return new RedirectView("/management/breadcrumb/"+question_id);
     }

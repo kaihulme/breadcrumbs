@@ -317,6 +317,15 @@ th {
     margin-bottom: 60px;
 }
 
+#hintMap {
+   height: 300px;
+   margin: 20px;
+}
+
+.jumbotron {
+    margin: 20px;
+}
+
 /************* FADE DOWN ANIMATION ****************/
 
 .fadeInDown {

@@ -21,6 +21,22 @@ $("#y_coord").on("slide", function(slideEvt) {
 	$("#y_coordSliderVal").text(slideEvt.value);
 });
 
+//function equalHeight(group) {
+//	var tallest = 0;
+//	group.each(function() {
+//		var thisHeight = $(this).height();
+//		if(thisHeight > tallest) {
+//			tallest = thisHeight;
+//		}
+//	});
+//	group.height(tallest);
+//}
+//
+//$(document).ready(function() {
+
+//	equalHeight($(".col-question"));
+//});
+
 // search table and filter results
 function searchUserTable(event) {
     var filter = event.target.value.toUpperCase();

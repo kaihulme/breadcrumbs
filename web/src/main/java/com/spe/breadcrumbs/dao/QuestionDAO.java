@@ -34,9 +34,9 @@ public interface QuestionDAO {
 
     boolean deleteHint(Long hint_id);
 
-    boolean updateHint(Hint h);
+    boolean updateHint(Hint h, Long id);
 
-    boolean updateHintLocation(Hint h);
+    boolean updateHintLocation(Hint h, Long id);
 
     boolean updateChoices(Long questionId, List<Choice> choices);
 
