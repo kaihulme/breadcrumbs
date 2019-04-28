@@ -43,6 +43,8 @@ public interface QuestionDAO {
 
     boolean updateHintImage(String pictureName, Blob picture, Long id);
 
+    boolean removeHintImage(Long hint_id);
+
     boolean updateChoices(Long questionId, List<Choice> choices);
 
     boolean update(Long id, Question q);

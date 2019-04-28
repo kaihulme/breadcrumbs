@@ -297,6 +297,27 @@ public class QuestionDbDAO implements QuestionDAO {
         }
     }
 
+    @Override
+    public boolean removeHintImage(Long hint_id) {
+        try{
+
+            String updateUser = "UPDATE Hint " +
+                    "SET pictureName = ?, picture = ? " +
+                    "WHERE id = ?;";
+            Connection con = dbConnection.getConnection();
+            PreparedStatement stmt = con.prepareStatement(updateUser);
+            stmt.setNull(1, Types.INTEGER);
+            stmt.setNull(2, Types.INTEGER);
+            stmt.setLong(3, hint_id);
+            stmt.executeUpdate();
+            return true;
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     /////////////// UPDATE /////////////////////
 
     @Override

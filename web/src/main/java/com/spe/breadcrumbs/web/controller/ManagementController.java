@@ -429,7 +429,9 @@ public class ManagementController {
     }
 
     @PostMapping(value = "/updateHint/{question_id}&{hint_id}")
-    public RedirectView updateHint(@ModelAttribute Hint hint, @PathVariable Long question_id, @PathVariable Long hint_id, @RequestParam(value="action", required=true) String action) {
+    public RedirectView updateHint(@ModelAttribute Hint hint,
+                                   @PathVariable Long question_id, @PathVariable Long hint_id,
+                                   @RequestParam(value="action", required=true) String action) {
 
         switch (action) {
 
@@ -450,16 +452,27 @@ public class ManagementController {
     }
 
     @PostMapping("/updateHintImage/{question_id}&{hint_id}&{hint_no}")
-    public RedirectView changeHintImage(@RequestParam("f") MultipartFile f, @PathVariable Long question_id, @PathVariable Long hint_id, @PathVariable int hint_no) {
+    public RedirectView changeHintImage(@RequestParam("f") MultipartFile f, @RequestParam(value="action", required=true) String action,
+                                        @PathVariable Long question_id, @PathVariable Long hint_id, @PathVariable int hint_no) {
 
-        try {
-            String pictureName = "hintImage_q" + question_id + "_h" + hint_no;
-            BufferedImage bi = multipartToImage(f);
-            Blob picture = imageToBlob(bi);
-            questionDAO.updateHintImage(pictureName, picture, hint_id);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+        switch (action) {
+
+            case "submit":
+                try {
+                    String pictureName = "hintImage_q" + question_id + "_h" + hint_no;
+                    BufferedImage bi = multipartToImage(f);
+                    Blob picture = imageToBlob(bi);
+                    questionDAO.updateHintImage(pictureName, picture, hint_id);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case "delete":
+                questionDAO.removeHintImage(hint_id);
+                break;
+
         }
 
         return new RedirectView("/management/breadcrumb/"+question_id);
