@@ -1,7 +1,28 @@
 package bristol.ac.uk.breadcrumbsspe.entity;
 
-public class Hint {
-    Question question;
-    private String hintText;
+import java.io.Serializable;
 
+public class Hint implements Serializable {
+    // TODO Add image
+    private Long questionId;
+    private String hintText;
+    private String hintImageUrl;
+
+    public Hint(Long questionId,String hintText, String hintImageUrl){
+        this.questionId = questionId;
+        this.hintText = hintText;
+        this.hintImageUrl = hintImageUrl;
+    }
+
+    public String getHintText(){
+        return hintText;
+    }
+
+    public Long getQuestionId(){
+        return questionId;
+    }
+
+    public String getHintImageUrl(){
+        return hintImageUrl;
+    }
 }

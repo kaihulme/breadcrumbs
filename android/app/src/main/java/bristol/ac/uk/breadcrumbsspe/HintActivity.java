@@ -10,15 +10,35 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import bristol.ac.uk.breadcrumbsspe.api.QRCodeHintHandler;
+import bristol.ac.uk.breadcrumbsspe.entity.Hint;
+
 
 public class HintActivity extends AppCompatActivity {
+
+    public TextView hintTextView;
+    public ImageView hintImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hint);
-        getHintData();
+        Intent intent = getIntent();
         goHome();
+        Hint hint = (Hint) intent.getSerializableExtra("HINT");
+        String url = intent.getStringExtra("URL");
+
+        hintTextView = findViewById(R.id.hint_textview);
+        hintImage = findViewById(R.id.hint_image);
+
+        if(hint != null){
+            hintTextView.setText(hint.getHintText());
+            Picasso.get().load(hint.getHintImageUrl()).into(hintImage);
+        } else {
+            QRCodeHintHandler qrCodeHintHandler = new QRCodeHintHandler();
+            qrCodeHintHandler.setHintActivity(this);
+            qrCodeHintHandler.start(this, url);
+        }
     }
 
     // Back to Home Screen
@@ -33,27 +53,6 @@ public class HintActivity extends AppCompatActivity {
         });
 
     }
-
-    private void getHintData() {
-        drawHint();
-        updateText();
-    }
-
-    private void updateText(){
-        TextView hintText = findViewById(R.id.hint_textview);
-        // TODO set to hint text
-        String text = "";
-        hintText.setText(text);
-
-    }
-
-    private void drawHint() {
-        ImageView hintImage = findViewById(R.id.hint_image);
-        // TODO set to hint image
-        String url = "http://breadcrumbs.bioscientifica.com/image/venueMap_empty";
-        Picasso.get().load(url).into(hintImage);
-    }
-
 
     @Override
     public void onBackPressed() {

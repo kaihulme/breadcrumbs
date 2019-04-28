@@ -26,18 +26,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import bristol.ac.uk.breadcrumbsspe.HintActivity;
 import bristol.ac.uk.breadcrumbsspe.HomeActivity;
 import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.R;
+import bristol.ac.uk.breadcrumbsspe.api.HintService;
 import bristol.ac.uk.breadcrumbsspe.api.QuestionService;
 import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSource;
 import bristol.ac.uk.breadcrumbsspe.camera.CameraSourcePreview;
+import bristol.ac.uk.breadcrumbsspe.entity.Hint;
 import bristol.ac.uk.breadcrumbsspe.entity.MapState;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -53,13 +57,13 @@ import static android.view.View.TEXT_ALIGNMENT_CENTER;
 
 
 public final class QRCodeCaptureActivity extends AppCompatActivity
-        implements QRCodeTracker.QRcodeGraphicTrackerCallback,Callback<Question> {
+        implements QRCodeTracker.QRcodeGraphicTrackerCallback, Callback<Question> {
     private Button InputCode;
     private AlertDialog dialog;
+
     @Override
     public void onResponse(Call<Question> call, Response<Question> response) {
         if(response.isSuccessful() && response.body() != null){
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             dialog.cancel();
             Question q = response.body();
             int currentQuestion = ((MapState) getApplication()).getCurrentQuestion();
@@ -67,6 +71,7 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                 Intent i = new Intent(QRCodeCaptureActivity.this, QuestionActivity.class);
                 i.putExtra("QUESTION", q);
                 startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
             else
                 wrongQuestionDialog();
@@ -147,8 +152,39 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                         if (code.length() != 4){
                             Toast.makeText(QRCodeCaptureActivity.this, "Invalid code. Please input the 4 character code.", Toast.LENGTH_SHORT).show();
                         }
-                        else {
+                        else if(code.startsWith("H")){
                             // TODO Add hint
+                            HintService hintService = RetrofitClient.retrofit.create(HintService.class);
+                            Call<Hint> hintCallback = hintService.getHint(code);
+                            hintCallback.enqueue(new Callback<Hint>() {
+                                @Override
+                                public void onResponse(Call<Hint> call, Response<Hint> response) {
+                                    if(response.isSuccessful() && response.body() != null){
+                                        dialog.cancel();
+                                        Hint h = response.body();
+                                        int currentQuestion = ((MapState) getApplication()).getCurrentQuestion();
+                                        if(h.getQuestionId().intValue() == currentQuestion) {
+                                            Intent i = new Intent(QRCodeCaptureActivity.this, HintActivity.class);
+                                            i.putExtra("HINT", h);
+                                            startActivity(i);
+                                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                        }
+                                        else
+                                            wrongHintDialog();
+                                    }else {
+                                        InputCode.performClick();
+                                        Toast.makeText(QRCodeCaptureActivity.this, "Incorrect code. Please input the correct code.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Hint> call, Throwable t) {
+
+                                }
+                            });
+                            wrongHintDialog();
+                        }
+                        else {
                             QuestionService questionService = RetrofitClient.retrofit.create(QuestionService.class);
                             Call<Question> questionCallback = questionService.getQuestion(code);
                             questionCallback.enqueue(QRCodeCaptureActivity.this);
