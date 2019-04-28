@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Breadcrumbs | 500</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <!-- Jansy CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+    <!-- Iconic CSS CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+
+
+</head>
+
+<body id="error-body">
+
+    <div class="row d-flex justify-content-center fadeInDown">
+        <div class="container error-container" id="error-page">
+
+            <div class="row justify-content-center">
+
+                <div id="errorImg" class="col-1 align-self-center">
+                    <h1 id="sadFace">:(</h1>
+                </div>
+
+                <div id="errorMsg" class="col-3">
+
+                    <div class="row d-flex">
+                        <h1 id="oops">Oops...</h1>
+                    </div>
+
+                    <div class="row d-flex">
+                        <p>500: something went wrong on our end, please try again later.</p>
+                    </div>
+
+                    <hr class="style1">
+
+                    <div class="container error-container">
+                        <div class="row">
+                            <div class="col align-self-end">
+                                  <a th:href="@{/}"><button id="safetyBtn" class="btn btn-outline-primary">return to safety</button></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- jQuery JS CDN-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <!-- Bootstrap JS CDN -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <!-- Jansy-Bootstrap JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+
+</body>
+
+</html>

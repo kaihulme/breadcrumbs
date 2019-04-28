@@ -25,6 +25,9 @@ public class MainController{
         return "index";
     }
 
+//    @RequestMapping(value = {"/error"}, method = RequestMethod.GET)
+//    public String error() { return "error"; }
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String mainPage(){
         return "redirect:/participants";
@@ -49,10 +52,5 @@ public class MainController{
     public String paths(){
         return "views/paths";
     }
-
-//    @RequestMapping("/map")
-//    public String map() {
-//        return "views/map";
-//    }
 
 }
