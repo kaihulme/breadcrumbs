@@ -148,6 +148,7 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                             Toast.makeText(QRCodeCaptureActivity.this, "Invalid code. Please input the 4 character code.", Toast.LENGTH_SHORT).show();
                         }
                         else {
+                            // TODO Add hint
                             QuestionService questionService = RetrofitClient.retrofit.create(QuestionService.class);
                             Call<Question> questionCallback = questionService.getQuestion(code);
                             questionCallback.enqueue(QRCodeCaptureActivity.this);
@@ -195,7 +196,23 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                 .show();
     }
 
+    private void wrongHintDialog() {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Wrong hint")
+                .setMessage("Sorry that hint is part of a different question. Keep looking!")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
 
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
 
     @Override
     public void onDetectedQrCode(Barcode qrcode) {
