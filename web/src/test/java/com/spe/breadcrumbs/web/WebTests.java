@@ -47,6 +47,8 @@ public class WebTests {
     private MainController mainController;
 
     private String localhost = "http://localhost";
+    private final String admin = "jackSmith@hotmail.co.uk";
+    private final String basic = "EBach@Yahoo.com";
 
 //    @BeforeEach
 //    void setup(WebApplicationContext wac) {
@@ -61,7 +63,7 @@ public class WebTests {
     }
 
     @Test
-    @WithUserDetails("user@test.com")
+    @WithUserDetails(basic)
     public void testParticipantsPage() throws Exception{
         this.mockMvc.perform(get("/participants"))
                 .andExpect(status().isOk());
@@ -75,21 +77,21 @@ public class WebTests {
     }
 
     @Test
-    @WithUserDetails("user@test.com")
+    @WithUserDetails(basic)
     public void testManagementPageFails() throws Exception{
         this.mockMvc.perform(get("/management"))
                 .andExpect(status().is(403));
     }
 
     @Test
-    @WithUserDetails("jackSmith@hotmail.co.uk")
+    @WithUserDetails(admin)
     public void testManagementPageSucceeds() throws Exception{
         this.mockMvc.perform(get("/management"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithUserDetails("jackSmith@hotmail.co.uk")
+    @WithUserDetails(admin)
     public void testQuestionPagesAreLoading() throws Exception{
         List<Question> questions = questionDAO.getAllQuestions();
         Question q = questions.get(0);
@@ -99,7 +101,7 @@ public class WebTests {
     }
 
     @Test
-    @WithUserDetails("jackSmith@hotmail.co.uk")
+    @WithUserDetails(admin)
     public void testUserPagesAreLoading() throws Exception{
         List<User> users = userDAO.getAllUsers();
         User u = users.get(0);
@@ -108,7 +110,7 @@ public class WebTests {
     }
 
     @Test
-    @WithUserDetails("jackSmith@hotmail.co.uk")
+    @WithUserDetails(admin)
     public void testExpertPagesAreLoading() throws Exception{
         List<Expert> experts = expertDAO.getAllExperts();
         Expert e = experts.get(0);
@@ -117,7 +119,7 @@ public class WebTests {
     }
 
     @Test
-    @WithUserDetails("jackSmith@hotmail.co.uk")
+    @WithUserDetails(admin)
     public void testMeetingPagesAreLoading() throws Exception{
         List<Meeting> meetings = meetingDAO.getMeetings();
         Meeting m = meetings.get(0);

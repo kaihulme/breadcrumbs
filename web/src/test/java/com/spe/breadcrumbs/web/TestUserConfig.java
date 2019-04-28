@@ -17,7 +17,7 @@ public class TestUserConfig {
     @Bean
     @Primary
     public UserDetailsService userDetailsService(){
-        User basic = new User("user@test.com","password"
+        User basic = new User("EBach@Yahoo.com","siliconValley"
                 ,Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
 
 
