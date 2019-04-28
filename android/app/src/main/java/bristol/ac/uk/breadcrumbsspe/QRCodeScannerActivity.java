@@ -48,14 +48,19 @@ public class QRCodeScannerActivity extends DrawerActivity {
                     //mResultTextView.setText(QRCode.displayValue);
                     String url = QRCode.displayValue;
 
-                    if(url.contains("hint")){
-                        //TODO Add hint
-                        wrongHintDialog();
-                    }
-
                     int currentQuestion = ((MapState) this.getApplication()).getCurrentQuestion() + 1;
 
-                    if (url.endsWith(Integer.toString(currentQuestion))) {
+                    if(url.contains("hint")){
+                        //TODO Add hint
+                        if(url.endsWith(Integer.toString(currentQuestion))){
+                            Intent i = new Intent(QRCodeScannerActivity.this, HintActivity.class);
+                            i.putExtra("HINT_URL", url);
+                            startActivity(i);
+                        } else {
+                            wrongHintDialog();
+                        }
+                    }
+                    else if (url.endsWith(Integer.toString(currentQuestion))) {
                         Intent i = new Intent(QRCodeScannerActivity.this, QuestionActivity.class);
                         i.putExtra("QUESTION_URL", url);
                         startActivity(i);

@@ -54,9 +54,6 @@ public class QuestionActivity extends AppCompatActivity {
         buttons.add((Button)findViewById(R.id.button_answer2));
         buttons.add((Button)findViewById(R.id.button_answer3));
         buttons.add((Button)findViewById(R.id.button_answer4));
-        QRCodeQuestionHandler qrCodeQuestionHandler = new QRCodeQuestionHandler();
-        qrCodeQuestionHandler.setQuestionActivity(this);
-        TextCodeQuestionHandler textCodeQuestionHandler = new TextCodeQuestionHandler();
         if(q != null){
             //do everything that was being done in the QRCode Question handler
             question_text_view.setText(q.getQuestion());
@@ -81,6 +78,9 @@ public class QuestionActivity extends AppCompatActivity {
             }
         }
         else if(code == null){
+            QRCodeQuestionHandler qrCodeQuestionHandler = new QRCodeQuestionHandler();
+            qrCodeQuestionHandler.setQuestionActivity(this);
+//            TextCodeQuestionHandler textCodeQuestionHandler = new TextCodeQuestionHandler();
             qrCodeQuestionHandler.start(this,url);
         }
     }
