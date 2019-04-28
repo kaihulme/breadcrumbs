@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS Path;
 DROP TABLE IF EXISTS Meeting;
 DROP TABLE IF EXISTS Map;
 DROP TABLE IF EXISTS Expert_Role;
@@ -100,6 +101,13 @@ CREATE TABLE Meeting(
     location VARCHAR(200),
     FOREIGN KEY (userId) REFERENCES User(id),
     FOREIGN KEY (expertId) REFERENCES Expert(id)
+);
+CREATE TABLE Path(
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(200),
+    userId INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (userId) REFERENCES User(id)
 );
 INSERT INTO Expert (firstName,lastName,email)
 VALUES ('Jane','Smith','Jane.Smith@hotmail.co.uk');
