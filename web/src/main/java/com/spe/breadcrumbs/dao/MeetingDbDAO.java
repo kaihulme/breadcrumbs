@@ -114,6 +114,8 @@ public class MeetingDbDAO implements MeetingDAO {
                 Time t = rs.getTime("meeting_time");
                 String loc = rs.getString("location");
                 Meeting m = new Meeting(expert,user,t,loc);
+                String time = t.toString();
+                m.setTime(time.substring(0, 5));
                 meetings.add(m);
             }
         } catch (IOException | SQLException e) {

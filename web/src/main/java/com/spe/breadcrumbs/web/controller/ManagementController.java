@@ -5,6 +5,8 @@ import com.spe.breadcrumbs.entity.*;
 import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Map;
 import com.spe.breadcrumbs.web.DBConnection;
+import com.spe.breadcrumbs.web.security.SecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
@@ -39,6 +41,15 @@ public class ManagementController {
     @Value(value = "classpath:static/mapFeatures/hintIcon.png")
     private Resource hintIcon;
 
+    @Autowired
+    private SecurityService securityService;
+
+    private List<Meeting> getCurrentExpertsMeetings() {
+        String username = securityService.findLoggedInUsername();
+        Expert currentExpert = expertDAO.findByEmail(username);
+        return meetingDAO.getMeetingsWithExpert(currentExpert.getId());
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public String tableContent(Model m) {
 
@@ -49,6 +60,7 @@ public class ManagementController {
         m.addAttribute("users", users);
         m.addAttribute("meetings", meetings);
         m.addAttribute("usersWithoutMeetings", usersWithoutMeetings);
+        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
 
         m.addAttribute("maps", mapDAO.getAllMaps());
         m.addAttribute("experts", expertDAO.getAllExperts());
@@ -67,6 +79,7 @@ public class ManagementController {
     public String updateUser(@PathVariable Long id, Model m) {
         User match = userDAO.getUser(id);
         m.addAttribute("user", match);
+        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
         return "views/management_userEdit";
     }
 
@@ -79,6 +92,7 @@ public class ManagementController {
     @RequestMapping(method = RequestMethod.GET, value= "/user")
     public String addUser(Model m) {
         m.addAttribute("user", new User());
+        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
         return "views/management_userAdd";
     }
 
@@ -100,6 +114,7 @@ public class ManagementController {
     public String updateExpert(@PathVariable Long id, Model m) {
         Expert match = expertDAO.getExpert(id);
         m.addAttribute("expert", match);
+        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
         return "views/management_expertEdit";
     }
 
@@ -112,6 +127,7 @@ public class ManagementController {
     @RequestMapping(method = RequestMethod.GET, value= "/expert")
     public String addExpert(Model m) {
         m.addAttribute("expert", new Expert());
+        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
         return "views/management_expertAdd";
     }
 
@@ -149,6 +165,8 @@ public class ManagementController {
 //        int[] max = new int[]{ x_max, y_max };
 //        m.addAttribute("x_max", x_max);
 //        m.addAttribute("y_max", y_max);
+
+        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
 
         return "views/management_breadcrumbEdit";
     }
@@ -511,6 +529,7 @@ public class ManagementController {
         meeting.setMeeting_time(time);
 
         meetingDAO.createMeeting(meeting);
+
         return new RedirectView("/management");
     }
 
@@ -528,6 +547,7 @@ public class ManagementController {
         m.addAttribute("experts", experts);
         m.addAttribute("users", users);
         m.addAttribute("meeting", meeting);
+        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
         return "views/management_meetingEdit";
     }
 

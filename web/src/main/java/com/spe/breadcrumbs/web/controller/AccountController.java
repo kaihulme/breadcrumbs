@@ -25,7 +25,7 @@ public class AccountController {
     private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 
     @RequestMapping(method = RequestMethod.GET)
-    public String participants(Model m){
+    public String getAccountDetails(Model m){
 //        context.scan("com.spe.breadcrumbs.security");
 //        context.refresh();
 //        securityService = context.getBean(SecurityService.class);
@@ -33,6 +33,10 @@ public class AccountController {
         String username = securityService.findLoggedInUsername();
         Expert expert = expertDAO.findByEmail(username);
         List<Meeting> meetings = meetingDAO.getMeetingsWithExpert(expert.getId());
+
+        for (Meeting meeting : meetings) {
+            System.out.println(meeting.getExpert().getFirstName() + " " + meeting.getExpert().getLastName());
+        }
 
         m.addAttribute("expert", expert);
         m.addAttribute("meetings", meetings);

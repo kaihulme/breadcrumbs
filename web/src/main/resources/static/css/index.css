@@ -240,6 +240,10 @@ th {
   background: #d14444;
 }
 
+.meeting-notification {
+    margin-right: 10px;
+}
+
 #title {
     background: #9d2043;
     color: #FFFFFF;

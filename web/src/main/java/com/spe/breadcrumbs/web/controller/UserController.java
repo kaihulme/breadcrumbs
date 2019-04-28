@@ -1,11 +1,10 @@
 package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
-import com.spe.breadcrumbs.entity.Choice;
-import com.spe.breadcrumbs.entity.Question;
-import com.spe.breadcrumbs.entity.Quiz;
-import com.spe.breadcrumbs.entity.User;
+import com.spe.breadcrumbs.entity.*;
 import com.spe.breadcrumbs.web.DBConnection;
+import com.spe.breadcrumbs.web.security.SecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +17,22 @@ import java.util.List;
 
 
 public class UserController {
+
     private UserDAO userDAO = new UserDbDAO(new DBConnection());
     private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
     private QuizDAO quizDAO = new QuizDbDAO(new DBConnection());
     private AttemptDAO attemptDAO = new AttemptDbDAO(new DBConnection());
+    private MeetingDAO meetingDAO = new MeetingDbDAO(new DBConnection());
+    private ExpertDAO expertDAO = new ExpertDbDAO(new DBConnection());
+
+    @Autowired
+    private SecurityService securityService;
+
+    private List<Meeting> getCurrentExpertsMeetings() {
+        String username = securityService.findLoggedInUsername();
+        Expert currentExpert = expertDAO.findByEmail(username);
+        return meetingDAO.getMeetingsWithExpert(currentExpert.getId());
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String participants(Model m){
@@ -49,6 +60,7 @@ public class UserController {
         }
 
         m.addAttribute("users", users);
+        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
         return "views/participants";
     }
 
@@ -77,6 +89,7 @@ public class UserController {
 
         match.setProgress(progress);
         m.addAttribute("user", match);
+        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
 
         return "views/participants_userProfile";
     }
@@ -91,6 +104,7 @@ public class UserController {
         List<Choice> attempts = attemptDAO.getAttempts(questionId,userId);
         q.setAttempts(attempts);
         m.addAttribute("question",q);
+        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
         return "views/participants_userProfile_question";
     }
 

@@ -79,6 +79,20 @@
 
 					<!-- Navbar Right -->
 					<ul class="nav navbar-nav navbar-right">
+
+						<div th:switch="${#lists.size(expertsMeetings)}">
+							<div th:case="'0'">
+								<button type="button" class="btn btn-info meeting-notification" data-toggle="tooltip" data-placement="bottom" title="No upcoming meetings">
+									<span class="oi oi-bell"></span>
+								</button>
+							</div>
+							<div th:case="*">
+								<button type="button" class="btn btn-danger meeting-notification" data-toggle="tooltip" data-placement="bottom" title="You have a meeting!">
+									<a th:href="@{/account}"><span class="oi oi-bell"></span></a>
+								</button>
+							</div>
+						</div>
+
 						<div class="btn-group">
 							<button type="button" class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<span class="oi oi-person"></span>
