@@ -35,4 +35,5 @@
     <string name="sponsor_3">Third Sponsor</string>
     <string name="sponsor_4">Fourth Sponsor</string>
     <string name="continue_map">Continue to Map</string>
+    <string name="hint_image">Image related to the question</string>
 </resources>
