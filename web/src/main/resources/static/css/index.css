@@ -322,8 +322,17 @@ th {
    margin: 20px;
 }
 
+#hintImage {
+   width: 300px;
+   border: 1px solid #dbdbdb;
+}
+
 .jumbotron {
+    padding: 20px;
     margin: 20px;
+    background: #FFFFFF;
+    border: 1px solid #dbdbdb;
+
 }
 
 /************* FADE DOWN ANIMATION ****************/

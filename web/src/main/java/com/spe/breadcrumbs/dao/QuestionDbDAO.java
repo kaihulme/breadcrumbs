@@ -183,7 +183,7 @@ public class QuestionDbDAO implements QuestionDAO {
             return null;
         }
     }
-    
+
     @Override
     public Hint getHintByName(String name) {
         String getHintByName = "SELECT * FROM Hint WHERE pictureName = ?";

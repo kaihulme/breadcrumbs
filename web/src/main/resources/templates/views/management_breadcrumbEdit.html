@@ -182,7 +182,7 @@
 
 						<div class="form-group row justify-content-md-center">
 							<div class="col-4">
-								<input type="submit" class="form-control" value="Submit" />
+								<button type="submit" class="form-control" name="action" value="submit">update</button>
 							</div>
 						</div>
 
@@ -233,9 +233,16 @@
 								</div>
 
 								<div class="jumbotron">
+
 									<h3 th:text="@{'Hint '+${iStat.count}}"></h3>
 									<hr class="style1">
+
 									<p th:text="@{${hint.hintText}}"></p>
+
+									<div th:if="${hint.pictureName} != null" class="row justify-content-md-center">
+										<img th:src="@{'/image/hintImage_q' + ${question.id} + '_h' + ${iStat.count}}" id="hintImage">
+									</div>
+
 								</div>
 
 								<hr class="style1">
@@ -268,11 +275,14 @@
 
 								<hr class="style1">
 
-								<p>Change hint image.</p>
+								<p th:if="${hint.pictureName} == null">Add an image to this hint.</p>
+								<p th:if="${hint.pictureName} != null">Change hint image.</p>
 
 								<form action="#" th:action="@{'/management/updateHintImage/'+${question.id}+'&'+${hint.id}+'&'+${iStat.count}}" method="post" enctype="multipart/form-data">
 
 									<input type="file" class="form-control-file" name="f"/>
+
+									<br>
 
 									<div class="form-group row justify-content-md-center">
 										<div class="col-4">
@@ -370,9 +380,16 @@
 								</div>
 
 								<div class="jumbotron">
+
 									<h3 th:text="@{'Hint '+${iStat.count}}"></h3>
 									<hr class="style1">
+
 									<p th:text="@{${hint.hintText}}"></p>
+
+									<div th:if="${hint.pictureName} != null" class="row justify-content-md-center">
+										<img th:src="@{'/image/hintImage_q' + ${question.id} + '_h' + ${iStat.count}}" id="hintImage">
+									</div>
+
 								</div>
 
 								<hr class="style1">
@@ -381,13 +398,6 @@
 									<div class="col-10">
 										<p>Edit hint text.</p>
 									</div>
-									<!--									<div class="col-2">-->
-									<!--										<form action="#" th:action="@{'/management/deleteHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">-->
-									<!--											<button type="submit" value="Submit" class="btn btn-danger btn-sm">-->
-									<!--												<span class="oi oi-delete" title="align-left" aria-hidden="true"></span>-->
-									<!--											</button>-->
-									<!--										</form>-->
-									<!--									</div>-->
 								</div>
 
 								<form action="#" th:action="@{'/management/updateHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
@@ -410,6 +420,28 @@
 
 								</form>
 
+								<hr class="style1">
+
+								<p th:if="${hint.pictureName} == null">Add an image to this hint.</p>
+								<p th:if="${hint.pictureName} != null">Change hint image.</p>
+
+								<form action="#" th:action="@{'/management/updateHintImage/'+${question.id}+'&'+${hint.id}+'&'+${iStat.count}}" method="post" enctype="multipart/form-data">
+
+									<input type="file" class="form-control-file" name="f"/>
+
+									<br>
+
+									<div class="form-group row justify-content-md-center">
+										<div class="col-4">
+											<button type="submit" class="form-control" name="action" value="submit">update</button>
+										</div>
+										<!--										<div class="col-4">-->
+										<!--											<button type="submit" class="form-control" name="action" value="delete">delete</button>-->
+										<!--										</div>-->
+									</div>
+
+								</form>
+
 							</div>
 
 							<div class="container col-4">
@@ -421,15 +453,14 @@
 								<p>Change location of hint on map.</p>
 
 								<div class="row justify-content-md-center">
-									<img th:if="${iStat.count == 1 }" th:src="@{'/image/venueMap_q' + ${question.id}+ '_c10'}" id="editMap">
-									<img th:if="${iStat.count == 2 }" th:src="@{'/image/venueMap_q' + ${question.id}+ '_c01'}" id="editMap">
+									<img th:src="@{'/image/venueMap_q' + ${question.id}+ '_c10'}" id="editMap">
 								</div>
 
 								<div class="row justify-content-md-center">
 									<span>(</span>
-									<span th:id="hint_x_coordSliderVal+${iStat.count}" th:text="@{${hint.x_coord}}"></span>
+									<span th:id="'hint_x_coordSliderVal' + ${iStat.count}" th:text="@{${hint.x_coord}}"></span>
 									<span>, </span>
-									<span th:id="hint_y_coordSliderVal+${iStat.count}" th:text="@{${hint.y_coord}}"></span>
+									<span th:id="'hint_y_coordSliderVal' + ${iStat.count}" th:text="@{${hint.y_coord}}"></span>
 									<span>)</span>
 								</div>
 
@@ -438,10 +469,10 @@
 								<form action="#" th:action="@{'/management/updateHintLocation/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
 
 									<div class="form-group row justify-content-md-center">
-										<input th:id="'hint_x_coord'+${iStat.count}" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
+										<input th:id="'hint_x_coord' + ${iStat.count}" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
 									</div>
 									<div class="form-group row justify-content-md-center">
-										<input th:id="'hint_y_coord'+${iStat.count}" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
+										<input th:id="'hint_y_coord' + ${iStat.count}" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
 									</div>
 
 									<br>
