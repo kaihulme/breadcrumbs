@@ -48,6 +48,11 @@ public class QRCodeScannerActivity extends DrawerActivity {
                     //mResultTextView.setText(QRCode.displayValue);
                     String url = QRCode.displayValue;
 
+                    if(url.contains("hint")){
+                        //TODO Add hint
+                        wrongHintDialog();
+                    }
+
                     int currentQuestion = ((MapState) this.getApplication()).getCurrentQuestion() + 1;
 
                     if (url.endsWith(Integer.toString(currentQuestion))) {
@@ -75,6 +80,24 @@ public class QRCodeScannerActivity extends DrawerActivity {
         }
         builder.setTitle("Wrong question")
                 .setMessage("Sorry that's the wrong question. Keep looking!")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void wrongHintDialog() {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Wrong hint")
+                .setMessage("Sorry that hint is part of a different question. Keep looking!")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
