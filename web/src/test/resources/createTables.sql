@@ -62,6 +62,7 @@ CREATE TABLE Hint(
   x_coord INT,
   y_coord INT,
   picture BLOB,
+  pictureName VARCHAR(200),
   FOREIGN KEY (question) REFERENCES Question(id),
   PRIMARY KEY (id)
 );
