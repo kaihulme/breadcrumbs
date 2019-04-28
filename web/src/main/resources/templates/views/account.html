@@ -160,12 +160,12 @@
                                 </tr>
                             </thread>
                             <tbody>
-                            <tr th:each="meeting : ${meetings}">
-                                <td><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></td>
-                                <td><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></td>
-                                <td><span th:text="${meeting.meeting_time}">id</span></td>
-                                <td><span th:text="${meeting.location}">id</span></td>
-                            </tr>
+                                <tr th:each="meeting : ${$meetings}">
+                                    <td><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></td>
+                                    <td><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></td>
+                                    <td><span th:text="${meeting.meeting_time}">id</span></td>
+                                    <td><span th:text="${meeting.location}">id</span></td>
+                                </tr>
                             </tbody>
                         </table>
                         <!-- /Meeting Table -->

@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 @SpringBootApplication
+//@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 public class WebApplication {
 
 	public static void main(String[] args) {

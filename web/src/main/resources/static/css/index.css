@@ -344,8 +344,9 @@ th {
 }
 
 #error-page {
-    margin-top: 15%;
+    margin-top: 150px;
     overflow: hidden;
+    overflow-y: hidden;
 }
 
 .error-container {
@@ -354,8 +355,8 @@ th {
 }
 
 #errorMsg, errorImg {
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 120px;
+    margin-right: 120px;
 }
 
 #sadFace {
@@ -365,10 +366,6 @@ th {
 
 #oops {
     font-weight: bold;
-}
-
-#safetyBtn {
-    /*margin-left: 80px;*/
 }
 
 /************* FADE DOWN ANIMATION ****************/

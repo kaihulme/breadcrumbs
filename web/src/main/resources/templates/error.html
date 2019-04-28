@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Breadcrumbs | ERROR</title>
+    <title th:text="'Breadcrumbs | ' + ${status}"></title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -33,24 +33,96 @@
                     <h1 id="sadFace">:(</h1>
                 </div>
 
-                <div id="errorMsg" class="col-3">
+                <div id="errorMsg" class="col-5">
 
                     <div class="row d-flex">
                         <h1 id="oops">Oops...</h1>
                     </div>
 
-                    <div class="row d-flex">
-                        <p>Something went wrong when loading the page and an unknown error occurred</p>
-                    </div>
+                    <div th:switch="${status}">
 
-                    <hr class="style1">
+                        <div th:case="'404'">
 
-                    <div class="container error-container">
-                        <div class="row">
-                            <div class="col align-self-end">
-                                  <a th:href="@{/}"><button id="safetyBtn" class="btn btn-outline-primary">return to safety</button></a>
+                            <div class="row d-flex">
+                                <p>We weren't able to find the page you were looking for...</p>
                             </div>
+
+                            <hr class="style1">
+
+                            <table class="table table-hover table-striped">
+                                <tr>
+                                    <th>Status</th>
+                                    <th th:text="${status}"></th>
+                                </tr>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th th:text="${timestamp}"></th>
+                                </tr>
+                            </table>
+
                         </div>
+
+                        <div th:case="'500'">
+
+                            <div class="row d-flex">
+                                <p>Something went wrong on our end, please try again later...</p>
+                            </div>
+
+                            <hr class="style1">
+
+                            <table class="table table-hover table-striped">
+                                <tr>
+                                    <th>Status</th>
+                                    <th th:text="${status}"></th>
+                                </tr>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th th:text="${timestamp}"></th>
+                                </tr>
+                                <tr>
+                                    <th>Message</th>
+                                    <th th:text="${message}"></th>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                        <div th:case="*">
+
+                            <div class="row d-flex">
+                                <p>Something went wrong when loading the page and an unknown error occurred</p>
+                            </div>
+
+                            <hr class="style1">
+
+                            <table class="table table-hover table-striped">
+                                <tr>
+                                    <th>Status</th>
+                                    <th th:text="${status}"></th>
+                                </tr>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th th:text="${timestamp}"></th>
+                                </tr>
+                                <tr>
+                                    <th>Exception</th>
+                                    <th th:text="${exception}"></th>
+                                </tr>
+                                <tr>
+                                    <th>Message</th>
+                                    <th th:text="${message}"></th>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                        <hr class="style1">
+                        <br>
+
+                        <div class="row justify-content-center">
+                            <a th:href="@{/}"><button id="safetyBtn" class="btn btn-outline-dark">return to safety</button></a>
+                        </div>
+
                     </div>
 
                 </div>
