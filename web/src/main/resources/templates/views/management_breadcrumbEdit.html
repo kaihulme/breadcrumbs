@@ -98,99 +98,95 @@
 
 			<hr class="style1">
 
-			<div>
+			<div class="row justify-content-md-center fadeInUp">
 
-				<div class="row justify-content-md-center fadeInUp">
+				<div class="container col-6">
 
-					<div class="container col-6">
-
-						<div class="row" id="title">
-							<h2>Question</h2>
-						</div>
-
-						<p>Edit question and its choices (please check the correct answer).</p>
-
-						<form action="#" th:action="@{'updateBreadcrumb/'+${question.id}}" th:object="${question}" method="post">
-
-							<div class="form-group row">
-								<label for="question" class="col-2 col-form-label">Question</label>
-								<div class="col-10">
-									<textarea class="form-control" id="question" th:field="*{question}" rows="3"/></textarea>
-								</div>
-							</div>
-
-							<div class="form-group row" th:each="choice,itemStat : *{choices}">
-
-								<label for="question" class="col-2 col-form-label" th:text ="Choice + ' ' + ${itemStat.index + 1}">Choice</label>
-
-								<div class="col-9">
-
-									<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].choiceId}"/>
-									<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].questionId}"/>
-
-									<textarea type="text" class="form-control" id="choice" th:field="*{choices[__${itemStat.index}__].choiceText}" rows="2"></textarea>
-
-								</div>
-								<div class="col-1">
-
-									<input type="checkbox" class="form-control" id= "answer" name="answer" th:field="*{choices[__${itemStat.index}__].answer}" th:value="${choice.answer}"/>
-
-								</div>
-
-							</div>
-
-							<div class="form-group row justify-content-md-center">
-								<div class="col-4">
-									<input type="submit" class="form-control" value="Submit" />
-								</div>
-							</div>
-
-						</form>
-
+					<div class="row" id="title">
+						<h2>Question</h2>
 					</div>
 
-					<div class="container col-4">
+					<p>Edit question and its choices (please check the correct answer).</p>
 
-						<div class="row" id="title">
-							<h2>Map Location</h2>
+					<form action="#" th:action="@{'updateBreadcrumb/'+${question.id}}" th:object="${question}" method="post">
+
+						<div class="form-group row">
+							<label for="question" class="col-2 col-form-label">Question</label>
+							<div class="col-10">
+								<textarea class="form-control" id="question" th:field="*{question}" rows="3"/></textarea>
+							</div>
 						</div>
 
-						<p>Change the location of current question on map.</p>
+						<div class="form-group row" th:each="choice,itemStat : *{choices}">
 
-						<div class="row justify-content-md-center">
-							<img th:src="@{'/image/venueMap_q' + ${question.id}}" id="editMap">
+							<label for="question" class="col-2 col-form-label" th:text ="Choice + ' ' + ${itemStat.index + 1}">Choice</label>
+
+							<div class="col-9">
+
+								<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].choiceId}"/>
+								<input type="hidden" class="form-control"  th:field="*{choices[__${itemStat.index}__].questionId}"/>
+
+								<textarea type="text" class="form-control" id="choice" th:field="*{choices[__${itemStat.index}__].choiceText}" rows="2"></textarea>
+
+							</div>
+							<div class="col-1">
+
+								<input type="checkbox" class="form-control" id= "answer" name="answer" th:field="*{choices[__${itemStat.index}__].answer}" th:value="${choice.answer}"/>
+
+							</div>
+
 						</div>
 
-						<div class="row justify-content-md-center">
-							<span>(</span>
-							<span id="x_coordSliderVal" th:text="@{${question.x_coord}}"></span>
-							<span>, </span>
-							<span id="y_coordSliderVal" th:text="@{${question.y_coord}}"></span>
-							<span>)</span>
+						<div class="form-group row justify-content-md-center">
+							<div class="col-4">
+								<input type="submit" class="form-control" value="Submit" />
+							</div>
+						</div>
+
+					</form>
+
+				</div>
+
+				<div class="container col-4">
+
+					<div class="row" id="title">
+						<h2>Map Location</h2>
+					</div>
+
+					<p>Change the location of current question on map.</p>
+
+					<div class="row justify-content-md-center">
+						<img th:src="@{'/image/venueMap_q' + ${question.id}}" id="editMap">
+					</div>
+
+					<div class="row justify-content-md-center">
+						<span>(</span>
+						<span id="x_coordSliderVal" th:text="@{${question.x_coord}}"></span>
+						<span>, </span>
+						<span id="y_coordSliderVal" th:text="@{${question.y_coord}}"></span>
+						<span>)</span>
+					</div>
+
+					<br>
+
+					<form action="#" th:action="@{'updateBreadcrumbLocation/'+${question.id}}" th:object="${question}" method="post">
+
+						<div class="form-group row justify-content-md-center">
+								<input id="x_coord" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
+						</div>
+						<div class="form-group row justify-content-md-center">
+								<input id="y_coord" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
 						</div>
 
 						<br>
 
-						<form action="#" th:action="@{'updateBreadcrumbLocation/'+${question.id}}" th:object="${question}" method="post">
-
-							<div class="form-group row justify-content-md-center">
-									<input id="x_coord" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
+						<div class="form-group row justify-content-md-center">
+							<div class="col-4">
+								<input type="submit" class="form-control" value="Submit" />
 							</div>
-							<div class="form-group row justify-content-md-center">
-									<input id="y_coord" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
-							</div>
+						</div>
 
-							<br>
-
-							<div class="form-group row justify-content-md-center">
-								<div class="col-4">
-									<input type="submit" class="form-control" value="Submit" />
-								</div>
-							</div>
-
-						</form>
-
-					</div>
+					</form>
 
 				</div>
 
@@ -248,13 +244,6 @@
 									<div class="col-10">
 										<p>Edit hint text.</p>
 									</div>
-<!--									<div class="col-2">-->
-<!--										<form action="#" th:action="@{'/management/deleteHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">-->
-<!--											<button type="submit" value="Submit" class="btn btn-danger btn-sm">-->
-<!--												<span class="oi oi-delete" title="align-left" aria-hidden="true"></span>-->
-<!--											</button>-->
-<!--										</form>-->
-<!--									</div>-->
 								</div>
 
 								<form action="#" th:action="@{'/management/updateHint/'+${question.id}+'&'+${hint.id}}" th:object="${hint}" method="post">
@@ -273,6 +262,25 @@
 										<div class="col-4">
 											<button type="submit" class="form-control" name="action" value="delete">delete</button>
 										</div>
+									</div>
+
+								</form>
+
+								<hr class="style1">
+
+								<p>Change hint image.</p>
+
+								<form action="#" th:action="@{'/management/updateHintImage/'+${question.id}+'&'+${hint.id}+'&'+${iStat.count}}" method="post" enctype="multipart/form-data">
+
+									<input type="file" class="form-control-file" name="f"/>
+
+									<div class="form-group row justify-content-md-center">
+										<div class="col-4">
+											<button type="submit" class="form-control" name="action" value="submit">update</button>
+										</div>
+<!--										<div class="col-4">-->
+<!--											<button type="submit" class="form-control" name="action" value="delete">delete</button>-->
+<!--										</div>-->
 									</div>
 
 								</form>

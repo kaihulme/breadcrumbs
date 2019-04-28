@@ -4,6 +4,7 @@ import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Hint;
 import com.spe.breadcrumbs.entity.Question;
 
+import java.sql.Blob;
 import java.util.List;
 
 public interface QuestionDAO {
@@ -30,6 +31,8 @@ public interface QuestionDAO {
     List<Hint> getHints(Long questionId);
 
 
+    Hint getHintByName(String name);
+
     boolean addHint(Hint h, Long question_id);
 
     boolean deleteHint(Long hint_id);
@@ -37,6 +40,8 @@ public interface QuestionDAO {
     boolean updateHint(Hint h, Long id);
 
     boolean updateHintLocation(Hint h, Long id);
+
+    boolean updateHintImage(String pictureName, Blob picture, Long id);
 
     boolean updateChoices(Long questionId, List<Choice> choices);
 

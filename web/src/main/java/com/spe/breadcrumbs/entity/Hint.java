@@ -25,14 +25,18 @@ public class Hint {
     @Column(name = "y_coord")
     private int y_coord;
 
+    @Column(name = "pictureName")
+    private String pictureName;
+
     @Column (name="picture")
     private Blob picture;
 
-    public Hint(Long id, String hintText,int x_coord,int y_coord, Blob picture){
+    public Hint(Long id, String hintText, int x_coord, int y_coord, String pictureName, Blob picture){
         this.id = id;
         this.hintText = hintText;
-        this.x_coord =x_coord;
+        this.x_coord = x_coord;
         this.y_coord = y_coord;
+        this.pictureName = pictureName;
         this.picture = picture;
     }
 

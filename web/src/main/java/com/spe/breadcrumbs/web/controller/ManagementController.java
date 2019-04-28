@@ -3,6 +3,7 @@ package com.spe.breadcrumbs.web.controller;
 import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.*;
 import com.spe.breadcrumbs.entity.Choice;
+import com.spe.breadcrumbs.entity.Map;
 import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -19,8 +20,8 @@ import java.io.*;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 @CrossOrigin
 @Controller
@@ -40,10 +41,17 @@ public class ManagementController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String tableContent(Model m) {
+
+        List<User> users = userDAO.getAllUsers();
+        List<Meeting> meetings = meetingDAO.getMeetings();
+        List<User> usersWithoutMeetings = getUsersWithoutMeetings();
+
+        m.addAttribute("users", users);
+        m.addAttribute("meetings", meetings);
+        m.addAttribute("usersWithoutMeetings", usersWithoutMeetings);
+
         m.addAttribute("maps", mapDAO.getAllMaps());
-        m.addAttribute("users", userDAO.getAllUsers());
         m.addAttribute("experts", expertDAO.getAllExperts());
-        m.addAttribute("meetings", meetingDAO.getMeetings());
         m.addAttribute("questions", questionDAO.getAllQuestions());
 
         m.addAttribute("user", new User());
@@ -405,9 +413,14 @@ public class ManagementController {
     }
 
     @PostMapping("/addHint/{question_id}")
-    public RedirectView addHint(@ModelAttribute Hint hint, @PathVariable Long question_id) {
+    public RedirectView addHint(/*@RequestParam("f") MultipartFile f,*/ @ModelAttribute Hint hint, @PathVariable Long question_id) {
+
+//        BufferedImage bi = multipartToImage(f);
+//        Blob picture = imageToBlob(bi);
+//        hint.setPicture(picture);
 
         questionDAO.addHint(hint, question_id);
+
         Question question = questionDAO.getQuestion(question_id);
         mapDAO.deleteMapsForQuestion(question_id);
         addQuestionMap(question);
@@ -436,7 +449,42 @@ public class ManagementController {
         return new RedirectView("/management/breadcrumb/"+question_id);
     }
 
+    @PostMapping("/updateHintImage/{question_id}&{hint_id}&{hint_no}")
+    public RedirectView changeHintImage(@RequestParam("f") MultipartFile f, @PathVariable Long question_id, @PathVariable Long hint_id, @PathVariable int hint_no) {
+
+        try {
+            String pictureName = "hintImage_q" + question_id + "_h" + hint_no;
+            BufferedImage bi = multipartToImage(f);
+            Blob picture = imageToBlob(bi);
+            questionDAO.updateHintImage(pictureName, picture, hint_id);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new RedirectView("/management/breadcrumb/"+question_id);
+    }
+
     //////////////////////////// MEETINGS /////////////////////////////////
+
+    private List<User> getUsersWithoutMeetings() {
+
+        List<User> users = userDAO.getAllUsers();
+        List<Meeting> meetings = meetingDAO.getMeetings();
+        List<User> userWithMeetings = new ArrayList<>();
+
+        for (User user: users) {
+            for (Meeting meeting : meetings) {
+                if (user.getId().equals(meeting.getUser().getId())) {
+                    userWithMeetings.add(user);
+                    break;
+                }
+            }
+        }
+        users.removeAll(userWithMeetings);
+
+        return users;
+    }
 
     @PostMapping("/addMeeting")
     public RedirectView addMeeting(@ModelAttribute Meeting meeting) {

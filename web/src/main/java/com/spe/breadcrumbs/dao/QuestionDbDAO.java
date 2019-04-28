@@ -172,7 +172,9 @@ public class QuestionDbDAO implements QuestionDAO {
             stmt.setLong(1,questionId);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                Hint h = new Hint(rs.getLong("id"),rs.getString("hintText"),rs.getInt("x_coord"),rs.getInt("y_coord"),rs.getBlob("picture"));
+                Hint h = new Hint(rs.getLong("id"), rs.getString("hintText"),
+                        rs.getInt("x_coord"),  rs.getInt("y_coord"),
+                        rs.getString("pictureName"), rs.getBlob("picture"));
                 hints.add(h);
             }
             return hints;
@@ -181,6 +183,29 @@ public class QuestionDbDAO implements QuestionDAO {
             return null;
         }
     }
+    
+    @Override
+    public Hint getHintByName(String name) {
+        String getHintByName = "SELECT * FROM Hint WHERE pictureName = ?";
+        try {
+            Connection con = dbConnection.getConnection();
+            PreparedStatement stmt = con.prepareStatement(getHintByName);
+            stmt.setString(1, name);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Hint hint = new Hint(rs.getLong("id"),rs.getString("hintText"),
+                        rs.getInt("x_coord"),rs.getInt("y_coord"),
+                        rs.getString("pictureName"), rs.getBlob("picture"));
+                stmt.close();
+                con.close();
+                return hint;
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     @Override
     public boolean addHint(Hint h, Long question_id) {
@@ -253,6 +278,25 @@ public class QuestionDbDAO implements QuestionDAO {
         }
     }
 
+    @Override
+    public boolean updateHintImage(String pictureName, Blob picture, Long id) {
+        try{
+            String updateUser = "UPDATE Hint " +
+                    "SET pictureName = ?, picture = ? " +
+                    "WHERE id = ?;";
+            Connection con = dbConnection.getConnection();
+            PreparedStatement stmt = con.prepareStatement(updateUser);
+            stmt.setString(1, pictureName);
+            stmt.setBlob(2, picture);
+            stmt.setLong(3, id);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     /////////////// UPDATE /////////////////////
 
     @Override
@@ -267,6 +311,7 @@ public class QuestionDbDAO implements QuestionDAO {
         }
         return true;
     }
+
     private boolean updateChoice(Long choiceId, Choice c){
         try{
             String updateChoice = "UPDATE Choice SET choiceText = ?," +
