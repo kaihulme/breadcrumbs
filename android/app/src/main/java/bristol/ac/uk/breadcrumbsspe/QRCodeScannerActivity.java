@@ -51,6 +51,7 @@ public class QRCodeScannerActivity extends DrawerActivity {
                     int currentQuestion = ((MapState) this.getApplication()).getCurrentQuestion() + 1;
 
                     if(url.contains("hints")){
+                        // TODO make url work with currentQuestion
                         if(url.endsWith(Integer.toString(currentQuestion))){
                             Intent i = new Intent(QRCodeScannerActivity.this, HintActivity.class);
                             i.putExtra("HINT_URL", url);
