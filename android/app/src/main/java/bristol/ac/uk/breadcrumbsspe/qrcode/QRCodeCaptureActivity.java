@@ -83,7 +83,7 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
 
     @Override
     public void onFailure(Call<Question> call, Throwable t) {
-
+        t.printStackTrace();
     }
 
     private CameraSource source;
@@ -153,7 +153,6 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                             Toast.makeText(QRCodeCaptureActivity.this, "Invalid code. Please input the 4 character code.", Toast.LENGTH_SHORT).show();
                         }
                         else if(code.startsWith("H")){
-                            // TODO Add hint
                             HintService hintService = RetrofitClient.retrofit.create(HintService.class);
                             Call<Hint> hintCallback = hintService.getHint(code);
                             hintCallback.enqueue(new Callback<Hint>() {
@@ -179,10 +178,9 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
 
                                 @Override
                                 public void onFailure(Call<Hint> call, Throwable t) {
-
+                                    t.printStackTrace();
                                 }
                             });
-                            wrongHintDialog();
                         }
                         else {
                             QuestionService questionService = RetrofitClient.retrofit.create(QuestionService.class);
