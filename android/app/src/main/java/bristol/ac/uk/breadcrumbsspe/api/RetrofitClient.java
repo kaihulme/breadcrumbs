@@ -6,7 +6,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static OkHttpClient client = new OkHttpClient.Builder()
-            .addInterceptor(new BasicAuthInterceptor("jackSmith@hotmail.co.uk", "aurora44"))
             .build();
 
     public static final Retrofit retrofit = new Retrofit.Builder()

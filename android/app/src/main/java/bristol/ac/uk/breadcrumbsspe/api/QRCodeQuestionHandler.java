@@ -36,7 +36,6 @@ public class QRCodeQuestionHandler implements Callback<Question> {
     public void start(QuestionActivity questionActivity,String url){
         setURL(url);
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new BasicAuthInterceptor("jackSmith@hotmail.co.uk", "aurora44"))
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(base_URL)

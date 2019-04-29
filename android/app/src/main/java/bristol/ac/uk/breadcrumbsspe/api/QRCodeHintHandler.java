@@ -27,7 +27,6 @@ public class QRCodeHintHandler implements Callback<Hint> {
     public void start(HintActivity hintActivity, String url){
         setURL(url);
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new BasicAuthInterceptor("jackSmith@hotmail.co.uk", "aurora44"))
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(base_URL)
