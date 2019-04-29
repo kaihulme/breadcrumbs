@@ -37,6 +37,29 @@ public class HintDbDAO implements HintDAO {
         return null;
     }
 
+    @Override
+    public Hint getHintByCode(String code) {
+        String getHintByName = "SELECT * FROM Hint WHERE code = ?";
+        try {
+            Connection con = dbConnection.getConnection();
+            PreparedStatement stmt = con.prepareStatement(getHintByName);
+            stmt.setString(1, code);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Hint hint = new Hint(rs.getLong("id"),rs.getString("hintText"),
+                        rs.getInt("x_coord"),rs.getInt("y_coord"),
+                        rs.getString("pictureName"), rs.getBlob("picture"));
+                hint.setCode(code);
+                stmt.close();
+                con.close();
+                return hint;
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     @Override
     public boolean addHint(Hint h, Long question_id) {

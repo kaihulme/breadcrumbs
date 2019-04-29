@@ -23,15 +23,15 @@ VALUES (1,'May have psammoma bodies',1),
 (4,'Bronze or hyperpigmented skin',1);
 
 
-INSERT INTO Hint (question,hintText)
-VALUES (1,'made of calcium'),
-(1,'have a laminar appearance'),
-(2,'tuns starch dark blue'),
-(2,'can be used to treat a certain type of cancer'),
-(3,'sounds similar to a pain treatment'),
-(3,'produced in the brain'),
-(4,'shows on the outside'),
-(4,'not to be confused with Silver syndrome');
+INSERT INTO Hint (question,hintText,code)
+VALUES (1,'made of calcium','HR4FE'),
+(1,'have a laminar appearance','HQ4G9'),
+(2,'tuns starch dark blue','HAS83'),
+(2,'can be used to treat a certain type of cancer','H4GUP'),
+(3,'sounds similar to a pain treatment','HRT93'),
+(3,'produced in the brain','HET03'),
+(4,'shows on the outside','HWF30'),
+(4,'not to be confused with Silver syndrome','HWR52');
 
 INSERT INTO Question (question)
 VALUES('After consuming a banana split, which hormones would be expected to increase?'),
