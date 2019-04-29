@@ -11,7 +11,7 @@ jobs:
                 command: cat > $HOME/.secret.properties && echo $DB_URL >> $HOME/.secret.properties &&  echo $DB_USER >> $HOME/.secret.properties && echo $DB_PASS >> $HOME/.secret.properties
             - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
                 key: breadcrumbs-web-{{ checksum "web/pom.xml" }}
-            - run: cd web && cat pom.xml && mvn dependency:go-offline # gets the project dependencies
+            - run: cd web && sudo apt-get purge maven && sudo apt install maven && mvn dependency:go-offline # gets the project dependencies
             - save_cache:
                 paths:
                     - ~/.m2
