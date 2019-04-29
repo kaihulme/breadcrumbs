@@ -23,4 +23,13 @@ public class HintAPI {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
+    @RequestMapping(method = RequestMethod.GET,value = "{id}")
+    public ResponseEntity getHintById(@PathVariable Long id){
+        Hint h = hintDAO.getHintById(id);
+        if( h != null){
+            return new ResponseEntity<>(h, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }    }
 }

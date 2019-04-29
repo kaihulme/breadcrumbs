@@ -9,6 +9,8 @@ public interface HintDAO {
 
     Hint getHintByCode(String code);
 
+    Hint getHintById(Long id);
+
     boolean addHint(Hint h, Long question_id);
 
     boolean deleteHint(Long hint_id);

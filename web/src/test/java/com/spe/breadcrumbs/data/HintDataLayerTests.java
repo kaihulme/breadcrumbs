@@ -59,4 +59,10 @@ public class HintDataLayerTests {
         Hint h = hintDAO.getHintByCode("HR4FE");
         assertEquals(h.getHintText(),"made of calcium");
     }
+
+    @Test
+    public void testGetHintById(){
+        Hint h = hintDAO.getHintById(1L);
+        assertEquals(h.getHintText(),"made of calcium");
+    }
 }

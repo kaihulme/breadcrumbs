@@ -27,8 +27,8 @@ public class HintDbDAO implements HintDAO {
                 Hint hint = new Hint(rs.getLong("id"),rs.getString("hintText"),
                         rs.getInt("x_coord"),rs.getInt("y_coord"),
                         rs.getString("pictureName"), rs.getBlob("picture"));
+                hint.setCode(rs.getString("code"));
                 stmt.close();
-                con.close();
                 return hint;
             }
         } catch (SQLException | IOException e) {
@@ -39,10 +39,10 @@ public class HintDbDAO implements HintDAO {
 
     @Override
     public Hint getHintByCode(String code) {
-        String getHintByName = "SELECT * FROM Hint WHERE code = ?";
+        String getHintByCode = "SELECT * FROM Hint WHERE code = ?";
         try {
             Connection con = dbConnection.getConnection();
-            PreparedStatement stmt = con.prepareStatement(getHintByName);
+            PreparedStatement stmt = con.prepareStatement(getHintByCode);
             stmt.setString(1, code);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -51,7 +51,28 @@ public class HintDbDAO implements HintDAO {
                         rs.getString("pictureName"), rs.getBlob("picture"));
                 hint.setCode(code);
                 stmt.close();
-                con.close();
+                return hint;
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Hint getHintById(Long id) {
+        String getHintByCode = "SELECT * FROM Hint WHERE id = ?";
+        try {
+            Connection con = dbConnection.getConnection();
+            PreparedStatement stmt = con.prepareStatement(getHintByCode);
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Hint hint = new Hint(rs.getLong("id"),rs.getString("hintText"),
+                        rs.getInt("x_coord"),rs.getInt("y_coord"),
+                        rs.getString("pictureName"), rs.getBlob("picture"));
+                hint.setCode(rs.getString("code"));
+                stmt.close();
                 return hint;
             }
         } catch (SQLException | IOException e) {
