@@ -6,9 +6,7 @@ import com.spe.breadcrumbs.entity.Meeting;
 import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.controller.MainController;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -47,11 +45,6 @@ public class WebTests {
     private String localhost = "http://localhost";
     private final String admin = "jackSmith@hotmail.co.uk";
     private final String basic = "EBach@Yahoo.com";
-
-//    @BeforeEach
-//    void setup(WebApplicationContext wac) {
-//        this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-//    }
 
     @Test
     public void testRedirectsToLoginPage() throws Exception {
