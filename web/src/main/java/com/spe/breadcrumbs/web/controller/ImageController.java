@@ -1,9 +1,6 @@
 package com.spe.breadcrumbs.web.controller;
 
-import com.spe.breadcrumbs.dao.MapDAO;
-import com.spe.breadcrumbs.dao.MapDbDAO;
-import com.spe.breadcrumbs.dao.QuestionDAO;
-import com.spe.breadcrumbs.dao.QuestionDbDAO;
+import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.Map;
 import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +22,7 @@ public class ImageController {
 
     private MapDAO mapDAO = new MapDbDAO(new DBConnection());
     private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
+    private HintDAO hintDAO = new HintDbDAO(new DBConnection());
 
     @RequestMapping(value = "/{image}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> postImage(@PathVariable("image") String image) throws SQLException {
@@ -32,7 +30,7 @@ public class ImageController {
         Blob blob = null;
 
         if (image.substring(0, 8).equals("venueMap")) blob = mapDAO.getMapByName(image).getPicture();
-        else if (image.substring(0, 9).equals("hintImage")) blob = questionDAO.getHintByName(image).getPicture();
+        else if (image.substring(0, 9).equals("hintImage")) blob = hintDAO.getHintByName(image).getPicture();
         //else if (image.substring(4).equals("path")) blob = pathDAO.getPath(image);
 
         if (blob != null) {

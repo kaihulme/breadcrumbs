@@ -75,8 +75,9 @@ public class QuestionDbDAO implements QuestionDAO {
             Connection con = dbConnection.getConnection();
             //first delete hints
             List<Hint> hints = getHints(id);
+            HintDAO hintDAO = new HintDbDAO(dbConnection);
             for(Hint h: hints){
-                assert(deleteHint(h.getId()));
+                assert(hintDAO.deleteHint(h.getId()));
             }
             //delete choices afterwards
             List<Choice> choices = getChoices(id);
@@ -160,8 +161,6 @@ public class QuestionDbDAO implements QuestionDAO {
         return choices;
     }
 
-    /////////////////// HINTS /////////////////////////
-
     @Override
     public List<Hint> getHints(Long questionId) {
         List<Hint> hints = new ArrayList<>();
@@ -184,139 +183,6 @@ public class QuestionDbDAO implements QuestionDAO {
         }
     }
 
-    @Override
-    public Hint getHintByName(String name) {
-        String getHintByName = "SELECT * FROM Hint WHERE pictureName = ?";
-        try {
-            Connection con = dbConnection.getConnection();
-            PreparedStatement stmt = con.prepareStatement(getHintByName);
-            stmt.setString(1, name);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                Hint hint = new Hint(rs.getLong("id"),rs.getString("hintText"),
-                        rs.getInt("x_coord"),rs.getInt("y_coord"),
-                        rs.getString("pictureName"), rs.getBlob("picture"));
-                stmt.close();
-                con.close();
-                return hint;
-            }
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    @Override
-    public boolean addHint(Hint h, Long question_id) {
-        try{
-            Connection con = dbConnection.getConnection();
-            String addHint = "INSERT INTO Hint(question, hintText,x_coord,y_coord) VALUES(?,?,?,?)";
-            PreparedStatement stmt = con.prepareStatement(addHint);
-            stmt.setLong(1,question_id);
-            stmt.setString(2,h.getHintText());
-            stmt.setInt(3,h.getX_coord());
-            stmt.setInt(4,h.getY_coord());
-            stmt.executeUpdate();
-//            con.close();
-            return true;
-        }catch(SQLException | IOException e){
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean deleteHint(Long hint_id) {
-        try{
-            Connection con = dbConnection.getConnection();
-            String deleteHint = "DELETE FROM Hint Where id = ?";
-            PreparedStatement stmt = con.prepareStatement(deleteHint);
-            stmt.setLong(1,hint_id);
-            stmt.executeUpdate();
-            return true;
-        }catch (SQLException | IOException e){
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean updateHint(Hint h, Long id) {
-        try{
-            String updateUser = "UPDATE Hint " +
-                    "SET hintText = ? " +
-                    "WHERE id = ?;";
-            Connection con = dbConnection.getConnection();
-            PreparedStatement stmt = con.prepareStatement(updateUser);
-            stmt.setString(1,h.getHintText());
-            stmt.setLong(2,id);
-            stmt.executeUpdate();
-            return true;
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean updateHintLocation(Hint h, Long id) {
-        try{
-            String updateUser = "UPDATE Hint " +
-                    "SET x_coord = ?, y_coord = ? " +
-                    "WHERE id = ?;";
-            Connection con = dbConnection.getConnection();
-            PreparedStatement stmt = con.prepareStatement(updateUser);
-            stmt.setInt(1,h.getX_coord());
-            stmt.setInt(2,h.getY_coord());
-            stmt.setLong(3,id);
-            stmt.executeUpdate();
-            return true;
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean updateHintImage(String pictureName, Blob picture, Long id) {
-        try{
-            String updateUser = "UPDATE Hint " +
-                    "SET pictureName = ?, picture = ? " +
-                    "WHERE id = ?;";
-            Connection con = dbConnection.getConnection();
-            PreparedStatement stmt = con.prepareStatement(updateUser);
-            stmt.setString(1, pictureName);
-            stmt.setBlob(2, picture);
-            stmt.setLong(3, id);
-            stmt.executeUpdate();
-            return true;
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean removeHintImage(Long hint_id) {
-        try{
-
-            String updateUser = "UPDATE Hint " +
-                    "SET pictureName = ?, picture = ? " +
-                    "WHERE id = ?;";
-            Connection con = dbConnection.getConnection();
-            PreparedStatement stmt = con.prepareStatement(updateUser);
-            stmt.setNull(1, Types.INTEGER);
-            stmt.setNull(2, Types.INTEGER);
-            stmt.setLong(3, hint_id);
-            stmt.executeUpdate();
-            return true;
-
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     /////////////// UPDATE /////////////////////
 

@@ -31,6 +31,9 @@ public class Hint {
     @Column (name="picture")
     private Blob picture;
 
+    @Column (name="code")
+    private String code;
+
     public Hint(Long id, String hintText, int x_coord, int y_coord, String pictureName, Blob picture){
         this.id = id;
         this.hintText = hintText;
