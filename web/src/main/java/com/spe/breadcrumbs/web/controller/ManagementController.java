@@ -35,6 +35,7 @@ public class ManagementController {
     private ExpertDAO expertDAO = new ExpertDbDAO(new DBConnection());
     private MeetingDAO meetingDAO = new MeetingDbDAO(new DBConnection());
     private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
+    private HintDAO hintDAO = new HintDbDAO(new DBConnection());
 
     @Value(value = "classpath:static/mapFeatures/questionIcon.png")
     private Resource questionIcon;
@@ -424,7 +425,7 @@ public class ManagementController {
 
     @PostMapping("//updateHintLocation/{question_id}&{hint_id}")
     public RedirectView updateHintLocation(@ModelAttribute Hint hint, @PathVariable Long question_id, @PathVariable Long hint_id, Model m) {
-        questionDAO.updateHintLocation(hint, hint_id);
+        hintDAO.updateHintLocation(hint, hint_id);
         Question question = questionDAO.getQuestion(question_id);
         updateQuestionMap(question);
         return new RedirectView("/management/breadcrumb/" + question_id);
@@ -437,7 +438,7 @@ public class ManagementController {
 //        Blob picture = imageToBlob(bi);
 //        hint.setPicture(picture);
 
-        questionDAO.addHint(hint, question_id);
+        hintDAO.addHint(hint, question_id);
 
         Question question = questionDAO.getQuestion(question_id);
         mapDAO.deleteMapsForQuestion(question_id);
@@ -454,11 +455,11 @@ public class ManagementController {
         switch (action) {
 
             case "submit":
-                questionDAO.updateHint(hint, hint_id);
+                hintDAO.updateHint(hint, hint_id);
                 break;
 
             case "delete":
-                questionDAO.deleteHint(hint_id);
+                hintDAO.deleteHint(hint_id);
                 Question question = questionDAO.getQuestion(question_id);
                 mapDAO.deleteMapsForQuestion(question_id);
                 addQuestionMap(question);
@@ -480,7 +481,7 @@ public class ManagementController {
                     String pictureName = "hintImage_q" + question_id + "_h" + hint_no;
                     BufferedImage bi = multipartToImage(f);
                     Blob picture = imageToBlob(bi);
-                    questionDAO.updateHintImage(pictureName, picture, hint_id);
+                    hintDAO.updateHintImage(pictureName, picture, hint_id);
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -488,7 +489,7 @@ public class ManagementController {
                 break;
 
             case "delete":
-                questionDAO.removeHintImage(hint_id);
+                hintDAO.removeHintImage(hint_id);
                 break;
 
         }
