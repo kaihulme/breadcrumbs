@@ -1,6 +1,7 @@
 package bristol.ac.uk.breadcrumbsspe;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -53,6 +54,10 @@ public class QRCodeScannerActivity extends DrawerActivity {
         if (requestCode == QRCodeReaderRequestCode) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (intent != null) {
+                    final ProgressDialog progressDialog = new ProgressDialog(QRCodeScannerActivity.this);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setMessage("Checking the QR Code...");
+                    progressDialog.show();
                     Barcode QRCode = intent.getParcelableExtra(QRCodeCaptureActivity.QRcodeObject);
                     //mResultTextView.setText(QRCode.displayValue);
                     String url = QRCode.displayValue;
@@ -60,10 +65,11 @@ public class QRCodeScannerActivity extends DrawerActivity {
                     int currentQuestion = ((MapState) this.getApplication()).getCurrentQuestion() + 1;
 
                     if(url.contains("hints")){
+                        String baseURL = url + "/";
                         OkHttpClient client = new OkHttpClient.Builder()
                                 .build();
                         Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl(url)
+                                .baseUrl(baseURL)
                                 .client(client)
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
@@ -72,12 +78,15 @@ public class QRCodeScannerActivity extends DrawerActivity {
                         hintCall.enqueue(new Callback<Hint>() {
                             @Override
                             public void onResponse(Call<Hint> call, Response<Hint> response) {
+                                progressDialog.cancel();
                                 if(response.isSuccessful() && response.body() != null){
                                     Hint hint = response.body();
                                     if(hint.getQuestionId().intValue() == currentQuestion){
                                         Intent i = new Intent(QRCodeScannerActivity.this, HintActivity.class);
+                                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                         i.putExtra("HINT", hint);
                                         startActivity(i);
+                                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                     } else {
                                         wrongHintDialog();
                                     }
@@ -89,16 +98,19 @@ public class QRCodeScannerActivity extends DrawerActivity {
 
                             @Override
                             public void onFailure(Call<Hint> call, Throwable t) {
+                                progressDialog.cancel();
                                 t.printStackTrace();
                             }
                         });
                     }
                     else if (url.endsWith(Integer.toString(currentQuestion))) {
+                        progressDialog.cancel();
                         Intent i = new Intent(QRCodeScannerActivity.this, QuestionActivity.class);
                         i.putExtra("QUESTION_URL", url);
                         startActivity(i);
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     } else {
+                        progressDialog.cancel();
                         wrongQuestionDialog();
                     }
                 } else

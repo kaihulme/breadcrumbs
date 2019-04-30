@@ -35,6 +35,7 @@ public class HintActivity extends AppCompatActivity {
             Picasso.get().load(hint.getHintImageUrl()).into(hintImage);
         } else {
             startActivity(new Intent(getApplicationContext(), QRCodeCaptureActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     }
 
