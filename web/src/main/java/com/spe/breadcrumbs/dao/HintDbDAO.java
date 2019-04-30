@@ -1,6 +1,7 @@
 package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.Hint;
+import com.spe.breadcrumbs.entity.Question;
 import com.spe.breadcrumbs.web.DBConnection;
 
 import java.io.IOException;
@@ -27,6 +28,9 @@ public class HintDbDAO implements HintDAO {
                 Hint hint = new Hint(rs.getLong("id"),rs.getString("hintText"),
                         rs.getInt("x_coord"),rs.getInt("y_coord"),
                         rs.getString("pictureName"), rs.getBlob("picture"));
+                QuestionDAO questionDAO = new QuestionDbDAO(dbConnection);
+                Question question = questionDAO.getQuestion(rs.getLong("question"));
+                hint.setQuestion(question);
                 hint.setCode(rs.getString("code"));
                 stmt.close();
                 return hint;
@@ -49,6 +53,9 @@ public class HintDbDAO implements HintDAO {
                 Hint hint = new Hint(rs.getLong("id"),rs.getString("hintText"),
                         rs.getInt("x_coord"),rs.getInt("y_coord"),
                         rs.getString("pictureName"), rs.getBlob("picture"));
+                QuestionDAO questionDAO = new QuestionDbDAO(dbConnection);
+                Question question = questionDAO.getQuestion(rs.getLong("question"));
+                hint.setQuestion(question);
                 hint.setCode(code);
                 stmt.close();
                 return hint;
@@ -71,6 +78,9 @@ public class HintDbDAO implements HintDAO {
                 Hint hint = new Hint(rs.getLong("id"),rs.getString("hintText"),
                         rs.getInt("x_coord"),rs.getInt("y_coord"),
                         rs.getString("pictureName"), rs.getBlob("picture"));
+                QuestionDAO questionDAO = new QuestionDbDAO(dbConnection);
+                Question question = questionDAO.getQuestion(rs.getLong("question"));
+                hint.setQuestion(question);
                 hint.setCode(rs.getString("code"));
                 stmt.close();
                 return hint;
