@@ -16,13 +16,15 @@ import static android.graphics.Color.rgb;
 
 public class AttemptHandler implements Callback<ResponseBody> {
     private QuestionActivity questionActivity;
-    private Button b;
-    private Question q;
-   public  AttemptHandler(QuestionActivity questionActivity, Button b, Question q){
+    private Button button;
+    private Question question;
+
+    public AttemptHandler(QuestionActivity questionActivity, Button button, Question question){
         this.questionActivity = questionActivity;
-        this.b = b;
-        this.q = q;
+        this.button = button;
+        this.question = question;
     }
+
     public void setQuestionActivity(QuestionActivity questionActivity) {
         this.questionActivity = questionActivity;
     }
@@ -30,20 +32,18 @@ public class AttemptHandler implements Callback<ResponseBody> {
     @Override
     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
        if(response.isSuccessful()){
-           if (questionActivity.buttons.indexOf(b) == questionActivity.answer) {
-               q.correctAttemptMade(true);
-               b.setBackgroundColor(rgb(0, 191, 0));
-               //wait
+           if (questionActivity.getButtons().indexOf(button) == questionActivity.getAnswer()) {
+               question.correctAttemptMade(true);
+               button.setBackgroundColor(rgb(0, 191, 0));
                Intent nextQ = new Intent(questionActivity, HomeActivity.class);
-               nextQ.putExtra("CURRENT_QUESTION", q.getId().intValue());
-               //System.out.println(q.getId() + "getId");
+               nextQ.putExtra("CURRENT_QUESTION", question.getId().intValue());
                questionActivity.startActivity(nextQ);
                questionActivity.overridePendingTransition( R.anim.fade_in, R.anim.fade_out );
                questionActivity.finish();
            } else {
-               q.correctAttemptMade(false);
-               b.setBackgroundColor(rgb(191, 0, 0));
-               b.setEnabled(false);
+               question.correctAttemptMade(false);
+               button.setBackgroundColor(rgb(191, 0, 0));
+               button.setEnabled(false);
            }
        }else{
            System.out.println(response.code());

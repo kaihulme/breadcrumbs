@@ -16,8 +16,6 @@ public class Question implements Serializable {
     private String question;
     private int noOfAttempts;
     private int score;
-    private Quiz quiz;
-    private List<Choice> attempts = new ArrayList<>(); //stores the order the user made the hints (can be less than 4)
     private List<Choice> choices = new ArrayList<>();
     public Question(Long id,String question,int score) {
         this.id = id;

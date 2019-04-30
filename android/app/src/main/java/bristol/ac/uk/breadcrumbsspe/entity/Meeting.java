@@ -3,24 +3,24 @@ package bristol.ac.uk.breadcrumbsspe.entity;
 import java.sql.Time;
 
 public class Meeting {
-    private Expert expert;
+    private String expertName;
     private User user;
     private Time meetingTime;
     private String location;
 
-    public Meeting(Expert e, User u, Time t, String loc){
-        expert = e;
-        user = u;
-        meetingTime = t;
-        location = loc;
+    public Meeting(String expertName, User user, Time time, String location){
+        this.expertName = expertName;
+        this.user = user;
+        this.meetingTime = time;
+        this.location = location;
+    }
+
+    public String getExpertName(){
+        return expertName;
     }
 
     public User getUser() {
         return user;
-    }
-
-    public Expert getExpert() {
-        return expert;
     }
 
     public Time getMeetingTime() {

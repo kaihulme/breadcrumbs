@@ -23,9 +23,9 @@ import retrofit2.Call;
 //@SpringBootApplication
 public class QuestionActivity extends AppCompatActivity {
 
-    public List<Button> buttons;
-    public TextView questionTextView;
-    public int answer;
+    private List<Button> buttons;
+    private TextView questionTextView;
+    private int answer;
     private Question question;
 
     // TODO Credits activity with us and sponsors
@@ -51,21 +51,21 @@ public class QuestionActivity extends AppCompatActivity {
         if(question != null){
             questionTextView.setText(question.getQuestion());
             for (int i = 0; i < 4; i++) {
-                Choice c = question.getChoices().get(i);
-                buttons.get(i).setText(c.getChoiceText());
-                if(c.isAnswer()) answer = i;
+                Choice choice = question.getChoices().get(i);
+                buttons.get(i).setText(choice.getChoiceText());
+                if(choice.isAnswer()) answer = i;
             }
-            for (Button b : buttons) {
-                b.setOnClickListener(new View.OnClickListener() {
+            for (Button button : buttons) {
+                button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         AttemptService attemptService = RetrofitClient.retrofit.create(AttemptService.class);
-                        User u = UserInSession.getUser();
-                        int a = buttons.indexOf(b);
-                        Choice c = question.getChoices().get(a);
-                        Attempt attempt = new Attempt(u,c);
-                        Call<ResponseBody> responseBodyCall = attemptService.addAttempt(attempt);
-                        responseBodyCall.enqueue(new AttemptHandler(QuestionActivity.this,b, question));
+                        User user = UserInSession.getUser();
+                        int current = buttons.indexOf(button);
+                        Choice choice = question.getChoices().get(current);
+                        Attempt attempt = new Attempt(user,choice);
+                        Call<ResponseBody> responseBodyCall  = attemptService.addAttempt(attempt);
+                        responseBodyCall.enqueue(new AttemptHandler(QuestionActivity.this, button, question));
                     }
                 });
             }
@@ -73,6 +73,14 @@ public class QuestionActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), QRCodeCaptureActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
+    }
+
+    public int getAnswer(){
+        return answer;
+    }
+
+    public List<Button> getButtons(){
+        return buttons;
     }
 
     @Override

@@ -23,8 +23,6 @@ public class User {
 
     private int score;
 
-    Quiz quiz;
-
     public User(Long id,String firstName,String lastName,String email) {
         this.id = id;
         this.firstName = firstName;
