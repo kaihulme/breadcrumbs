@@ -11,13 +11,12 @@ import java.util.List;
 
 import bristol.ac.uk.breadcrumbsspe.api.AttemptHandler;
 import bristol.ac.uk.breadcrumbsspe.api.AttemptService;
-import bristol.ac.uk.breadcrumbsspe.api.QRCodeQuestionHandler;
 import bristol.ac.uk.breadcrumbsspe.api.RetrofitClient;
-import bristol.ac.uk.breadcrumbsspe.api.TextCodeQuestionHandler;
 import bristol.ac.uk.breadcrumbsspe.entity.Attempt;
 import bristol.ac.uk.breadcrumbsspe.entity.Choice;
 import bristol.ac.uk.breadcrumbsspe.entity.Question;
 import bristol.ac.uk.breadcrumbsspe.entity.User;
+import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
@@ -25,12 +24,9 @@ import retrofit2.Call;
 public class QuestionActivity extends AppCompatActivity {
 
     public List<Button> buttons;
-    public TextView question_text_view;
-    public int qIndex;
+    public TextView questionTextView;
     public int answer;
-    private String url;
-    private String code;
-    private Question q;
+    private Question question;
 
     // TODO Credits activity with us and sponsors
 
@@ -38,13 +34,11 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent i = getIntent();
-        q = (Question) i.getSerializableExtra("QUESTION");
-        url = i.getStringExtra("QUESTION_URL");
-        code = i.getStringExtra("CODE");
+        question = (Question) i.getSerializableExtra("QUESTION");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         buttons = new ArrayList<>();
-        question_text_view = findViewById(R.id.question_textview);
+        questionTextView = findViewById(R.id.question_textview);
         answer();
     }
 
@@ -54,11 +48,10 @@ public class QuestionActivity extends AppCompatActivity {
         buttons.add((Button)findViewById(R.id.button_answer2));
         buttons.add((Button)findViewById(R.id.button_answer3));
         buttons.add((Button)findViewById(R.id.button_answer4));
-        if(q != null){
-            //do everything that was being done in the QRCode Question handler
-            question_text_view.setText(q.getQuestion());
+        if(question != null){
+            questionTextView.setText(question.getQuestion());
             for (int i = 0; i < 4; i++) {
-                Choice c = q.getChoices().get(i);
+                Choice c = question.getChoices().get(i);
                 buttons.get(i).setText(c.getChoiceText());
                 if(c.isAnswer()) answer = i;
             }
@@ -69,19 +62,16 @@ public class QuestionActivity extends AppCompatActivity {
                         AttemptService attemptService = RetrofitClient.retrofit.create(AttemptService.class);
                         User u = UserInSession.getUser();
                         int a = buttons.indexOf(b);
-                        Choice c = q.getChoices().get(a);
+                        Choice c = question.getChoices().get(a);
                         Attempt attempt = new Attempt(u,c);
                         Call<ResponseBody> responseBodyCall = attemptService.addAttempt(attempt);
-                        responseBodyCall.enqueue(new AttemptHandler(QuestionActivity.this,b,q));
+                        responseBodyCall.enqueue(new AttemptHandler(QuestionActivity.this,b, question));
                     }
                 });
             }
-        }
-        else if(code == null){
-            QRCodeQuestionHandler qrCodeQuestionHandler = new QRCodeQuestionHandler();
-            qrCodeQuestionHandler.setQuestionActivity(this);
-//            TextCodeQuestionHandler textCodeQuestionHandler = new TextCodeQuestionHandler();
-            qrCodeQuestionHandler.start(this,url);
+        } else {
+            startActivity(new Intent(getApplicationContext(), QRCodeCaptureActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     }
 

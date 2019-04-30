@@ -68,11 +68,11 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
     public void onResponse(Call<Question> call, Response<Question> response) {
         progressDialog.cancel();
         if(response.isSuccessful() && response.body() != null){
-            Question q = response.body();
+            Question question = response.body();
             int currentQuestion = ((MapState) getApplication()).getCurrentQuestion();
-            if(q.getId().intValue() == currentQuestion) {
+            if(question.getId().intValue() == currentQuestion) {
                 Intent i = new Intent(QRCodeCaptureActivity.this, QuestionActivity.class);
-                i.putExtra("QUESTION", q);
+                i.putExtra("QUESTION", question);
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }

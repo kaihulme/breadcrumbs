@@ -15,8 +15,10 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.squareup.picasso.Picasso;
 
 import bristol.ac.uk.breadcrumbsspe.api.QRCodeHintService;
+import bristol.ac.uk.breadcrumbsspe.api.QRCodeQuestionService;
 import bristol.ac.uk.breadcrumbsspe.entity.Hint;
 import bristol.ac.uk.breadcrumbsspe.entity.MapState;
+import bristol.ac.uk.breadcrumbsspe.entity.Question;
 import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -64,15 +66,16 @@ public class QRCodeScannerActivity extends DrawerActivity {
 
                     int currentQuestion = ((MapState) this.getApplication()).getCurrentQuestion() + 1;
 
+                    String baseURL = url + "/";
+                    OkHttpClient client = new OkHttpClient.Builder()
+                            .build();
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(baseURL)
+                            .client(client)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
                     if(url.contains("hints")){
-                        String baseURL = url + "/";
-                        OkHttpClient client = new OkHttpClient.Builder()
-                                .build();
-                        Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl(baseURL)
-                                .client(client)
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
                         QRCodeHintService qrCodeHintService = retrofit.create(QRCodeHintService.class);
                         Call<Hint> hintCall = qrCodeHintService.getHint();
                         hintCall.enqueue(new Callback<Hint>() {
@@ -102,17 +105,49 @@ public class QRCodeScannerActivity extends DrawerActivity {
                                 t.printStackTrace();
                             }
                         });
-                    }
-                    else if (url.endsWith(Integer.toString(currentQuestion))) {
-                        progressDialog.cancel();
-                        Intent i = new Intent(QRCodeScannerActivity.this, QuestionActivity.class);
-                        i.putExtra("QUESTION_URL", url);
-                        startActivity(i);
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     } else {
-                        progressDialog.cancel();
-                        wrongQuestionDialog();
+                        QRCodeQuestionService qrCodeQuestionService = retrofit.create(QRCodeQuestionService.class);
+                        Call<Question> questionCall = qrCodeQuestionService.getQuestion();
+                        questionCall.enqueue(new Callback<Question>() {
+                            @Override
+                            public void onResponse(Call<Question> call, Response<Question> response) {
+                                progressDialog.cancel();
+                                if(response.isSuccessful() && response.body() != null) {
+                                    Question question = response.body();
+                                    if(question.getId().intValue() == currentQuestion){
+                                        Intent i = new Intent(QRCodeScannerActivity.this, QuestionActivity.class);
+                                        i.putExtra("QUESTION", question);
+                                        startActivity(i);
+                                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                    } else {
+                                        wrongQuestionDialog();
+                                    }
+                                } else {
+                                    System.out.println(response.errorBody());
+                                    wrongQuestionDialog();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Question> call, Throwable t) {
+                                progressDialog.cancel();
+                                t.printStackTrace();
+
+                            }
+                        });
                     }
+
+
+//                    else if (url.endsWith(Integer.toString(currentQuestion))) {
+//                        progressDialog.cancel();
+//                        Intent i = new Intent(QRCodeScannerActivity.this, QuestionActivity.class);
+//                        i.putExtra("QUESTION_URL", url);
+//                        startActivity(i);
+//                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//                    } else {
+//                        progressDialog.cancel();
+//                        wrongQuestionDialog();
+//                    }
                 } else
                     mResultTextView.setText(R.string.no_qrcode_captured);
             } else
