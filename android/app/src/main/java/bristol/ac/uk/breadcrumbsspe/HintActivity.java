@@ -26,7 +26,7 @@ public class HintActivity extends AppCompatActivity {
         Intent intent = getIntent();
         goHome();
         Hint hint = (Hint) intent.getSerializableExtra("HINT");
-        String url = intent.getStringExtra("URL");
+        String url = intent.getStringExtra("HINT_URL");
 
         hintTextView = findViewById(R.id.hint_textview);
         hintImage = findViewById(R.id.hint_image);
