@@ -5,13 +5,13 @@ import java.sql.Time;
 public class Meeting {
     private Expert expert;
     private User user;
-    private Time meeting_time;
+    private Time meetingTime;
     private String location;
 
     public Meeting(Expert e, User u, Time t, String loc){
         expert = e;
         user = u;
-        meeting_time = t;
+        meetingTime = t;
         location = loc;
     }
 
@@ -23,8 +23,8 @@ public class Meeting {
         return expert;
     }
 
-    public Time getMeeting_time() {
-        return meeting_time;
+    public Time getMeetingTime() {
+        return meetingTime;
     }
 
     public String getLocation() {

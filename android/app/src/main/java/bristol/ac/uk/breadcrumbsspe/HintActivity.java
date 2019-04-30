@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import bristol.ac.uk.breadcrumbsspe.api.QRCodeHintHandler;
 import bristol.ac.uk.breadcrumbsspe.entity.Hint;
+import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
 
 
 public class HintActivity extends AppCompatActivity {
@@ -26,7 +26,6 @@ public class HintActivity extends AppCompatActivity {
         Intent intent = getIntent();
         goHome();
         Hint hint = (Hint) intent.getSerializableExtra("HINT");
-        String url = intent.getStringExtra("HINT_URL");
 
         hintTextView = findViewById(R.id.hint_textview);
         hintImage = findViewById(R.id.hint_image);
@@ -35,9 +34,7 @@ public class HintActivity extends AppCompatActivity {
             hintTextView.setText(hint.getHintText());
             Picasso.get().load(hint.getHintImageUrl()).into(hintImage);
         } else {
-            QRCodeHintHandler qrCodeHintHandler = new QRCodeHintHandler();
-            qrCodeHintHandler.setHintActivity(this);
-            qrCodeHintHandler.start(this, url);
+            startActivity(new Intent(getApplicationContext(), QRCodeCaptureActivity.class));
         }
     }
 

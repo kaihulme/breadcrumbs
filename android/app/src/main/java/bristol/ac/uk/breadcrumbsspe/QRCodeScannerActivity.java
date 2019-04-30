@@ -11,9 +11,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.squareup.picasso.Picasso;
 
+import bristol.ac.uk.breadcrumbsspe.api.QRCodeHintService;
+import bristol.ac.uk.breadcrumbsspe.entity.Hint;
 import bristol.ac.uk.breadcrumbsspe.entity.MapState;
 import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class QRCodeScannerActivity extends DrawerActivity {
     private TextView mResultTextView;
@@ -51,14 +60,38 @@ public class QRCodeScannerActivity extends DrawerActivity {
                     int currentQuestion = ((MapState) this.getApplication()).getCurrentQuestion() + 1;
 
                     if(url.contains("hints")){
-                        // TODO make url work with currentQuestion
-                        if(url.endsWith(Integer.toString(currentQuestion))){
-                            Intent i = new Intent(QRCodeScannerActivity.this, HintActivity.class);
-                            i.putExtra("HINT_URL", url);
-                            startActivity(i);
-                        } else {
-                            wrongHintDialog();
-                        }
+                        OkHttpClient client = new OkHttpClient.Builder()
+                                .build();
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(url)
+                                .client(client)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+                        QRCodeHintService qrCodeHintService = retrofit.create(QRCodeHintService.class);
+                        Call<Hint> hintCall = qrCodeHintService.getHint();
+                        hintCall.enqueue(new Callback<Hint>() {
+                            @Override
+                            public void onResponse(Call<Hint> call, Response<Hint> response) {
+                                if(response.isSuccessful() && response.body() != null){
+                                    Hint hint = response.body();
+                                    if(hint.getQuestionId().intValue() == currentQuestion){
+                                        Intent i = new Intent(QRCodeScannerActivity.this, HintActivity.class);
+                                        i.putExtra("HINT", hint);
+                                        startActivity(i);
+                                    } else {
+                                        wrongHintDialog();
+                                    }
+                                } else {
+                                    System.out.println(response.errorBody());
+                                    wrongHintDialog();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Hint> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
                     }
                     else if (url.endsWith(Integer.toString(currentQuestion))) {
                         Intent i = new Intent(QRCodeScannerActivity.this, QuestionActivity.class);

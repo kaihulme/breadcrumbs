@@ -3,7 +3,6 @@ package bristol.ac.uk.breadcrumbsspe.entity;
 import java.io.Serializable;
 
 public class Hint implements Serializable {
-    // TODO Add image
     private Long questionId;
     private String hintText;
     private String hintImageUrl;
