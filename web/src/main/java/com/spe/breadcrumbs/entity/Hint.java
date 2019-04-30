@@ -10,7 +10,9 @@ import java.sql.Blob;
 @Setter @Getter
 public class Hint {
 
-    Question question;
+    private Question question;
+
+    private Long questionId;
 
     @Id
     @GeneratedValue

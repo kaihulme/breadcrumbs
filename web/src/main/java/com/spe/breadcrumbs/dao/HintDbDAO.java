@@ -56,6 +56,7 @@ public class HintDbDAO implements HintDAO {
                 QuestionDAO questionDAO = new QuestionDbDAO(dbConnection);
                 Question question = questionDAO.getQuestion(rs.getLong("question"));
                 hint.setQuestion(question);
+                hint.setQuestionId(rs.getLong("question"));
                 hint.setCode(code);
                 stmt.close();
                 return hint;
@@ -81,6 +82,7 @@ public class HintDbDAO implements HintDAO {
                 QuestionDAO questionDAO = new QuestionDbDAO(dbConnection);
                 Question question = questionDAO.getQuestion(rs.getLong("question"));
                 hint.setQuestion(question);
+                hint.setQuestionId(rs.getLong("question"));
                 hint.setCode(rs.getString("code"));
                 stmt.close();
                 return hint;
