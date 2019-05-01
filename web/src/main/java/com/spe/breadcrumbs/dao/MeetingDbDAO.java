@@ -134,6 +134,7 @@ public class MeetingDbDAO implements MeetingDAO {
             if(rs.next()){
                 User user = userDAO.getUser(rs.getLong("userId"));
                 Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
+                expert.setEmail(null); // email shouldn't be retrieved via api
                 expert.setPassword(null); //passwords shouldn't be retrieved via api
                 Time t = rs.getTime("meeting_time");
                 String loc = rs.getString("location");
