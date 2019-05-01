@@ -108,7 +108,7 @@ public class MeetingDbDAO implements MeetingDAO {
             PreparedStatement stmt = con.prepareStatement(getMeetings);
             stmt.setLong(1,expertId);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()){
+            while(rs.next()){
                 User user = userDAO.getUser(rs.getLong("userId"));
                 Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
                 Time t = rs.getTime("meeting_time");

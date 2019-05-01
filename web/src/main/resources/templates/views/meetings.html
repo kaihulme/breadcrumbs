@@ -48,18 +48,21 @@
             <li>
                 <a th:href="@{/participants}">Users</a>
             </li>
-            <li>
-                <a href="#analysis" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Analysis</a>
-                <ul class="collapse list-unstyled" id="analysis">
-                    <li>
-                        <a data-toggle="modal" data-target="#notBuiltModal">Questions</a>
-                        <!--<a th:href="@{/questions}">Questions</a>-->
-                    </li>
-                    <li>
-                        <a data-toggle="modal" data-target="#notBuiltModal">Paths</a>
-                        <!--<a th:href="@{/paths}">Paths</a>-->
-                    </li>
-                </ul>
+<!--            <li>-->
+<!--                <a href="#analysis" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Analysis</a>-->
+<!--                <ul class="collapse list-unstyled" id="analysis">-->
+<!--                    <li>-->
+<!--                        <a data-toggle="modal" data-target="#notBuiltModal">Questions</a>-->
+<!--                        &lt;!&ndash;<a th:href="@{/questions}">Questions</a>&ndash;&gt;-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a data-toggle="modal" data-target="#notBuiltModal">Paths</a>-->
+<!--                        &lt;!&ndash;<a th:href="@{/paths}">Paths</a>&ndash;&gt;-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+            <li class="active">
+                <a th:href="@{/meetings}">Meetings</a>
             </li>
             <li>
                 <a th:href="@{/management}">Management</a>
@@ -89,12 +92,12 @@
                     <div th:switch="${#lists.size(usersOnFinalQuestion)}">
                         <div th:case="'0'">
                             <button type="button" class="btn btn-info meeting-notification" data-toggle="tooltip" data-placement="bottom" title="Click to see your upcoming meetings">
-                                <span class="oi oi-bell"></span>
+                                <a th:href="@{/meetings}"><span class="oi oi-bell"></span></a>
                             </button>
                         </div>
                         <div th:case="*">
                             <button type="button" class="btn btn-danger meeting-notification" data-toggle="tooltip" data-placement="bottom" title="A user is on their final question!">
-                                <a th:href="@{/account}"><span class="oi oi-bell"></span></a>
+                                <a th:href="@{/meetings}"><span class="oi oi-bell"></span></a>
                             </button>
                         </div>
                     </div>
@@ -119,54 +122,75 @@
 
             <hr class="style1">
 
-            <div class="row justify-content-md-center">
+            <div th:if="${usersOnFinalQuestion} != null">
 
-                <div class="col-4">
-                    <div class="container">
+                <div class="row justify-content-md-center">
+
+                    <div class="col-4 container">
 
                         <div class="row" id="title">
-                            <h2>Account Details</h2>
+                            <h2>Upcoming Meeting</h2>
                         </div>
 
-                        <p>Your account details.</p>
+                        <p>This user is near the end of the breadcrumb trail and has a meeting with you soon.</p>
 
                         <table class="table">
                             <tbody>
-                                <tr>
-                                    <td>ID</td>
-                                    <td th:text = "${expert.id}"></td>
-                                </tr>
-                                <tr>
-                                    <td>First Name</td>
-                                    <td th:text = "${expert.firstName}"></td>
-                                </tr>
-                                <tr>
-                                    <td>Second Name</td>
-                                    <td th:text = "${expert.lastName}"></td>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <td th:text = "${expert.email}"></td>
-                                </tr>
+                            <tr>
+                                <td>Expert</td>
+                                <td th:text = "${usersOnFinalQuestion[0].expert.firstName}+' '+${usersOnFinalQuestion[0].expert.lastName}"></td>
+                            </tr>
+                            <tr>
+                                <td>User</td>
+                                <td th:text = "${usersOnFinalQuestion[0].user.firstName}+' '+${usersOnFinalQuestion[0].user.lastName}"></td>
+                            </tr>
+                            <tr>
+                                <td>Time</td>
+                                <td th:text = "${usersOnFinalQuestion[0].time}"></td>
+                            </tr>
+                            <tr>
+                                <td>Location</td>
+                                <td th:text = "${usersOnFinalQuestion[0].location}"></td>
+                            </tr>
                             </tbody>
                         </table>
 
+                        <div class="row justify-content-md-center">
+                            <div class="col-4">
+                                <a th:href="@{'/meetings/meeting/'+usersOnFinalQuestion[0].userId}" ><button class="btn btn-outline-secondary">Start Meeting</button></a>
+                            </div>
+                        </div>
+
                     </div>
+
+                    <div class="col-4 container">
+
+                        <div class="row" id="title">
+                            <h2>Location</h2>
+                        </div>
+
+                        <div class="row justify-content-md-center">
+                            <img th:src="@{'/image/venueMap_empty'}" id="hintImage">
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="col-6">
+            </div>
+
+            <div class="row justify-content-md-center">
+                <div class="col-8">
                     <div class="container">
 
                         <div class="row" id="title">
                             <h2>Meetings</h2>
                         </div>
 
-                        <div th:switch="${#lists.size(meetings)}">
+                        <div th:switch="${#lists.size(expertsMeetings)}">
 
                             <div th:case="'0'">
-
                                 <p>You have no upcoming meetings</p>
-
                             </div>
 
                             <div th:case="*">
@@ -176,20 +200,20 @@
                                 <!-- Meeting Table -->
                                 <table class="table table-striped table-hover" id="meetingsTable">
                                     <thead>
-                                        <tr>
-                                            <th>Expert</th>
-                                            <th>User</th>
-                                            <th>Time</th>
-                                            <th>Location</th>
-                                        </tr>
+                                    <tr>
+                                        <th>Expert</th>
+                                        <th>User</th>
+                                        <th>Time</th>
+                                        <th>Location</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="meeting : ${meetings}">
-                                            <td><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></td>
-                                            <td><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></td>
-                                            <td><span th:text="${meeting.time}">id</span></td>
-                                            <td><span th:text="${meeting.location}">id</span></td>
-                                        </tr>
+                                    <tr th:each="meeting : ${expertsMeetings}">
+                                        <td><a th:href="@{'/meetings/' + ${meeting.user.id}}"><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></a></td>
+                                        <td><a th:href="@{'/meetings/' + ${meeting.user.id}}"><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></a></td>
+                                        <td><a th:href="@{'/meetings/' + ${meeting.user.id}}"><span th:text="${meeting.time}">id</span></a></td>
+                                        <td><a th:href="@{'/meetings/' + ${meeting.user.id}}"><span th:text="${meeting.location}">id</span></a></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <!-- /Meeting Table -->
@@ -200,7 +224,6 @@
 
                     </div>
                 </div>
-
             </div>
 
             <hr class="style1">

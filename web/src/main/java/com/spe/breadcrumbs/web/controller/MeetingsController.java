@@ -15,9 +15,9 @@ import java.util.List;
 
 @CrossOrigin
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/meetings")
 
-public class AccountController {
+public class MeetingsController {
 
     @Autowired
     private SecurityService securityService;
@@ -28,28 +28,43 @@ public class AccountController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String getAccountDetails(Model m){
-//        context.scan("com.spe.breadcrumbs.security");
-//        context.refresh();
-//        securityService = context.getBean(SecurityService.class);
 
         String username = securityService.findLoggedInUsername();
         Expert expert = expertDAO.findByEmail(username);
-
         List<Meeting> expertsMeetings = meetingDAO.getMeetingsWithExpert(expert.getId());
-
         List<Meeting> usersOnFinalQuestion = new ArrayList<>();
-        int noOfQuestions = questionDAO.getAllQuestions().size();
 
+        int noOfQuestions = questionDAO.getAllQuestions().size();
         for (Meeting meeting : expertsMeetings) {
             List<Question> questionsAnswered = questionDAO.getQuestionsAnswered(meeting.getUser().getId());
             if (questionsAnswered.size() >= noOfQuestions - 1) usersOnFinalQuestion.add(meeting);
         }
 
-        m.addAttribute("expert", expert);
-        m.addAttribute("meetings", expertsMeetings);
+        m.addAttribute("expertsMeetings", expertsMeetings);
         m.addAttribute("usersOnFinalQuestion", usersOnFinalQuestion);
 
-        return "views/account";
+        return "views/meetings";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value="/{user_id}")
+    public String viewMeeting(Model m, @PathVariable Long user_id) {
+
+        String username = securityService.findLoggedInUsername();
+        Expert expert = expertDAO.findByEmail(username);
+        List<Meeting> expertsMeetings = meetingDAO.getMeetingsWithExpert(expert.getId());
+        List<Meeting> usersOnFinalQuestion = new ArrayList<>();
+
+        int noOfQuestions = questionDAO.getAllQuestions().size();
+        for (Meeting meeting : expertsMeetings) {
+            List<Question> questionsAnswered = questionDAO.getQuestionsAnswered(meeting.getUser().getId());
+            if (questionsAnswered.size() >= noOfQuestions - 1) usersOnFinalQuestion.add(meeting);
+        }
+
+        m.addAttribute("selectedMeeting", meetingDAO.getMeeting(user_id, expert.getId()));
+        m.addAttribute("expertsMeetings", expertsMeetings);
+        m.addAttribute("usersOnFinalQuestion", usersOnFinalQuestion);
+
+        return "views/meetings_meeting";
     }
 
 }

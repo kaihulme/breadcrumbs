@@ -53,4 +53,9 @@ public class MainController{
         return "views/paths";
     }
 
+    @RequestMapping("/meetings")
+    public String meetings(){
+        return "views/meetings";
+    }
+
 }
