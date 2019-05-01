@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface MeetingDAO {
     boolean createMeeting(Meeting m);
-    boolean updateMeeting(Long userId,Long expertId,Meeting m);
-    boolean deleteMeeting(Long userId,Long expertId);
+    boolean updateMeeting(Long userId,Meeting m);
+    boolean deleteMeeting(Long userId);
     List<Meeting> getMeetings();
     List<Meeting> getMeetingsWithExpert(Long expertId);
-    Meeting getMeeting(Long userId,Long expertId);
+    Meeting getMeeting(Long userId);
 }

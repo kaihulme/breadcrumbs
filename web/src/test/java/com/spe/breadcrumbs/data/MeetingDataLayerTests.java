@@ -62,17 +62,17 @@ public class MeetingDataLayerTests {
 
     @Test
     public void testDeleteMeeting(){
-        assertNotNull(meetingDAO.getMeeting(testMeeting.getUser().getId(),testMeeting.getExpert().getId()));
-        assert(meetingDAO.deleteMeeting(testMeeting.getUser().getId(),testMeeting.getExpert().getId()));
-        assertNull(meetingDAO.getMeeting(testMeeting.getUser().getId(),testMeeting.getExpert().getId()));
+        assertNotNull(meetingDAO.getMeeting(testMeeting.getUser().getId()));
+        assert(meetingDAO.deleteMeeting(testMeeting.getUser().getId()));
+        assertNull(meetingDAO.getMeeting(testMeeting.getUser().getId()));
     }
 
     @Test
     public void testUpdateMeeting(){
         assertEquals(testMeeting.getLocation(),"Meeting Room A");
         testMeeting.setLocation("Cafe");
-        assert(meetingDAO.updateMeeting(testMeeting.getUser().getId(),testMeeting.getExpert().getId(),testMeeting));
-        Meeting m = meetingDAO.getMeeting(testMeeting.getUser().getId(),testMeeting.getExpert().getId());
+        assert(meetingDAO.updateMeeting(testMeeting.getUser().getId(),testMeeting));
+        Meeting m = meetingDAO.getMeeting(testMeeting.getUser().getId());
         assertNotNull(m);
         assertEquals(m.getLocation(),"Cafe");
     }
