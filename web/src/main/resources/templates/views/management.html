@@ -336,6 +336,7 @@
 													<th>User</th>
 													<th>Time</th>
 													<th>Location</th>
+													<th>Completed</th>
 													<th>
 														<button class="btn btn-info btn-sm" id="addMeeting" type="button" data-toggle="modal" data-target="#addMeetingModal">
 															<span class="oi oi-plus" title="align-left" aria-hidden="true"></span>
@@ -355,6 +356,7 @@
 												<td><a th:href="@{'/management/meeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}"><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></a></td>
 												<td><a th:href="@{'/management/meeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}"><span th:text="${meeting.time}">id</span></a></td>
 												<td><a th:href="@{'/management/meeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}"><span th:text="${meeting.location}">id</span></a></td>
+												<td><a th:href="@{'/management/meeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}"><span th:text="${meeting.completed}">id</span></a></td>
 
 												<td>
 													<form action="#" th:action="@{'/management/meeting/deleteMeeting/'+${meeting.user.id}+'&'+${meeting.expert.id}}" th:object="${meeting}" method="post">

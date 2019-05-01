@@ -2,6 +2,7 @@ package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
 import com.spe.breadcrumbs.entity.Map;
+import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ public class ImageController {
     private MapDAO mapDAO = new MapDbDAO(new DBConnection());
     private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
     private HintDAO hintDAO = new HintDbDAO(new DBConnection());
+    private MeetingDAO meetingDAO = new MeetingDbDAO(new DBConnection());
+    private UserDAO userDAO = new UserDbDAO(new DBConnection());
 
     @RequestMapping(value = "/{image}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> postImage(@PathVariable("image") String image) throws SQLException {
@@ -32,6 +35,7 @@ public class ImageController {
         if (image.substring(0, 8).equals("venueMap")) blob = mapDAO.getMapByName(image).getPicture();
         else if (image.substring(0, 9).equals("hintImage")) blob = hintDAO.getHintByName(image).getPicture();
         //else if (image.substring(4).equals("path")) blob = pathDAO.getPath(image);
+        else if (image.substring(0, 7).equals("meeting")) blob = meetingDAO.getMeeting(Long.parseLong(image)).getPicture();
 
         if (blob != null) {
             byte[] bytes = blob.getBytes(1, (int) blob.length());

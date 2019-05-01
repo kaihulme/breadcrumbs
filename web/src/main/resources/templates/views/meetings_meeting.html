@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Breadcrumbs | Account</title>
+    <title>Breadcrumbs | Meetings</title>
 
     <!-- CSS Imports -->
 
@@ -89,7 +89,7 @@
                 <!-- Navbar Right -->
                 <ul class="nav navbar-nav navbar-right">
 
-                    <div th:switch="${#lists.size(usersOnFinalQuestion)}">
+                    <div th:switch="${#lists.size(meetingsWithUserAtEnd)}">
                         <div th:case="'0'">
                             <button type="button" class="btn btn-info meeting-notification" data-toggle="tooltip" data-placement="bottom" title="Click to see your upcoming meetings">
                                 <a th:href="@{/meetings}"><span class="oi oi-bell"></span></a>

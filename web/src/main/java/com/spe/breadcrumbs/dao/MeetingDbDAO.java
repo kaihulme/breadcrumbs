@@ -19,12 +19,17 @@ public class MeetingDbDAO implements MeetingDAO {
     public boolean createMeeting(Meeting m) {
         try{
             Connection con = dbConnection.getConnection();
-            String addMeeting = "INSERT INTO Meeting (userId,expertId,meeting_time,location) VALUES (?,?,?,?)";
+            String addMeeting = "INSERT INTO Meeting (userId,expertId,meeting_time,location,completed, picture) VALUES (?,?,?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(addMeeting);
             stmt.setLong(1,m.getUser().getId());
             stmt.setLong(2,m.getExpert().getId());
             stmt.setTime(3,m.getMeeting_time());
             stmt.setString(4,m.getLocation());
+            stmt.setBoolean(5, false);
+            stmt.setBlob(6, m.getPicture());
+
+            System.out.println(stmt);
+
             stmt.executeUpdate();
             return true;
         } catch (IOException | SQLException e) {
@@ -37,10 +42,47 @@ public class MeetingDbDAO implements MeetingDAO {
     public boolean updateMeeting(Long userId, Meeting m) {
         try{
             Connection con = dbConnection.getConnection();
-            String updateMeeting = "UPDATE Meeting SET meeting_time = ?, location = ? WHERE userId = ?";
+            String updateMeeting = "UPDATE Meeting SET expertId = ?, userId = ? WHERE userId = ?";
             PreparedStatement stmt = con.prepareStatement(updateMeeting);
-            stmt.setTime(1,m.getMeeting_time());
-            stmt.setString(2,m.getLocation());
+            stmt.setLong(1,m.getExpertId());
+            stmt.setLong(2,m.getExpertId());
+            stmt.setLong(3,userId);
+            stmt.executeUpdate();
+
+            return true;
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateMeetingLocation(Long userId, Meeting m) {
+        try{
+            Connection con = dbConnection.getConnection();
+            String updateMeeting = "UPDATE Meeting SET x_coord = ?, y_coord = ?, picture = ? WHERE userId = ?";
+            PreparedStatement stmt = con.prepareStatement(updateMeeting);
+            stmt.setInt(1,m.getX_coord());
+            stmt.setInt(2,m.getY_coord());
+            stmt.setBlob(3,m.getPicture());
+            stmt.setLong(4,userId);
+            stmt.executeUpdate();
+
+            return true;
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean completeMeeting(Long userId, String text) {
+        try{
+            Connection con = dbConnection.getConnection();
+            String updateMeeting = "UPDATE Meeting SET text = ?, completed = ? WHERE userId = ?";
+            PreparedStatement stmt = con.prepareStatement(updateMeeting);
+            stmt.setString(1,text);
+            stmt.setBoolean(2, true);
             stmt.setLong(3,userId);
             stmt.executeUpdate();
 
@@ -81,7 +123,8 @@ public class MeetingDbDAO implements MeetingDAO {
                 Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
                 Time t = rs.getTime("meeting_time");
                 String loc = rs.getString("location");
-                Meeting m = new Meeting(expert,user,t,loc);
+                Boolean completed = rs.getBoolean("completed");
+                Meeting m = new Meeting(expert,user,t,loc, completed);
                 String time = t.toString();
                 m.setTime(time.substring(0, 5));
                 meetings.add(m);
@@ -109,7 +152,79 @@ public class MeetingDbDAO implements MeetingDAO {
                 Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
                 Time t = rs.getTime("meeting_time");
                 String loc = rs.getString("location");
-                Meeting m = new Meeting(expert,user,t,loc);
+                Boolean completed = rs.getBoolean("completed");
+                Meeting m = new Meeting(expert,user,t,loc, completed);
+                String time = t.toString();
+                m.setTime(time.substring(0, 5));
+                meetings.add(m);
+            }
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+        return meetings;
+    }
+
+    @Override
+    public List<Meeting> getUpcomingMeetingsWithExpert(Long expertId) {
+        UserDAO userDAO = new UserDbDAO(dbConnection);
+        ExpertDAO expertDAO = new ExpertDbDAO(dbConnection);
+        List<Meeting> meetings = new ArrayList<>();
+
+        System.out.println("Get upcoming meetings with expertID : " + expertId);
+
+        try{
+            Connection con = dbConnection.getConnection();
+            String getMeetings = "SELECT * FROM Meeting WHERE expertId = ?";
+            PreparedStatement stmt = con.prepareStatement(getMeetings);
+            stmt.setLong(1,expertId);
+            //stmt.setBoolean(2, false);
+
+            System.out.println(stmt);
+
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                User user = userDAO.getUser(rs.getLong("userId"));
+                Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
+                Time t = rs.getTime("meeting_time");
+                String loc = rs.getString("location");
+                Boolean completed = rs.getBoolean("completed");
+                Meeting m = new Meeting(expert,user,t,loc, completed);
+                String time = t.toString();
+                m.setTime(time.substring(0, 5));
+
+                System.out.println(m.getCompleted());
+
+                if (m.getCompleted()) {
+                    meetings.add(m);
+                    System.out.println("upcoming with : " + m.getUser().getFirstName());
+                } else System.out.println("meeting with : " + m.getUser().getFirstName() + " completed");
+
+            }
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+        return meetings;
+    }
+
+    @Override
+    public List<Meeting> getCompletedMeetingsWithExpert(Long expertId) {
+        UserDAO userDAO = new UserDbDAO(dbConnection);
+        ExpertDAO expertDAO = new ExpertDbDAO(dbConnection);
+        List<Meeting> meetings = new ArrayList<>();
+        try{
+            Connection con = dbConnection.getConnection();
+            String getMeetings = "SELECT * FROM Meeting WHERE expertId = ? AND completed = ?";
+            PreparedStatement stmt = con.prepareStatement(getMeetings);
+            stmt.setLong(1,expertId);
+            stmt.setBoolean(2, true);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                User user = userDAO.getUser(rs.getLong("userId"));
+                Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
+                Time t = rs.getTime("meeting_time");
+                String loc = rs.getString("location");
+                Boolean completed = rs.getBoolean("completed");
+                Meeting m = new Meeting(expert,user,t,loc, completed);
                 String time = t.toString();
                 m.setTime(time.substring(0, 5));
                 meetings.add(m);
@@ -138,7 +253,8 @@ public class MeetingDbDAO implements MeetingDAO {
                 expert.setPassword(null); //passwords shouldn't be retrieved via api
                 Time t = rs.getTime("meeting_time");
                 String loc = rs.getString("location");
-                m = new Meeting(expert,user,t,loc);
+                Boolean completed = rs.getBoolean("completed");
+                m = new Meeting(expert,user,t,loc, completed);
                 String time = t.toString();
                 m.setTime(time.substring(0, 5));
             }

@@ -41,6 +41,8 @@ public class ManagementController {
     private Resource questionIcon;
     @Value(value = "classpath:static/mapFeatures/hintIcon.png")
     private Resource hintIcon;
+    @Value(value = "classpath:static/mapFeatures/meetingIcon.png")
+    private Resource meetingIcon;
 
     @Autowired
     private SecurityService securityService;
@@ -49,6 +51,22 @@ public class ManagementController {
         String username = securityService.findLoggedInUsername();
         Expert currentExpert = expertDAO.findByEmail(username);
         return meetingDAO.getMeetingsWithExpert(currentExpert.getId());
+    }
+
+    private List<Meeting> getMeetingsWithUserAtEnd() {
+
+        String username = securityService.findLoggedInUsername();
+        Expert expert = expertDAO.findByEmail(username);
+        List<Meeting> expertsMeetings = meetingDAO.getUpcomingMeetingsWithExpert(expert.getId());
+        List<Meeting> meetingsWithUserAtEnd = new ArrayList<>();
+
+        int noOfQuestions = questionDAO.getAllQuestions().size();
+        for (Meeting meeting : expertsMeetings) {
+            List<Question> questionsAnswered = questionDAO.getQuestionsAnswered(meeting.getUser().getId());
+            if (questionsAnswered.size() >= noOfQuestions - 1) meetingsWithUserAtEnd.add(meeting);
+        }
+
+        return meetingsWithUserAtEnd;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -227,6 +245,25 @@ public class ManagementController {
     }
 
     //////////////// MAPS ////////////////////////////////
+
+    private Blob drawMeetingImage(Meeting meeting) {
+        try {
+
+            Map emptyMap = mapDAO.getMapByName("venueMap_empty");
+            Blob map = emptyMap.getPicture();
+
+            BufferedImage bi_map = blobToImage(map);
+            BufferedImage bi_meetingIcon = ImageIO.read(meetingIcon.getInputStream());
+
+            Graphics g = bi_map.getGraphics();
+            g.drawImage(bi_meetingIcon, meeting.getX_coord(), meeting.getY_coord(), 100, 100, null);
+
+            return imageToBlob(bi_map);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     private Blob drawQuestionImage(Question question) {
         try {
@@ -528,6 +565,7 @@ public class ManagementController {
         meeting.setExpert(expert);
         meeting.setUser(user);
         meeting.setMeeting_time(time);
+        meeting.setPicture(drawMeetingImage(meeting));
 
         meetingDAO.createMeeting(meeting);
 
@@ -564,7 +602,15 @@ public class ManagementController {
         meeting.setMeeting_time(time);
 
         meetingDAO.updateMeeting( meeting.getUserId(), meeting);
+
         return new RedirectView("/management");
+    }
+
+    @PostMapping("/meeting/updateMeetingLocation/{user_id}&{expert_id}")
+    public RedirectView updateMeetingLocation(@ModelAttribute Meeting meeting, @PathVariable Long user_id, @PathVariable Long expert_id) {
+        meeting.setPicture(drawMeetingImage(meeting));
+        meetingDAO.updateMeetingLocation(user_id, meeting);
+        return new RedirectView("/management/"+user_id+'&'+expert_id);
     }
 
 }

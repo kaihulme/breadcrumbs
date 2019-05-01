@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Breadcrumbs | Account</title>
+    <title>Breadcrumbs | Meetings</title>
 
     <!-- CSS Imports -->
 
@@ -89,7 +89,7 @@
                 <!-- Navbar Right -->
                 <ul class="nav navbar-nav navbar-right">
 
-                    <div th:switch="${#lists.size(usersOnFinalQuestion)}">
+                    <div th:switch="${#lists.size(meetingsWithUserAtEnd)}">
                         <div th:case="'0'">
                             <button type="button" class="btn btn-info meeting-notification" data-toggle="tooltip" data-placement="bottom" title="Click to see your upcoming meetings">
                                 <a th:href="@{/meetings}"><span class="oi oi-bell"></span></a>
@@ -122,9 +122,14 @@
 
             <hr class="style1">
 
-            <div th:if="${usersOnFinalQuestion} != null">
+            <div th:switch="${#lists.size(meetingsWithUserAtEnd)}">
 
-                <div class="row justify-content-md-center">
+                <div th:case="'0'">
+                </div>
+
+                <div th:case="*">
+
+                    <div class="row justify-content-md-center">
 
                     <div class="col-4 container">
 
@@ -138,26 +143,26 @@
                             <tbody>
                             <tr>
                                 <td>Expert</td>
-                                <td th:text = "${usersOnFinalQuestion[0].expert.firstName}+' '+${usersOnFinalQuestion[0].expert.lastName}"></td>
+                                <td th:text = "${meetingsWithUserAtEnd[0].expert.firstName}+' '+${meetingsWithUserAtEnd[0].expert.lastName}"></td>
                             </tr>
                             <tr>
                                 <td>User</td>
-                                <td th:text = "${usersOnFinalQuestion[0].user.firstName}+' '+${usersOnFinalQuestion[0].user.lastName}"></td>
+                                <td th:text = "${meetingsWithUserAtEnd[0].user.firstName}+' '+${meetingsWithUserAtEnd[0].user.lastName}"></td>
                             </tr>
                             <tr>
                                 <td>Time</td>
-                                <td th:text = "${usersOnFinalQuestion[0].time}"></td>
+                                <td th:text = "${meetingsWithUserAtEnd[0].time}"></td>
                             </tr>
                             <tr>
                                 <td>Location</td>
-                                <td th:text = "${usersOnFinalQuestion[0].location}"></td>
+                                <td th:text = "${meetingsWithUserAtEnd[0].location}"></td>
                             </tr>
                             </tbody>
                         </table>
 
                         <div class="row justify-content-md-center">
                             <div class="col-4">
-                                <a th:href="@{'/meetings/meeting/'+usersOnFinalQuestion[0].userId}" ><button class="btn btn-outline-secondary">Start Meeting</button></a>
+                                <a th:href="@{'/meetings/meeting/'+meetingsWithUserAtEnd[0].userId}" ><button class="btn btn-outline-secondary">Start Meeting</button></a>
                             </div>
                         </div>
 
@@ -176,6 +181,10 @@
                     </div>
 
                 </div>
+
+                </div>
+
+            </div>
 
             </div>
 

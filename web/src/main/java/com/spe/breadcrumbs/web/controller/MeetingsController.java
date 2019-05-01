@@ -26,22 +26,25 @@ public class MeetingsController {
     private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
     private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 
+    private List<Meeting> getMeetingsWithUserAtEnd(List<Meeting> expertsMeetings) {
+        List<Meeting> meetingsWithUserAtEnd = new ArrayList<>();
+        int noOfQuestions = questionDAO.getAllQuestions().size();
+        for (Meeting meeting : expertsMeetings) {
+            List<Question> questionsAnswered = questionDAO.getQuestionsAnswered(meeting.getUser().getId());
+            if (questionsAnswered.size() >= noOfQuestions - 1) meetingsWithUserAtEnd.add(meeting);
+        }
+        return meetingsWithUserAtEnd;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public String getAccountDetails(Model m){
 
         String username = securityService.findLoggedInUsername();
         Expert expert = expertDAO.findByEmail(username);
-        List<Meeting> expertsMeetings = meetingDAO.getMeetingsWithExpert(expert.getId());
-        List<Meeting> usersOnFinalQuestion = new ArrayList<>();
-
-        int noOfQuestions = questionDAO.getAllQuestions().size();
-        for (Meeting meeting : expertsMeetings) {
-            List<Question> questionsAnswered = questionDAO.getQuestionsAnswered(meeting.getUser().getId());
-            if (questionsAnswered.size() >= noOfQuestions - 1) usersOnFinalQuestion.add(meeting);
-        }
+        List<Meeting> expertsMeetings = meetingDAO.getUpcomingMeetingsWithExpert(expert.getId());
 
         m.addAttribute("expertsMeetings", expertsMeetings);
-        m.addAttribute("usersOnFinalQuestion", usersOnFinalQuestion);
+        m.addAttribute("meetingsWithUserAtEnd", getMeetingsWithUserAtEnd(expertsMeetings));
 
         return "views/meetings";
     }
@@ -51,18 +54,11 @@ public class MeetingsController {
 
         String username = securityService.findLoggedInUsername();
         Expert expert = expertDAO.findByEmail(username);
-        List<Meeting> expertsMeetings = meetingDAO.getMeetingsWithExpert(expert.getId());
-        List<Meeting> usersOnFinalQuestion = new ArrayList<>();
+        List<Meeting> expertsMeetings = meetingDAO.getUpcomingMeetingsWithExpert(expert.getId());
 
-        int noOfQuestions = questionDAO.getAllQuestions().size();
-        for (Meeting meeting : expertsMeetings) {
-            List<Question> questionsAnswered = questionDAO.getQuestionsAnswered(meeting.getUser().getId());
-            if (questionsAnswered.size() >= noOfQuestions - 1) usersOnFinalQuestion.add(meeting);
-        }
-
-        m.addAttribute("selectedMeeting", meetingDAO.getMeeting(user_id, expert.getId()));
+        m.addAttribute("selectedMeeting", meetingDAO.getMeeting(user_id));
         m.addAttribute("expertsMeetings", expertsMeetings);
-        m.addAttribute("usersOnFinalQuestion", usersOnFinalQuestion);
+        m.addAttribute("meetingsWithUserAtEnd", getMeetingsWithUserAtEnd(expertsMeetings));
 
         return "views/meetings_meeting";
     }
