@@ -11,10 +11,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.sql.Time;
-
+import bristol.ac.uk.breadcrumbsspe.api.MeetingHandler;
 import bristol.ac.uk.breadcrumbsspe.entity.MapState;
-import bristol.ac.uk.breadcrumbsspe.entity.Meeting;
 import bristol.ac.uk.breadcrumbsspe.entity.User;
 
 
@@ -24,6 +22,9 @@ public class HomeActivity extends DrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        startMeeting();
+
         Intent i = getIntent();
         int qIndex = i.getIntExtra("CURRENT_QUESTION", -1);
         System.out.print("qIndex" + qIndex);
@@ -74,8 +75,8 @@ public class HomeActivity extends DrawerActivity {
     }
 
     private void startMeeting(){
-        Meeting placeholderMeeting = new Meeting("Placeholder", UserInSession.getUser(), new Time(0), "location");
-//        System.out.println("Placeholder " + ((MapState)getApplication()).getCurrentQuestion());
+        MeetingHandler meetingHandler = new MeetingHandler();
+        meetingHandler.getMeeting(this, UserInSession.getUser().getId());
     }
 
     @Override

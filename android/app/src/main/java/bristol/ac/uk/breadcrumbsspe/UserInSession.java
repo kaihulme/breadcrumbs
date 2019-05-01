@@ -1,7 +1,5 @@
 package bristol.ac.uk.breadcrumbsspe;
 
-import android.icu.lang.UScript;
-
 import bristol.ac.uk.breadcrumbsspe.entity.User;
 
 public class UserInSession {
