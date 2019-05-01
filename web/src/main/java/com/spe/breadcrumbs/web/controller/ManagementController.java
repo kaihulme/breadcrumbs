@@ -536,7 +536,7 @@ public class ManagementController {
 
     @PostMapping("/meeting/deleteMeeting/{user_id}&{expert_id}")
     public RedirectView deleteUserFromEdit(@PathVariable Long user_id, @PathVariable Long expert_id) {
-        meetingDAO.deleteMeeting(user_id, expert_id);
+        meetingDAO.deleteMeeting(user_id);
         return new RedirectView("/management");
     }
 
@@ -544,7 +544,7 @@ public class ManagementController {
     public String updateMeeting(@PathVariable Long user_id, @PathVariable Long expert_id, Model m) {
         List<Expert> experts = expertDAO.getAllExperts();
         List<User> users = userDAO.getAllUsers();
-        Meeting meeting = meetingDAO.getMeeting(user_id, expert_id);
+        Meeting meeting = meetingDAO.getMeeting(user_id);
         m.addAttribute("experts", experts);
         m.addAttribute("users", users);
         m.addAttribute("meeting", meeting);
@@ -563,7 +563,7 @@ public class ManagementController {
         meeting.setUser(user);
         meeting.setMeeting_time(time);
 
-        meetingDAO.updateMeeting( meeting.getUserId(),meeting.getExpertId(), meeting);
+        meetingDAO.updateMeeting( meeting.getUserId(), meeting);
         return new RedirectView("/management");
     }
 

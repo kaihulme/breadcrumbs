@@ -34,18 +34,15 @@ public class MeetingDbDAO implements MeetingDAO {
     }
 
     @Override
-    public boolean updateMeeting(Long userId, Long expertId, Meeting m) {
+    public boolean updateMeeting(Long userId, Meeting m) {
         try{
             Connection con = dbConnection.getConnection();
-            String updateMeeting = "UPDATE Meeting SET meeting_time = ?, location = ? WHERE userId = ? AND expertId = ?";
+            String updateMeeting = "UPDATE Meeting SET meeting_time = ?, location = ? WHERE userId = ?";
             PreparedStatement stmt = con.prepareStatement(updateMeeting);
             stmt.setTime(1,m.getMeeting_time());
             stmt.setString(2,m.getLocation());
             stmt.setLong(3,userId);
-            stmt.setLong(4,expertId);
             stmt.executeUpdate();
-
-            System.out.println(m.getLocation());
 
             return true;
         } catch (IOException | SQLException e) {
@@ -55,13 +52,12 @@ public class MeetingDbDAO implements MeetingDAO {
     }
 
     @Override
-    public boolean deleteMeeting(Long userId, Long expertId) {
+    public boolean deleteMeeting(Long userId) {
         try{
             Connection con = dbConnection.getConnection();
-            String deleteMeeting = "DELETE FROM Meeting WHERE userId = ? AND expertId = ?";
+            String deleteMeeting = "DELETE FROM Meeting WHERE userId = ?";
             PreparedStatement stmt = con.prepareStatement(deleteMeeting);
             stmt.setLong(1,userId);
-            stmt.setLong(2,expertId);
             stmt.executeUpdate();
             return true;
         } catch (IOException | SQLException e) {
@@ -125,16 +121,15 @@ public class MeetingDbDAO implements MeetingDAO {
     }
 
     @Override
-    public Meeting getMeeting(Long userId, Long expertId) {
+    public Meeting getMeeting(Long userId) {
         UserDAO userDAO = new UserDbDAO(dbConnection);
         ExpertDAO expertDAO = new ExpertDbDAO(dbConnection);
         Meeting m = null;
         try{
             Connection con = dbConnection.getConnection();
-            String getMeetings = "SELECT * FROM Meeting WHERE userId = ? AND expertId = ?";
+            String getMeetings = "SELECT * FROM Meeting WHERE userId = ?";
             PreparedStatement stmt = con.prepareStatement(getMeetings);
             stmt.setLong(1,userId);
-            stmt.setLong(2,expertId);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 User user = userDAO.getUser(rs.getLong("userId"));
