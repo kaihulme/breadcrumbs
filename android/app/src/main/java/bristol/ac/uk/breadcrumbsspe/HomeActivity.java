@@ -23,7 +23,7 @@ public class HomeActivity extends DrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        startMeeting();
+//        startMeeting();
 
         Intent i = getIntent();
         int qIndex = i.getIntExtra("CURRENT_QUESTION", -1);
