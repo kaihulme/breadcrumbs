@@ -125,46 +125,29 @@
                     <form id="updateMeetingForm" action="#" th:action="@{/management/meeting/updateMeeting}" th:object="${meeting}" method="post">
 
                         <div class="form-group row">
-
                             <label for="meetingExpert" class="col-4 col-form-label">Expert</label>
                             <div class="col-8">
-                                <div class="form-group">
-                                    <select class="form-control" th:field="*{expertId}" id="meetingExpert">
-                                        <option value="0">Select an expert...</option>
-                                        <option th:each="expert : ${experts}" th:value="${expert.id}" th:text="${expert.firstName} + ' ' + ${expert.lastName}"></option>
-                                    </select>
-                                </div>
+                                <div class="form-group" id="meetingExpert" th:text="${meeting.expert.firstName} + ' ' +${meeting.expert.lastName}"></div>
                             </div>
-
                         </div>
                         <div class="form-group row">
-
                             <label for="meetingUser" class="col-4 col-form-label">User</label>
                             <div class="col-8">
-                                <div class="form-group">
-                                    <select class="form-control" th:field="*{userId}" id="meetingUser">
-                                        <option value="0">Select a user...</option>
-                                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
-                                    </select>
-                                </div>
+                                <div class="form-group" id="meetingUser" th:text="${meeting.user.firstName} + ' ' +${meeting.user.lastName}"></div>
                             </div>
-
                         </div>
-                        <div class="form-group row">
 
+                        <div class="form-group row">
                             <label for="meeting_time" class="col-4 col-form-label">Time</label>
                             <div class="col-8">
                                 <input type="time" class="form-control" id="meeting_time" th:field="*{time}"/>
                             </div>
-
                         </div>
                         <div class="form-group row">
-
                             <label for="meetingLocation" class="col-4 col-form-label">Location</label>
                             <div class="col-8">
                                 <input class="form-control" id="meetingLocation" th:field="*{location}"/>
                             </div>
-
                         </div>
 
                         <div class="form-group row justify-content-md-center">
@@ -177,6 +160,50 @@
 
                 </div>
             </div>
+
+            <div class="container col-4">
+
+                <div class="row" id="title">
+                    <h2>Map Location</h2>
+                </div>
+
+                <p>Change the location of meeting on map.</p>
+
+                <div class="row justify-content-md-center">
+                    <img th:src="@{'/image/venueMap_empty'}" id="editMap">
+                </div>
+
+                <div class="row justify-content-md-center">
+                    <span>(</span>
+                    <span id="x_coordSliderVal" th:text="@{${meeting.x_coord}}"></span>
+                    <span>, </span>
+                    <span id="y_coordSliderVal" th:text="@{${meeting.y_coord}}"></span>
+                    <span>)</span>
+                </div>
+
+                <br>
+
+                <form action="#" th:action="@{'updateMeetingLocation/'+${meeting.user.id}}" th:object="${meeting}" method="post">
+
+                    <div class="form-group row justify-content-md-center">
+                        <input id="x_coord" th:field="*{x_coord}" type="text" data-slider-min="0" data-slider-step="1" data-slider-value="500" data-slider-max="1328"/>
+                    </div>
+                    <div class="form-group row justify-content-md-center">
+                        <input id="y_coord" th:field="*{y_coord}" type="text" data-slider-min="0" data-slider-max="1080" data-slider-step="1" data-slider-value="500"/>
+                    </div>
+
+                    <br>
+
+                    <div class="form-group row justify-content-md-center">
+                        <div class="col-4">
+                            <button type="submit" class="form-control" name="action" value="submit">update</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
         </div>
 
         <hr class="style1">

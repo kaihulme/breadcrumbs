@@ -43,10 +43,10 @@ public class MeetingDbDAO implements MeetingDAO {
     public boolean updateMeeting(Long userId, Meeting m) {
         try{
             Connection con = dbConnection.getConnection();
-            String updateMeeting = "UPDATE Meeting SET expertId = ?, userId = ? WHERE userId = ?";
+            String updateMeeting = "UPDATE Meeting SET location = ?, meeting_time = ? WHERE userId = ?";
             PreparedStatement stmt = con.prepareStatement(updateMeeting);
-            stmt.setLong(1,m.getExpertId());
-            stmt.setLong(2,m.getExpertId());
+            stmt.setString(1,m.getLocation());
+            stmt.setTime(2,m.getMeeting_time());
             stmt.setLong(3,userId);
             stmt.executeUpdate();
 

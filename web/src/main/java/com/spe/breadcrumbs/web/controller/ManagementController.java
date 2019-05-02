@@ -592,23 +592,15 @@ public class ManagementController {
 
     @PostMapping("/meeting/updateMeeting")
     public RedirectView updateMeeting(@ModelAttribute Meeting meeting) {
-
-        Expert expert = expertDAO.getExpert(meeting.getExpertId());
-        User user = userDAO.getUser(meeting.getUserId());
         Time time = java.sql.Time.valueOf(meeting.getTime()+":00");
-
-        meeting.setExpert(expert);
-        meeting.setUser(user);
         meeting.setMeeting_time(time);
-
         meetingDAO.updateMeeting( meeting.getUserId(), meeting);
-
         return new RedirectView("/management");
     }
 
     @PostMapping("/meeting/updateMeetingLocation/{user_id}&{expert_id}")
     public RedirectView updateMeetingLocation(@ModelAttribute Meeting meeting, @PathVariable Long user_id, @PathVariable Long expert_id) {
-        meeting.setPicture(drawMeetingImage(meeting));
+//        meeting.setPicture(drawMeetingImage(meeting));
         meetingDAO.updateMeetingLocation(user_id, meeting);
         return new RedirectView("/management/"+user_id+'&'+expert_id);
     }
