@@ -60,10 +60,10 @@ public class MeetingHandler implements Callback<Meeting> {
                 if(response.isSuccessful()){
                     Meeting meeting = response.body();
                     try {
-                        tv_message.setText("You will be meeting with " + meeting.getExpert().getFirstName() + " " + meeting.getExpert().getLastName() + " at " + meeting.getMeetingTime().toString() + " at location: " + meeting.getLocation());
+                        tv_message.setText("You will be meeting with " + meeting.getExpert().getFirstName() + " " + meeting.getExpert().getLastName() + " at location: " + meeting.getLocation());
                     } catch (Exception e){
                         tv_message.setText("You will be meeting with EXPERT at TIME at location: LOCATION");
-                        Toast.makeText(homeActivity, "No connection.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(homeActivity, "Exception.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     tv_message.setText("You will be meeting with EXPERT at TIME at location: LOCATION");

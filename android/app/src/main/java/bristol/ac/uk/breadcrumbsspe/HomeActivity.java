@@ -27,7 +27,7 @@ public class HomeActivity extends DrawerActivity {
         setContentView(R.layout.activity_home);
 
         FloatingActionButton cameraButton = findViewById(R.id.camera_button);
-//        startMeeting(cameraButton);
+        startMeeting(cameraButton);
 
         Intent i = getIntent();
         int qIndex = i.getIntExtra("CURRENT_QUESTION", -1);
