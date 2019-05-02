@@ -1,6 +1,7 @@
 package bristol.ac.uk.breadcrumbsspe.api;
 
 import android.content.DialogInterface;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,9 +18,11 @@ import retrofit2.Response;
 
 public class MeetingHandler implements Callback<Meeting> {
     private HomeActivity homeActivity;
+    private FloatingActionButton cameraButton;
 
-    public void getMeeting(HomeActivity homeActivity, Long userId){
+    public void getMeeting(HomeActivity homeActivity, FloatingActionButton cameraButton, Long userId){
         this.homeActivity = homeActivity;
+        this.cameraButton = cameraButton;
         MeetingService meetingService = RetrofitClient.retrofit.create(MeetingService.class);
         Call<Meeting> meetingCall = meetingService.getMeeting(userId);
         meetingCall.enqueue(this);
@@ -35,8 +38,8 @@ public class MeetingHandler implements Callback<Meeting> {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 
-        homeActivity.getCameraButton().setImageResource(R.drawable.ic_assignment);
-        homeActivity.getCameraButton().setOnClickListener(new View.OnClickListener() {
+        cameraButton.setImageResource(R.drawable.ic_assignment);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.show();

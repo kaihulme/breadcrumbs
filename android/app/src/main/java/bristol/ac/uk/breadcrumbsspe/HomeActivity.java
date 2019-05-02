@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewDebug;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -18,14 +19,13 @@ import bristol.ac.uk.breadcrumbsspe.entity.User;
 
 public class HomeActivity extends DrawerActivity {
 
-    private FloatingActionButton cameraButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-//        startMeeting();
+        FloatingActionButton cameraButton = findViewById(R.id.camera_button);
+//        startMeeting(cameraButton);
 
         Intent i = getIntent();
         int qIndex = i.getIntExtra("CURRENT_QUESTION", -1);
@@ -35,13 +35,11 @@ public class HomeActivity extends DrawerActivity {
         }
 
         if(((MapState)this.getApplication()).getCurrentQuestion() == 8)
-            startMeeting();
+            startMeeting(cameraButton);
         drawMap();
         updateScore();
         makeDrawer();
         navigationView.setCheckedItem(R.id.nav_map);
-
-        cameraButton = findViewById(R.id.camera_button);
 
         Animation scale_fab_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_in);
         cameraButton.startAnimation(scale_fab_in);
@@ -76,13 +74,9 @@ public class HomeActivity extends DrawerActivity {
         ((MapState) this.getApplication()).setCurrentQuestion(questionNumber);
     }
 
-    private void startMeeting(){
+    private void startMeeting(FloatingActionButton cameraButton){
         MeetingHandler meetingHandler = new MeetingHandler();
-        meetingHandler.getMeeting(this, UserInSession.getUser().getId());
-    }
-
-    public FloatingActionButton getCameraButton(){
-        return cameraButton;
+        meetingHandler.getMeeting(this, cameraButton, UserInSession.getUser().getId());
     }
 
     @Override
