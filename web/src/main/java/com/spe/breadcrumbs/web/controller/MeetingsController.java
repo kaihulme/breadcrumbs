@@ -37,7 +37,7 @@ public class MeetingsController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getAccountDetails(Model m){
+    public String getMeetings(Model m){
 
         String username = securityService.findLoggedInUsername();
         Expert expert = expertDAO.findByEmail(username);

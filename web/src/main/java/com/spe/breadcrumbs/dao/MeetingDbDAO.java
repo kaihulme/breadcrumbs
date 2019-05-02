@@ -19,14 +19,15 @@ public class MeetingDbDAO implements MeetingDAO {
     public boolean createMeeting(Meeting m) {
         try{
             Connection con = dbConnection.getConnection();
-            String addMeeting = "INSERT INTO Meeting (userId,expertId,meeting_time,location,completed, picture) VALUES (?,?,?,?,?,?)";
+//            String addMeeting = "INSERT INTO Meeting (userId,expertId,meeting_time,location,completed, picture) VALUES (?,?,?,?,?,?)";
+            String addMeeting = "INSERT INTO Meeting (userId, expertId, meeting_time, location, completed) VALUES (?,?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(addMeeting);
             stmt.setLong(1,m.getUser().getId());
             stmt.setLong(2,m.getExpert().getId());
             stmt.setTime(3,m.getMeeting_time());
             stmt.setString(4,m.getLocation());
             stmt.setBoolean(5, false);
-            stmt.setBlob(6, m.getPicture());
+            //stmt.setBlob(6, m.getPicture());
 
             System.out.println(stmt);
 
@@ -174,10 +175,10 @@ public class MeetingDbDAO implements MeetingDAO {
 
         try{
             Connection con = dbConnection.getConnection();
-            String getMeetings = "SELECT * FROM Meeting WHERE expertId = ?";
+            String getMeetings = "SELECT * FROM Meeting WHERE expertId = ? AND completed = ?";
             PreparedStatement stmt = con.prepareStatement(getMeetings);
             stmt.setLong(1,expertId);
-            //stmt.setBoolean(2, false);
+            stmt.setBoolean(2, false);
 
             System.out.println(stmt);
 
@@ -193,11 +194,8 @@ public class MeetingDbDAO implements MeetingDAO {
                 m.setTime(time.substring(0, 5));
 
                 System.out.println(m.getCompleted());
-
-                if (m.getCompleted()) {
-                    meetings.add(m);
-                    System.out.println("upcoming with : " + m.getUser().getFirstName());
-                } else System.out.println("meeting with : " + m.getUser().getFirstName() + " completed");
+                meetings.add(m);
+                System.out.println("upcoming with : " + m.getUser().getFirstName());
 
             }
         } catch (IOException | SQLException e) {

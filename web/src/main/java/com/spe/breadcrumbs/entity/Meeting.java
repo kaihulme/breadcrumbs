@@ -45,11 +45,11 @@ public class Meeting {
     private Blob picture;
 
     public Meeting(Expert e, User u, Time t, String loc, Boolean completed){
-        expert = e;
-        user = u;
-        meeting_time = t;
-        location = loc;
-        completed = completed;
+        this.expert = e;
+        this.user = u;
+        this.meeting_time = t;
+        this.location = loc;
+        this.completed = completed;
     }
     public Meeting(){}
 

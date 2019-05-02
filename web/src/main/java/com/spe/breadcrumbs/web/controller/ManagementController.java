@@ -565,7 +565,7 @@ public class ManagementController {
         meeting.setExpert(expert);
         meeting.setUser(user);
         meeting.setMeeting_time(time);
-        meeting.setPicture(drawMeetingImage(meeting));
+        //meeting.setPicture(drawMeetingImage(meeting));
 
         meetingDAO.createMeeting(meeting);
 
