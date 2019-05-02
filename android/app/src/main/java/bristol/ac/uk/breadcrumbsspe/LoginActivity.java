@@ -112,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         t.printStackTrace();
+                        progressDialog.cancel();
                         Toast.makeText(LoginActivity.this, "Cannot connect to server. Please try again later.", Toast.LENGTH_SHORT).show();
                     }
                 });

@@ -1,6 +1,8 @@
 package bristol.ac.uk.breadcrumbsspe;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
@@ -36,16 +38,6 @@ public class HomeActivity extends DrawerActivity {
 
         if(((MapState)this.getApplication()).getCurrentQuestion() == 8)
             startMeeting(cameraButton);
-//        Progress dialog for Map
-//        final ProgressDialog progressDialog = new ProgressDialog(HomeActivity.this);
-//        progressDialog.setIndeterminate(true);
-//        progressDialog.setMessage("Getting Map...");
-//        progressDialog.show();
-//        progressDialog.cancel();
-        drawMap();
-        updateScore();
-        makeDrawer();
-        navigationView.setCheckedItem(R.id.nav_map);
 
         Animation scale_fab_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_in);
         cameraButton.startAnimation(scale_fab_in);
@@ -60,12 +52,46 @@ public class HomeActivity extends DrawerActivity {
             }
         });
         helpButton(cameraButton);
+
+        drawMap(cameraButton);
+        updateScore();
+        makeDrawer();
+        navigationView.setCheckedItem(R.id.nav_map);
     }
 
-    private void drawMap() {
+    private void drawMap(FloatingActionButton cameraButton) {
+        final ProgressDialog progressDialog = new ProgressDialog(HomeActivity.this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Getting Map...");
+        progressDialog.show();
         ImageView map = findViewById(R.id.map);
         String url = ((MapState) this.getApplication()).getCurrentMap();
-        Picasso.get().load(url).into(map);
+        Picasso.get().load(url).into(map, new com.squareup.picasso.Callback(){
+            @Override
+            public void onSuccess() {
+                progressDialog.cancel();
+            }
+
+            @Override
+            public void onError(Exception e) {
+                progressDialog.cancel();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this)
+                        .setTitle("No connection.")
+                        .setMessage("Please reload or try again later.")
+                        .setPositiveButton("Reload", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Animation scale_fab_out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_out);
+                                cameraButton.startAnimation(scale_fab_out);
+                                startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                finish();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
     }
 
     private void updateScore(){
