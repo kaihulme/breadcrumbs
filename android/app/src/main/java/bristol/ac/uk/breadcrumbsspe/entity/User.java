@@ -19,8 +19,6 @@ public class User {
 
     private String email;
 
-    private String code;
-
     private int score;
 
     public User(Long id,String firstName,String lastName,String email) {
