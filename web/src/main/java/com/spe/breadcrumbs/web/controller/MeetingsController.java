@@ -76,4 +76,12 @@ public class MeetingsController {
         return "views/meetings_completed";
     }
 
+    @PostMapping(value="{/meeting/complete")
+    public String completeMeeting(Model m, @PathVariable Long userId) {
+
+        meetingDAO.completeMeeting(userId, "");
+
+        return "views/meetings";
+    }
+
 }
