@@ -1,5 +1,6 @@
 package bristol.ac.uk.breadcrumbsspe;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
@@ -35,6 +36,12 @@ public class HomeActivity extends DrawerActivity {
 
         if(((MapState)this.getApplication()).getCurrentQuestion() == 8)
             startMeeting(cameraButton);
+//        Progress dialog for Map
+//        final ProgressDialog progressDialog = new ProgressDialog(HomeActivity.this);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("Getting Map...");
+//        progressDialog.show();
+//        progressDialog.cancel();
         drawMap();
         updateScore();
         makeDrawer();
