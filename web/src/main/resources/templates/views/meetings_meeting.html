@@ -48,21 +48,16 @@
             <li>
                 <a th:href="@{/participants}">Users</a>
             </li>
-            <!--            <li>-->
-            <!--                <a href="#analysis" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Analysis</a>-->
-            <!--                <ul class="collapse list-unstyled" id="analysis">-->
-            <!--                    <li>-->
-            <!--                        <a data-toggle="modal" data-target="#notBuiltModal">Questions</a>-->
-            <!--                        &lt;!&ndash;<a th:href="@{/questions}">Questions</a>&ndash;&gt;-->
-            <!--                    </li>-->
-            <!--                    <li>-->
-            <!--                        <a data-toggle="modal" data-target="#notBuiltModal">Paths</a>-->
-            <!--                        &lt;!&ndash;<a th:href="@{/paths}">Paths</a>&ndash;&gt;-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--            </li>-->
-            <li class="active">
-                <a th:href="@{/meetings}">Meetings</a>
+            <li>
+                <a href="#analysis" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">Meetings</a>
+                <ul class="collapse list-unstyled" id="analysis">
+                    <li class="active">
+                        <a th:href="@{/meetings}">Upcoming</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/meetings/completed}">Completed</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a th:href="@{/management}">Management</a>

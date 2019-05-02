@@ -49,15 +49,13 @@
                 <a th:href="@{/participants}">Users</a>
             </li>
             <li>
-                <a href="#analysis" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Analysis</a>
+                <a href="#analysis" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Meetings</a>
                 <ul class="collapse list-unstyled" id="analysis">
                     <li>
-                        <a data-toggle="modal" data-target="#notBuiltModal">Questions</a>
-                        <!--<a th:href="@{/questions}">Questions</a>-->
+                        <a th:href="@{/meetings}">Upcoming</a>
                     </li>
                     <li>
-                        <a data-toggle="modal" data-target="#notBuiltModal">Paths</a>
-                        <!--<a th:href="@{/paths}">Paths</a>-->
+                        <a th:href="@{/meetings/completed}">Completed</a>
                     </li>
                 </ul>
             </li>
