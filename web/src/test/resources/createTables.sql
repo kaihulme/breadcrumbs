@@ -101,6 +101,7 @@ CREATE TABLE Meeting(
     expertId INT NOT NULL,
     meeting_time TIME,
     location VARCHAR(200),
+    completed BIT,
     FOREIGN KEY (userId) REFERENCES User(id),
     FOREIGN KEY (expertId) REFERENCES Expert(id)
 );
