@@ -18,6 +18,8 @@ import bristol.ac.uk.breadcrumbsspe.entity.User;
 
 public class HomeActivity extends DrawerActivity {
 
+    private FloatingActionButton cameraButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public class HomeActivity extends DrawerActivity {
         makeDrawer();
         navigationView.setCheckedItem(R.id.nav_map);
 
-        FloatingActionButton cameraButton = findViewById(R.id.camera_button);
+        cameraButton = findViewById(R.id.camera_button);
 
         Animation scale_fab_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_fab_in);
         cameraButton.startAnimation(scale_fab_in);
@@ -77,6 +79,10 @@ public class HomeActivity extends DrawerActivity {
     private void startMeeting(){
         MeetingHandler meetingHandler = new MeetingHandler();
         meetingHandler.getMeeting(this, UserInSession.getUser().getId());
+    }
+
+    public FloatingActionButton getCameraButton(){
+        return cameraButton;
     }
 
     @Override
