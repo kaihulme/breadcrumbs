@@ -60,7 +60,12 @@ public class MeetingHandler implements Callback<Meeting> {
                 TextView tv_message = (TextView) alertDialog.findViewById(android.R.id.message);
                 if(response.isSuccessful()){
                     Meeting meeting = response.body();
-                    tv_message.setText("You will be meeting with " + meeting.getExpert().getFirstName() + " " + meeting.getExpert().getLastName() + " at " + meeting.getMeetingTime().toString() + " at location: " + meeting.getLocation());
+                    try {
+                        tv_message.setText("You will be meeting with " + meeting.getExpert().getFirstName() + " " + meeting.getExpert().getLastName() + " at " + meeting.getMeetingTime().toString() + " at location: " + meeting.getLocation());
+                    } catch (Exception e){
+                        tv_message.setText("You will be meeting with EXPERT at TIME at location: LOCATION");
+                        Toast.makeText(homeActivity, "No connection.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     tv_message.setText("You will be meeting with EXPERT at TIME at location: LOCATION");
                     Toast.makeText(homeActivity, "No connection.", Toast.LENGTH_SHORT).show();
