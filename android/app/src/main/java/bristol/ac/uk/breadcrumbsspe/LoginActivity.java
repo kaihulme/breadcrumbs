@@ -26,7 +26,6 @@ import bristol.ac.uk.breadcrumbsspe.entity.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.internal.EverythingIsNonNull;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -62,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.show();
 
                 String code = codeText.getText().toString();
-                code = "RAcJG"; //TODO REMOVE THIS LINE BEFORE FINAL RELEASE
+//                code = "RAcJG"; //TODO REMOVE THIS LINE BEFORE FINAL RELEASE
                 UserService userService = RetrofitClient.retrofit.create(UserService.class);
                 Call<User> userCall = userService.getUserByCode(code);
                 userCall.enqueue(new Callback<User>() {
@@ -115,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onFailure(Call<User> call, Throwable t) {
                         t.printStackTrace();
                         progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Cannot connect to server. Please try again later.", Toast.LENGTH_SHORT).show();
+                        wrongCodeDialog();
                     }
                 });
             }
