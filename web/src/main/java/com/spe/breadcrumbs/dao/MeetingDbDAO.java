@@ -120,12 +120,14 @@ public class MeetingDbDAO implements MeetingDAO {
             PreparedStatement stmt = con.prepareStatement(getMeetings);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                User user = userDAO.getUser(rs.getLong("userId"));
-                Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
+                Long userId = rs.getLong("userId");
+                Long expertId = rs.getLong("expertId");
+                User user = userDAO.getUser(userId);
+                Expert expert = expertDAO.getExpert(expertId);
                 Time t = rs.getTime("meeting_time");
                 String loc = rs.getString("location");
                 Boolean completed = rs.getBoolean("completed");
-                Meeting m = new Meeting(expert,user,t,loc, completed);
+                Meeting m = new Meeting(userId, expertId, expert,user,t,loc, completed);
                 String time = t.toString();
                 m.setTime(time.substring(0, 5));
                 meetings.add(m);
@@ -149,12 +151,13 @@ public class MeetingDbDAO implements MeetingDAO {
             stmt.setLong(1,expertId);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                User user = userDAO.getUser(rs.getLong("userId"));
-                Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
+                Long userId = rs.getLong("userId");
+                User user = userDAO.getUser(userId);
+                Expert expert = expertDAO.getExpert(expertId);
                 Time t = rs.getTime("meeting_time");
                 String loc = rs.getString("location");
                 Boolean completed = rs.getBoolean("completed");
-                Meeting m = new Meeting(expert,user,t,loc, completed);
+                Meeting m = new Meeting(userId, expertId, expert,user,t,loc, completed);
                 String time = t.toString();
                 m.setTime(time.substring(0, 5));
                 meetings.add(m);
@@ -178,12 +181,13 @@ public class MeetingDbDAO implements MeetingDAO {
             stmt.setBoolean(2, false);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                User user = userDAO.getUser(rs.getLong("userId"));
-                Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
+                Long userId = rs.getLong("userId");
+                User user = userDAO.getUser(userId);
+                Expert expert = expertDAO.getExpert(expertId);
                 Time t = rs.getTime("meeting_time");
                 String loc = rs.getString("location");
                 Boolean completed = rs.getBoolean("completed");
-                Meeting m = new Meeting(expert,user,t,loc, completed);
+                Meeting m = new Meeting(userId, expertId, expert,user,t,loc, completed);
                 String time = t.toString();
                 m.setTime(time.substring(0, 5));
                 meetings.add(m);
@@ -207,12 +211,13 @@ public class MeetingDbDAO implements MeetingDAO {
             stmt.setBoolean(2, true);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                User user = userDAO.getUser(rs.getLong("userId"));
-                Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
+                Long userId = rs.getLong("userId");
+                User user = userDAO.getUser(userId);
+                Expert expert = expertDAO.getExpert(expertId);
                 Time t = rs.getTime("meeting_time");
                 String loc = rs.getString("location");
                 Boolean completed = rs.getBoolean("completed");
-                Meeting m = new Meeting(expert,user,t,loc, completed);
+                Meeting m = new Meeting(userId, expertId, expert,user,t,loc, completed);
                 String time = t.toString();
                 m.setTime(time.substring(0, 5));
                 meetings.add(m);
@@ -235,14 +240,15 @@ public class MeetingDbDAO implements MeetingDAO {
             stmt.setLong(1,userId);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                User user = userDAO.getUser(rs.getLong("userId"));
-                Expert expert = expertDAO.getExpert(rs.getLong("expertId"));
+                Long expertId = rs.getLong("expertId");
+                User user = userDAO.getUser(userId);
+                Expert expert = expertDAO.getExpert(expertId);
                 expert.setEmail(null); // email shouldn't be retrieved via api
                 expert.setPassword(null); //passwords shouldn't be retrieved via api
                 Time t = rs.getTime("meeting_time");
                 String loc = rs.getString("location");
                 Boolean completed = rs.getBoolean("completed");
-                m = new Meeting(expert,user,t,loc, completed);
+                m = new Meeting(userId, expertId, expert,user,t,loc, completed);
                 String time = t.toString();
                 m.setTime(time.substring(0, 5));
             }

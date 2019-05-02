@@ -44,7 +44,9 @@ public class Meeting {
     @Column(name="picture")
     private Blob picture;
 
-    public Meeting(Expert e, User u, Time t, String loc, Boolean completed){
+    public Meeting(Long userId, Long expertId, Expert e, User u, Time t, String loc, Boolean completed){
+        this.userId = userId;
+        this.expertId = expertId;
         this.expert = e;
         this.user = u;
         this.meeting_time = t;

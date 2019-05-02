@@ -56,7 +56,7 @@ public class MeetingDataLayerTests {
         Expert e = expertDAO.getExpert(1L);
         Time t = new Time(1557448200000L);
         String loc = "Meeting Room A";
-        testMeeting = new Meeting(e,u,t,loc,false);
+        testMeeting = new Meeting(u.getId(), e.getId(), e,u,t,loc,false);
         assert(meetingDAO.createMeeting(testMeeting));
     }
 
