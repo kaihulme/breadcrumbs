@@ -132,9 +132,9 @@ public class LoginActivity extends AppCompatActivity {
         builder.setTitle("Invalid Code")
         .setMessage("That is an invalid code. Please try again.")
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int which) {
-                        // Return to welcome page
-        }
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
         })
         .setIcon(android.R.drawable.ic_dialog_alert)
         .show();
