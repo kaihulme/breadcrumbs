@@ -170,9 +170,6 @@ public class MeetingDbDAO implements MeetingDAO {
         UserDAO userDAO = new UserDbDAO(dbConnection);
         ExpertDAO expertDAO = new ExpertDbDAO(dbConnection);
         List<Meeting> meetings = new ArrayList<>();
-
-        System.out.println("Get upcoming meetings with expertID : " + expertId);
-
         try{
             Connection con = dbConnection.getConnection();
             String getMeetings = "SELECT * FROM Meeting WHERE expertId = ? AND completed = ?";

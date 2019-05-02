@@ -82,15 +82,15 @@
                 <!-- Navbar Right -->
                 <ul class="nav navbar-nav navbar-right">
 
-                    <div th:switch="${#lists.size(expertsMeetings)}">
+                    <div th:switch="${#lists.size(meetingsWithUserAtEnd)}">
                         <div th:case="'0'">
-                            <button type="button" class="btn btn-info meeting-notification" data-toggle="tooltip" data-placement="bottom" title="No upcoming meetings">
-                                <span class="oi oi-bell"></span>
+                            <button type="button" class="btn btn-info meeting-notification" data-toggle="tooltip" data-placement="bottom" title="Click to see your upcoming meetings">
+                                <a th:href="@{/meetings}"><span class="oi oi-bell"></span></a>
                             </button>
                         </div>
                         <div th:case="*">
-                            <button type="button" class="btn btn-danger meeting-notification" data-toggle="tooltip" data-placement="bottom" title="You have a meeting!">
-                                <a th:href="@{/account}"><span class="oi oi-bell"></span></a>
+                            <button type="button" class="btn btn-danger meeting-notification" data-toggle="tooltip" data-placement="bottom" title="A user is on their final question!">
+                                <a th:href="@{/meetings}"><span class="oi oi-bell"></span></a>
                             </button>
                         </div>
                     </div>

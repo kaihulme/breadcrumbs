@@ -26,28 +26,27 @@ public class AccountController {
     private QuestionDAO questionDAO = new QuestionDbDAO(new DBConnection());
     private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 
+    private List<Meeting> getMeetingsWithUserAtEnd(List<Meeting> expertsMeetings) {
+        List<Meeting> meetingsWithUserAtEnd = new ArrayList<>();
+        int noOfQuestions = questionDAO.getAllQuestions().size();
+        for (Meeting meeting : expertsMeetings) {
+            List<Question> questionsAnswered = questionDAO.getQuestionsAnswered(meeting.getUser().getId());
+            if (questionsAnswered.size() >= noOfQuestions - 1) meetingsWithUserAtEnd.add(meeting);
+        }
+        return meetingsWithUserAtEnd;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public String getAccountDetails(Model m){
-//        context.scan("com.spe.breadcrumbs.security");
-//        context.refresh();
-//        securityService = context.getBean(SecurityService.class);
 
         String username = securityService.findLoggedInUsername();
         Expert expert = expertDAO.findByEmail(username);
 
         List<Meeting> expertsMeetings = meetingDAO.getMeetingsWithExpert(expert.getId());
 
-        List<Meeting> usersOnFinalQuestion = new ArrayList<>();
-        int noOfQuestions = questionDAO.getAllQuestions().size();
-
-        for (Meeting meeting : expertsMeetings) {
-            List<Question> questionsAnswered = questionDAO.getQuestionsAnswered(meeting.getUser().getId());
-            if (questionsAnswered.size() >= noOfQuestions - 1) usersOnFinalQuestion.add(meeting);
-        }
-
         m.addAttribute("expert", expert);
         m.addAttribute("meetings", expertsMeetings);
-        m.addAttribute("usersOnFinalQuestion", usersOnFinalQuestion);
+        m.addAttribute("meetingsWithUserAtEnd", getMeetingsWithUserAtEnd(expertsMeetings));
 
         return "views/account";
     }

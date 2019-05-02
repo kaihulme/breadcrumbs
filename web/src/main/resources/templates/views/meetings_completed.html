@@ -48,17 +48,17 @@
             <li>
                 <a th:href="@{/participants}">Users</a>
             </li>
-                <li>
-                    <a href="#analysis" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">Meetings</a>
-                    <ul class="collapse list-unstyled" id="analysis">
-                        <li>
-                            <a th:href="@{/meetings}">Upcoming</a>
-                        </li>
-                        <li class="active">
-                            <a th:href="@{/meetings}">Completed</a>
-                        </li>
-                    </ul>
-                </li>
+            <li>
+                <a href="#analysis" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">Meetings</a>
+                <ul class="collapse list-unstyled" id="analysis">
+                    <li>
+                        <a th:href="@{/meetings}">Upcoming</a>
+                    </li>
+                    <li class="active">
+                        <a th:href="@{/meetings/completed}">Completed</a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a th:href="@{/management}">Management</a>
             </li>

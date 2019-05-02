@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -32,6 +33,22 @@ public class UserController {
         String username = securityService.findLoggedInUsername();
         Expert currentExpert = expertDAO.findByEmail(username);
         return meetingDAO.getMeetingsWithExpert(currentExpert.getId());
+    }
+
+    private List<Meeting> getMeetingsWithUserAtEnd() {
+
+        String username = securityService.findLoggedInUsername();
+        Expert expert = expertDAO.findByEmail(username);
+        List<Meeting> expertsMeetings = meetingDAO.getUpcomingMeetingsWithExpert(expert.getId());
+        List<Meeting> meetingsWithUserAtEnd = new ArrayList<>();
+
+        int noOfQuestions = questionDAO.getAllQuestions().size();
+        for (Meeting meeting : expertsMeetings) {
+            List<Question> questionsAnswered = questionDAO.getQuestionsAnswered(meeting.getUser().getId());
+            if (questionsAnswered.size() >= noOfQuestions - 1) meetingsWithUserAtEnd.add(meeting);
+        }
+
+        return meetingsWithUserAtEnd;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -60,7 +77,7 @@ public class UserController {
         }
 
         m.addAttribute("users", users);
-        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
+        m.addAttribute("meetingsWithUserAtEnd", getMeetingsWithUserAtEnd());
         return "views/participants";
     }
 
@@ -89,7 +106,7 @@ public class UserController {
 
         match.setProgress(progress);
         m.addAttribute("user", match);
-        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
+        m.addAttribute("meetingsWithUserAtEnd", getMeetingsWithUserAtEnd());
 
         return "views/participants_userProfile";
     }
@@ -104,7 +121,7 @@ public class UserController {
         List<Choice> attempts = attemptDAO.getAttempts(questionId,userId);
         q.setAttempts(attempts);
         m.addAttribute("question",q);
-        m.addAttribute("expertsMeetings", getCurrentExpertsMeetings());
+        m.addAttribute("meetingsWithUserAtEnd", getMeetingsWithUserAtEnd());
         return "views/participants_userProfile_question";
     }
 
