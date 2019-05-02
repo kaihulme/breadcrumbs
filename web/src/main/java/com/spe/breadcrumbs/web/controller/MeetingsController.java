@@ -9,6 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,12 +77,12 @@ public class MeetingsController {
         return "views/meetings_completed";
     }
 
-    @PostMapping(value="{/meeting/complete")
-    public String completeMeeting(Model m, @PathVariable Long userId) {
+    @PostMapping(value="meeting/complete/{userId}")
+    public RedirectView completeMeeting(@PathVariable Long userId) {
 
         meetingDAO.completeMeeting(userId, "");
 
-        return "views/meetings";
+        return new RedirectView("/meetings");
     }
 
 }

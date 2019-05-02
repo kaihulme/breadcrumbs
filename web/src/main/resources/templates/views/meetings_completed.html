@@ -147,10 +147,10 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="meeting : ${meetingsCompleted}">
-                                        <td><a th:href="@{'/meetings/' + ${meeting.user.id}}"><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></a></td>
-                                        <td><a th:href="@{'/meetings/' + ${meeting.user.id}}"><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></a></td>
-                                        <td><a th:href="@{'/meetings/' + ${meeting.user.id}}"><span th:text="${meeting.time}">id</span></a></td>
-                                        <td><a th:href="@{'/meetings/' + ${meeting.user.id}}"><span th:text="${meeting.location}">id</span></a></td>
+                                        <td><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></td>
+                                        <td><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></td>
+                                        <td><span th:text="${meeting.time}">id</span></td>
+                                        <td><span th:text="${meeting.location}">id</span></td>
                                     </tr>
                                     </tbody>
                                 </table>
