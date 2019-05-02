@@ -101,18 +101,20 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(Call<List<Question>> call, Throwable t) {
                                     t.printStackTrace();
+                                    progressDialog.dismiss();
                                     Toast.makeText(LoginActivity.this, "Cannot connect to server. Please try again later.", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
                         }else{
+                            progressDialog.dismiss();
                             wrongCodeDialog();
                         }
                     }
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         t.printStackTrace();
-                        progressDialog.cancel();
+                        progressDialog.dismiss();
                         Toast.makeText(LoginActivity.this, "Cannot connect to server. Please try again later.", Toast.LENGTH_SHORT).show();
                     }
                 });
