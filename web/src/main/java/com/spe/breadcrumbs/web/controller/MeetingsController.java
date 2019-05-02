@@ -63,4 +63,17 @@ public class MeetingsController {
         return "views/meetings_meeting";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value="/completed")
+    public String getMeetingsCompleted(Model m){
+
+        String username = securityService.findLoggedInUsername();
+        Expert expert = expertDAO.findByEmail(username);
+        List<Meeting> expertsMeetings = meetingDAO.getUpcomingMeetingsWithExpert(expert.getId());
+
+        m.addAttribute("meetingsCompleted", meetingDAO.getCompletedMeetingsWithExpert(expert.getId()));
+        m.addAttribute("meetingsWithUserAtEnd", getMeetingsWithUserAtEnd(expertsMeetings));
+
+        return "views/meetings_completed";
+    }
+
 }

@@ -48,22 +48,17 @@
             <li>
                 <a th:href="@{/participants}">Users</a>
             </li>
-            <!--            <li>-->
-            <!--                <a href="#analysis" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Analysis</a>-->
-            <!--                <ul class="collapse list-unstyled" id="analysis">-->
-            <!--                    <li>-->
-            <!--                        <a data-toggle="modal" data-target="#notBuiltModal">Questions</a>-->
-            <!--                        &lt;!&ndash;<a th:href="@{/questions}">Questions</a>&ndash;&gt;-->
-            <!--                    </li>-->
-            <!--                    <li>-->
-            <!--                        <a data-toggle="modal" data-target="#notBuiltModal">Paths</a>-->
-            <!--                        &lt;!&ndash;<a th:href="@{/paths}">Paths</a>&ndash;&gt;-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--            </li>-->
-            <li class="active">
-                <a th:href="@{/meetings}">Meetings</a>
-            </li>
+                <li>
+                    <a href="#analysis" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">Meetings</a>
+                    <ul class="collapse list-unstyled" id="analysis">
+                        <li>
+                            <a th:href="@{/meetings}">Upcoming</a>
+                        </li>
+                        <li class="active">
+                            <a th:href="@{/meetings}">Completed</a>
+                        </li>
+                    </ul>
+                </li>
             <li>
                 <a th:href="@{/management}">Management</a>
             </li>
@@ -123,71 +118,17 @@
             <hr class="style1">
 
             <div class="row justify-content-md-center">
-
-                <div class="col-4 container">
-
-                    <div class="row" id="title">
-                        <h2>Upcoming Meeting</h2>
-                    </div>
-
-                    <p>Details and location of selected meeting.</p>
-
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <td>Expert</td>
-                            <td th:text = "${selectedMeeting.expert.firstName}+' '+${selectedMeeting.expert.lastName}"></td>
-                        </tr>
-                        <tr>
-                            <td>User</td>
-                            <td th:text = "${selectedMeeting.user.firstName}+' '+${selectedMeeting.user.lastName}"></td>
-                        </tr>
-                        <tr>
-                            <td>Time</td>
-                            <td th:text = "${selectedMeeting.time}"></td>
-                        </tr>
-                        <tr>
-                            <td>Location</td>
-                            <td th:text = "${selectedMeeting.location}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="row justify-content-md-center">
-                        <div class="col-4">
-                            <a th:href="@{'/meetings/meeting/'+selectedMeeting.userId}" ><button class="btn btn-outline-secondary">Start Meeting</button></a>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-4 container">
-
-                        <div class="row" id="title">
-                            <h2>Location</h2>
-                        </div>
-
-                        <div class="row justify-content-md-center">
-                            <img th:src="@{'/image/venueMap_empty'}" id="hintImage">
-                        </div>
-
-                </div>
-
-
-            </div>
-
-            <div class="row justify-content-md-center">
                 <div class="col-8">
                     <div class="container">
 
                         <div class="row" id="title">
-                            <h2>Meetings</h2>
+                            <h2>Completed Meetings</h2>
                         </div>
 
-                        <div th:switch="${#lists.size(expertsMeetings)}">
+                        <div th:switch="${#lists.size(meetingsCompleted)}">
 
                             <div th:case="'0'">
-                                <p>You have no upcoming meetings</p>
+                                <p>You have not completed any meetings</p>
                             </div>
 
                             <div th:case="*">
@@ -205,7 +146,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="meeting : ${expertsMeetings}">
+                                    <tr th:each="meeting : ${meetingsCompleted}">
                                         <td><a th:href="@{'/meetings/' + ${meeting.user.id}}"><span th:text="${meeting.expert.firstName} + ' ' + ${meeting.expert.lastName}">id</span></a></td>
                                         <td><a th:href="@{'/meetings/' + ${meeting.user.id}}"><span th:text="${meeting.user.firstName} + ' ' + ${meeting.user.lastName}">id</span></a></td>
                                         <td><a th:href="@{'/meetings/' + ${meeting.user.id}}"><span th:text="${meeting.time}">id</span></a></td>

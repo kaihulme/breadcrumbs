@@ -179,9 +179,6 @@ public class MeetingDbDAO implements MeetingDAO {
             PreparedStatement stmt = con.prepareStatement(getMeetings);
             stmt.setLong(1,expertId);
             stmt.setBoolean(2, false);
-
-            System.out.println(stmt);
-
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 User user = userDAO.getUser(rs.getLong("userId"));
@@ -192,11 +189,7 @@ public class MeetingDbDAO implements MeetingDAO {
                 Meeting m = new Meeting(expert,user,t,loc, completed);
                 String time = t.toString();
                 m.setTime(time.substring(0, 5));
-
-                System.out.println(m.getCompleted());
                 meetings.add(m);
-                System.out.println("upcoming with : " + m.getUser().getFirstName());
-
             }
         } catch (IOException | SQLException e) {
             e.printStackTrace();
