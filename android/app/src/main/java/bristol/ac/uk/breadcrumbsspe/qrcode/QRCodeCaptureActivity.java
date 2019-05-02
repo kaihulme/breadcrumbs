@@ -29,7 +29,6 @@ import android.widget.Toast;
 
 import bristol.ac.uk.breadcrumbsspe.HintActivity;
 import bristol.ac.uk.breadcrumbsspe.HomeActivity;
-import bristol.ac.uk.breadcrumbsspe.QRCodeScannerActivity;
 import bristol.ac.uk.breadcrumbsspe.QuestionActivity;
 import bristol.ac.uk.breadcrumbsspe.R;
 import bristol.ac.uk.breadcrumbsspe.api.HintService;
@@ -43,7 +42,6 @@ import bristol.ac.uk.breadcrumbsspe.entity.Question;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
