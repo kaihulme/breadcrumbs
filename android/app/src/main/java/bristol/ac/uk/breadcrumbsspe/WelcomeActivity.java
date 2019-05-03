@@ -58,7 +58,7 @@ public class WelcomeActivity extends DrawerActivity {
             public void onClick(View v) {
                 startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
+                finish();
             }
         });
     }

@@ -32,7 +32,7 @@ public class HomeActivity extends DrawerActivity {
         Intent i = getIntent();
         int qIndex = i.getIntExtra("CURRENT_QUESTION", -1);
         System.out.print("qIndex" + qIndex);
-        if(qIndex != -1 && qIndex != 8) {
+        if(qIndex != -1) {
             updateMap(qIndex);
         }
 
