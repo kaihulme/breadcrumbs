@@ -8,13 +8,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
-import com.squareup.picasso.Picasso;
 
 import bristol.ac.uk.breadcrumbsspe.api.QRCodeHintService;
 import bristol.ac.uk.breadcrumbsspe.api.QRCodeQuestionService;
