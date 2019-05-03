@@ -20,16 +20,12 @@ import bristol.ac.uk.breadcrumbsspe.qrcode.QRCodeCaptureActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
-//@SpringBootApplication
 public class QuestionActivity extends AppCompatActivity {
 
     private List<Button> buttons;
     private TextView questionTextView;
     private int answer;
     private Question question;
-
-    // TODO Credits activity with us and sponsors
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
