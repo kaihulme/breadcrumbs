@@ -3,7 +3,6 @@ package com.spe.breadcrumbs.dao;
 import com.spe.breadcrumbs.entity.Map;
 import com.spe.breadcrumbs.web.DBConnection;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;

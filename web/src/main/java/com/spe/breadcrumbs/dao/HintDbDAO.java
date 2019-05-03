@@ -6,8 +6,7 @@ import com.spe.breadcrumbs.web.DBConnection;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class HintDbDAO implements HintDAO {
     private DBConnection dbConnection;

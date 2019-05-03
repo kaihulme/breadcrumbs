@@ -2,6 +2,7 @@ package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.Quiz;
 import com.spe.breadcrumbs.entity.User;
+
 import java.util.List;
 
 public interface UserDAO {

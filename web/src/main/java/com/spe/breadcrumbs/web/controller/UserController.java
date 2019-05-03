@@ -7,7 +7,10 @@ import com.spe.breadcrumbs.web.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,17 +62,10 @@ public class UserController {
         List<Question> questions = match.getQuiz().getQuestions();
         for (User u : users) {
 
-            //            int completed = 0;
 
 
             List<Question> completed = questionDAO.getQuestionsAnswered(u.getId());
 
-
-//            for (Question q : questions) {
-//                if (attemptDAO.getAttempts(q.getId(),u.getId()).size() > 0) {
-//                    completed++;
-//                }
-//            }
 
             float progress = 100 * ((float)completed.size() / (float)questions.size());
             u.setProgress(progress);

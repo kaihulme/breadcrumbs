@@ -1,7 +1,6 @@
 package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.Expert;
-import com.spe.breadcrumbs.entity.User;
 
 import java.util.List;
 

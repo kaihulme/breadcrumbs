@@ -1,8 +1,6 @@
 package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
-import com.spe.breadcrumbs.entity.Map;
-import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -48,21 +46,3 @@ public class ImageController {
 
 }
 
-//        try {
-//            Long id = (long) 0;
-//            id = id.parseLong(image);
-//            map = mapDAO.getMap(id);
-//            if (map != null) {
-//                Blob blob = map.getPicture();
-//                byte[] picture = blob.getBytes(1, (int) blob.length());
-//                final HttpHeaders headers = new HttpHeaders();
-//                headers.setContentType(MediaType.IMAGE_PNG);
-//                return new ResponseEntity<byte[]>(picture, headers, HttpStatus.OK);
-//            }
-//        } finally {
-//            return new ResponseEntity<>(null, null, HttpStatus.NOT_FOUND);
-//        }
-//
-//    }
-//
-//}

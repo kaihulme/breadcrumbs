@@ -4,7 +4,6 @@ import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Hint;
 import com.spe.breadcrumbs.entity.Question;
 
-import java.sql.Blob;
 import java.util.List;
 
 public interface QuestionDAO {
