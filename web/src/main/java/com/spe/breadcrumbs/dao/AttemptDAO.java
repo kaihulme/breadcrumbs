@@ -2,7 +2,6 @@ package com.spe.breadcrumbs.dao;
 
 import com.spe.breadcrumbs.entity.Attempt;
 import com.spe.breadcrumbs.entity.Choice;
-import com.spe.breadcrumbs.entity.User;
 
 import java.util.List;
 

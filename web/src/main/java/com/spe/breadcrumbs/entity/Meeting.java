@@ -7,7 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Column;
 import java.sql.Blob;
 import java.sql.Time;
-import java.sql.Types;
 
 @Getter
 @Setter

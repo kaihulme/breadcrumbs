@@ -262,6 +262,11 @@ th {
    margin: 20px;
 }
 
+#meetingMap {
+   height: 300px;
+   margin: 20px;
+}
+
 #userStats {
    padding: 50px;
 }

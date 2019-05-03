@@ -1,9 +1,8 @@
 package com.spe.breadcrumbs.web.controller;
 
 import com.spe.breadcrumbs.dao.*;
-import com.spe.breadcrumbs.entity.*;
 import com.spe.breadcrumbs.entity.Choice;
-import com.spe.breadcrumbs.entity.Map;
+import com.spe.breadcrumbs.entity.*;
 import com.spe.breadcrumbs.web.DBConnection;
 import com.spe.breadcrumbs.web.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,9 @@ import java.io.*;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @CrossOrigin
 @Controller
@@ -179,11 +179,6 @@ public class ManagementController {
         Hint hint = new Hint();
         m.addAttribute("hint", hint);
 
-//        int x_max = 2001;
-//        int y_max = 2002;
-//        int[] max = new int[]{ x_max, y_max };
-//        m.addAttribute("x_max", x_max);
-//        m.addAttribute("y_max", y_max);
 
         m.addAttribute("meetingsWithUserAtEnd", getMeetingsWithUserAtEnd());
 
@@ -296,7 +291,6 @@ public class ManagementController {
 
             Graphics g = bi_map.getGraphics();
 
-//            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
 
             Random rand = new Random();
 
@@ -326,11 +320,9 @@ public class ManagementController {
             Blob map = emptyMap.getPicture();
 
             BufferedImage bi_map = blobToImage(map);
-            BufferedImage bi_questionIcon = ImageIO.read(questionIcon.getInputStream());
             BufferedImage bi_hintIcon = ImageIO.read(hintIcon.getInputStream());
 
             Graphics g = bi_map.getGraphics();
-//            g.drawImage(bi_questionIcon, question.getX_coord(), question.getY_coord(), 100, 100, null);
 
             Random rand = new Random();
 
@@ -471,9 +463,6 @@ public class ManagementController {
     @PostMapping("/addHint/{question_id}")
     public RedirectView addHint(/*@RequestParam("f") MultipartFile f,*/ @ModelAttribute Hint hint, @PathVariable Long question_id) {
 
-//        BufferedImage bi = multipartToImage(f);
-//        Blob picture = imageToBlob(bi);
-//        hint.setPicture(picture);
 
         hintDAO.addHint(hint, question_id);
 

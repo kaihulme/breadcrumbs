@@ -27,12 +27,11 @@ public class HomeActivity extends DrawerActivity {
         setContentView(R.layout.activity_home);
 
         FloatingActionButton cameraButton = findViewById(R.id.camera_button);
-//        startMeeting(cameraButton);
 
         Intent i = getIntent();
         int qIndex = i.getIntExtra("CURRENT_QUESTION", -1);
         System.out.print("qIndex" + qIndex);
-        if(qIndex != -1 && qIndex != 8) {
+        if(qIndex != -1) {
             updateMap(qIndex);
         }
 

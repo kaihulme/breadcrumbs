@@ -5,7 +5,6 @@ import com.spe.breadcrumbs.entity.Quiz;
 import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.DBConnection;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,7 +29,6 @@ public class UserDbDAO implements UserDAO {
                 User u = new User(rs.getLong("id"),rs.getString("firstName"),
                         rs.getString("lastName"),rs.getString("email"),
                         rs.getString("code"),rs.getInt("score"));
-                u.setCode(null); //code shouldn't be gotten
                 users.add(u);
             }
             con.close();

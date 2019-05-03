@@ -73,6 +73,8 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                 i.putExtra("QUESTION", question);
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                setResult(RESULT_CANCELED, new Intent());
+                finish();
             }
             else
                 wrongQuestionDialog();
@@ -173,6 +175,8 @@ public final class QRCodeCaptureActivity extends AppCompatActivity
                                                 i.putExtra("HINT", h);
                                                 startActivity(i);
                                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                                setResult(RESULT_CANCELED, new Intent());
+                                                finish();
                                             }
                                             else
                                                 wrongHintDialog();

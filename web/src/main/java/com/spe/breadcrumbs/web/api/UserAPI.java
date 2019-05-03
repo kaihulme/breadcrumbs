@@ -1,18 +1,12 @@
 package com.spe.breadcrumbs.web.api;
 
-import com.spe.breadcrumbs.dao.QuestionDAO;
-import com.spe.breadcrumbs.dao.QuestionDbDAO;
 import com.spe.breadcrumbs.dao.UserDAO;
 import com.spe.breadcrumbs.dao.UserDbDAO;
-import com.spe.breadcrumbs.entity.Question;
-import com.spe.breadcrumbs.entity.Quiz;
 import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/users")

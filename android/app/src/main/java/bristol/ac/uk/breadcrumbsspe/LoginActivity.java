@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.show();
 
                 String code = codeText.getText().toString();
-//                code = "RAcJG"; //TODO REMOVE THIS LINE BEFORE FINAL RELEASE
                 UserService userService = RetrofitClient.retrofit.create(UserService.class);
                 Call<User> userCall = userService.getUserByCode(code);
                 userCall.enqueue(new Callback<User>() {

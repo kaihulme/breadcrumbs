@@ -10,6 +10,8 @@ public class MapState extends Application {
 
     public String getCurrentMap() {
         int questionNo = currentQuestion + 1;
+        if(questionNo == 9)
+            return "http://breadcrumbs.bioscientifica.com/image/venueMap_empty";
         return "http://breadcrumbs.bioscientifica.com/image/venueMap_q" + questionNo;
     }
 

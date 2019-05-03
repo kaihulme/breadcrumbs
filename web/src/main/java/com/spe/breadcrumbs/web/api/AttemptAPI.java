@@ -5,16 +5,13 @@ import com.spe.breadcrumbs.dao.AttemptDbDAO;
 import com.spe.breadcrumbs.dao.QuestionDAO;
 import com.spe.breadcrumbs.dao.QuestionDbDAO;
 import com.spe.breadcrumbs.entity.Attempt;
-import com.spe.breadcrumbs.entity.Choice;
 import com.spe.breadcrumbs.entity.Question;
-import com.spe.breadcrumbs.entity.User;
 import com.spe.breadcrumbs.web.DBConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 
 
 @CrossOrigin
