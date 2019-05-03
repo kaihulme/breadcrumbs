@@ -29,7 +29,6 @@ public class UserDbDAO implements UserDAO {
                 User u = new User(rs.getLong("id"),rs.getString("firstName"),
                         rs.getString("lastName"),rs.getString("email"),
                         rs.getString("code"),rs.getInt("score"));
-                u.setCode(null); //code shouldn't be gotten
                 users.add(u);
             }
             con.close();
