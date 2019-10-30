@@ -1,0 +1,4 @@
+#Mon Jul 15 12:16:13 BST 2019
+base.0=/home/cancelot/Documents/University/Year 2/SPE/Breadcrumbs/flutter_app/build/app/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex
